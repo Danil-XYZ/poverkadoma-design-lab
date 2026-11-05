@@ -9,18 +9,19 @@
 .detail-toolbar .app-screen-title { flex: 1; min-width: 0; margin: 0; font-size: calc(24px * var(--card-font-scale)); font-weight: 600; line-height: calc(32px * var(--card-font-scale)); overflow-wrap: anywhere; }
 .detail-toolbar .app-back-button { margin-left: -12px; }
 .detail-toolbar .toolbar-actions { flex: 0 0 auto; width: auto; }
-.phone[data-v-route="tools"] .v-topbar .detail-toolbar { --tools-action-width: 48px; position: relative; height: auto; min-height: 48px; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
-.phone[data-v-route="tools"] .v-topbar .app-screen-title { flex: 0 0 auto; min-width: 0; max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
-.phone[data-v-route="tools"] .v-topbar .toolbar-actions { display: flex; gap: 8px; }
-.phone[data-v-route="tools"] .v-topbar .icon-button,
-.phone[data-v-route="tools"] .v-topbar .network-slot { width: var(--tools-action-width); flex: 0 0 var(--tools-action-width); }
-.phone[data-v-route="tools"][data-offline="false"] .v-topbar .network-slot { display: none; }
-.phone[data-v-route="tools"][data-offline="true"] .v-topbar .detail-toolbar { --tools-action-width: 44px; }
-.phone[data-v-route="tools"][data-offline="true"] .v-topbar .toolbar-actions { gap: 0; }
-.phone[data-v-route="tools"] .v-topbar [data-ink-layout="true"] .toolbar-actions { display: contents; }
-.phone[data-v-route="tools"] .v-topbar [data-ink-layout="true"] .toolbar-actions > .icon-button,
-.phone[data-v-route="tools"] .v-topbar [data-ink-layout="true"] .network-slot { position: absolute; left: var(--tools-button-left); top: 50%; transform: translateY(-50%); }
-.phone[data-v-route="tools"] .v-topbar [data-ink-layout="true"] .toolbar-actions .icon { transform: translateX(var(--tools-icon-shift,0px)); }
+.phone:is([data-v-route="tools"],[data-v-route="notifications"]) .v-topbar .detail-toolbar { --tools-action-width: 48px; position: relative; height: auto; min-height: 48px; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
+.phone:is([data-v-route="tools"],[data-v-route="notifications"]) .v-topbar .app-screen-title { flex: 0 0 auto; min-width: 0; max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+.phone:is([data-v-route="tools"],[data-v-route="notifications"]) .v-topbar .toolbar-actions { display: flex; gap: 8px; }
+.phone:is([data-v-route="tools"],[data-v-route="notifications"]) .v-topbar .icon-button,
+.phone:is([data-v-route="tools"],[data-v-route="notifications"]) .v-topbar .network-slot { width: var(--tools-action-width); flex: 0 0 var(--tools-action-width); }
+.phone:is([data-v-route="tools"],[data-v-route="notifications"])[data-offline="false"] .v-topbar .network-slot { display: none; }
+.phone:is([data-v-route="tools"],[data-v-route="notifications"])[data-offline="true"] .v-topbar .detail-toolbar { --tools-action-width: 44px; }
+.phone:is([data-v-route="tools"],[data-v-route="notifications"])[data-offline="true"] .v-topbar .toolbar-actions { gap: 0; }
+.phone:is([data-v-route="tools"],[data-v-route="notifications"]) .v-topbar [data-ink-layout="true"] .toolbar-actions { display: contents; }
+.phone:is([data-v-route="tools"],[data-v-route="notifications"]) .v-topbar [data-ink-layout="true"] .toolbar-actions > .icon-button,
+.phone:is([data-v-route="tools"],[data-v-route="notifications"]) .v-topbar [data-ink-layout="true"] .network-slot { position: absolute; left: var(--tools-button-left); top: 50%; transform: translateY(-50%); }
+.phone:is([data-v-route="tools"],[data-v-route="notifications"]) .v-topbar [data-ink-layout="true"] .toolbar-actions .icon { transform: translateX(var(--tools-icon-shift,0px)); }
+.phone[data-v-route="notifications"] .v-topbar [data-ink-layout="true"] .toolbar-actions { display: flex; width: var(--ink-actions-width); }
 .v-nav-glyph { display: inline-flex; align-items: center; justify-content: center; }
 .v-nav-glyph svg { width: 20px; height: 20px; stroke-width: 1.7; }
 .v-tools-group { display: flex; flex-direction: column; gap: 8px; }
