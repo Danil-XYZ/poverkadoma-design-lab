@@ -1,0 +1,1597 @@
+{
+  "scope": "42 полных текстовых тела Confluence/ADF и лист 'Параметры акта/СИ'!A1:AB133. Изображения/диаграммы-вложения не рассматривались; сведения из них не утверждаются.",
+  "roles": [
+    {
+      "role": "Незарегистрированный",
+      "meaning": "Вход по идентификатору или регистрация/восстановление e-mail. Старое разрешение Реестра/Нептона до входа противоречит текущей матрице регистрации.",
+      "pages": [
+        "374603787",
+        "360906753",
+        "25231569"
+      ]
+    },
+    {
+      "role": "Демо",
+      "meaning": "Отдельная роль. Новая регистрация создаёт условную ПЛ/АО/город, включает биллинг и расширенную СМК, назначает Условный УПСЖ. Можно изучать формы, но выгрузка ограничена биллингом; документы только заголовки.",
+      "pages": [
+        "374603787"
+      ]
+    },
+    {
+      "role": "Внешний поверитель",
+      "meaning": "ПЛ не под аккредитацией МСР. По эпикам Ответственный+Поверитель, произвольный номер акта, фото акта/СИ опционально, но фото процесса может быть обязательным.",
+      "pages": [
+        "374603787",
+        "25264129",
+        "25231513"
+      ]
+    },
+    {
+      "role": "Внутренний поверитель",
+      "meaning": "ПЛ под аккредитацией МСР. QR и проверка партнёра/PIN; создание акта блокируют неознакомленные документы/просроченное оборудование. Доп. роли Ответственный и Диспетчер.",
+      "pages": [
+        "374603787",
+        "25231494",
+        "105283585"
+      ]
+    },
+    {
+      "role": "Диспетчер",
+      "meaning": "Назначение/переназначение заявок поверителям, отмена новых. В коде требуется роль и наличие другого поверителя.",
+      "pages": [
+        "105283585"
+      ]
+    },
+    {
+      "role": "Ответственный",
+      "meaning": "Создание и сопровождение агентов; роль может сочетаться с Поверителем.",
+      "pages": [
+        "244383745",
+        "360579073"
+      ]
+    },
+    {
+      "role": "Агент",
+      "meaning": "Создаёт заявки, меняет/отменяет пока Новая; позже читает статусы, комментарий и причину отмены, видит вознаграждение. Неактивная учётка запрещает создание.",
+      "pages": [
+        "201130152",
+        "249364481",
+        "246022146"
+      ]
+    },
+    {
+      "role": "Может производить оплату",
+      "meaning": "Отдельная возможность профиля, не самостоятельный тип UI; пополнение пакета через ЛК против обращения к менеджеру.",
+      "pages": [
+        "192544769",
+        "165052450"
+      ]
+    }
+  ],
+  "fieldMatrix": {
+    "source": "https://docs.google.com/spreadsheets/d/19rgSWBi_JM2R9HgZJkhTaLWwKYvaMIcRCNIebYiubFM/edit?gid=1579828796",
+    "range": "'Параметры акта/СИ'!A1:AB133",
+    "rowsFullyRead": 133,
+    "scenarioColumns": 24,
+    "notes": "В прочитанном диапазоне notes отсутствуют. Row9 заключение акта зачёркнуто; row20 заключение СИ обязательно. Цвета дублируют текстовую обязательность/опциональность/генерацию сервером/отсутствие.",
+    "axes": [
+      "внутренний vs внешний/демо",
+      "методика с/без фотофиксации",
+      "установка с/без фотофиксации — 3/9 проливов",
+      "СМК",
+      "пригодность",
+      "газ/вода только в явно предусмотренных колонках"
+    ],
+    "rules": [
+      "row16/19: фото акта и СИ внутреннему обязательно, внешнему/демо опционально",
+      "row12: при фотометодике фото чека обязательно, если нет кассового чека",
+      "row14/15/29: примечание обычной методики vs адрес фотометодики; помещение только обычная вода",
+      "row30–33: условия обязательны при СМК или фотометодике",
+      "row34–45: часть данных/фотографий добавляет сервер; у внешнего фотография эталона с номером обязательна независимо от СМК",
+      "row47–55: первый пролив фотометодики обязателен и для непригодного",
+      "row57–129: дальнейшие проливы непригодного обычно опциональны",
+      "row130–133: условия после поверки обязательны для пригодного с СМК, опциональны для непригодного с СМК, иначе генерируются"
+    ],
+    "openCells": [
+      "V75,V76,V78,V81,V103,V104,V106,V109 обязательны для внешнего непригодного без СМК, аналогичные J ячейки внутреннего — опциональны; смысл различия не разъяснён",
+      "Газ с СМК не представлен отдельной веткой; допустимость сочетания следует подтвердить"
+    ],
+    "calculations": "Математические алгоритмы остальных листов не проверены"
+  },
+  "issues": [
+    {
+      "priority": "P0 для проектирования",
+      "kind": "source-conflict",
+      "title": "Отмена заявки описана взаимоисключающими текстами",
+      "pages": [
+        "105283585",
+        "249364481",
+        "201130152"
+      ],
+      "evidence": "Н19 экран Отменена+таймер, но справка ещё Ожидается отмена и подтверждение обещает невозможность восстановления. Н32 новая справка с периодом отмены, но старое подтверждение тоже говорит необратимо. Н30 список статусов включает Отмена.",
+      "action": "Зафиксировать каноническую модель по актуальному эпику640417793, единые слова и условия восстановления во всех ролях."
+    },
+    {
+      "priority": "P0 для проектирования",
+      "kind": "release-gap",
+      "title": "Заключение переехало с акта на СИ в спецификации, но не в исследованном коде",
+      "pages": [
+        "25264129",
+        "25231513"
+      ],
+      "sheet": "A9:AB9;A20:AB20",
+      "code": [
+        "app/src/main/java/ru/poverkadoma/data/model/Act.kt:26",
+        "app/src/main/java/ru/poverkadoma/data/model/Act.kt:104",
+        "app/src/main/java/ru/poverkadoma/ui/screens/act/component/ActContent.kt:194",
+        "app/src/main/java/ru/poverkadoma/ui/screens/act_meter/ActMeterViewModel.kt:1956"
+      ],
+      "action": "Утвердить целевой контракт данных/релиз PD-2858 до визуального редизайна. Закрытая дизайн-задача не доказывает внедрение."
+    },
+    {
+      "priority": "P1",
+      "kind": "source-conflict",
+      "title": "Нет единой согласованной матрицы полей в текстах",
+      "pages": [
+        "39714817",
+        "25231513"
+      ],
+      "sheet": "A1:AB133",
+      "evidence": "Confluence акт/СИ помечены Устарело. Н6 шире показывает помещение для воды, Sheet29 и код скрывают его при фотометодике. Для установки без фотофиксации Sheet требует ряд числовых полей без СМК, prose Н6 связывает их с СМК.",
+      "code": [
+        "app/src/main/java/ru/poverkadoma/ui/screens/act_meter/component/ActMeterContent.kt:330",
+        "app/src/main/java/ru/poverkadoma/ui/screens/act_meter/ActMeterViewModel.kt:1054"
+      ],
+      "action": "Sheet использовать как более конкретный источник полей; разрешить неоднозначности до нового UI, разработать примеры всех веток."
+    },
+    {
+      "priority": "P1",
+      "kind": "inherited-UX",
+      "title": "Рекомендация переустановить приложение не учитывает локальные черновики",
+      "pages": [
+        "34111522"
+      ],
+      "code": [
+        "app/src/main/java/ru/poverkadoma/ui/base/utils/Constants.kt:518",
+        "app/src/main/java/ru/poverkadoma/ui/base/utils/Constants.kt:653",
+        "app/src/main/java/ru/poverkadoma/data/repositories/ActsRepositoryImpl.kt:190"
+      ],
+      "evidence": "API-3/API-22 советуют переустановку. Н13 предоставляет резервную копию; НРМ12 исключает БД из Google backup.",
+      "action": "Ошибки должны вести в безопасную диагностику/экспорт/повтор, с сохранением данных."
+    },
+    {
+      "priority": "P1",
+      "kind": "source-conflict",
+      "title": "Срок допустимой выгрузки30 или40 дней",
+      "pages": [
+        "39714817",
+        "34111522"
+      ],
+      "code": [
+        "app/src/main/java/ru/poverkadoma/ui/base/utils/Constants.kt:550"
+      ],
+      "evidence": "Валидация говорит30 дней; API-6 и код40. Сервер фактически не проверялся.",
+      "action": "Уточнить правило backend и показывать актуальный срок до попытки отправки."
+    },
+    {
+      "priority": "P1",
+      "kind": "source-conflict",
+      "title": "Общие требования и регистрационный эпик расходятся с текущими ролями и онлайн-границами",
+      "pages": [
+        "17399846",
+        "374603787",
+        "25231601",
+        "25231569"
+      ],
+      "evidence": "Старые3 типа/весь offline/документы только внутренним не покрывают demo/agent, платёжные ограничения, роль ответственного; меню регистрации устарело относительно Н3.",
+      "action": "Тип пользователя, роли, возможности и настройки лаборатории моделировать раздельно; проверять реальные ролевые конфигурации."
+    },
+    {
+      "priority": "P1",
+      "kind": "code-spec-divergence",
+      "title": "Порядок массовой выгрузки отличается от Н7",
+      "pages": [
+        "25264154"
+      ],
+      "code": [
+        "app/src/main/java/ru/poverkadoma/data/model/workers/UploadActsWorker.kt:364"
+      ],
+      "evidence": "Н7 требует номер акта по возрастанию, код дату по убыванию.",
+      "action": "Определить ожидаемый порядок очереди и показывать его пользователю; не называть багом до решения владельца процесса."
+    },
+    {
+      "priority": "P2",
+      "kind": "source-conflict",
+      "title": "Предикаты и тексты документации устарели частями",
+      "pages": [
+        "34111522",
+        "25231413",
+        "25264167",
+        "105283585"
+      ],
+      "evidence": "Google-socket Internet check зачёркнут в справочнике ошибок(PD-2724), но повторяется в H-сценариях; статистика Н20 сохраняет default2023.",
+      "action": "Отделить обязательное поведение от исторической реализации и обновить канонические сценарии."
+    }
+  ],
+  "productConstraints": [
+    "Различать четыре денежные величины: цена поверки/сумма клиентского чека; лимит онлайн-кассы; оплаченные выгрузки/кредит; агентское вознаграждение.",
+    "Различать бизнес-статус заявки, локальную сохранность и отправку изменений. Выполнена/Завершена на агентском экране объединены как Выполнена намеренно (Н32).",
+    "Не путать фотографию СИ, акта, чека, эталона с подключением, номера эталона, средства поверки, снимок до/после пролива.",
+    "Не обозначать автоматически сгенерированные сервером данные как введённые/измеренные пользователем; sheet содержит отдельные источники данных.",
+    "Нептон Wi-Fi и Интернет — разные каналы; связь с прибором не подтверждает доступность сервера.",
+    "Сохранение черновика и допустимость выгрузки — разные действия; неполноту можно сохранить согласно Н5/Н6."
+  ],
+  "excludedAsCurrent": [
+    {
+      "page": "36929537",
+      "reason": "архив/отменённые, STATUS Не актуальный дизайн"
+    },
+    {
+      "page": "46071816",
+      "reason": "архив/устаревшие"
+    },
+    {
+      "page": "201129986",
+      "reason": "архив/отменённые, Н25 на карте зачёркнут"
+    },
+    {
+      "page": "201162753",
+      "reason": "планируемые→отменённые изменения, STATUS приостановлено"
+    },
+    {
+      "page": "128778244",
+      "reason": "планируемые→отменённые изменения, STATUS отменено"
+    }
+  ],
+  "limitations": [
+    "Вложения/диаграммы Confluence не рендерились",
+    "Н21 и Н23 делегированы design_system; нет в моём ledger",
+    "Н28/Н29 фигурируют на карте, отдельные страницы Н28/Н29 в корпусе не найдены",
+    "Фактический production backend, APK и сложение ролей в реальных профилях не проверены",
+    "Проверка арифметики измерений и server generation не проводилась"
+  ],
+  "ledger": [
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 19370,
+      "hierarchy": [
+        {
+          "id": "17399846",
+          "title": "Требования к приложению"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Требования к приложению",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17104897",
+      "id": "17399846"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 5009,
+      "hierarchy": [
+        {
+          "id": "186286082",
+          "title": "Общие принципы UI/UX"
+        },
+        {
+          "id": "460128257",
+          "title": "UI/UX"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Общие принципы UI/UX",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "460128257",
+      "id": "186286082"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 356,
+      "hierarchy": [
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Сценарии использования",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17104897",
+      "id": "17203206"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 1410,
+      "hierarchy": [
+        {
+          "id": "25231361",
+          "title": "НК. Карта сценариев использования"
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "НК. Карта сценариев использования",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17203206",
+      "id": "25231361"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 4715,
+      "hierarchy": [
+        {
+          "id": "25231413",
+          "title": "Н1. Инициализация приложения"
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н1. Инициализация приложения",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17203206",
+      "id": "25231413"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 4916,
+      "hierarchy": [
+        {
+          "id": "25231494",
+          "title": "Н4. Создание нового акта"
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н4. Создание нового акта",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17203206",
+      "id": "25231494"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 3131,
+      "hierarchy": [
+        {
+          "id": "25231601",
+          "title": "Н3. Меню"
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н3. Меню",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17203206",
+      "id": "25231601"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 7834,
+      "hierarchy": [
+        {
+          "id": "360906753",
+          "title": "Н33. Регистрация пользователя"
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н33. Регистрация пользователя",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17203206",
+      "id": "360906753"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 6434,
+      "hierarchy": [
+        {
+          "id": "25231537",
+          "title": "Н8. Доступ к истории"
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н8. Доступ к истории",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17203206",
+      "id": "25231537"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 3313,
+      "hierarchy": [
+        {
+          "id": "25231556",
+          "title": "Н11. Ознакомление с документами"
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н11. Ознакомление с документами",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17203206",
+      "id": "25231556"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 5773,
+      "hierarchy": [
+        {
+          "id": "25264154",
+          "title": "Н7. Выгрузка актов"
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н7. Выгрузка актов",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17203206",
+      "id": "25264154"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 214,
+      "hierarchy": [
+        {
+          "id": "34504705",
+          "title": "Н15. Переход в личный кабинет"
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н15. Переход в личный кабинет",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17203206",
+      "id": "34504705"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 3181,
+      "hierarchy": [
+        {
+          "id": "35323905",
+          "title": "Н16. Регистрация условий хранения средств поверки"
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н16. Регистрация условий хранения средств поверки",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17203206",
+      "id": "35323905"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 4407,
+      "hierarchy": [
+        {
+          "id": "192544769",
+          "title": "Н22. Счётчик выгрузок"
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н22. Счётчик выгрузок",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17203206",
+      "id": "192544769"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 3993,
+      "hierarchy": [
+        {
+          "id": "244383745",
+          "title": "Н26. Агенты"
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н26. Агенты",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17203206",
+      "id": "244383745"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 4723,
+      "hierarchy": [
+        {
+          "id": "360579073",
+          "title": "Н27. Создание агента"
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н27. Создание агента",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17203206",
+      "id": "360579073"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 2596,
+      "hierarchy": [
+        {
+          "id": "246022146",
+          "title": "Н31. Создание заявки"
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н31. Создание заявки",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17203206",
+      "id": "246022146"
+    },
+    {
+      "classification": "cancelled-planned-changes",
+      "proseFullyRead": true,
+      "textLength": 181,
+      "hierarchy": [
+        {
+          "id": "201162753",
+          "title": "Н24. Выбор режима работы"
+        },
+        {
+          "id": "348618759",
+          "title": "Отменённые изменения"
+        },
+        {
+          "id": "128712705",
+          "title": "Планируемые изменения"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н24. Выбор режима работы",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "348618759",
+      "id": "201162753"
+    },
+    {
+      "classification": "cancelled-planned-changes",
+      "proseFullyRead": true,
+      "textLength": 2155,
+      "hierarchy": [
+        {
+          "id": "128778244",
+          "title": "Изменение типов пользователей"
+        },
+        {
+          "id": "348618759",
+          "title": "Отменённые изменения"
+        },
+        {
+          "id": "128712705",
+          "title": "Планируемые изменения"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Изменение типов пользователей",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "348618759",
+      "id": "128778244"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 2802,
+      "hierarchy": [
+        {
+          "id": "165052450",
+          "title": "Биллинг - фаза 2"
+        },
+        {
+          "id": "348586002",
+          "title": "Эпики"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Биллинг - фаза 2",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "348586002",
+      "id": "165052450"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 34132,
+      "hierarchy": [
+        {
+          "id": "25231433",
+          "title": "Н2. Главный экран"
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н2. Главный экран",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17203206",
+      "id": "25231433"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 25177,
+      "hierarchy": [
+        {
+          "id": "25264129",
+          "title": "Н5. Редактирование акта"
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н5. Редактирование акта",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17203206",
+      "id": "25264129"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 34176,
+      "hierarchy": [
+        {
+          "id": "25231513",
+          "title": "Н6. Добавление или редактирование СИ в акте"
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н6. Добавление или редактирование СИ в акте",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17203206",
+      "id": "25231513"
+    },
+    {
+      "classification": "archive-hierarchy",
+      "proseFullyRead": true,
+      "textLength": 3385,
+      "hierarchy": [
+        {
+          "id": "36929537",
+          "title": "Н8. Доступ к истории (с загрузкой с сервера и фильтрацией)"
+        },
+        {
+          "id": "45842457",
+          "title": "Отменённые"
+        },
+        {
+          "id": "106463246",
+          "title": "Сценарии использования - архив"
+        },
+        {
+          "id": "112197644",
+          "title": "Мобильное приложение - архив"
+        },
+        {
+          "id": "106496001",
+          "title": "Архив"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н8. Доступ к истории (с загрузкой с сервера и фильтрацией)",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "45842457",
+      "id": "36929537"
+    },
+    {
+      "classification": "archive-hierarchy",
+      "proseFullyRead": true,
+      "textLength": 1664,
+      "hierarchy": [
+        {
+          "id": "46071816",
+          "title": "Н14. Обратная связь"
+        },
+        {
+          "id": "46071809",
+          "title": "Устаревшие"
+        },
+        {
+          "id": "106463246",
+          "title": "Сценарии использования - архив"
+        },
+        {
+          "id": "112197644",
+          "title": "Мобильное приложение - архив"
+        },
+        {
+          "id": "106496001",
+          "title": "Архив"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н14. Обратная связь",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "46071809",
+      "id": "46071816"
+    },
+    {
+      "classification": "archive-hierarchy",
+      "proseFullyRead": true,
+      "textLength": 1871,
+      "hierarchy": [
+        {
+          "id": "201129986",
+          "title": "Н25. Заказ поверки"
+        },
+        {
+          "id": "45842457",
+          "title": "Отменённые"
+        },
+        {
+          "id": "106463246",
+          "title": "Сценарии использования - архив"
+        },
+        {
+          "id": "112197644",
+          "title": "Мобильное приложение - архив"
+        },
+        {
+          "id": "106496001",
+          "title": "Архив"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н25. Заказ поверки",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "45842457",
+      "id": "201129986"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 1630,
+      "hierarchy": [
+        {
+          "id": "100663307",
+          "title": "Н18. Оплата при помощи QR кода"
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н18. Оплата при помощи QR кода",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17203206",
+      "id": "100663307"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 1969,
+      "hierarchy": [
+        {
+          "id": "123437057",
+          "title": "Н20. Статистика"
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н20. Статистика",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17203206",
+      "id": "123437057"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 4358,
+      "hierarchy": [
+        {
+          "id": "418185217",
+          "title": "Н34. Поиск в \"Аршине\""
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н34. Поиск в \"Аршине\"",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17203206",
+      "id": "418185217"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 7018,
+      "hierarchy": [
+        {
+          "id": "25264167",
+          "title": "Н9. Использование реестра средств измерений"
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н9. Использование реестра средств измерений",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17203206",
+      "id": "25264167"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 8095,
+      "hierarchy": [
+        {
+          "id": "25264186",
+          "title": "Н10. Подключение к НЕПТОН"
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н10. Подключение к НЕПТОН",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17203206",
+      "id": "25264186"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 13166,
+      "hierarchy": [
+        {
+          "id": "25264199",
+          "title": "Н12. Идентификационные бирки"
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н12. Идентификационные бирки",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17203206",
+      "id": "25264199"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 16310,
+      "hierarchy": [
+        {
+          "id": "25231569",
+          "title": "Н13. Изменение настроек"
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н13. Изменение настроек",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17203206",
+      "id": "25231569"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 8824,
+      "hierarchy": [
+        {
+          "id": "25231582",
+          "title": "Н14. Сообщения"
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н14. Сообщения",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17203206",
+      "id": "25231582"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 5663,
+      "hierarchy": [
+        {
+          "id": "61046785",
+          "title": "Н17. Обработка ошибок"
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н17. Обработка ошибок",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17203206",
+      "id": "61046785"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 22952,
+      "hierarchy": [
+        {
+          "id": "105283585",
+          "title": "Н19. Обработка заявки"
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н19. Обработка заявки",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17203206",
+      "id": "105283585"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 7843,
+      "hierarchy": [
+        {
+          "id": "201130152",
+          "title": "Н30. Заявки агента (агент)"
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н30. Заявки агента (агент)",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17203206",
+      "id": "201130152"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 9278,
+      "hierarchy": [
+        {
+          "id": "249364481",
+          "title": "Н32. Редактирование заявки"
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Н32. Редактирование заявки",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17203206",
+      "id": "249364481"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 19380,
+      "hierarchy": [
+        {
+          "id": "374603787",
+          "title": "Регистрация пользователей"
+        },
+        {
+          "id": "348586002",
+          "title": "Эпики"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Регистрация пользователей",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "348586002",
+      "id": "374603787"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 41894,
+      "hierarchy": [
+        {
+          "id": "39714817",
+          "title": "Валидация полей мобильного приложения"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Валидация полей мобильного приложения",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17104897",
+      "id": "39714817"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 50960,
+      "hierarchy": [
+        {
+          "id": "34111522",
+          "title": "Справочник ошибок"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Справочник ошибок",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "17104904",
+      "id": "34111522"
+    },
+    {
+      "classification": "current-hierarchy; release not established",
+      "proseFullyRead": true,
+      "textLength": 5599,
+      "hierarchy": [
+        {
+          "id": "127008769",
+          "title": "Индикатор контрольного срока заявки"
+        },
+        {
+          "id": "105283585",
+          "title": "Н19. Обработка заявки"
+        },
+        {
+          "id": "17203206",
+          "title": "Сценарии использования"
+        },
+        {
+          "id": "17104897",
+          "title": "Мобильное приложение"
+        },
+        {
+          "id": "17104904",
+          "title": "Документы дизайна"
+        },
+        {
+          "id": "163843",
+          "title": "МС-РЕСУРС"
+        }
+      ],
+      "title": "Индикатор контрольного срока заявки",
+      "adfStatusDateStrikePreserved": true,
+      "embeddedImagesViewed": false,
+      "parentId": "105283585",
+      "id": "127008769"
+    }
+  ],
+  "readPageCount": 42,
+  "generatedAt": "2026-10-23T14:23:16.4987834+03:00"
+}

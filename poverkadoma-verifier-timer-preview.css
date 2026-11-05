@@ -1,0 +1,35 @@
+.prototype-timer-preview { display:flex; flex-direction:column; gap:8px; padding-bottom:12px; border-bottom:1px solid var(--line); }
+.prototype-timer-preview select { min-height:44px; min-width:0; max-width:66%; padding:0 12px; border:1px solid var(--line); border-radius:12px; background:var(--surface); color:var(--ink); font:inherit; }
+.prototype-timer-timeline { display:grid; grid-template-columns:1fr auto; gap:4px 12px; }
+.prototype-timer-timeline input { width:100%; grid-column:1/-1; accent-color:var(--blue); }
+.prototype-timer-timeline output { font-variant-numeric:tabular-nums; }
+.prototype-timer-actions { display:flex; gap:8px; }
+.prototype-timer-actions button { min-height:40px; padding:8px 16px; border-radius:12px; border:1px solid var(--line); background:var(--surface); color:var(--ink); font:inherit; }
+.prototype-timer-note { margin:0; font-size:13px; line-height:18px; }
+.phone .request-action.primary.agreement-action.has-timer-preview { --timer-panel-width:31%; display:grid; grid-template-columns:minmax(0,1fr) max(72px,var(--timer-panel-width)); align-items:center; gap:0; padding:0; height:48px; min-height:48px; position:relative; isolation:isolate; overflow:hidden; background:var(--blue-fill); color:#fff; }
+.phone .has-timer-preview > .action-label { padding:0 12px; text-align:left; min-width:0; }
+.phone .request-timer-panel { display:flex; flex-direction:column; align-items:center; justify-content:center; align-self:stretch; min-width:0; position:relative; isolation:isolate; background:transparent; color:#fff; padding:0; font-variant-numeric:tabular-nums; pointer-events:none; }
+.phone .request-timer-panel::before { content:""; position:absolute; inset:0; z-index:-1; border-radius:inherit; background:var(--request-timer-color,#0084c1); opacity:var(--request-timer-opacity,0); }
+.phone .request-timer-caption { font-size:13px; line-height:14px; font-weight:400; }
+.phone .request-timer-value { font-size:16px; line-height:20px; font-weight:600; }
+.phone[data-request-timer-style="wave"] .has-timer-preview { --timer-panel-width:33%; }
+.phone[data-request-timer-style="wave"] .request-timer-panel { clip-path:var(--request-timer-wave); padding-left:8px; }
+.phone[data-request-timer-style="window"] .request-timer-panel { margin:5px 5px 5px 0; border-radius:7px; }
+.phone[data-request-timer-style="plain-tab"] .request-timer-panel { border-radius:12px 0 0 12px; }
+.phone[data-request-timer-style="seal"] .request-action.primary.agreement-action.has-timer-preview, .phone[data-request-timer-style="meeting"] .request-action.primary.agreement-action.has-timer-preview { grid-template-columns:minmax(0,1fr) clamp(72px,31%,92px); }
+.phone[data-request-timer-style="seal"] .request-timer-panel { margin:3px 3px 3px 0; border-radius:11px; }
+.phone[data-request-timer-style="seal"] .request-timer-panel::before { opacity:1; }
+.phone[data-request-timer-style="seal"] .request-timer-caption { font-size:11px; line-height:12px; letter-spacing:.2px; }
+.phone[data-request-timer-style="seal"] .request-timer-value { font-size:19px; line-height:23px; font-weight:700; }
+.phone[data-request-timer-style="meeting"] .request-action.primary.agreement-action.has-timer-preview { background:var(--request-timer-color,var(--blue)); }
+.phone[data-request-timer-style="meeting"] .has-timer-preview > .action-label { display:flex; align-items:center; align-self:stretch; position:relative; z-index:1; background:var(--blue-fill); border-radius:14px 20px 20px 14px; margin-right:-8px; padding-right:20px; }
+.phone[data-request-timer-style="meeting"] .request-timer-panel { padding-left:5px; }
+.phone[data-request-timer-style="meeting"] .request-timer-panel::before { opacity:0; }
+.phone[data-request-timer-style="meeting"] .request-timer-caption { font-size:12px; }
+.phone[data-request-timer-style="meeting"] .request-timer-value { font-weight:700; }
+.phone[data-card-text="large"] .request-action.primary.agreement-action.has-timer-preview { min-height:72px; height:auto; grid-template-columns:minmax(0,1fr); padding-top:12px; }
+.phone[data-card-text="large"] .has-timer-preview > .action-label { text-align:center; }
+.phone[data-card-text="large"] .request-timer-panel { margin-top:8px; min-height:48px; border-radius:0; clip-path:none; }
+.phone[data-card-text="large"] .request-timer-caption { font-size:16px; line-height:20px; }
+.phone[data-card-text="large"] .request-timer-value { font-size:24px; line-height:28px; }
+.phone[data-card-text="large"][data-request-timer-style="meeting"] .has-timer-preview > .action-label { margin-right:0; min-height:48px; justify-content:center; padding:0 12px; border-radius:14px 14px 20px 20px; }

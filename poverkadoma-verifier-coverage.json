@@ -1,0 +1,114 @@
+{
+  "date": "2026-10-31",
+  "role": "Внутренний поверитель",
+  "status": "implemented_pending_rendered_review",
+  "preview": "poverkadoma-verifier-app-preview.html",
+  "scope": "Interactive local HTML/CSS/JS prototype;no production Android or real backend changes",
+  "routes": 39,
+  "route_inventory": [
+    "Заявки",
+    "Акты",
+    "Новый акт",
+    "Редактор акта",
+    "Счётчик",
+    "Измерения",
+    "Проверка готовности",
+    "Выгрузка",
+    "История",
+    "Выгруженный акт",
+    "Статистика",
+    "Личные данные",
+    "Настройки",
+    "Сообщения",
+    "Сообщение",
+    "Уведомления",
+    "Приборы",
+    "Карточка прибора",
+    "Бирки",
+    "Условия хранения",
+    "НЕПТОН",
+    "Справочник",
+    "Тип СИ",
+    "АРШИН",
+    "Документы",
+    "Документ СМК",
+    "Поддержка",
+    "Вход",
+    "Регистрация",
+    "Подтверждение кода",
+    "Идентификатор организации",
+    "Ожидание доступа",
+    "Восстановление",
+    "Онбординг",
+    "О приложении",
+    "Лимит кассы",
+    "Заявка",
+    "Инструменты",
+    "Разделы"
+  ],
+  "source": [
+    "product-context.json",
+    "epc-original-role-internal-v.mmd",
+    "epc-original-prepare.mmd",
+    "poverkadoma-design-ideas.json",
+    "poverkadoma-design-rules.json",
+    "Original Android forms read-only;module-level source audits"
+  ],
+  "preserved": [
+    "Approved request list/detail styling and data",
+    "Original palette in light/dark variants",
+    "16px screen gutters,12px spacing/padding,rounded16px controls",
+    "Thin configurable outlines and independent shadows/depth",
+    "Bottom navigation only on Requests/Acts/Tools roots"
+  ],
+  "implemented": [
+    "Full local act and meter editing with draft validation,conditions,runs,photos,signature,receipt,method and result",
+    "Distinct save/readiness/send/history states;offline and retry",
+    "Request-act binding and consistent local completion/removal",
+    "Equipment,service,labels,storage,NEPTON,reference catalogue,ARSHIN,documents and acknowledgement,support",
+    "Registration/login/recovery/internal organization access and four-step onboarding",
+    "Contextual help on every role screen and dialogs;global setting disables it and can reenable",
+    "Light/dark/system theme,text size,scanner/maps,backup/import and logout",
+    "Notifications/Settings top entries;Requests/Acts/Tools roots;section map available only from Settings",
+    "Private state with bounded lossless compression,overflow warning and full JSON backup including request drafts",
+    "Product-owned calendar and selectors across forms and request dialogs",
+    "Direct list agreement dialog; local host-state echo no longer reconstructs open dialogs",
+    "Acts floating creation button; no root search/filter; blue Open actions without nested shadows",
+    "Settings identity card opens personal data;working tools are not stored in Profile",
+    "All headers reuse the Request structure/classes and real system icons;legacy profile route is migrated",
+    "White secondary actions,square icon-only FAB,rounded checkboxes,icon selector chevrons and shared communication segments",
+    "External5style timer selector;soft wave,window,plain-tab,seal,meeting;20second25→5loop;pause/restart/manual control;request domain state unchanged"
+  ],
+  "verification_passes": [
+    {
+      "name": "Module self-checks",
+      "evidence": "Acts2passes,accessflows,tools17scenarios+5cross-moduleflows;reports from module agents",
+      "scope": "DOM/static;not native visual"
+    },
+    {
+      "name": "Original regressions",
+      "file": "poverkadoma-card-qa.json",
+      "passed": 72
+    },
+    {
+      "name": "Integrated routes/navigation/help/persistence",
+      "file": "poverkadoma-verifier-qa.json",
+      "passed": 32
+    },
+    {
+      "name": "Style and edge-state audit",
+      "evidence": "Shared surface elevation; nested controls have no redundant shadows; explicit primary fills; native-hidden selectors and host-echo cases; CSS/DOM only",
+      "scope": "CSS declarations and DOM verified;rendered geometry not verified"
+    }
+  ],
+  "limitations": [
+    "Real server,mail/SMS,hardware,OCR,ARSHIN publication/payment are not connected;actions are visibly local demonstrations",
+    "Photo bytes/objectURLs live only for the current session;restored metadata requests re-selection;missing required photo bytes block readiness",
+    "Large snapshots that still exceed16KiB warn instead of silently truncating;JSON backup remains available",
+    "Camera,file dialogs,canvas drawing,external phone/maps/download handlers and actual device/TalkBack/layout are not executed by DOM tests",
+    "No claim of exact Figma fidelity or full production business-rule compliance across unresolved release variants",
+    "Browser Use rejected local preview file URL. Current 36 non-request routes have structural/scenario review but are not signed off visually.",
+    "Samsung A51 had only New requests; actual agreement dialog could not be opened without changing business data. Its content was inspected in AgreeBidDialog.kt; phone date selector was inspected and cancelled without saving."
+  ],
+  "latest_navigation_exception": "Per explicit user change,the section launcher is only in Settings. Root paths stay within2taps;some nested paths take3."
+}

@@ -1,0 +1,112 @@
+<div id="pd-request-summary-ten" aria-label="Компактная сводка заявки">
+  <style>
+    #pd-request-summary-ten { --rs-bg:light-dark(#F2F4F9,#181818); --rs-surface:light-dark(#FFFFFF,#242427); --rs-field:light-dark(#E9ECF2,#343437); --rs-ink:light-dark(#181818,#FFFFFF); --rs-muted:light-dark(#616264,#C6C6C6); --rs-line:light-dark(#CCCCCC,#616264); --rs-blue:#0084C1; --rs-amber:#FFB21C; --rs-red:#D96161; --rs-green:#43BE83; --rs-tone:var(--rs-red); --rs-scale:1; color-scheme:light dark; color:var(--rs-ink); font-family:"Segoe UI",sans-serif; }
+    #pd-request-summary-ten[data-theme="light"] { color-scheme:light; }
+    #pd-request-summary-ten[data-theme="dark"] { color-scheme:dark; }
+    #pd-request-summary-ten .rs-controls { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:12px; font:14px/20px "Segoe UI",sans-serif; }
+    #pd-request-summary-ten .rs-controls label { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+    #pd-request-summary-ten .rs-controls select { min-height:44px; max-width:100%; padding:8px 12px; border:1px solid var(--rs-line); border-radius:12px; color:var(--rs-ink); background:var(--rs-surface); font:16px/24px "Segoe UI",sans-serif; }
+    #pd-request-summary-ten .rs-stage { display:flex; align-items:flex-start; justify-content:center; min-height:160px; padding:16px 0; box-sizing:border-box; }
+    #pd-request-summary-ten[data-large="true"] .rs-stage { min-height:260px; }
+    #pd-request-summary-ten[data-long="true"] .rs-stage { min-height:220px; }
+    #pd-request-summary-ten[data-large="true"][data-long="true"] .rs-stage { min-height:340px; }
+    #pd-request-summary-ten .rs-product { width:100%; max-width:var(--rs-width,390px); padding:16px; box-sizing:border-box; background:var(--rs-bg); border-radius:20px; }
+    #pd-request-summary-ten .rs-product * { box-sizing:border-box; }
+    #pd-request-summary-ten .rs-summary { display:flex; flex-direction:column; min-width:0; gap:4px; padding:12px; border-radius:12px; background:var(--rs-field); font-size:calc(14px * var(--rs-scale)); line-height:calc(20px * var(--rs-scale)); }
+    #pd-request-summary-ten .rs-row { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:4px 8px; min-width:0; }
+    #pd-request-summary-ten .rs-number { display:block; min-width:0; font-size:calc(16px * var(--rs-scale)); line-height:calc(24px * var(--rs-scale)); font-weight:700; overflow-wrap:anywhere; }
+    #pd-request-summary-ten .rs-label { display:inline-flex; align-items:center; gap:4px; flex:0 0 auto; padding:2px 8px; border-radius:6px; background:color-mix(in srgb,var(--rs-amber) 16%,var(--rs-surface)); color:var(--rs-ink); font-size:calc(13px * var(--rs-scale)); line-height:calc(20px * var(--rs-scale)); font-weight:400; white-space:nowrap; }
+    #pd-request-summary-ten .rs-label::before { content:""; width:8px; height:8px; flex:0 0 8px; border-radius:50%; background:var(--rs-amber); }
+    #pd-request-summary-ten .rs-deadline { display:flex; align-items:center; gap:6px; min-width:0; color:var(--rs-ink); overflow-wrap:anywhere; }
+    #pd-request-summary-ten .rs-deadline span { min-width:0; }
+    #pd-request-summary-ten .rs-icon { display:inline-flex; align-items:center; justify-content:center; width:16px; height:20px; flex:0 0 16px; color:var(--rs-tone); }
+    #pd-request-summary-ten .rs-icon svg { width:16px; height:16px; stroke-width:1.7; }
+    #pd-request-summary-ten .rs-caption { display:block; color:var(--rs-muted); font-size:calc(13px * var(--rs-scale)); line-height:calc(18px * var(--rs-scale)); font-weight:400; }
+    #pd-request-summary-ten .rs-emphasis { font-size:calc(16px * var(--rs-scale)); line-height:calc(24px * var(--rs-scale)); font-weight:600; font-variant-numeric:tabular-nums; }
+    #pd-request-summary-ten .rs-deadline-stack { display:flex; flex-direction:column; align-items:flex-start; gap:0; min-width:0; }
+    #pd-request-summary-ten .rs-tone { padding:2px 8px; border-radius:6px; background:color-mix(in srgb,var(--rs-tone) 16%,var(--rs-surface)); }
+    #pd-request-summary-ten .rs-strict > .rs-deadline { justify-content:flex-end; }
+    #pd-request-summary-ten .rs-next .rs-row:last-child { align-items:center; }
+    #pd-request-summary-ten .rs-next .rs-row:last-child > .rs-caption { margin-left:auto; }
+    #pd-request-summary-ten .rs-columns { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.35fr); align-items:center; gap:12px; }
+    #pd-request-summary-ten .rs-identity { display:flex; flex-direction:column; align-items:flex-start; gap:4px; min-width:0; }
+    #pd-request-summary-ten .rs-columns > .rs-deadline-stack { border-left:1px solid var(--rs-line); padding-left:12px; }
+    #pd-request-summary-ten .rs-band { padding:0; gap:0; overflow:hidden; }
+    #pd-request-summary-ten .rs-band > .rs-row { padding:8px 12px; }
+    #pd-request-summary-ten .rs-band > .rs-deadline { padding:4px 12px; background:color-mix(in srgb,var(--rs-tone) 12%,var(--rs-surface)); }
+    #pd-request-summary-ten .rs-edge { position:relative; background:var(--rs-surface); padding-left:16px; }
+    #pd-request-summary-ten .rs-edge::before { content:""; position:absolute; top:10px; bottom:10px; left:0; width:4px; border-radius:0 4px 4px 0; background:var(--rs-tone); }
+    #pd-request-summary-ten .rs-under { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px; align-items:center; }
+    #pd-request-summary-ten .rs-under .rs-identity { gap:0; }
+    #pd-request-summary-ten .rs-unified > .rs-number { line-height:calc(24px * var(--rs-scale)); }
+    #pd-request-summary-ten .rs-strip { display:flex; flex-wrap:wrap; align-items:center; gap:4px 8px; padding:4px 8px; border-radius:8px; background:var(--rs-surface); }
+    #pd-request-summary-ten .rs-strip .rs-label { padding:0; background:transparent; }
+    #pd-request-summary-ten .rs-strip .rs-deadline { flex:1; padding-left:8px; border-left:1px solid var(--rs-line); }
+    #pd-request-summary-ten .rs-first > .rs-deadline { padding-bottom:4px; border-bottom:1px solid var(--rs-line); }
+    #pd-request-summary-ten .rs-first > .rs-row { padding-top:4px; }
+    #pd-request-summary-ten .rs-three { display:grid; grid-template-columns:minmax(0,1fr) auto minmax(72px,.9fr); align-items:center; gap:8px; }
+    #pd-request-summary-ten .rs-three > .rs-deadline-stack { align-items:flex-end; text-align:right; }
+    #pd-request-summary-ten .rs-three .rs-emphasis { display:flex; align-items:center; gap:4px; }
+    #pd-request-summary-ten .rs-plain { padding:8px 0; background:transparent; border-radius:0; }
+    #pd-request-summary-ten .rs-plain > .rs-row { padding-bottom:4px; border-bottom:1px solid var(--rs-line); }
+    #pd-request-summary-ten .rs-plain > .rs-deadline { padding-top:4px; }
+    #pd-request-summary-ten[data-narrow="true"] .rs-columns { gap:8px; }
+    #pd-request-summary-ten[data-narrow="true"] .rs-columns > .rs-deadline-stack { padding-left:8px; }
+    #pd-request-summary-ten[data-narrow="true"] .rs-three { grid-template-columns:minmax(0,1fr) auto; }
+    #pd-request-summary-ten[data-narrow="true"] .rs-three > .rs-deadline-stack { grid-column:1/-1; flex-direction:row; flex-wrap:wrap; justify-content:space-between; align-items:center; text-align:left; }
+    #pd-request-summary-ten[data-large="true"] .rs-under, #pd-request-summary-ten[data-large="true"] .rs-columns { grid-template-columns:minmax(0,1fr); }
+    #pd-request-summary-ten[data-large="true"] .rs-columns > .rs-deadline-stack { padding:4px 0 0; border-left:0; border-top:1px solid var(--rs-line); }
+    #pd-request-summary-ten[data-large="true"] .rs-under > .rs-label { justify-self:start; }
+    @media(max-width:350px) { #pd-request-summary-ten .rs-three { grid-template-columns:minmax(0,1fr) auto; } #pd-request-summary-ten .rs-three > .rs-deadline-stack { grid-column:1/-1; flex-direction:row; flex-wrap:wrap; justify-content:space-between; align-items:center; } #pd-request-summary-ten .rs-stage { min-height:200px; } }
+  </style>
+  <div class="rs-controls" aria-label="Состояние для сравнения"><label for="rs-example">Согласование<select id="rs-example"><option value="-35" selected>Просрочено на 35 минут</option><option value="-5">Просрочено на 5 минут</option><option value="0">Срок истёк</option><option value="5">Осталось 5 минут</option><option value="15">Осталось 15 минут</option><option value="40">Осталось 40 минут</option></select></label></div>
+  <div class="viz-carousel viz-dotted-background" aria-label="Десять компактных сводок заявки" data-previous-label="Назад" data-next-label="Далее">
+    <section data-variant="Строгая строка" data-layout="strict"><div class="rs-stage"><div class="rs-product"></div></div></section>
+    <section data-variant="Срок у номера" data-layout="next" hidden><div class="rs-stage"><div class="rs-product"></div></div></section>
+    <section data-variant="Две колонки" data-layout="columns" hidden><div class="rs-stage"><div class="rs-product"></div></div></section>
+    <section data-variant="Нижняя лента" data-layout="band" hidden><div class="rs-stage"><div class="rs-product"></div></div></section>
+    <section data-variant="Сигнальный край" data-layout="edge" hidden><div class="rs-stage"><div class="rs-product"></div></div></section>
+    <section data-variant="Под номером" data-layout="under" hidden><div class="rs-stage"><div class="rs-product"></div></div></section>
+    <section data-variant="Общий лейбл" data-layout="unified" hidden><div class="rs-stage"><div class="rs-product"></div></div></section>
+    <section data-variant="Срок первым" data-layout="first" hidden><div class="rs-stage"><div class="rs-product"></div></div></section>
+    <section data-variant="Три опоры" data-layout="three" hidden><div class="rs-stage"><div class="rs-product"></div></div></section>
+    <section data-variant="Без подложки" data-layout="plain" hidden><div class="rs-stage"><div class="rs-product"></div></div></section>
+  </div>
+  <script>
+  (()=>{
+    const root=document.getElementById('pd-request-summary-ten'),panels=[...root.querySelectorAll('[data-layout]')],select=root.querySelector('#rs-example');
+    const prefs={appearance:'light',width:'390',largeText:false,longNumber:false};let minutes=-35;
+    const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;};
+    const icon=()=>{const n=el('span','rs-icon'),i=el('i');i.dataset.lucide='clock-3';i.setAttribute('aria-hidden','true');n.setAttribute('aria-hidden','true');n.append(i);return n;};
+    const number=()=>el('strong','rs-number',prefs.longNumber?'МСР-2026-0012347':'МСР-12347');
+    const label=()=>el('span','rs-label','Назначена');
+    const short=()=>minutes<0?'Просрочено на '+Math.abs(minutes)+' мин':minutes===0?'Срок истёк':'Осталось '+minutes+' мин';
+    const full=()=>minutes<0?'Согласование просрочено на '+Math.abs(minutes)+' мин':minutes===0?'Срок согласования истёк':'На согласование осталось '+minutes+' мин';
+    const amount=()=>minutes===0?'Срок истёк':Math.abs(minutes)+' мин';
+    const phase=()=>minutes<0?'Просрочено':minutes===0?'Согласование':'На согласование';
+    const row=(...children)=>{const n=el('div','rs-row');n.append(...children);return n;};
+    const deadline=(text=full(),tone=false)=>{const n=el('div','rs-deadline'+(tone?' rs-tone':''));n.setAttribute('aria-label',full());n.append(icon(),el('span','',text));return n;};
+    const stack=(...children)=>{const n=el('div','rs-deadline-stack');n.setAttribute('aria-label',full());n.append(...children);return n;};
+    const identity=(...children)=>{const n=el('div','rs-identity');n.append(...children);return n;};
+    function render(){
+      root.dataset.theme=prefs.appearance;root.dataset.large=String(prefs.largeText);root.dataset.long=String(prefs.longNumber);root.dataset.narrow=String(Number(prefs.width)<=360||prefs.largeText);root.dataset.minutes=String(minutes);root.style.setProperty('--rs-width',prefs.width+'px');root.style.setProperty('--rs-scale',prefs.largeText?'1.4':'1');root.style.setProperty('--rs-tone',minutes<=5?'var(--rs-red)':minutes<=15?'var(--rs-amber)':'var(--rs-blue)');
+      for(const panel of panels){const key=panel.dataset.layout,n=el('div','rs-summary rs-'+key);n.setAttribute('role','group');n.setAttribute('aria-label','Заявка '+(prefs.longNumber?'МСР-2026-0012347':'МСР-12347')+'. Назначена. '+full());
+        if(key==='strict'||key==='edge'||key==='band'||key==='plain')n.append(row(number(),label()),deadline());
+        if(key==='next')n.append(row(number(),deadline(minutes<0?Math.abs(minutes)+' мин просрочки':short(),true)),row(label(),el('span','rs-caption','Согласование')));
+        if(key==='columns')n.append(identity(number(),label()),stack(el('span','rs-caption','Согласование'),deadline(short())));
+        if(key==='under')n.append(identity(number(),deadline(short())),label());
+        if(key==='unified'){const strip=el('div','rs-strip');strip.append(label(),deadline(short()));n.append(row(number(),el('span','rs-caption','Согласование')),strip);}
+        if(key==='first')n.append(deadline(full()),row(number(),label()));
+        if(key==='three'){const value=el('span','rs-emphasis');value.append(icon(),document.createTextNode(amount()));n.append(number(),label(),stack(el('span','rs-caption',phase()),value));}
+        panel.querySelector('.rs-product').replaceChildren(n);
+      }
+      select.value=String(minutes);globalThis.lucide?.createIcons?.({attrs:{width:16,height:16,'stroke-width':1.7}});
+    }
+    function save(){window.openai?.setWidgetState?.({modelContent:{subject:'Компактная сводка заявки',minutes,...prefs},privateContent:{requestSummaryTen:{version:1,minutes,...prefs}}})?.catch?.(()=>{});}
+    function restore(snapshot){const v=snapshot?.privateContent?.requestSummaryTen;if(!v||v.version!==1)return;if([-35,-5,0,5,15,40].includes(Number(v.minutes)))minutes=Number(v.minutes);if(['light','dark','auto'].includes(v.appearance))prefs.appearance=v.appearance;if(['320','360','390','430'].includes(String(v.width)))prefs.width=String(v.width);prefs.largeText=v.largeText===true;prefs.longNumber=v.longNumber===true;render();}
+    select.addEventListener('change',()=>{if(![-35,-5,0,5,15,40].includes(Number(select.value)))return;minutes=Number(select.value);render();save();});
+    render();restore(window.openai?.widgetState);window.addEventListener('openai:set_globals',e=>restore(e.detail?.globals?.widgetState));
+    if(globalThis.Tweak){const t=new Tweak({container:root,onChange:()=>{render();save();}});t.addSelect(prefs,'appearance',{label:'Тема',options:[{value:'light',label:'Светлая'},{value:'dark',label:'Тёмная'},{value:'auto',label:'Системная'}]});t.addSelect(prefs,'width',{label:'Ширина',options:[{value:'320',label:'320 px'},{value:'360',label:'360 px'},{value:'390',label:'390 px'},{value:'430',label:'430 px'}]});t.addToggle(prefs,'largeText',{label:'Увеличенный текст'});t.addToggle(prefs,'longNumber',{label:'Длинный номер'});}
+  })();
+  </script>
+</div>

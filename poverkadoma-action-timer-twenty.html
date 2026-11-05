@@ -1,0 +1,243 @@
+<div id="pd-action-timer-twenty" class="viz-dotted-background">
+  <div class="viz-controls" role="group" aria-label="Срок на основной карточке">
+    <span>Осталось:</span>
+    <button class="btn" type="button" data-preset="45" aria-pressed="false">45 мин</button>
+    <button class="btn" type="button" data-preset="15" aria-pressed="true">15 мин</button>
+    <button class="btn" type="button" data-preset="5" aria-pressed="false">5 мин</button>
+    <button class="btn" type="button" data-preset="0" aria-pressed="false">Срок истёк</button>
+  </div>
+  <div class="viz-carousel" aria-label="Двадцать кнопок с индикатором времени" data-previous-label="Предыдущий" data-next-label="Следующий">
+    <section data-variant="Убывающая заливка" data-design="fill"></section>
+    <section data-variant="Сигнальная кнопка" data-design="signal" hidden></section>
+    <section data-variant="Две зоны" data-design="split" hidden></section>
+    <section data-variant="Таймер в капсуле" data-design="badge" hidden></section>
+    <section data-variant="Шкала у основания" data-design="footer" hidden></section>
+    <section data-variant="Шкала над действием" data-design="crown" hidden></section>
+    <section data-variant="Вертикальный остаток" data-design="edge" hidden></section>
+    <section data-variant="Час по четвертям" data-design="segments" hidden></section>
+    <section data-variant="Батарея времени" data-design="battery" hidden></section>
+    <section data-variant="Круговой остаток" data-design="ring" hidden></section>
+    <section data-variant="Остаток по контуру" data-design="outline" hidden></section>
+    <section data-variant="Сначала время" data-design="leading" hidden></section>
+    <section data-variant="Прямой текст" data-design="explicit" hidden></section>
+    <section data-variant="До указанного времени" data-design="deadline" hidden></section>
+    <section data-variant="Линейка часа" data-design="ruler" hidden></section>
+    <section data-variant="Таймер в окошке" data-design="window" hidden></section>
+    <section data-variant="Запас в точках" data-design="dots" hidden></section>
+    <section data-variant="Сигнальная метка" data-design="seal" hidden></section>
+    <section data-variant="Вкладка времени" data-design="tab" hidden></section>
+    <section data-variant="Крупные минуты" data-design="countdown" hidden></section>
+  </div>
+  <div class="at-overlay" hidden>
+    <section class="at-dialog" role="dialog" aria-modal="true" aria-labelledby="at-dialog-title" aria-describedby="at-dialog-message">
+      <h2 id="at-dialog-title"></h2>
+      <p id="at-dialog-message"></p>
+      <div class="at-dialog-actions">
+        <button type="button" class="at-cancel cursor-interaction">Назад</button>
+        <button type="button" class="at-confirm cursor-interaction">Понятно</button>
+      </div>
+    </section>
+  </div>
+  <span class="at-live" role="status" aria-live="polite"></span>
+</div>
+<style>
+  #pd-action-timer-twenty { --at-blue:#0084c1; --at-blue-light:#2db0ed; --at-warning:#ffb21c; --at-critical:#d96161; --at-bg:#f2f4f9; --at-surface:#fff; --at-ink:#181818; --at-secondary:#616264; --at-field:#e9ecf2; --at-line:#ccc; --at-white:#fff; --at-scale:1; font-family:"Segoe UI",sans-serif; color-scheme:light; position:relative; }
+  #pd-action-timer-twenty[data-appearance="dark"] { --at-bg:#181818; --at-surface:#242427; --at-ink:#fff; --at-secondary:#c6c6c8; --at-field:#303035; --at-line:#616264; color-scheme:dark; }
+  #pd-action-timer-twenty [data-design] { min-height:640px; padding:16px 0 24px; }
+  #pd-action-timer-twenty[data-text-size="large"] [data-design] { min-height:760px; }
+  #pd-action-timer-twenty .at-stage { width:min(390px,100%); margin:0 auto; color:var(--at-ink); }
+  #pd-action-timer-twenty .at-stage *, #pd-action-timer-twenty .at-dialog * { box-sizing:border-box; }
+  #pd-action-timer-twenty .at-stage [hidden], #pd-action-timer-twenty .at-overlay[hidden] { display:none; }
+  #pd-action-timer-twenty .at-preview { background:var(--at-bg); padding:16px; border-radius:24px; }
+  #pd-action-timer-twenty .at-card { padding:12px; border-radius:22px; background:var(--at-surface); border:1px solid var(--at-line); box-shadow:0 3px 10px #1818180c; font-size:calc(16px * var(--at-scale)); line-height:1.4; }
+  #pd-action-timer-twenty .at-head { display:flex; justify-content:space-between; align-items:center; gap:8px; padding-bottom:4px; margin-bottom:4px; border-bottom:1px solid var(--at-line); }
+  #pd-action-timer-twenty .at-id { color:var(--at-secondary); overflow-wrap:anywhere; }
+  #pd-action-timer-twenty .at-state { display:flex; gap:4px; align-items:center; }
+  #pd-action-timer-twenty .at-dot { width:8px; height:8px; border-radius:50%; background:var(--at-critical); flex:none; }
+  #pd-action-timer-twenty .at-card[data-status="appointed"] .at-dot { background:var(--at-warning); }
+  #pd-action-timer-twenty .at-address { margin:0; font-size:calc(17px * var(--at-scale)); font-weight:700; line-height:1.4; }
+  #pd-action-timer-twenty .at-facts { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; column-gap:12px; color:var(--at-secondary); }
+  #pd-action-timer-twenty .at-fact { display:inline-flex; gap:4px; align-items:center; }
+  #pd-action-timer-twenty .at-icon { width:18px; height:18px; flex:none; display:inline-flex; align-items:center; justify-content:center; }
+  #pd-action-timer-twenty .at-icon svg { width:100%; height:100%; stroke-width:1.8; }
+  #pd-action-timer-twenty .at-card > .at-control { margin-top:8px; }
+  #pd-action-timer-twenty .at-control { --at-signal:var(--at-blue); --at-signal-ink:var(--at-white); --at-tint:color-mix(in srgb,var(--at-signal) 15%,var(--at-surface)); --at-fraction:25%; --at-remaining:0.25; width:100%; min-width:0; position:relative; isolation:isolate; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:8px 12px; min-height:56px; border:0; border-radius:14px; overflow:hidden; background:var(--at-blue); color:var(--at-white); font:inherit; font-size:calc(19px * var(--at-scale)); line-height:1.26; font-weight:700; text-align:left; touch-action:manipulation; }
+  #pd-action-timer-twenty .at-control[data-urgency="warning"] { --at-signal:var(--at-warning); --at-signal-ink:#181818; }
+  #pd-action-timer-twenty .at-control[data-urgency="critical"], #pd-action-timer-twenty .at-control[data-urgency="expired"] { --at-signal:var(--at-critical); --at-signal-ink:#181818; }
+  #pd-action-timer-twenty .at-control:focus-visible { outline:2px solid var(--at-ink); outline-offset:3px; }
+  #pd-action-timer-twenty .at-control:active { transform:translateY(1px); }
+  #pd-action-timer-twenty .at-action { min-width:0; position:relative; z-index:1; overflow-wrap:normal; }
+  #pd-action-timer-twenty .at-time { display:flex; flex-direction:column; align-items:flex-end; gap:0; flex:0 0 auto; color:var(--at-ink); font-variant-numeric:tabular-nums; }
+  #pd-action-timer-twenty .at-time-label { font-size:calc(13px * var(--at-scale)); line-height:1.3; font-weight:400; }
+  #pd-action-timer-twenty .at-time-value { white-space:nowrap; font-size:calc(19px * var(--at-scale)); line-height:1.25; font-weight:700; }
+  #pd-action-timer-twenty .at-control[data-urgency="expired"] .at-time-value { font-size:calc(16px * var(--at-scale)); }
+  #pd-action-timer-twenty .at-timer-box { display:flex; gap:8px; align-items:center; padding:4px 8px; border-radius:10px; background:var(--at-tint); color:var(--at-ink); flex:none; }
+  #pd-action-timer-twenty .at-timer-box .at-icon { width:20px; height:20px; }
+  #pd-action-timer-twenty .at-track { position:relative; display:block; overflow:hidden; height:8px; border-radius:4px; background:var(--at-tint); color:var(--at-signal); }
+  #pd-action-timer-twenty .at-track-fill { display:block; width:var(--at-fraction); height:100%; background:var(--at-signal); }
+  #pd-action-timer-twenty .at-control[data-urgency="expired"] .at-track-fill { width:0; }
+  #pd-action-timer-twenty .at-action-with-icon { display:flex; align-items:center; gap:8px; }
+  #pd-action-timer-twenty .at-samples { padding:16px; }
+  #pd-action-timer-twenty .at-samples-heading { margin:0 0 12px; color:var(--at-secondary); font-weight:400; font-size:14px; line-height:20px; }
+  #pd-action-timer-twenty .at-sample { margin:0 0 12px; }
+  #pd-action-timer-twenty .at-sample:last-child { margin-bottom:0; }
+  #pd-action-timer-twenty .at-like { display:flex; gap:8px; align-items:center; justify-content:center; margin:4px auto 0; min-height:44px; padding:8px 16px; border-radius:14px; background:var(--at-surface); border:1px solid var(--at-line); color:var(--at-ink); font:inherit; font-size:14px; }
+  #pd-action-timer-twenty .at-like[aria-pressed="true"] { color:var(--at-ink); border-color:var(--at-blue); font-weight:700; }
+  #pd-action-timer-twenty .at-like .at-icon { width:16px; height:16px; }
+  #pd-action-timer-twenty .at-like[aria-pressed="true"] .at-icon { color:var(--at-blue); }
+  /* Full remaining time is a filled data area. Both text layers share geometry. */
+  #pd-action-timer-twenty .at-control[data-style="fill"] { display:block; padding:0; min-height:64px; background:var(--at-tint); color:var(--at-ink); }
+  #pd-action-timer-twenty .at-fill-copy { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:64px; padding:8px 12px; text-align:center; }
+  #pd-action-timer-twenty .at-fill-overlay { position:absolute; inset:0; background:var(--at-signal); color:var(--at-signal-ink); clip-path:inset(0 calc(100% - var(--at-fraction)) 0 0); }
+  #pd-action-timer-twenty .at-fill-copy > span { font-size:calc(19px * var(--at-scale)); line-height:1.26; font-weight:700; }
+  #pd-action-timer-twenty .at-control[data-style="signal"] { background:var(--at-signal); color:var(--at-signal-ink); }
+  #pd-action-timer-twenty .at-control[data-style="signal"] .at-timer-box { background:var(--at-surface); }
+  #pd-action-timer-twenty .at-control[data-style="split"] { padding:0; align-items:stretch; gap:0; }
+  #pd-action-timer-twenty .at-control[data-style="split"] > .at-action { display:flex; align-items:center; flex:1; padding:8px 12px; }
+  #pd-action-timer-twenty .at-control[data-style="split"] .at-split-meter { position:relative; display:flex; align-items:center; justify-content:center; min-width:100px; padding:4px 12px 10px; background:var(--at-tint); color:var(--at-ink); }
+  #pd-action-timer-twenty .at-split-meter .at-track { position:absolute; bottom:0; left:0; right:0; border-radius:0; }
+  #pd-action-timer-twenty .at-control[data-style="badge"] .at-timer-box { border-radius:24px; padding:4px 12px; background:var(--at-surface); }
+  #pd-action-timer-twenty .at-control[data-style="badge"]:not([data-urgency="normal"]) .at-timer-box { background:var(--at-signal); color:var(--at-signal-ink); }
+  #pd-action-timer-twenty .at-control[data-style="badge"]:not([data-urgency="normal"]) .at-time { color:var(--at-signal-ink); }
+  #pd-action-timer-twenty .at-control[data-style="footer"] { padding-bottom:12px; background:var(--at-signal); color:var(--at-signal-ink); }
+  #pd-action-timer-twenty .at-control[data-style="footer"] > .at-time { background:var(--at-surface); border-radius:8px; padding:2px 8px; }
+  #pd-action-timer-twenty .at-control[data-style="footer"] > .at-track { position:absolute; left:0; right:0; bottom:0; height:8px; border-radius:0; background:color-mix(in srgb,var(--at-signal-ink) 20%,transparent); }
+  #pd-action-timer-twenty .at-control[data-style="footer"] .at-track-fill { background:var(--at-signal-ink); }
+  #pd-action-timer-twenty .at-control[data-style="crown"] { background:var(--at-field); color:var(--at-blue); padding-top:16px; }
+  #pd-action-timer-twenty .at-control[data-style="crown"] > .at-track { position:absolute; inset:0 0 auto; border-radius:0; height:8px; }
+  #pd-action-timer-twenty .at-control[data-style="edge"] { background:var(--at-field); color:var(--at-blue); padding-left:24px; }
+  #pd-action-timer-twenty .at-control[data-style="edge"] > .at-track { position:absolute; top:0; bottom:0; left:0; width:8px; height:auto; border-radius:0; }
+  #pd-action-timer-twenty .at-control[data-style="edge"] .at-track-fill { width:100%; height:var(--at-fraction); position:absolute; bottom:0; }
+  #pd-action-timer-twenty .at-control[data-style="segments"] { background:var(--at-field); color:var(--at-blue); padding-bottom:20px; }
+  #pd-action-timer-twenty .at-segments { display:flex; gap:4px; position:absolute; bottom:8px; left:12px; right:12px; height:8px; }
+  #pd-action-timer-twenty .at-segment { display:block; flex:1; overflow:hidden; border-radius:4px; background:var(--at-tint); }
+  #pd-action-timer-twenty .at-segment > span { display:block; height:100%; background:var(--at-signal); }
+  #pd-action-timer-twenty .at-control[data-style="battery"] { background:var(--at-field); color:var(--at-blue); }
+  #pd-action-timer-twenty .at-battery { display:flex; flex-direction:column; gap:4px; flex:none; min-width:92px; }
+  #pd-action-timer-twenty .at-battery .at-time { align-items:center; }
+  #pd-action-timer-twenty .at-battery-meter { display:flex; gap:3px; padding:3px; height:16px; border-radius:4px; background:var(--at-tint); position:relative; margin-right:4px; }
+  #pd-action-timer-twenty .at-battery-meter:after { content:""; position:absolute; width:3px; height:8px; right:-4px; top:4px; background:var(--at-signal); border-radius:0 2px 2px 0; }
+  #pd-action-timer-twenty .at-battery-cell { flex:1; background:var(--at-signal); border-radius:1px; opacity:0.15; }
+  #pd-action-timer-twenty .at-battery-cell[data-filled="true"] { opacity:1; }
+  #pd-action-timer-twenty .at-control[data-style="ring"] { background:var(--at-field); color:var(--at-blue); }
+  #pd-action-timer-twenty .at-ring-combo { display:flex; align-items:center; gap:8px; color:var(--at-ink); }
+  #pd-action-timer-twenty .at-ring-label { font-size:calc(13px * var(--at-scale)); font-weight:400; }
+  #pd-action-timer-twenty .at-ring { display:flex; position:relative; flex-direction:column; align-items:center; justify-content:center; width:56px; height:56px; border-radius:50%; background:conic-gradient(var(--at-signal) var(--at-fraction),var(--at-tint) 0); font-size:calc(19px * var(--at-scale)); flex:none; }
+  #pd-action-timer-twenty .at-ring:before { content:""; position:absolute; inset:5px; border-radius:50%; background:var(--at-field); }
+  #pd-action-timer-twenty .at-ring > span { z-index:1; line-height:1.1; }
+  #pd-action-timer-twenty .at-ring .at-unit { font-size:calc(13px * var(--at-scale)); font-weight:400; }
+  #pd-action-timer-twenty .at-control[data-style="ring"][data-urgency="expired"] .at-ring-combo { flex-direction:column; gap:0; }
+  #pd-action-timer-twenty .at-control[data-style="ring"][data-urgency="expired"] .at-ring { width:28px; height:28px; background:var(--at-tint); }
+  #pd-action-timer-twenty .at-control[data-style="outline"] { background:var(--at-field); color:var(--at-blue); padding:10px 16px; }
+  #pd-action-timer-twenty .at-outline-meter { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+  #pd-action-timer-twenty .at-outline-meter rect { fill:none; stroke:var(--at-tint); stroke-width:5px; }
+  #pd-action-timer-twenty .at-outline-meter rect:last-child { stroke:var(--at-signal); stroke-dasharray:calc(var(--at-remaining) * 100) 100; stroke-linecap:butt; }
+  #pd-action-timer-twenty .at-control[data-style="leading"] { flex-direction:row-reverse; padding:4px 12px 4px 4px; }
+  #pd-action-timer-twenty .at-control[data-style="leading"] .at-leading-box { align-self:stretch; display:flex; flex-direction:column; justify-content:center; min-width:100px; padding:4px 12px; border-radius:11px; background:var(--at-tint); gap:4px; }
+  #pd-action-timer-twenty .at-leading-box .at-time { align-items:flex-start; }
+  #pd-action-timer-twenty .at-leading-box .at-track { height:6px; }
+  #pd-action-timer-twenty .at-control[data-style="explicit"] { flex-direction:column; align-items:stretch; gap:4px; background:var(--at-field); color:var(--at-blue); }
+  #pd-action-timer-twenty .at-explicit-top { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+  #pd-action-timer-twenty .at-explicit-bottom { display:flex; justify-content:space-between; align-items:center; gap:12px; color:var(--at-ink); font-size:calc(15px * var(--at-scale)); font-weight:400; }
+  #pd-action-timer-twenty .at-explicit-bottom .at-track { flex:1; max-width:92px; height:10px; }
+  #pd-action-timer-twenty .at-control[data-style="deadline"] { background:var(--at-field); color:var(--at-blue); }
+  #pd-action-timer-twenty .at-deadline-stack { display:flex; flex-direction:column; gap:4px; color:var(--at-ink); align-items:flex-end; }
+  #pd-action-timer-twenty .at-deadline-top { display:flex; align-items:center; gap:4px; font-size:calc(13px * var(--at-scale)); font-weight:400; }
+  #pd-action-timer-twenty .at-deadline-remain { padding:2px 8px; background:var(--at-tint); border-radius:6px; font-size:calc(16px * var(--at-scale)); white-space:nowrap; }
+  #pd-action-timer-twenty .at-control[data-style="ruler"] { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:4px 8px; padding-bottom:8px; background:var(--at-field); color:var(--at-blue); }
+  #pd-action-timer-twenty .at-ruler { grid-column:1/-1; position:relative; height:12px; background:repeating-linear-gradient(90deg,transparent 0,transparent calc(100% / 12 - 2px),var(--at-surface) calc(100% / 12 - 2px),var(--at-surface) calc(100% / 12)); border-radius:4px; overflow:hidden; }
+  #pd-action-timer-twenty .at-ruler > .at-track { position:absolute; inset:0; height:12px; z-index:-1; }
+  #pd-action-timer-twenty .at-control[data-style="window"] { padding:6px; gap:8px; }
+  #pd-action-timer-twenty .at-control[data-style="window"] > .at-action { padding-left:6px; }
+  #pd-action-timer-twenty .at-window { align-self:stretch; display:flex; flex-direction:column; justify-content:center; flex:none; min-width:100px; background:var(--at-surface); padding:4px 8px; border-radius:8px; gap:4px; }
+  #pd-action-timer-twenty .at-window .at-time { align-items:center; }
+  #pd-action-timer-twenty .at-window .at-track { height:6px; }
+  #pd-action-timer-twenty .at-control[data-style="window"]:is([data-urgency="critical"],[data-urgency="expired"]) .at-window { background:var(--at-signal); }
+  #pd-action-timer-twenty .at-control[data-style="window"]:is([data-urgency="critical"],[data-urgency="expired"]) .at-time { color:var(--at-signal-ink); }
+  #pd-action-timer-twenty .at-control[data-style="dots"] { background:var(--at-field); color:var(--at-blue); }
+  #pd-action-timer-twenty .at-dotted-action { display:flex; flex-direction:column; gap:8px; }
+  #pd-action-timer-twenty .at-dots { display:flex; gap:4px; }
+  #pd-action-timer-twenty .at-dots > span { width:8px; height:8px; border-radius:50%; background:var(--at-tint); }
+  #pd-action-timer-twenty .at-dots > span[data-filled="true"] { background:var(--at-signal); }
+  #pd-action-timer-twenty .at-control[data-style="seal"] { background:var(--at-field); color:var(--at-blue); }
+  #pd-action-timer-twenty .at-seal { color:var(--at-ink); display:flex; gap:8px; align-items:center; }
+  #pd-action-timer-twenty .at-seal-icon { width:32px; height:32px; border-radius:10px; display:flex; justify-content:center; align-items:center; background:var(--at-signal); color:var(--at-signal-ink); }
+  #pd-action-timer-twenty .at-seal-icon .at-icon { width:22px; height:22px; }
+  #pd-action-timer-twenty .at-control[data-style="tab"] { padding:0; align-items:stretch; gap:0; }
+  #pd-action-timer-twenty .at-control[data-style="tab"] .at-action { flex:1; padding:16px 12px; display:flex; align-items:center; }
+  #pd-action-timer-twenty .at-tab { align-self:stretch; min-width:100px; position:relative; padding:8px 12px 8px 16px; background:var(--at-tint); clip-path:polygon(8px 0,100% 0,100% 100%,8px 100%,0 50%); }
+  #pd-action-timer-twenty .at-tab .at-track { position:absolute; bottom:0; left:8px; right:0; height:4px; border-radius:0; }
+  #pd-action-timer-twenty .at-control[data-style="countdown"] { background:var(--at-field); color:var(--at-blue); }
+  #pd-action-timer-twenty .at-countdown { color:var(--at-ink); display:flex; align-items:center; gap:8px; }
+  #pd-action-timer-twenty .at-countdown-value { padding:4px 8px; min-width:48px; text-align:center; border-radius:8px; background:var(--at-tint); font-size:calc(28px * var(--at-scale)); line-height:1; font-variant-numeric:tabular-nums; }
+  #pd-action-timer-twenty .at-countdown-unit { display:flex; flex-direction:column; font-size:calc(13px * var(--at-scale)); line-height:1.3; font-weight:400; }
+  #pd-action-timer-twenty .at-control[data-urgency="expired"] { --at-fraction:0%; --at-remaining:0; }
+  #pd-action-timer-twenty .at-control[data-urgency="critical"] .at-time, #pd-action-timer-twenty .at-control[data-urgency="expired"] .at-time { font-weight:700; }
+  #pd-action-timer-twenty .at-control[data-style="crown"][data-urgency="critical"], #pd-action-timer-twenty .at-control[data-style="edge"][data-urgency="critical"], #pd-action-timer-twenty .at-control[data-style="segments"][data-urgency="critical"], #pd-action-timer-twenty .at-control[data-style="battery"][data-urgency="critical"], #pd-action-timer-twenty .at-control[data-style="ring"][data-urgency="critical"], #pd-action-timer-twenty .at-control[data-style="outline"][data-urgency="critical"], #pd-action-timer-twenty .at-control[data-style="explicit"][data-urgency="critical"], #pd-action-timer-twenty .at-control[data-style="deadline"][data-urgency="critical"], #pd-action-timer-twenty .at-control[data-style="ruler"][data-urgency="critical"], #pd-action-timer-twenty .at-control[data-style="dots"][data-urgency="critical"], #pd-action-timer-twenty .at-control[data-style="seal"][data-urgency="critical"] { background:var(--at-tint); }
+  #pd-action-timer-twenty .at-control[data-urgency="expired"] .at-time-label { display:none; }
+  #pd-action-timer-twenty .at-control[data-style="outline"][data-urgency="expired"] { background:var(--at-tint); }
+  #pd-action-timer-twenty .at-control:is([data-style="crown"],[data-style="edge"],[data-style="segments"],[data-style="battery"],[data-style="ring"],[data-style="explicit"],[data-style="deadline"],[data-style="ruler"],[data-style="dots"],[data-style="seal"],[data-style="countdown"])[data-urgency="expired"] { background:var(--at-tint); }
+  #pd-action-timer-twenty[data-appearance="dark"] .at-control:is([data-style="crown"],[data-style="edge"],[data-style="segments"],[data-style="battery"],[data-style="ring"],[data-style="outline"],[data-style="explicit"],[data-style="deadline"],[data-style="ruler"],[data-style="dots"],[data-style="seal"],[data-style="countdown"]) { color:var(--at-white); }
+  #pd-action-timer-twenty .at-control[data-style="tab"][data-urgency="expired"] .at-tab, #pd-action-timer-twenty .at-control[data-style="split"][data-urgency="expired"] .at-split-meter { display:flex; align-items:center; }
+  #pd-action-timer-twenty .at-overlay { position:absolute; inset:0; z-index:20; background:#18181880; padding:24px 16px; display:flex; align-items:center; justify-content:center; border-radius:24px; }
+  #pd-action-timer-twenty .at-dialog { width:min(350px,100%); background:var(--at-surface); color:var(--at-ink); padding:20px; border-radius:22px; box-shadow:0 8px 32px #18181833; font-size:16px; }
+  #pd-action-timer-twenty .at-dialog h2 { font-size:20px; line-height:1.4; margin:0 0 12px; }
+  #pd-action-timer-twenty .at-dialog p { margin:0 0 16px; line-height:1.5; }
+  #pd-action-timer-twenty .at-dialog-actions { display:flex; gap:8px; }
+  #pd-action-timer-twenty .at-dialog button { flex:1; min-height:48px; border:0; border-radius:12px; font:inherit; font-weight:700; background:var(--at-field); color:var(--at-ink); }
+  #pd-action-timer-twenty .at-dialog .at-confirm { background:var(--at-blue); color:var(--at-white); font-size:19px; }
+  #pd-action-timer-twenty .at-live { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  @media(max-width:360px) { #pd-action-timer-twenty .at-preview { padding:12px; } #pd-action-timer-twenty .at-control { gap:8px; } #pd-action-timer-twenty .at-timer-box { gap:4px; padding:4px 6px; } #pd-action-timer-twenty .at-ring-combo { gap:4px; } #pd-action-timer-twenty .at-ring-label { display:none; } #pd-action-timer-twenty .at-control[data-style="ring"]:not([data-urgency="expired"]) .at-action:after { content:"Осталось времени"; font-size:13px; font-weight:400; color:var(--at-ink); display:block; } #pd-action-timer-twenty[data-text-size="large"] .at-control { flex-wrap:wrap; } #pd-action-timer-twenty[data-text-size="large"] .at-action { min-width:max-content; } }
+  @media(prefers-reduced-motion:reduce) { #pd-action-timer-twenty .at-control:active { transform:none; } }
+</style>
+<script>
+(() => {
+  const root=document.getElementById('pd-action-timer-twenty');
+  const defaults={minutes:15,action:'accept',appearance:'light',largeText:false,liked:[]};
+  const settings={...defaults};
+  const names=new Map([...root.querySelectorAll('[data-design]')].map(n=>[n.dataset.design,n.dataset.variant]));
+  const el=(tag,cls='',value)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(value!==undefined)n.textContent=value;return n;};
+  const icon=name=>{const n=el('span','at-icon'),i=el('i');i.setAttribute('data-lucide',name);i.setAttribute('aria-hidden','true');n.setAttribute('aria-hidden','true');n.append(i);return n;};
+  const action=()=>settings.action==='agree'?'Согласовать':'Принять';
+  const deadline=m=>m<=0?'Срок истёк':'Осталось '+m+' мин';
+  const time=m=>{const n=el('span','at-time');n.append(el('span','at-time-label',m<=0?'':'Осталось'),el('span','at-time-value',m<=0?'Срок истёк':m+' мин'));return n;};
+  const track=()=>{const n=el('span','at-track');n.setAttribute('aria-hidden','true');n.append(el('span','at-track-fill'));return n;};
+  const box=(m,withIcon=false)=>{const n=el('span','at-timer-box');if(withIcon)n.append(icon(m<=0?'alarm-clock-off':'timer'));n.append(time(m));return n;};
+  const label=()=>el('span','at-action',action());
+  const urgency=m=>m<=0?'expired':m<=5?'critical':m<=15?'warning':'normal';
+  function fillCopy(m){const n=el('span','at-fill-copy');n.append(el('span','',action()),el('span','',deadline(m)));return n;}
+  function control(style,m,isMain=false){
+    const b=el('button','at-control cursor-interaction');b.type='button';b.dataset.style=style;b.dataset.minutes=String(m);b.dataset.urgency=urgency(m);b.dataset.main=String(isMain);b.style.setProperty('--at-fraction',Math.max(0,Math.min(100,m/60*100))+'%');b.style.setProperty('--at-remaining',Math.max(0,Math.min(1,m/60)));b.setAttribute('aria-label',action()+' заявку МСР-12341. '+deadline(m)+'. Открыть диалог.');
+    if(style==='fill'){b.append(fillCopy(m));const overlay=fillCopy(m);overlay.classList.add('at-fill-overlay');overlay.setAttribute('aria-hidden','true');b.append(overlay);}
+    else if(style==='signal'){b.append(label(),box(m));}
+    else if(style==='split'){const meter=el('span','at-split-meter');meter.append(time(m),track());b.append(label(),meter);}
+    else if(style==='badge'){b.append(label(),box(m,true));}
+    else if(style==='footer'||style==='crown'||style==='edge'){b.append(label(),time(m),track());}
+    else if(style==='segments'){const parts=el('span','at-segments');parts.setAttribute('aria-hidden','true');for(let i=0;i<4;i++){const p=el('span','at-segment'),fill=el('span');fill.style.width=Math.max(0,Math.min(1,m/15-i))*100+'%';p.append(fill);parts.append(p);}b.append(label(),time(m),parts);}
+    else if(style==='battery'){const battery=el('span','at-battery'),meter=el('span','at-battery-meter');meter.setAttribute('aria-hidden','true');for(let i=0;i<6;i++){const p=el('span','at-battery-cell');p.dataset.filled=String(m>i*10);meter.append(p);}battery.append(time(m),meter);b.append(label(),battery);}
+    else if(style==='ring'){const combo=el('span','at-ring-combo');if(m<=0){combo.append(el('span','at-time-value','Срок истёк'));}else{const ring=el('span','at-ring');ring.setAttribute('aria-hidden','true');ring.append(el('span','',String(m)),el('span','at-unit','мин'));combo.append(el('span','at-ring-label','Осталось'),ring);}b.append(label(),combo);}
+    else if(style==='outline'){b.append(label(),time(m));const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');svg.setAttribute('class','at-outline-meter');svg.setAttribute('width','100%');svg.setAttribute('height','100%');svg.setAttribute('aria-hidden','true');for(let i=0;i<2;i++){const r=document.createElementNS(ns,'rect');r.setAttribute('x','3');r.setAttribute('y','3');r.setAttribute('width','100%');r.setAttribute('height','100%');r.style.width='calc(100% - 6px)';r.style.height='calc(100% - 6px)';r.setAttribute('rx','12');r.setAttribute('pathLength','100');svg.append(r);}b.append(svg);}
+    else if(style==='leading'){const left=el('span','at-leading-box');left.append(time(m),track());b.append(label(),left);}
+    else if(style==='explicit'){const top=el('span','at-explicit-top'),bottom=el('span','at-explicit-bottom');top.append(label(),icon('arrow-right'));bottom.append(el('span','',deadline(m)),track());b.append(top,bottom);}
+    else if(style==='deadline'){const stack=el('span','at-deadline-stack'),upper=el('span','at-deadline-top'),clock=String(14+Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0');upper.append(icon(m<=0?'alarm-clock-off':'clock-3'),el('span','',m<=0?'Срок истёк':'До '+clock));stack.append(upper,el('span','at-deadline-remain',m<=0?'Время вышло':m+' мин осталось'));b.append(label(),stack);}
+    else if(style==='ruler'){const ruler=el('span','at-ruler');ruler.setAttribute('aria-hidden','true');ruler.append(track());b.append(label(),time(m),ruler);}
+    else if(style==='window'){const window=el('span','at-window');window.append(time(m),track());b.append(label(),window);}
+    else if(style==='dots'){const side=el('span','at-dotted-action'),dots=el('span','at-dots');dots.setAttribute('aria-hidden','true');for(let i=0;i<10;i++){const dot=el('span');dot.dataset.filled=String(m>i*6);dots.append(dot);}side.append(label(),dots);b.append(side,time(m));}
+    else if(style==='seal'){const seal=el('span','at-seal'),symbol=el('span','at-seal-icon');symbol.append(icon(m<=0?'alarm-clock-off':m<=5?'alarm-clock':'clock-3'));seal.append(symbol,time(m));b.append(label(),seal);}
+    else if(style==='tab'){const tab=el('span','at-tab');tab.append(time(m),track());b.append(label(),tab);}
+    else if(style==='countdown'){const count=el('span','at-countdown');if(m<=0)count.append(time(m));else{const unit=el('span','at-countdown-unit');unit.append(el('span','','мин'),el('span','','осталось'));count.append(el('span','at-countdown-value',String(m)),unit);}b.append(label(),count);}
+    b.addEventListener('click',()=>openDialog(b,style,m));return b;
+  }
+  function card(style){const c=el('article','at-card'),head=el('div','at-head'),state=el('span','at-state');c.dataset.status=settings.action==='agree'?'appointed':'new';state.append(el('span','at-dot'),el('span','',settings.action==='agree'?'Назначена':'Новая'));head.append(el('span','at-id','МСР-12341'),state);c.append(head,el('p','at-address','ул. Строителей, 18, кв. 24'));const facts=el('div','at-facts'),work=el('span','at-fact');work.append(icon('gauge'),el('span','','1 счётчик воды'));facts.append(work,el('span','','1 200 ₽'));const visit=el('div','at-facts'),day=el('span','at-fact'),hours=el('span','at-fact');day.append(icon('calendar-days'),el('span','','30 октября'));hours.append(icon('clock-3'),el('span','','15:00–17:00'));visit.append(day,hours);c.append(facts,visit,control(style,settings.minutes,true));return c;}
+  const overlay=root.querySelector('.at-overlay'),dialog=overlay.querySelector('.at-dialog');let restoreFocus=null;
+  function closeDialog(){overlay.hidden=true;restoreFocus?.focus?.();restoreFocus=null;}
+  function openDialog(trigger,style,m){restoreFocus=trigger;root.querySelector('#at-dialog-title').textContent=m<=0?'Срок истёк':action()+' заявку?';root.querySelector('#at-dialog-message').textContent=m<=0?'Время на действие закончилось. В рабочем приложении доступность действия должна проверяться по актуальному состоянию заявки. Здесь можно сравнить только оформление.':'МСР-12341 · ул. Строителей, 18, кв. 24. '+deadline(m)+'. Это демонстрация кнопки; заявка не изменяется.';overlay.hidden=false;overlay.querySelector('.at-confirm').focus?.();}
+  overlay.querySelector('.at-cancel').addEventListener('click',closeDialog);overlay.querySelector('.at-confirm').addEventListener('click',closeDialog);overlay.addEventListener('click',e=>{if(e.target===overlay)closeDialog();});overlay.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();closeDialog();}if(e.key==='Tab'){const nodes=[...dialog.querySelectorAll('button')],first=nodes[0],last=nodes.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}});
+  function save(){window.openai?.setWidgetState?.({modelContent:{subject:'Поверка дома — двадцать кнопок с индикатором',minutes:settings.minutes,action:settings.action,appearance:settings.appearance,largeText:settings.largeText,liked:settings.liked.map(key=>names.get(key))},privateContent:{actionTimerTwenty:{...settings}}})?.catch?.(()=>{});}
+  function render(){closeDialog();root.dataset.appearance=settings.appearance;root.dataset.textSize=settings.largeText?'large':'normal';root.style.setProperty('--at-scale',settings.largeText?1.15:1);for(const [key,name]of names){const section=root.querySelector('[data-design="'+key+'"]'),stage=el('div','at-stage'),preview=el('div','at-preview');preview.setAttribute('aria-label','Карточка заявки: '+name);preview.append(card(key));const samples=el('div','at-samples');samples.append(el('p','at-samples-heading','Та же кнопка · другие сроки'));for(const m of [45,5,0]){const sample=el('div','at-sample');sample.append(control(key,m));samples.append(sample);}const like=el('button','at-like cursor-interaction');like.type='button';like.setAttribute('aria-pressed',String(settings.liked.includes(key)));like.setAttribute('aria-label',(settings.liked.includes(key)?'Убрать из избранного: ':'Нравится: ')+name);like.append(icon('heart'),el('span','',settings.liked.includes(key)?'В избранном':'Нравится этот вариант'));like.addEventListener('click',()=>{settings.liked=settings.liked.includes(key)?settings.liked.filter(x=>x!==key):[...settings.liked,key];like.setAttribute('aria-pressed',String(settings.liked.includes(key)));like.querySelector('span:last-child').textContent=settings.liked.includes(key)?'В избранном':'Нравится этот вариант';like.setAttribute('aria-label',(settings.liked.includes(key)?'Убрать из избранного: ':'Нравится: ')+name);save();});stage.append(preview,samples,like);section.replaceChildren(stage);}root.querySelectorAll('[data-preset]').forEach(n=>n.setAttribute('aria-pressed',String(Number(n.dataset.preset)===settings.minutes)));if(globalThis.lucide?.createIcons)globalThis.lucide.createIcons({attrs:{width:18,height:18}});}
+  function restore(value){const stored=value?.privateContent?.actionTimerTwenty;if(!stored)return;settings.minutes=Number.isFinite(stored.minutes)?Math.max(0,Math.min(60,Math.round(stored.minutes))):15;settings.action=stored.action==='agree'?'agree':'accept';settings.appearance=stored.appearance==='dark'?'dark':'light';settings.largeText=stored.largeText===true;settings.liked=Array.isArray(stored.liked)?stored.liked.filter(x=>names.has(x)):[];render();}
+  root.querySelectorAll('[data-preset]').forEach(n=>n.addEventListener('click',()=>{settings.minutes=Number(n.dataset.preset);render();root.querySelector('.at-live').textContent='На основной карточке: '+deadline(settings.minutes);save();}));
+  restore(window.openai?.widgetState);render();window.addEventListener('openai:set_globals',e=>restore(e.detail?.globals?.widgetState));
+  if(globalThis.Tweak){const tweak=new Tweak({container:root,onChange:()=>{render();save();}});tweak.addSelect(settings,'action',{label:'Действие заявки',options:[{label:'Принять новую',value:'accept'},{label:'Согласовать назначенную',value:'agree'}]});tweak.addSelect(settings,'appearance',{label:'Тема',options:[{label:'Светлая',value:'light'},{label:'Тёмная',value:'dark'}]});tweak.addSlider(settings,'minutes',{label:'Осталось времени',min:0,max:60,step:1,unit:'мин'});tweak.addToggle(settings,'largeText',{label:'Увеличенный текст'});}
+})();
+</script>

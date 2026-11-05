@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Поверка дома — главный экран</title>
+  <link rel="stylesheet" href="poverkadoma-home.css">
+  <link rel="stylesheet" href="poverkadoma-request-detail.css">
+  <script src="poverkadoma-request-workflow.js" defer></script>
+  <script src="poverkadoma-home.js" defer></script>
+</head>
+<body>
+  <div class="prototype-layout">
+  <aside class="prototype-controls" id="prototype-controls" aria-label="Состояние макета">
+    <details class="prototype-checks" id="request-sample-controls">
+      <summary>Экран конкретной заявки</summary>
+      <div class="prototype-control-row">
+        <label for="request-sample">Статус образца</label>
+        <select id="request-sample">
+          <option value="sample-appointed">Назначена</option><option value="sample-new">Новая</option>
+          <option value="sample-agreed">Согласована</option><option value="sample-replacement">Замена ИПУ</option>
+          <option value="sample-in-work">В работе, с актом</option><option value="sample-completed">Выполнена</option>
+          <option value="sample-canceled">Отменена, можно вернуть</option><option value="sample-final">Отменена окончательно</option>
+        </select>
+      </div>
+      <button class="request-back" id="request-sample-open" type="button">Открыть образец заявки</button>
+      <p class="prototype-detail-note">Данные учебные. Карта взята из исходного макета. Изменения полей сохраняются только в макете; бизнес-действия показывают следующий шаг без отправки.</p>
+    </details>
+    <div class="prototype-control-row">
+    <span>Интернет</span>
+    <div class="network-selector" role="group" aria-label="Подключение к интернету">
+      <button type="button" data-network="online" aria-pressed="true">Есть</button>
+      <button type="button" data-network="offline" aria-pressed="false">Нет</button>
+    </div>
+    </div>
+    <div class="prototype-control-row">
+      <span>Города</span>
+      <div class="network-selector" role="group" aria-label="География заявок в макете">
+        <button type="button" data-city-scenario="single" aria-pressed="true">Один город</button>
+        <button type="button" data-city-scenario="mixed" aria-pressed="false">Разные города</button>
+      </div>
+    </div>
+    <div class="prototype-control-row">
+      <span>Низ топбара</span>
+      <div class="network-selector" role="group" aria-label="Нижние углы топбара">
+        <button type="button" data-corners="rounded" aria-pressed="true">Скруглить</button>
+        <button type="button" data-corners="square" aria-pressed="false">Прямые</button>
+      </div>
+    </div>
+    <div class="prototype-control-row">
+      <span>Нижний бар</span>
+      <div class="network-selector" role="group" aria-label="Верхние углы нижнего бара">
+        <button type="button" data-bottom-corners="rounded" aria-pressed="true">Скруглить</button>
+        <button type="button" data-bottom-corners="square" aria-pressed="false">Прямые</button>
+      </div>
+    </div>
+    <div class="prototype-control-row">
+      <span>Заливка</span>
+      <div class="network-selector" role="group" aria-label="Заливка синих элементов">
+        <button type="button" data-blue-fill="solid" aria-pressed="false">Сплошной</button>
+        <button type="button" data-blue-fill="gradient" aria-pressed="true">Градиент</button>
+      </div>
+    </div>
+    <div class="prototype-appearance-toggles">
+      <label class="prototype-toggle" for="shadows-toggle"><input id="shadows-toggle" type="checkbox" role="switch" checked><span>Тени</span></label>
+      <label class="prototype-toggle" for="borders-toggle"><input id="borders-toggle" type="checkbox" role="switch" checked><span>Обводки</span></label>
+    </div>
+    <label class="prototype-toggle" for="linked-bid-toggle"><input id="linked-bid-toggle" type="checkbox" role="switch" checked><span>Образец «В работе» — из акта</span></label>
+    <div class="prototype-depth-control">
+      <div class="prototype-depth-label"><label for="shadow-depth">Глубина теней</label><output id="shadow-depth-value" for="shadow-depth">50%</output></div>
+      <input id="shadow-depth" type="range" min="0" max="100" step="1" value="50" aria-valuetext="50 процентов">
+    </div>
+    <details class="prototype-checks">
+      <summary>Проверка карточек</summary>
+      <div class="prototype-control-row">
+        <label for="card-data">Данные</label>
+        <select id="card-data"><option value="normal">Обычные</option><option value="long">Длинные</option></select>
+      </div>
+      <div class="prototype-control-row">
+        <label for="card-text">Размер текста</label>
+        <select id="card-text"><option value="normal">100%</option><option value="large">200%</option></select>
+      </div>
+    </details>
+    <span class="visually-hidden" id="connection-status" role="status"></span>
+  </aside>
+  <div class="phone" id="app" data-source-node="22392:32283">
+    <header class="topbar">
+      <div class="systembar" aria-hidden="true">
+        <span>9:41</span>
+        <div class="system-icons"><span data-icon="signal"></span><span data-icon="wifi"></span><span data-icon="battery"></span></div>
+      </div>
+      <div class="toolbar">
+        <h1>Заявки</h1>
+        <div class="toolbar-actions">
+          <span class="network-slot"><span class="icon-button" id="offline-indicator" role="img" aria-label="Нет подключения к интернету" title="Нет подключения к интернету" hidden><span data-icon="offline"></span></span></span>
+          <button class="icon-button" type="button" aria-label="Подсказки" title="Подсказки"><span data-icon="help"></span></button>
+          <button class="icon-button" type="button" aria-label="Уведомления" title="Уведомления"><span data-icon="bell"></span></button>
+        </div>
+      </div>
+    </header>
+    <main class="requests-viewport" aria-label="Заявки">
+    <section class="list-tools" aria-label="Управление заявками">
+      <div class="tools-row">
+        <div class="date-selector" role="group" aria-label="Принадлежность заявок">
+          <button type="button" data-scope="mine" aria-pressed="true">Мои</button>
+          <button type="button" data-scope="available" aria-pressed="false">Свободные</button>
+        </div>
+        <button class="square-button" id="search-toggle" type="button" aria-label="Поиск" title="Поиск" aria-expanded="false" aria-controls="search-field"><span data-icon="search"></span></button>
+        <button class="square-button" id="filter-toggle" type="button" aria-label="Фильтр" title="Фильтр" aria-expanded="false" aria-controls="request-filters"><span data-icon="funnel"></span><span class="filter-dot" aria-hidden="true" hidden></span></button>
+      </div>
+      <div class="search-field" id="search-field" hidden>
+        <span data-icon="search-muted"></span>
+        <input id="search-input" type="search" placeholder="Адрес, телефон или номер" aria-label="Адрес, телефон или номер" autocomplete="off">
+        <button class="icon-button" id="search-close" type="button" aria-label="Закрыть поиск" title="Закрыть поиск"><span data-icon="close"></span></button>
+      </div>
+      <div class="filter-summary" id="filter-summary" aria-label="Применённые фильтры" hidden></div>
+    </section>
+      <div class="requests" id="requests"></div>
+      <p class="empty-state" id="empty-state" hidden>Заявки не найдены</p>
+      <span class="visually-hidden" role="status" id="result-status"></span>
+    </main>
+    <section class="request-detail" id="request-screen" aria-labelledby="request-screen-title" hidden>
+      <header class="topbar detail-topbar">
+        <div class="systembar" aria-hidden="true"><span>9:41</span><div class="system-icons"><span data-icon="signal"></span><span data-icon="wifi"></span><span data-icon="battery"></span></div></div>
+        <div class="toolbar detail-toolbar">
+          <button class="icon-button" id="request-back" type="button" aria-label="Назад к заявкам"><span data-icon="back"></span></button>
+          <h2>Заявка</h2>
+          <div class="detail-toolbar-actions">
+            <span class="network-slot"><span class="icon-button detail-offline" role="img" aria-label="Нет подключения к интернету" hidden><span data-icon="offline"></span></span></span>
+            <button class="icon-button" type="button" id="request-help" aria-label="Подсказка о статусе заявки"><span data-icon="help"></span></button>
+          </div>
+        </div>
+      </header>
+      <div class="detail-viewport" id="request-detail-scroll">
+        <div class="detail-sheet">
+          <div class="detail-identity"><div class="detail-identity-row"><h2 id="request-screen-title"></h2><button class="detail-status" id="request-detail-status" type="button" aria-label="Статус заявки"></button></div><div id="request-deadline" class="detail-deadline" role="status" hidden></div></div>
+          <span id="request-draft-status" class="detail-draft-status" role="status" hidden></span>
+          <div id="request-detail-content"></div>
+          <details class="detail-information" id="request-information"><summary>Сведения о заявке<span data-icon="chevron"></span></summary><div class="detail-information-body"><div class="detail-created">Дата создания: <time id="request-screen-created"></time></div><div id="request-history-content"></div></div></details>
+          <div class="detail-actions detail-secondary-actions" id="request-secondary-actions"></div>
+        </div>
+      </div>
+      <footer class="detail-action-bar"><p id="request-action-hint" class="detail-action-hint" role="status" hidden></p><div class="detail-actions" id="request-detail-actions"></div><div class="gesture-area" aria-hidden="true"><span></span></div></footer>
+      <div class="detail-dialog-overlay" id="request-action-overlay" hidden>
+        <section class="detail-dialog" role="dialog" aria-modal="true" aria-labelledby="request-action-title" aria-describedby="request-action-description">
+          <h2 id="request-action-title"></h2><p id="request-action-description"></p>
+          <div id="request-editor-content" hidden></div>
+          <button class="request-action primary" id="request-editor-save" type="button" hidden>Сохранить</button>
+          <button class="request-action primary" id="request-action-close" type="button">Понятно</button>
+        </section>
+      </div>
+    </section>
+    <section class="hub-view" id="acts-screen" aria-label="Акты" hidden>
+      <p class="hub-note">Экран списка актов проработаем отдельно. Здесь можно проверить новые переходы.</p>
+      <button class="request-action primary" type="button" data-destination="new-act">Создать акт</button>
+      <div class="hub-section">
+        <h2>Работа с актами</h2>
+        <div class="hub-group">
+          <button class="hub-link" type="button" data-destination="upload"><span>Выгрузить все акты</span><span data-icon="chevron"></span></button>
+          <button class="hub-link" type="button" data-destination="history"><span>История</span><span data-icon="chevron"></span></button>
+          <button class="hub-link" type="button" data-destination="statistics"><span>Статистика</span><span data-icon="chevron"></span></button>
+        </div>
+      </div>
+      <div class="hub-section">
+        <h2>Инструменты для акта</h2>
+        <div class="hub-group">
+          <button class="hub-link" type="button" data-destination="nepton"><span>Подключение к НЕПТОН</span><span data-icon="chevron"></span></button>
+          <button class="hub-link" type="button" data-destination="guide"><span>Справочник</span><span data-icon="chevron"></span></button>
+        </div>
+      </div>
+    </section>
+    <section class="hub-view" id="profile-screen" aria-label="Профиль" hidden>
+      <div class="hub-section">
+        <h2>Аккаунт</h2>
+        <div class="hub-group">
+          <button class="hub-link" type="button" data-destination="account"><span>Личный кабинет</span><span data-icon="chevron"></span></button>
+          <button class="hub-link" type="button" data-destination="settings"><span>Настройки</span><span data-icon="chevron"></span></button>
+          <button class="hub-link" type="button" data-destination="messages"><span>Сообщения</span><span data-icon="chevron"></span></button>
+          <button class="hub-link" type="button" data-destination="feedback"><span>Обратная связь</span><span data-icon="chevron"></span></button>
+        </div>
+      </div>
+      <div class="hub-section">
+        <h2>Рабочие инструменты</h2>
+        <div class="hub-group">
+          <button class="hub-link" type="button" data-destination="equipment"><span>Приборы</span><span data-icon="chevron"></span></button>
+          <button class="hub-link" type="button" data-destination="tags"><span>Идентификационные бирки</span><span data-icon="chevron"></span></button>
+          <button class="hub-link" type="button" data-destination="storage"><span>Условия хранения</span><span data-icon="chevron"></span></button>
+          <button class="hub-link" type="button" data-destination="nepton"><span>Подключение к НЕПТОН</span><span data-icon="chevron"></span></button>
+          <button class="hub-link" type="button" data-destination="guide" aria-label="Справочник — реестр средств измерений"><span>Справочник</span><span data-icon="chevron"></span></button>
+          <button class="hub-link" type="button" data-destination="arshin"><span>Поиск в АРШИН</span><span data-icon="chevron"></span></button>
+          <button class="hub-link" type="button" data-destination="documents"><span>Документы</span><span data-icon="chevron"></span></button>
+        </div>
+      </div>
+    </section>
+    <section class="request-placeholder" id="destination-screen" aria-labelledby="destination-title" hidden>
+      <button class="request-back" id="destination-back" type="button">Назад</button>
+      <h2 id="destination-title"></h2>
+      <p>Пока показываем расположение раздела в новой навигации. Его содержимое проработаем отдельно.</p>
+    </section>
+    <span class="visually-hidden" id="navigation-status" role="status"></span>
+    <div class="filter-overlay" id="request-filters" role="dialog" aria-modal="true" aria-labelledby="filter-title" hidden>
+      <form class="filter-panel" id="filter-form">
+        <div class="filter-heading"><h2 id="filter-title">Фильтр</h2><button class="icon-button" id="filter-close" type="button" aria-label="Закрыть фильтр"><span data-icon="close"></span></button></div>
+        <label class="filter-field" for="filter-scope"><span>Заявки</span><select id="filter-scope"><option value="mine">Мои</option><option value="available">Свободные</option><option value="all">Все заявки</option></select></label>
+        <label class="filter-field" for="filter-period"><span>Дата визита</span><select id="filter-period"><option value="all">Все даты</option><option value="today">Сегодня</option><option value="tomorrow">Завтра</option><option value="range">Период</option></select></label>
+        <div class="filter-range" id="filter-range" hidden>
+          <label class="filter-field" for="filter-from"><span>С</span><input id="filter-from" type="date"></label>
+          <label class="filter-field" for="filter-to"><span>По</span><input id="filter-to" type="date"></label>
+        </div>
+        <p class="filter-error" id="filter-error" role="alert" hidden>Дата «С» должна быть не позже даты «По».</p>
+        <button class="request-action primary" type="submit">Применить</button>
+      </form>
+    </div>
+    <footer class="bottom-bar">
+      <nav class="bottom-navigation" aria-label="Основные разделы">
+        <button class="nav-item" data-nav="requests" type="button" aria-current="page"><span class="nav-mark"><span data-icon="bids"></span></span><span>Заявки</span></button>
+        <button class="nav-item" data-nav="acts" type="button"><span class="nav-mark"><span data-icon="acts"></span></span><span>Акты</span></button>
+        <button class="nav-item" data-nav="profile" type="button"><span class="nav-mark"><span data-icon="profile-nav"></span></span><span>Профиль</span></button>
+      </nav>
+      <div class="gesture-area" aria-hidden="true"><span></span></div>
+    </footer>
+  </div>
+  </div>
+</body>
+</html>

@@ -1,10 +1,10 @@
 {
-  "package_sha256": "5F47D0CD6162B7C86702C0A545C26E4B2E7474415B197EC066108339653627A9",
   "project": "poverkadoma-design-site",
   "experiments": 27,
   "role_profiles": 13,
   "build_date": "2026-11-05",
   "processes": 47,
   "analyses": 16,
-  "variants": 231
+  "variants": 231,
+  "data_sha256": "c6b076a5781bf02df578ff4e22ebddacaa71a137c572b7984d624115e00bb904"
 }

@@ -1,0 +1,278 @@
+{
+  "status": "implemented_for_review",
+  "role": "Внутренний поверитель",
+  "source": "Figma H19 Обработка заявки; H32 agent-only screens excluded from the primary template",
+  "preview": "poverkadoma-request-preview.html",
+  "integration": "Нажатие карточки открывает подробности. Главный список и его оформление сохранены.",
+  "content": [
+    "Номер/статус",
+    "Сроки/синхронизация при наличии",
+    "Населённый пункт/адрес/карта",
+    "Дата/время визита",
+    "Количество ИПУ/стоимость/вид работ",
+    "Владелец/телефон/примечание",
+    "Комментарий",
+    "Результат/акт/причина и срок возврата по состоянию"
+  ],
+  "intentional_adaptations": [
+    "Общие отступы16/12,радиусы,тонкие обводки и палитра",
+    "Статус с точкой вместо старой плашки",
+    "Текстовый срок вместо старой двухсегментной шкалы",
+    "Нижняя навигация только на основных экранах;в заявке скрыта по новому требованию",
+    "Дата создания в нижней части подробностей по предыдущему решению",
+    "Демонстрационные подтверждения вместо серверных операций"
+  ],
+  "validation": "72 DOM-only checks passed;42 local assets;self-contained detail preview remains below1MB.",
+  "limitations": [
+    "No live regulatory clock or organization calendar",
+    "Full act editor and real server transactions not implemented",
+    "Original map thumbnail only for its source address;other addresses use honest unavailable state",
+    "Phone/map handlers and rendered layout not executed on a device"
+  ],
+  "analysis": "poverkadoma-request-analysis.md",
+  "components": [
+    {
+      "name": "Header/navigation",
+      "source": "12281:16188",
+      "result": "adapted to approved chrome"
+    },
+    {
+      "name": "State/deadline/sync",
+      "source": [
+        "12281:16172",
+        "11310:15572",
+        "15256:17721",
+        "15403:20917"
+      ],
+      "result": "conditional values preserved,text representation replaces old scale"
+    },
+    {
+      "name": "Address/visit",
+      "source": "12281:16132",
+      "result": "city,address,map,date,time preserved"
+    },
+    {
+      "name": "Owner/phone/note",
+      "source": "12281:16132",
+      "result": "preserved including New detail contacts"
+    },
+    {
+      "name": "Service/quantity/amount",
+      "source": "11823:17840",
+      "result": "preserved;unknown fixture amount left unknown"
+    },
+    {
+      "name": "Comment/act/result",
+      "source": "BidContent.kt",
+      "result": "conditional branches represented;native act editing not implemented"
+    },
+    {
+      "name": "Actions/cancellation",
+      "source": [
+        "11310:15572",
+        "15256:17721",
+        "15403:20917",
+        "BidContent.kt"
+      ],
+      "result": "state-specific action entries;confirmation only"
+    }
+  ],
+  "surface_revision": {
+    "status": "implemented_by_user_request",
+    "date": "2026-10-29",
+    "background": "#F2F4F9",
+    "tiles": "#FFFFFF",
+    "outerCard": false,
+    "bottomNavigation": "Primary roots only",
+    "preserved": "Fields,source samples,actions,local draft state and approved request-list styling"
+  },
+  "number_revision": {
+    "date": "2026-10-29",
+    "status": "implemented_by_user_request",
+    "request": "Номер заявки в топбар;без знака номера в карточках и подробностях;часть номеров формата МСР-12341.",
+    "presentation": "В топбаре только «Заявка». Полный номер расположен ниже шапки рядом со статусом,без знака номера. На карточке также только номер без знака;префиксы и ведущие нули сохраняются.",
+    "numbers": "7 из21 карточки имеют синтетические номера МСР-12341…МСР-12347;остальные сохраняют цифровые номера. Номер — строка с сохранением префикса и ведущих нулей;внутренний ключ не подменяется отображаемым номером.",
+    "search": "Поиск учитывает полный отображаемый номер,цифровую часть и нормализованный ввод без дефиса. Открытие и восстановление используют стабильные ключи.",
+    "layout": "Шапка24px/32px600,как на главном экране;номер под шапкой19px700,как в исходной компоновке подробностей. Длинные номера переносятся. Стрелка Назад слева;перенос вправо не согласован.",
+    "verification": "46 DOM-only checks passed;rendered narrow-screen typography remains unverified.",
+    "placement_refinement": "Пользователь отменил перенос номера в топбар:в шапке просто Заявка,номер под шапкой."
+  },
+  "workflow_revision": {
+    "date": "2026-10-29",
+    "status": "historical_layout_superseded_by_rectangles_revision",
+    "user_request": "Реализуй твои идеи без потери содержания. Сделай чтобы было красиво и удобно",
+    "preview": "poverkadoma-request-preview.html",
+    "runtime": "poverkadoma-request-workflow.js",
+    "layout": [
+      "Шапка Заявка24/32;номер и статус под ней,без знака номера",
+      "Пять отдельных белых плиток:адрес,контакт,визит,работы,примечания;единыйфонF2F4F9",
+      "Контакт перед визитом;звонок48×48 сохранён",
+      "Карта раскрывается по нажатию;вход в выбор маршрута сохранён",
+      "Основное действие в отдельной нижней панели вне прокрутки;нижняя навигация скрыта",
+      "Отмена,закрытие и изменение привязки доступны отдельно;в работе основное действие Продолжить акт",
+      "Сведения о заявке раскрывают дату создания,историю согласования,источник/агента и дату выполнения при наличии"
+    ],
+    "interaction": [
+      "По умолчанию чтение;явные Изменить данные/Готово;редактируемость соответствует прежним полям",
+      "Пропущенное обязательное поле превращает основную кнопку в понятный шаг Указать адрес/дату/время",
+      "Остаток согласования перенесён в основную сигнальную кнопку,по ранее выбранным цветам",
+      "Пояснение закрытого/неизвестного окна возврата видно рядом с основным действием",
+      "Локальные правки сохраняются в прежнем снимке черновиков;серверное подтверждение не имитируется",
+      "При смене адреса убирается только фотография карты,не значок раскрытия",
+      "Пожелание до согласования и подтверждённый визит имеют разные заголовки"
+    ],
+    "content_preservation": {
+      "baseline": "poverkadoma-request-content-baseline.json",
+      "samples": 8,
+      "verification": "Every original field value,number,creation date,phone link,map asset,linked act and original action availability compared against pre-edit inventory. 53 DOM-only checks pass.",
+      "changes_in_copy": "Количество ИПУ→Количество счётчиков;Стоимость→Стоимость заявки;Примечание→Примечание к заявке. Значения сохранены.",
+      "pricing_evidence": "BidViewModel.kt:updateCounterMeasures computes amount as quantity*amountForOneMeasure. Prototype keeps unknown rates unknown;changed quantity marks the old amount as requiring confirmation instead of inventing a recalculation."
+    },
+    "limits": [
+      "Business confirmation dialogs remain previews;no server transactions or act editor implementation",
+      "Deadline and cancellation values are illustrative snapshots,not live regulatory calendar calculations",
+      "Only original map thumbnail is available;route/geocoding provider remains a prototype entry",
+      "Native date/time restrictions,SMK/equipment,tariffs,concurrency and Finished workflow not fully implemented",
+      "Draft storage retains prior demo limit of8entries;not Android durable storage",
+      "New rendered layout,keyboard insets and TalkBack remain unverified:browser local-file access blocked previously"
+    ],
+    "research_basis": [
+      {
+        "url": "https://www.nngroup.com/articles/progressive-disclosure/",
+        "use": "Secondary history and map disclosure;frequent contact/visit remain visible"
+      },
+      {
+        "url": "https://www.nngroup.com/articles/visibility-system-status/",
+        "use": "Separate local draft,technical sync status and unconfirmed business action"
+      },
+      {
+        "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum",
+        "use": "Touch target guidance;project48px target is distinct fromWCAGminimum"
+      }
+    ],
+    "validation": "53 DOM-only checks;no pixel-perfect or10/10 claim"
+  },
+  "rectangles_revision": {
+    "date": "2026-10-29",
+    "status": "implemented_for_review",
+    "basis": "Explicit user correction; visual preference still awaiting review",
+    "supersedes": [
+      "Global read/edit toggle",
+      "Grouped contact/visit/work cards",
+      "Collapsed map preview",
+      "Permanent empty note fields",
+      "Verbose missing-visit helper text"
+    ],
+    "layout": [
+      "16px screen gutters;12px inner padding and gaps between individual rectangles;4px spacing scale",
+      "One full address with city,16px regular type;visible horizontal map rectangle immediately below",
+      "Each data item has its own white rectangle;date/time and quantity/total price form two separate two-column rows",
+      "Call target48px stays right of the number even with large text;number wraps as needed",
+      "No global Edit data control or repeated Contact/Date and time/Work headings",
+      "Notes and verifier comment initially hidden;buttons distinguish existing content from empty fields;hiding never deletes data",
+      "Date and time rectangles open selectors directly;footer follows missing data and chains date then time when both are missing",
+      "Appointed footer labels:Указать дату и время / Указать дату / Указать время / Согласовать;New acceptance and other status actions preserved"
+    ],
+    "preservation": {
+      "baseline": "poverkadoma-request-content-baseline.json",
+      "samples": 8,
+      "verified": "Original field values after revealing notes,number,created date,phone link,map asset,linked act and action availability preserved. Shorter agreement wording intentional."
+    },
+    "validation": "57 DOM-only checks;CSS spacing declarations checked;rendered geometry,native picker and TalkBack not verified",
+    "limits": [
+      "No server operations or native Android implementation",
+      "Original map thumbnail only for its source sample;other/edited addresses show an honest unavailable preview with route entry",
+      "Visit intervals are demonstration options;organization calendar and server restrictions unimplemented",
+      "Drafts are local prototype state,not backend confirmation"
+    ],
+    "evidence_type": "user_requested_layout_and_local_dom_checks"
+  },
+  "current_layout": "Request number/status→white deadline card with colored left edge→labeled data rectangles;single visit editor;note previews;map route hint",
+  "functional_revision": {
+    "date": "2026-10-29",
+    "status": "implemented_for_review",
+    "source": "Explicit latest user corrections",
+    "changes": [
+      "Removed Close actions;Back in the header remains available. Terminal states hide the empty action footer.",
+      "Captions are above individual data rectangles,not inside. Shared card minimum50px with12px padding;content can grow for long text.",
+      "Phone and call are siblings in a12px-gap grid;call50px is outside the number rectangle and aligned with its lower edge.",
+      "Buttons use the existing configurable shadow token;Cancel is original redD96161 with dark text.",
+      "Primary footer remains blue with white text and no timer. The deadline is the first card,above number/status.",
+      "Deadline text says agreement remaining/expired;colors match the main-card action thresholds:blue>15,amber6–15,red<=5oroverdue.",
+      "Date/time selection,field editing,notes,history,status help and Back operate locally.",
+      "Confirm acceptance/agreement/cancellation/restoration/replacement completion changes local state and updates the list;cancel reason and local state survive host restore.",
+      "Local act draft opens/creates/saves a comment;binding can be changed/removed. Full verification act editor remains outside this screen.",
+      "Map opens a provider selector with actual address links;call uses the supplied tel target. External launching depends on host/system handlers."
+    ],
+    "validation": "66 DOM-only checks passed,including8original inventory samples and local transition/persistence scenarios;no rendered geometry or native-phone verification",
+    "local_demo_contract": "No backend request. Local business state explicitly marked as changed in the prototype and persisted in private requestDrafts. Demo cancellation supports undo but does not invent a real organization restoration period.",
+    "limitations": [
+      "No live regulatory clock or organization calendar",
+      "Full act editor and real server transactions not implemented",
+      "Original map thumbnail only for its source address;other addresses use honest unavailable state",
+      "Phone/map handlers and rendered layout not executed on a device"
+    ],
+    "components": [
+      {
+        "name": "Deadline placement/colors",
+        "checked": "DOM order,copy,all urgency states;CSS fills",
+        "rendered": false
+      },
+      {
+        "name": "Captions and card height",
+        "checked": "DOM nesting,shared50px minimum,content-driven type/padding declarations",
+        "rendered": false
+      },
+      {
+        "name": "External call",
+        "checked": "Sibling relationship,grid declarations,correct tel link",
+        "rendered": false
+      },
+      {
+        "name": "Shadows and cancel",
+        "checked": "Scoped styles,existing external shadow token,red action fill",
+        "rendered": false
+      },
+      {
+        "name": "Primary action",
+        "checked": "No timer or urgency override;conditional labels and confirmation",
+        "rendered": false
+      },
+      {
+        "name": "Local workflow",
+        "checked": "Accept,agree,cancel,restore,complete,act draft,binding;offline recheck",
+        "rendered": false
+      },
+      {
+        "name": "Persistence/navigation",
+        "checked": "Restore without writing on load,list ownership,state,Back,removed original act binding",
+        "rendered": false
+      }
+    ]
+  },
+  "local_business_actions": "Interactive locally with confirmations and persistence;no real server mutation",
+  "usability_revision": {
+    "date": "2026-10-29",
+    "status": "implemented_by_user_request",
+    "changes": [
+      "Editable fields disclose a chevron for choices and the existing Android edit icon for address/name;read-only fields have no edit affordance.",
+      "Empty visit fields say Выбрать дату / Выбрать время.",
+      "One bottom-sheet editor contains labeled date and interval controls;Готово validates and saves both together;Cancel discards both pending changes.",
+      "Existing notes/comments have a two-line preview with the full accessible name;editing remains collapsed until requested.",
+      "Map preview says Построить маршрут;choosing a provider persists a private preference and subsequent taps use its address link directly;a separate Карты control allows changing the provider.",
+      "Changing quantity or service displays Уточняется instead of the old amount. Original pricing inputs persist so reopening cannot make an outdated amount appear current;reverting the original inputs restores the source amount.",
+      "Deadline stays below request number/status and reads На согласование осталось N мин or an explicit expired message.",
+      "Deadline is now a white ordinary card with the existing shadow and a4pxleftborder:originalblue>15min,amber6–15min,red<=5min/overdue. Full signal fill is superseded only on the detail screen."
+    ],
+    "preservation": "Eight source samples retain original field values and action availability apart from the explicitly removed Close button;original palette,16px gutters,12px padding/gaps,rounded geometry and independent shadow controls preserved.",
+    "validation": "72 DOM-only checks passed;42 local assets;self-contained detail preview remains below1MB.",
+    "limitations": [
+      "No rendered screen/native picker/real-phone verification",
+      "Native external map and phone handlers depend on the host",
+      "No real tariff,server transaction,geocoding or live working-calendar calculation",
+      "Full verification act editor remains outside this prototype"
+    ],
+    "source_asset": "Edit glyph reused from Android ic_baseline_edit_24.xml;no new icon geometry invented",
+    "evidence_type": "explicit_user_request_and_local_dom_checks"
+  }
+}

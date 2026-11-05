@@ -1,0 +1,94 @@
+<div id="pd-original-palette">
+  <style>
+    #pd-original-palette .pd-palette-table { width:100%; table-layout:fixed; }
+    #pd-original-palette .pd-palette-table th:first-child { width:34%; }
+    #pd-original-palette .pd-palette-table td { vertical-align:middle; overflow-wrap:anywhere; }
+    #pd-original-palette .pd-value { display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
+    #pd-original-palette .pd-swatch { width:28px; height:28px; flex:0 0 28px; border-radius:9px; border:1px solid var(--border); }
+    #pd-original-palette .pd-code { white-space:nowrap; font-variant-numeric:tabular-nums; }
+    #pd-original-palette .pd-gradient { width:100%; min-height:44px; display:flex; align-items:center; justify-content:center; padding:8px 12px; border-radius:14px; box-sizing:border-box; text-align:center; }
+    #pd-original-palette .pd-action-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    #pd-original-palette .pd-action-grid figure { margin:0; }
+    #pd-original-palette .pd-action-grid figcaption { margin-top:8px; }
+    #pd-original-palette .pd-statuses { display:flex; flex-wrap:wrap; gap:10px; padding:0; list-style:none; }
+    #pd-original-palette .pd-statuses li { display:grid; gap:5px; align-content:start; }
+    #pd-original-palette .pd-status { border-radius:12px; padding:9px 12px; color:#181818; }
+    #pd-original-palette .pd-pair { display:grid; gap:6px; }
+    #pd-original-palette .pd-pair-sample { padding:10px; border-radius:10px; overflow-wrap:normal; }
+    #pd-original-palette .pd-cancel { display:flex; flex-wrap:wrap; gap:6px; }
+    #pd-original-palette .pd-cancel span { color:#FFFFFF; border-radius:12px; padding:9px 12px; }
+    #pd-original-palette .pd-cancel span:last-child { border:1px solid #919193; }
+    #pd-original-palette h3 { margin-top:24px; }
+    #pd-original-palette h3:first-child { margin-top:0; }
+    @media(max-width:430px) {
+      #pd-original-palette .pd-action-grid { grid-template-columns:1fr; }
+      #pd-original-palette .pd-palette-table th:first-child { width:32%; }
+      #pd-original-palette .pd-value { gap:5px; }
+      #pd-original-palette .pd-swatch { width:22px; height:22px; flex-basis:22px; border-radius:7px; }
+      #pd-original-palette .pd-states tr { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); }
+      #pd-original-palette .pd-states tbody th { grid-column:1 / -1; width:auto; }
+      #pd-original-palette .pd-states thead th:first-child { display:none; }
+      #pd-original-palette .pd-states thead th { width:auto; }
+    }
+  </style>
+
+  <h3>Основа интерфейса</h3>
+  <table class="table pd-palette-table pd-base">
+    <thead><tr><th scope="col">Назначение</th><th scope="col">Светлая тема</th><th scope="col">Тёмная тема</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Фон экрана</th><td><div class="pd-value"><span class="pd-swatch" style="background:#F2F4F9" aria-hidden="true"></span><span class="pd-code">#F2F4F9</span></div></td><td><div class="pd-value"><span class="pd-swatch" style="background:#000000" aria-hidden="true"></span><span class="pd-code">#000000</span></div></td></tr>
+      <tr><th scope="row">Карточки и диалоги</th><td><div class="pd-value"><span class="pd-swatch" style="background:#FFFFFF" aria-hidden="true"></span><span class="pd-code">#FFFFFF</span></div></td><td><div class="pd-value"><span class="pd-swatch" style="background:#242427" aria-hidden="true"></span><span class="pd-code">#242427</span></div></td></tr>
+      <tr><th scope="row">Поля ввода</th><td><div class="pd-value"><span class="pd-swatch" style="background:#E9ECF2" aria-hidden="true"></span><span class="pd-code">#E9ECF2</span></div></td><td><div class="pd-value"><span class="pd-swatch" style="background:#242427" aria-hidden="true"></span><span class="pd-code">#242427</span></div></td></tr>
+      <tr><th scope="row">Основной текст</th><td><div class="pd-value"><span class="pd-swatch" style="background:#181818" aria-hidden="true"></span><span class="pd-code">#181818</span></div></td><td><div class="pd-value"><span class="pd-swatch" style="background:#FFFFFF" aria-hidden="true"></span><span class="pd-code">#FFFFFF</span></div></td></tr>
+      <tr><th scope="row">Подписи и пояснения</th><td><div class="pd-value"><span class="pd-swatch" style="background:#616264" aria-hidden="true"></span><span class="pd-code">#616264</span></div></td><td><div class="pd-value"><span class="pd-swatch" style="background:#A0A0A0" aria-hidden="true"></span><span class="pd-code">#A0A0A0</span></div></td></tr>
+      <tr><th scope="row">Рамки полей и второстепенных кнопок</th><td><div class="pd-value"><span class="pd-swatch" style="background:#666666" aria-hidden="true"></span><span class="pd-code">#666666</span></div></td><td><div class="pd-value"><span class="pd-swatch" style="background:#919193" aria-hidden="true"></span><span class="pd-code">#919193</span></div></td></tr>
+      <tr><th scope="row">Разделители</th><td><div class="pd-value"><span class="pd-swatch" style="background:#CCCCCC" aria-hidden="true"></span><span class="pd-code">#CCCCCC</span></div></td><td><div class="pd-value"><span class="pd-swatch" style="background:#4B4C50" aria-hidden="true"></span><span class="pd-code">#4B4C50</span></div></td></tr>
+      <tr><th scope="row">Ссылки и текст активного раздела</th><td><div class="pd-value"><span class="pd-swatch" style="background:#035679" aria-hidden="true"></span><span class="pd-code">#035679</span></div></td><td><div class="pd-value"><span class="pd-swatch" style="background:#2DB0ED" aria-hidden="true"></span><span class="pd-code">#2DB0ED</span></div></td></tr>
+      <tr><th scope="row">Фокус и выбранный элемент</th><td><div class="pd-value"><span class="pd-swatch" style="background:#0084C1" aria-hidden="true"></span><span class="pd-code">#0084C1</span></div></td><td><div class="pd-value"><span class="pd-swatch" style="background:#2DB0ED" aria-hidden="true"></span><span class="pd-code">#2DB0ED</span></div></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Фирменные акценты · одинаковые в обеих темах</h3>
+  <div class="pd-action-grid">
+    <figure>
+      <div class="pd-gradient" style="background:linear-gradient(90deg,#0084C1,#2DB0ED);color:#000000">Основное действие</div>
+      <figcaption><span class="pd-code">#0084C1 → #2DB0ED</span><br><span class="text-small">Текст #000000 · контраст от 5,07:1</span></figcaption>
+    </figure>
+    <figure>
+      <div class="pd-gradient" style="background:linear-gradient(90deg,#00C27C,#10DC9F);color:#181818">Создать / добавить</div>
+      <figcaption><span class="pd-code">#00C27C → #10DC9F</span><br><span class="text-small">Текст #181818 · контраст от 7,62:1</span></figcaption>
+    </figure>
+  </div>
+
+  <h3>Состояния · фон и текст</h3>
+  <table class="table pd-palette-table pd-states">
+    <thead><tr><th scope="col">Назначение</th><th scope="col">Светлая тема</th><th scope="col">Тёмная тема</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Ошибка</th><td><div class="pd-pair"><span class="pd-pair-sample" style="background:#FFE6E6;color:#973232">Не отправлено</span><span class="text-small">Фон #FFE6E6<br>Текст #973232</span></div></td><td><div class="pd-pair"><span class="pd-pair-sample" style="background:#542222;color:#FF8A8A">Не отправлено</span><span class="text-small">Фон #542222<br>Текст #FF8A8A</span></div></td></tr>
+      <tr><th scope="row">Предупреждение</th><td><div class="pd-pair"><span class="pd-pair-sample" style="background:#FFF4BD;color:#181818">Нужна проверка</span><span class="text-small">Фон #FFF4BD<br>Текст #181818</span></div></td><td><div class="pd-pair"><span class="pd-pair-sample" style="background:#9C8F58;color:#181818">Нужна проверка</span><span class="text-small">Фон #9C8F58<br>Текст #181818</span></div></td></tr>
+      <tr><th scope="row">Успех</th><td><div class="pd-pair"><span class="pd-pair-sample" style="background:#A1DEC1;color:#181818">Отправлено</span><span class="text-small">Фон #A1DEC1<br>Текст #181818</span></div></td><td><div class="pd-pair"><span class="pd-pair-sample" style="background:#347155;color:#FFFFFF">Отправлено</span><span class="text-small">Фон #347155<br>Текст #FFFFFF</span></div></td></tr>
+      <tr><th scope="row">Распознанные данные</th><td><div class="pd-pair"><span class="pd-pair-sample" style="background:#FFF4BD;color:#181818">Распознано</span><span class="text-small">Фон #FFF4BD<br>Текст #181818</span></div></td><td><div class="pd-pair"><span class="pd-pair-sample" style="background:#FFEA7B;color:#181818">Распознано</span><span class="text-small">Фон #FFEA7B<br>Текст #181818</span></div></td></tr>
+      <tr><th scope="row">Значок и рамка ошибки</th><td><div class="pd-value"><span class="pd-swatch" style="background:#F60707" aria-hidden="true"></span><span class="pd-code">#F60707</span></div></td><td><div class="pd-value"><span class="pd-swatch" style="background:#F60707" aria-hidden="true"></span><span class="pd-code">#F60707</span></div></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Статусы заявок · сохраняем привычные цвета</h3>
+  <ul class="pd-statuses">
+    <li><span class="pd-status" style="background:#D96161">Новая</span><span class="text-small pd-code">#D96161</span></li>
+    <li><span class="pd-status" style="background:#FFB21C">Назначена</span><span class="text-small pd-code">#FFB21C</span></li>
+    <li><span class="pd-status" style="background:#1B9DD9">Согласована</span><span class="text-small pd-code">#1B9DD9</span></li>
+    <li><span class="pd-status" style="background:#1B9DD9">В работе</span><span class="text-small pd-code">#1B9DD9</span></li>
+    <li><span class="pd-status" style="background:#43BE83">Выполнена</span><span class="text-small pd-code">#43BE83</span></li>
+    <li><span class="pd-status" style="background:#43BE83">Завершена</span><span class="text-small pd-code">#43BE83</span></li>
+    <li><span class="pd-cancel"><span style="background:#181818">Отменена · светлая</span><span style="background:#242427">Отменена · тёмная</span></span><span class="text-small">#181818 / #242427 · текст #FFFFFF</span></li>
+  </ul>
+
+  <h3>Обозначения счётчиков</h3>
+  <ul class="pd-statuses">
+    <li><span class="pd-status" style="background:#6CA8C3">Холодная вода</span><span class="text-small pd-code">#6CA8C3</span></li>
+    <li><span class="pd-status" style="background:#D96161">Горячая вода</span><span class="text-small pd-code">#D96161</span></li>
+    <li><span class="pd-status" style="background:#43BE83">Годен</span><span class="text-small pd-code">#43BE83</span></li>
+    <li><span class="pd-status" style="background:#D96161">Непригоден</span><span class="text-small pd-code">#D96161</span></li>
+    <li><span class="pd-status" style="background:#666666;color:#FFFFFF">Неисправен</span><span class="text-small pd-code">#666666</span></li>
+  </ul>
+</div>

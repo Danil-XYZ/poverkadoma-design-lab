@@ -1,0 +1,16 @@
+{
+  "buildDate": "2026-11-05",
+  "experiments": 27,
+  "variants": 231,
+  "analyses": 16,
+  "profiles": 13,
+  "processes": 47,
+  "files": [
+    "poverkadoma-design-site.html",
+    "poverkadoma-design-site.css",
+    "poverkadoma-design-site.js",
+    "poverkadoma-design-site-data.js"
+  ],
+  "bytes": 13379512,
+  "verification": "Static package; no production services,credentials or raw Confluence exports included."
+}

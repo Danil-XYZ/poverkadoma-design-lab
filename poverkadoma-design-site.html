@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Поверка дома: интерактивный макет, история дизайн-экспериментов, исследования и EPC-сценарии по ролям.">
+  <meta name="theme-color" content="#0084c1">
+  <title>Поверка дома — дизайн-лаборатория</title>
+  <link rel="stylesheet" href="poverkadoma-design-site.css">
+  <script defer src="poverkadoma-design-site-data.js"></script>
+  <script defer src="poverkadoma-design-site.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">К содержимому</a>
+  <header class="site-header">
+    <a class="brand" href="#prototype" aria-label="Поверка дома — рабочий макет"><span class="brand-mark" aria-hidden="true">П</span><span>Поверка дома<small>Дизайн-лаборатория</small></span></a>
+    <nav class="site-nav" aria-label="Разделы сайта">
+      <a href="#prototype" data-nav="prototype" aria-current="page">Макет</a>
+      <a href="#experiments" data-nav="experiments">Эксперименты</a>
+      <a href="#research" data-nav="research">Анализы</a>
+      <a href="#scenarios" data-nav="scenarios">Сценарии</a>
+    </nav>
+    <span class="edition">Рабочая версия <span id="edition-date"></span></span>
+  </header>
+  <main id="main">
+    <section id="page-prototype" data-page="prototype">
+      <div class="page-heading"><div><p class="eyebrow">Внутренний поверитель</p><h1>Рабочий макет</h1><p class="lead">Проверьте сценарий и подберите оформление в одном месте.</p></div><button class="button" type="button" data-fullscreen="prototype-frame">Развернуть макет <span aria-hidden="true">↗</span></button></div>
+      <div class="workbench">
+        <aside class="settings-panel" aria-label="Настройки макета">
+          <div class="panel-heading"><h2>Настройки макета</h2><span class="pill quiet">Сохраняются</span></div>
+          <div class="control-group">
+            <label class="field-label" for="screen-picker">Открыть экран</label>
+            <select id="screen-picker"><option value="requests">Заявки</option><option value="acts">Акты</option><option value="tools">Инструменты</option><option value="settings">Настройки</option><option value="notifications">Уведомления и сообщения</option><option value="register">Регистрация</option><option value="onboarding">Онбординг</option></select>
+          </div>
+          <div class="control-group"><span class="field-label" id="theme-caption">Тема приложения</span><div class="segments" role="group" aria-labelledby="theme-caption"><button type="button" data-theme="light" aria-pressed="true">Светлая</button><button type="button" data-theme="dark" aria-pressed="false">Тёмная</button><button type="button" data-theme="auto" aria-pressed="false">Авто</button></div></div>
+          <div class="control-pair"><label class="control-group">Ширина экрана<select id="phone-width"><option value="320">320 px</option><option value="360">360 px</option><option value="390" selected>390 px</option><option value="430">430 px</option></select></label><label class="control-group">Размер текста<select data-proxy-select="card-text"><option value="normal">100%</option><option value="large">200%</option></select></label></div>
+          <details class="control-section" open><summary>Поверхности и цвет</summary><div class="section-fields">
+            <label class="control-group">Лейблы<select data-proxy-select="label-appearance"><option value="soft">Мягкие, с точкой</option><option value="solid">Насыщенные, без точки</option></select></label>
+            <span class="field-label" id="fill-caption">Синие элементы</span><div class="segments" role="group" aria-labelledby="fill-caption"><button type="button" data-proxy-click="[data-blue-fill='solid']" aria-pressed="false">Сплошные</button><button type="button" data-proxy-click="[data-blue-fill='gradient']" aria-pressed="true">Градиент</button></div>
+            <div class="switch-pair"><label class="switch"><span>Тени</span><input type="checkbox" data-proxy-check="shadows-toggle" checked><span class="switch-track" aria-hidden="true"></span></label><label class="switch"><span>Обводки</span><input type="checkbox" data-proxy-check="borders-toggle" checked><span class="switch-track" aria-hidden="true"></span></label></div>
+            <label class="range-label" for="site-shadow-depth">Глубина теней<output id="site-shadow-value" for="site-shadow-depth">50%</output></label><input id="site-shadow-depth" type="range" min="0" max="100" value="50" data-proxy-range="shadow-depth">
+            <div class="control-pair"><label class="control-group">Топбар<select id="top-corners"><option value="rounded">Скруглённый</option><option value="square">Прямой</option></select></label><label class="control-group">Боттомбар<select id="bottom-corners"><option value="rounded">Скруглённый</option><option value="square">Прямой</option></select></label></div>
+          </div></details>
+          <details class="control-section" open><summary>Индикатор согласования</summary><div class="section-fields">
+            <label class="control-group">Форма индикатора<select data-proxy-select="request-timer-style"><option value="wave">Мягкая волна</option><option value="window">Окошко</option><option value="plain-tab">Вкладка</option><option value="seal">Метка времени</option><option value="meeting">Встречные формы</option></select></label>
+            <div class="timer-tools"><button type="button" class="button primary" id="site-timer-play">Пауза</button><button type="button" class="button" data-proxy-click="#request-timer-restart">Сначала</button></div>
+            <label class="range-label" for="site-time">Остаток времени<output id="site-time-value" for="site-time">30 мин</output></label><input id="site-time" type="range" min="-10" max="30" value="30" data-proxy-range="request-timer-minutes">
+            <p class="control-note">Единый цикл 30 → −10 минут для карточек и экрана заявки.</p>
+          </div></details>
+          <details class="control-section"><summary>Данные и условия</summary><div class="section-fields">
+            <span class="field-label" id="network-caption">Интернет</span><div class="segments" role="group" aria-labelledby="network-caption"><button type="button" data-proxy-click="[data-network='online']" aria-pressed="true">Есть</button><button type="button" data-proxy-click="[data-network='offline']" aria-pressed="false">Нет</button></div>
+            <label class="control-group">Наполнение карточек<select data-proxy-select="card-data"><option value="normal">Обычное</option><option value="long">Длинные значения</option></select></label>
+            <label class="control-group">Города<select id="city-scenario"><option value="single">Один город</option><option value="mixed">Разные города</option></select></label>
+            <label class="control-group">Образец заявки<select id="request-example"></select></label><button type="button" class="button" id="open-request-example">Открыть образец</button>
+            <label class="switch"><span>Заявка связана с актом</span><input type="checkbox" data-proxy-check="linked-bid-toggle" checked><span class="switch-track" aria-hidden="true"></span></label>
+          </div></details>
+        </aside>
+        <div class="prototype-area"><div class="device-heading"><span id="device-route">Заявки</span><span id="device-size">390 × адаптивная высота</span></div><div class="device-stage"><iframe id="prototype-frame" title="Интерактивный макет приложения Поверка дома" sandbox="allow-scripts allow-same-origin allow-downloads allow-popups allow-popups-to-escape-sandbox"></iframe></div><p class="stage-note">Учебные данные. Действия внутри макета демонстрируют сценарии приложения.</p></div>
+      </div>
+    </section>
+    <section id="page-experiments" data-page="experiments" hidden>
+      <div class="page-heading"><div><p class="eyebrow">История поиска</p><h1>Эксперименты</h1><p class="lead">От первых концепций до отдельных деталей. Каждую серию можно раскрыть и попробовать.</p></div><span class="count-label" id="experiment-count"></span></div>
+      <div class="filter-bar"><label class="search-field"><span class="sr-only">Поиск по экспериментам</span><input id="experiment-search" type="search" placeholder="Найти идею, экран или деталь"></label><label class="filter-select"><span class="sr-only">Направление эксперимента</span><select id="experiment-category"><option value="all">Все направления</option></select></label><label class="filter-select"><span class="sr-only">Порядок экспериментов</span><select id="experiment-order"><option value="new">Сначала последние</option><option value="old">Сначала ранние</option></select></label></div>
+      <div id="experiment-feed" class="experiment-feed"></div><p id="experiment-empty" class="empty-state" hidden>По этому запросу экспериментов нет. Попробуйте другое название.</p>
+    </section>
+    <section id="page-research" data-page="research" hidden>
+      <div class="page-heading"><div><p class="eyebrow">Контекст и решения</p><h1>Анализы</h1><p class="lead">Исходные исследования, принятые правила и обоснования изменений.</p></div></div>
+      <div class="document-toolbar"><label>Материал<select id="research-picker"></select></label><label>Роль или сочетание<select id="research-role"></select></label><button class="button" type="button" id="download-research">Скачать материал</button></div>
+      <div class="document-info"><span class="pill" id="research-kind"></span><span id="research-date"></span></div><div id="research-content" class="research-content"></div>
+    </section>
+    <section id="page-scenarios" data-page="scenarios" hidden>
+      <div class="page-heading"><div><p class="eyebrow">Сценарии исходного приложения</p><h1>Роли и процессы</h1><p class="lead">EPC-схемы с переходами в подпроцессы, деталями и источниками.</p></div><button class="button" type="button" data-fullscreen="scenario-frame">Развернуть схему <span aria-hidden="true">↗</span></button></div>
+      <div class="document-toolbar"><label>Роль или сочетание<select id="scenario-role"></select></label><label>Процесс<select id="scenario-process"></select></label></div>
+      <div class="scenario-context" id="scenario-context"></div><iframe id="scenario-frame" class="scenario-frame" title="EPC-сценарии ролей Поверки дома" sandbox="allow-scripts allow-same-origin allow-downloads allow-popups allow-popups-to-escape-sandbox"></iframe>
+    </section>
+  </main>
+  <footer class="site-footer"><span>Поверка дома · материалы дизайн-проекта</span><a href="#research" id="open-rules">Принятые правила</a><span id="site-snapshot"></span></footer>
+  <div class="fullscreen-layer" id="fullscreen-layer" hidden><div class="fullscreen-toolbar"><strong id="fullscreen-title">Макет</strong><button type="button" class="button" id="fullscreen-close">Свернуть <span aria-hidden="true">×</span></button></div><div id="fullscreen-content"></div></div>
+  <div class="site-toast" id="site-toast" role="status" hidden></div>
+  <noscript>Для работы макетов, селекторов и схем включите JavaScript в браузере.</noscript>
+</body>
+</html>

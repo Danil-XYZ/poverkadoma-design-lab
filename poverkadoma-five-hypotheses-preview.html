@@ -1,0 +1,613 @@
+<div id="pd-five-hypotheses" class="viz-carousel viz-dotted-background" aria-label="Пять гипотез удобства Поверки дома" data-previous-label="Предыдущая" data-next-label="Следующая">
+  <section data-variant="Порядок работы" aria-label="Порядок работы"><div class="pd-stage"><span class="pd-demo-label">Демонстрация · реальные действия не выполняются</span><div class="pd-phone" data-view="queue"></div></div></section>
+  <section data-variant="Звонок и согласование" aria-label="Звонок и согласование" hidden><div class="pd-stage"><span class="pd-demo-label">Демонстрация · реальные действия не выполняются</span><div class="pd-phone" data-view="agreement"></div></div></section>
+  <section data-variant="Акт без повторного ввода" aria-label="Акт без повторного ввода" hidden><div class="pd-stage"><span class="pd-demo-label">Демонстрация · реальные действия не выполняются</span><div class="pd-phone" data-view="entry"></div></div></section>
+  <section data-variant="Исправление ошибок" aria-label="Исправление ошибок" hidden><div class="pd-stage"><span class="pd-demo-label">Демонстрация · реальные действия не выполняются</span><div class="pd-phone" data-view="validation"></div></div></section>
+  <section data-variant="Контроль отправки" aria-label="Контроль отправки" hidden><div class="pd-stage"><span class="pd-demo-label">Демонстрация · реальные действия не выполняются</span><div class="pd-phone" data-view="sync"></div></div></section>
+</div>
+
+<style>
+#pd-five-hypotheses .pd-stage{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; min-height:920px; padding:16px 0; }
+#pd-five-hypotheses .pd-demo-label{ color:var(--foreground,#616264); font:400 14px/1.4 "Segoe UI",sans-serif; text-align:center; }
+#pd-five-hypotheses .pd-phone{ --pd-blue:#0084c1; --pd-bg:#f2f4f9; --pd-white:#fff; --pd-field:#e9ecf2; --pd-ink:#181818; --pd-muted:#616264; --pd-line:#ccc; width:min(390px,100%); height:844px; flex:0 0 844px; position:relative; display:flex; flex-direction:column; overflow:hidden; border:1px solid var(--pd-line); border-radius:28px; background:var(--pd-bg); color:var(--pd-ink); font:400 16px/1.4 "Segoe UI",sans-serif; font-synthesis:none; color-scheme:light; }
+#pd-five-hypotheses .pd-phone *{ box-sizing:border-box; }
+#pd-five-hypotheses .pd-phone [hidden]{ display:none!important; }
+#pd-five-hypotheses .pd-phone button, #pd-five-hypotheses .pd-phone input, #pd-five-hypotheses .pd-phone select{ font:inherit; }
+#pd-five-hypotheses .pd-phone button{ appearance:none; border:0; padding:0; background:transparent; color:inherit; -webkit-tap-highlight-color:transparent; }
+#pd-five-hypotheses .pd-phone button:focus-visible, #pd-five-hypotheses .pd-phone a:focus-visible, #pd-five-hypotheses .pd-phone input:focus-visible, #pd-five-hypotheses .pd-phone select:focus-visible{ outline:2px solid var(--pd-blue); outline-offset:2px; }
+#pd-five-hypotheses .pd-phone p, #pd-five-hypotheses .pd-phone h2, #pd-five-hypotheses .pd-phone h3{ margin:0; }
+#pd-five-hypotheses .pd-phone h2, #pd-five-hypotheses .pd-phone h3{ font:inherit; }
+#pd-five-hypotheses .pd-phone .pd-title{ font-size:19px; line-height:1.3; font-weight:700; overflow-wrap:anywhere; }
+#pd-five-hypotheses .pd-phone .pd-text{ font-size:16px; font-weight:400; }
+#pd-five-hypotheses .pd-phone .pd-muted{ color:var(--pd-muted); font-size:16px; }
+#pd-five-hypotheses .pd-phone .pd-meta{ color:var(--pd-muted); font-size:14px; }
+#pd-five-hypotheses .pd-header{ flex:0 0 88px; padding:8px 16px; border-radius:0 0 22px 22px; background:var(--pd-blue); color:var(--pd-white); }
+#pd-five-hypotheses .pd-system{ display:flex; justify-content:space-between; height:20px; font-size:13px; line-height:18px; }
+#pd-five-hypotheses .pd-system-icons{ display:flex; align-items:center; gap:4px; }
+#pd-five-hypotheses .pd-system-icons .pd-icon{ width:16px; height:16px; }
+#pd-five-hypotheses .pd-toolbar{ display:flex; align-items:center; gap:8px; height:48px; margin-top:4px; }
+#pd-five-hypotheses .pd-toolbar h1{ flex:1; min-width:0; margin:0; font-size:24px; line-height:1.3; font-weight:700; }
+#pd-five-hypotheses .pd-toolbar.pd-nested h1{ font-size:20px; }
+#pd-five-hypotheses .pd-header-icons{ display:flex; gap:8px; flex-shrink:0; }
+#pd-five-hypotheses .pd-icon-button{ display:flex; align-items:center; justify-content:center; width:48px; height:48px; flex:0 0 48px; border-radius:12px; }
+#pd-five-hypotheses .pd-header .pd-icon img{ filter:brightness(0) invert(1); }
+#pd-five-hypotheses .pd-header button:focus-visible{ outline-color:var(--pd-white); }
+#pd-five-hypotheses .pd-icon{ display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; flex:0 0 24px; vertical-align:middle; }
+#pd-five-hypotheses .pd-icon img{ display:block; width:20px; height:20px; object-fit:contain; pointer-events:none; }
+#pd-five-hypotheses .pd-icon::before{ content:""; display:block; width:100%; height:100%; max-width:20px; max-height:20px; background:currentColor; -webkit-mask:var(--pd-art) center/contain no-repeat; mask:var(--pd-art) center/contain no-repeat; }
+#pd-five-hypotheses .pd-body{ position:relative; flex:1; min-height:0; overflow:auto; overscroll-behavior:contain; scrollbar-width:none; padding:16px; }
+#pd-five-hypotheses .pd-body::-webkit-scrollbar{ display:none; }
+#pd-five-hypotheses .pd-stack{ display:flex; flex-direction:column; gap:12px; min-width:0; }
+#pd-five-hypotheses .pd-row{ display:flex; align-items:center; gap:8px; min-width:0; }
+#pd-five-hypotheses .pd-row>*{ min-width:0; }
+#pd-five-hypotheses .pd-between{ justify-content:space-between; flex-wrap:wrap; }
+#pd-five-hypotheses .pd-section{ padding:12px; border:1px solid var(--pd-line); border-radius:22px; background:var(--pd-white); min-width:0; overflow-wrap:anywhere; }
+#pd-five-hypotheses .pd-action, #pd-five-hypotheses .pd-small-action{ display:flex; align-items:center; justify-content:center; gap:8px; min-height:48px; min-width:0; border:1px solid var(--pd-blue)!important; padding:8px 12px!important; border-radius:14px; background:var(--pd-white)!important; color:var(--pd-blue)!important; font-size:19px!important; line-height:1.3; font-weight:700!important; text-align:center; text-decoration:none; overflow-wrap:anywhere; }
+#pd-five-hypotheses .pd-small-action{ border-color:var(--pd-line)!important; font-size:16px!important; font-weight:400!important; color:var(--pd-ink)!important; }
+#pd-five-hypotheses .pd-action.pd-primary{ background:var(--pd-blue)!important; color:var(--pd-white)!important; }
+#pd-five-hypotheses .pd-action.pd-primary .pd-icon img{ filter:brightness(0) invert(1); }
+#pd-five-hypotheses .pd-phone button:disabled{ border-color:var(--pd-line)!important; background:var(--pd-field)!important; color:var(--pd-muted)!important; }
+#pd-five-hypotheses .pd-row>.pd-action{ flex:1; }
+#pd-five-hypotheses .pd-field{ display:flex; flex-direction:column; gap:4px; min-width:0; }
+#pd-five-hypotheses .pd-input{ width:100%; min-height:48px; border:1px solid var(--pd-line); padding:8px 12px; border-radius:12px; background:var(--pd-white); color:var(--pd-ink); font-size:16px; }
+#pd-five-hypotheses .pd-input[aria-invalid="true"]{ border-color:#d96262; }
+#pd-five-hypotheses .pd-chip{ display:inline-flex; align-items:center; gap:4px; padding:4px 8px; border-radius:10px; background:var(--pd-field); color:var(--pd-ink); font-size:14px; }
+#pd-five-hypotheses .pd-inline-status{ display:flex; align-items:center; gap:8px; }
+#pd-five-hypotheses .pd-separator{ height:1px; background:var(--pd-line); flex-shrink:0; }
+#pd-five-hypotheses .pd-error{ border-left:3px solid #d96262; padding:8px 12px; background:var(--pd-field); border-radius:0 10px 10px 0; }
+#pd-five-hypotheses .pd-footer{ flex:0 0 84px; border-top:1px solid var(--pd-line); background:var(--pd-white); padding:4px 16px 12px; }
+#pd-five-hypotheses .pd-nav{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); }
+#pd-five-hypotheses .pd-nav button{ min-height:60px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; font-size:13px; color:var(--pd-muted); }
+#pd-five-hypotheses .pd-nav-mark{ width:48px; height:28px; display:flex; align-items:center; justify-content:center; border-radius:12px; }
+#pd-five-hypotheses .pd-nav [aria-current="page"]{ color:var(--pd-ink); }
+#pd-five-hypotheses .pd-nav [aria-current="page"] .pd-nav-mark{ background:var(--pd-field); }
+#pd-five-hypotheses .pd-gesture{ width:112px; height:4px; border-radius:4px; background:var(--pd-ink); margin:4px auto 0; }
+#pd-five-hypotheses .pd-toolbar-controls{ display:flex; gap:8px; align-items:center; }
+#pd-five-hypotheses .pd-segment{ flex:1; display:flex; padding:3px; background:var(--pd-field); border-radius:14px; }
+#pd-five-hypotheses .pd-segment button{ min-height:44px; flex:1; padding:8px; border-radius:11px; }
+#pd-five-hypotheses .pd-segment button[aria-pressed="true"]{ background:var(--pd-white); box-shadow:inset 0 0 0 1px var(--pd-line); }
+#pd-five-hypotheses .pd-square{ width:48px; height:48px; flex:0 0 48px; border:1px solid var(--pd-line)!important; border-radius:14px; background:var(--pd-white)!important; display:flex; align-items:center; justify-content:center; text-decoration:none; }
+#pd-five-hypotheses .pd-heading-row{ display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin:4px 0 0; }
+#pd-five-hypotheses .pd-visit{ display:grid; grid-template-columns:76px minmax(0,1fr); column-gap:12px; row-gap:8px; padding:12px 0; border-bottom:1px solid var(--pd-line); }
+#pd-five-hypotheses .pd-visit:last-child{ border-bottom:0; padding-bottom:0; }
+#pd-five-hypotheses .pd-visit:first-child{ padding-top:0; }
+#pd-five-hypotheses .pd-visit-time{ font-size:19px; line-height:1.3; font-weight:700; }
+#pd-five-hypotheses .pd-visit .pd-actions{ grid-column:1/-1; }
+#pd-five-hypotheses .pd-visit-info{ display:flex; flex-direction:column; gap:4px; min-width:0; }
+#pd-five-hypotheses .pd-actions{ display:flex; align-items:stretch; gap:8px; }
+#pd-five-hypotheses .pd-actions>.pd-action{ flex:1; }
+#pd-five-hypotheses .pd-dot{ display:inline-block; width:6px; height:6px; flex:0 0 6px; border-radius:50%; background:#1b9dd9; }
+#pd-five-hypotheses .pd-dot.pd-amber{ background:#ffb21c; }
+#pd-five-hypotheses .pd-dot.pd-red{ background:#d96262; }
+#pd-five-hypotheses .pd-request-link{ width:100%; text-align:left; display:flex; align-items:flex-start; justify-content:space-between; gap:8px; min-height:48px; }
+#pd-five-hypotheses .pd-request-link .pd-title{ flex:1; }
+#pd-five-hypotheses .pd-schedule-line{ padding:8px 12px; background:var(--pd-field); border-radius:12px; }
+#pd-five-hypotheses .pd-sheet-wrap{ position:absolute; z-index:5; inset:0; display:flex; align-items:flex-end; background:rgb(24 24 24 / 24%); }
+#pd-five-hypotheses .pd-sheet{ width:100%; max-height:100%; overflow:auto; padding:16px; background:var(--pd-white); border:1px solid var(--pd-line); border-radius:24px 24px 0 0; }
+#pd-five-hypotheses .pd-sheet .pd-sheet-heading{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
+#pd-five-hypotheses .pd-preview-message{ margin-top:12px; padding:12px; border:1px solid var(--pd-line); border-radius:14px; background:var(--pd-white); }
+#pd-five-hypotheses .pd-sync-document{ gap:8px; }
+#pd-five-hypotheses .pd-overlay{ position:absolute; z-index:10; inset:0; display:grid; place-items:center; padding:16px; background:rgb(24 24 24 / 24%); }
+#pd-five-hypotheses .pd-overlay-panel{ width:100%; max-height:100%; overflow:auto; background:var(--pd-white); border:1px solid var(--pd-line); border-radius:22px; padding:16px; }
+#pd-five-hypotheses .pd-live{ position:absolute; width:1px; height:1px; padding:0; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+@media(max-width:359px){#pd-five-hypotheses .pd-header-icons{ gap:4px; }
+#pd-five-hypotheses .pd-toolbar h1{ font-size:20px; }
+#pd-five-hypotheses .pd-toolbar{ gap:4px; }
+#pd-five-hypotheses .pd-visit{ grid-template-columns:64px minmax(0,1fr); gap:8px; }
+ }
+
+
+</style>
+<script>
+(() => {
+  'use strict';
+  const pdIconAssets={"chevron":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjUuMDQ1ODMiIGhlaWdodD0iOS4xMjkxNyIgdmlld0JveD0iMCAwIDUuMDQ1ODMgOS4xMjkxNyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTAuNDgxMjUgMC40ODEyNUw0LjU2NDU4IDQuNTY0NThMMC40ODEyNSA4LjY0NzkyIiBzdHJva2Utd2lkdGg9IjAuOTYyNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2U9IiM2MTYyNjQiLz4KPC9nPgo8L3N2Zz4K","phone":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjMTgxODE4IiBkPSJNMjAuMDEsMTUuMzhjLTEuMjMsMCAtMi40MiwtMC4yIC0zLjUzLC0wLjU2IC0wLjM1LC0wLjEyIC0wLjc0LC0wLjAzIC0xLjAxLDAuMjRsLTEuNTcsMS45N2MtMi44MywtMS4zNSAtNS40OCwtMy45IC02Ljg5LC02LjgzbDEuOTUsLTEuNjZjMC4yNywtMC4yOCAwLjM1LC0wLjY3IDAuMjQsLTEuMDIgLTAuMzcsLTEuMTEgLTAuNTYsLTIuMyAtMC41NiwtMy41MyAwLC0wLjU0IC0wLjQ1LC0wLjk5IC0wLjk5LC0wLjk5SDQuMTlDMy42NSwzIDMsMy4yNCAzLDMuOTkgMywxMy4yOCAxMC43MywyMSAyMC4wMSwyMWMwLjcxLDAgMC45OSwtMC42MyAwLjk5LC0xLjE4di0zLjQ1YzAsLTAuNTQgLTAuNDUsLTAuOTkgLTAuOTksLTAuOTl6Ii8+PC9zdmc+DQo=","clock":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjEyLjQzMzMiIGhlaWdodD0iMTIuNDMzMyIgdmlld0JveD0iMCAwIDEyLjQzMzMgMTIuNDMzMyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTExLjg4MzMgNi4yMTY2N0MxMS44ODMzIDkuMzQ2MjggOS4zNDYyOCAxMS44ODMzIDYuMjE2NjcgMTEuODgzM0MzLjA4NzA1IDExLjg4MzMgMC41NSA5LjM0NjI4IDAuNTUgNi4yMTY2N0MwLjU1IDMuMDg3MDUgMy4wODcwNSAwLjU1IDYuMjE2NjcgMC41NUM5LjM0NjI4IDAuNTUgMTEuODgzMyAzLjA4NzA1IDExLjg4MzMgNi4yMTY2N1oiIHN0cm9rZS13aWR0aD0iMS4xIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZT0iIzYxNjI2NCIvPgo8cGF0aCBpZD0iVmVjdG9yXzIiIGQ9Ik02LjIxNjY3IDIuODgzMzNWNi4yMTY2N0w4LjIxNjY3IDcuNTUiIHN0cm9rZS13aWR0aD0iMS4xIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZT0iIzYxNjI2NCIvPgo8L2c+Cjwvc3ZnPgo=","search":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE3LjciIGhlaWdodD0iMTcuNyIgdmlld0JveD0iMCAwIDE3LjcgMTcuNyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTEzLjg1IDcuMzVDMTMuODUgMTAuOTM5OSAxMC45Mzk5IDEzLjg1IDcuMzUgMTMuODVDMy43NjAxNSAxMy44NSAwLjg1IDEwLjkzOTkgMC44NSA3LjM1QzAuODUgMy43NjAxNSAzLjc2MDE1IDAuODUgNy4zNSAwLjg1QzEwLjkzOTkgMC44NSAxMy44NSAzLjc2MDE1IDEzLjg1IDcuMzVaIiBzdHJva2Utd2lkdGg9IjEuNyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2U9IiMxODE4MTgiLz4KPHBhdGggaWQ9IlZlY3Rvcl8yIiBkPSJNMTIuMzUgMTIuMzVMMTYuODUgMTYuODUiIHN0cm9rZS13aWR0aD0iMS43IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZT0iIzE4MTgxOCIvPgo8L2c+Cjwvc3ZnPgo=","funnel":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE3LjciIGhlaWdodD0iMTYuNyIgdmlld0JveD0iMCAwIDE3LjcgMTYuNyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTAuODUwMDEyIDAuODVIMTYuODVMMTAuODUgNy44NVYxMy44NUw2Ljg1MDAxIDE1Ljg1VjcuODVMMC44NTAwMTIgMC44NVoiIHN0cm9rZS13aWR0aD0iMS43IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZT0iIzE4MTgxOCIvPgo8L2c+Cjwvc3ZnPgo=","help":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE5LjciIGhlaWdodD0iMTkuNyIgdmlld0JveD0iMCAwIDE5LjcgMTkuNyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KCjxwYXRoIGlkPSJWZWN0b3JfMiIgZD0iTTYuODUgNS44NUM2Ljg1IDUuMDU0MzUgNy4xNjYwNyA0LjI5MTI5IDcuNzI4NjggMy43Mjg2OEM4LjI5MTI5IDMuMTY2MDcgOS4wNTQzNSAyLjg1IDkuODUgMi44NUMxMC42NDU2IDIuODUgMTEuNDA4NyAzLjE2NjA3IDExLjk3MTMgMy43Mjg2OEMxMi41MzM5IDQuMjkxMjkgMTIuODUgNS4wNTQzNSAxMi44NSA1Ljg1QzEyLjg1IDguODUgOS44NSA3Ljg1IDkuODUgMTAuODVNOS44NSAxNC44NVYxNC45NSIgc3Ryb2tlLXdpZHRoPSIxLjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlPSJ3aGl0ZSIvPgo8L2c+Cjwvc3ZnPgo=","bell":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE1LjcwMDEiIGhlaWdodD0iMTkuNyIgdmlld0JveD0iMCAwIDE1LjcwMDEgMTkuNyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTUuODUwMDIgMTguODVIOS44NTAwMk03Ljg1MDAyIDEuODVWMC44NU0yLjg1MDAyIDEzLjg1VjguODVDMi44NTAwMiA3LjUyMzkyIDMuMzc2ODEgNi4yNTIxNSA0LjMxNDQ5IDUuMzE0NDdDNS4yNTIxNyA0LjM3Njc4IDYuNTIzOTQgMy44NSA3Ljg1MDAyIDMuODVDOS4xNzYxMSAzLjg1IDEwLjQ0NzkgNC4zNzY3OCAxMS4zODU2IDUuMzE0NDdDMTIuMzIzMiA2LjI1MjE1IDEyLjg1IDcuNTIzOTIgMTIuODUgOC44NVYxMy44NUwxNC44NSAxNS44NUgwLjg1MDAyNUwyLjg1MDAyIDEzLjg1WiIgc3Ryb2tlLXdpZHRoPSIxLjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlPSJ3aGl0ZSIvPgo8L2c+Cjwvc3ZnPgo=","profile":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE5LjciIGhlaWdodD0iMTkuNyIgdmlld0JveD0iMCAwIDE5LjcgMTkuNyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KCjxwYXRoIGlkPSJWZWN0b3JfMiIgZD0iTTEyLjg1IDYuODVDMTIuODUgOC41MDY4NSAxMS41MDY5IDkuODUgOS44NSA5Ljg1QzguMTkzMTUgOS44NSA2Ljg1IDguNTA2ODUgNi44NSA2Ljg1QzYuODUgNS4xOTMxNSA4LjE5MzE1IDMuODUgOS44NSAzLjg1QzExLjUwNjkgMy44NSAxMi44NSA1LjE5MzE1IDEyLjg1IDYuODVaIiBzdHJva2Utd2lkdGg9IjEuNyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2U9IndoaXRlIi8+CjxwYXRoIGlkPSJWZWN0b3JfMyIgZD0iTTMuODUgMTYuODVDMy44NSAxMC44NSAxNS44NSAxMC44NSAxNS44NSAxNi44NSIgc3Ryb2tlLXdpZHRoPSIxLjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlPSJ3aGl0ZSIvPgo8L2c+Cjwvc3ZnPgo=","offline":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjI0IiBoZWlnaHQ9IjE4IiB2aWV3Qm94PSIwIDAgMjQgMTgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGlkPSJPZmZsaW5lIiBkPSJNMTkuMzU1IDYuMDM1QzE4LjY3NSAyLjU5NSAxNS42NCAwIDEyIDBDMTAuNTI1IDAgOS4xNSAwLjQzNSA3Ljk5IDEuMTdMOS40NSAyLjYzQzEwLjIxNSAyLjIzNSAxMS4wOCAyIDEyIDJDMTUuMDQgMiAxNy41IDQuNDYgMTcuNSA3LjVWOEgxOUMyMC42NTUgOCAyMiA5LjM0NSAyMiAxMUMyMiAxMi4xMzUgMjEuMzY1IDEzLjExIDIwLjQzNSAxMy42MkwyMS44ODUgMTUuMDdDMjMuMTYgMTQuMTY1IDI0IDEyLjY4NSAyNCAxMUMyNCA4LjM2IDIxLjk0NSA2LjIyIDE5LjM1NSA2LjAzNVpNMyAxLjI3NUw1Ljc1IDQuMDE1QzIuNTYgNC4xNSAwIDYuNzc1IDAgMTBDMCAxMy4zMTUgMi42ODUgMTYgNiAxNkgxNy43MjVMMTkuNzI1IDE4TDIxIDE2LjczTDQuMjc1IDBMMyAxLjI3NVpNNy43MjUgNkwxNS43MjUgMTRINkMzLjc5IDE0IDIgMTIuMjEgMiAxMEMyIDcuNzkgMy43OSA2IDYgNkg3LjcyNVoiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo=","upload":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE4IiBoZWlnaHQ9IjE4IiB2aWV3Qm94PSIwIDAgMTggMTgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIGlkPSJpY29ucy9maWxlL2ljX2Nsb3VkX3VwbG9hZF80OHB4IiBjbGlwLXBhdGg9InVybCgjY2xpcDBfMF8xMjcpIj4KPGcgaWQ9IlZlY3RvciI+CjwvZz4KPHBhdGggaWQ9IlZlY3Rvcl8yIiBkPSJNMTQuNTE2MiA3LjUyNjI1QzE0LjAwNjIgNC45NDYyNSAxMS43MyAzIDkgM0M2LjgzMjUgMyA0Ljk1Mzc1IDQuMjMgNC4wMTI1IDYuMDI2MjVDMS43NTg3NSA2LjI3IDAgOC4xNzg3NSAwIDEwLjVDMCAxMi45ODYyIDIuMDEzNzUgMTUgNC41IDE1SDE0LjI1QzE2LjMyIDE1IDE4IDEzLjMyIDE4IDExLjI1QzE4IDkuMjcgMTYuNDU4NyA3LjY2NSAxNC41MTYyIDcuNTI2MjVaTTEwLjUgOS43NVYxMi43NUg3LjVWOS43NUg1LjI1TDkgNkwxMi43NSA5Ljc1SDEwLjVaIiBmaWxsPSIjRkZCMjFDIi8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDBfMF8xMjciPgo8cmVjdCB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIGZpbGw9IndoaXRlIi8+CjwvY2xpcFBhdGg+CjwvZGVmcz4KPC9zdmc+Cg==","close":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjEzLjciIGhlaWdodD0iMTMuNyIgdmlld0JveD0iMCAwIDEzLjcgMTMuNyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTAuODUgMC44NUw2Ljg1IDYuODVNNi44NSA2Ljg1TDEyLjg1IDEyLjg1TTYuODUgNi44NUwxMi44NSAwLjg1TTYuODUgNi44NUwwLjg1IDEyLjg1IiBzdHJva2Utd2lkdGg9IjEuNyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2U9IiM2MTYyNjQiLz4KPC9nPgo8L3N2Zz4K","signal":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjExLjgyOTIiIGhlaWdodD0iMTEuODI5MiIgdmlld0JveD0iMCAwIDExLjgyOTIgMTEuODI5MiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTAuNjAyMDgzIDExLjIyNzFWOS4xMDIwOE00LjE0Mzc1IDExLjIyNzFWNi4yNjg3NU03LjY4NTQyIDExLjIyNzFWMy40MzU0Mk0xMS4yMjcxIDExLjIyNzFWMC42MDIwODMiIHN0cm9rZS13aWR0aD0iMS4yMDQxNyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2U9IndoaXRlIi8+CjwvZz4KPC9zdmc+Cg==","wifi":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjEzLjk1NDIiIGhlaWdodD0iMTIuMDI0OCIgdmlld0JveD0iMCAwIDEzLjk1NDIgMTIuMDI0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTAuNjAyMDk3IDIuOTIyNzJDMi4zODgxOCAxLjQyMzc0IDQuNjQ1MzUgMC42MDIwODMgNi45NzcxIDAuNjAyMDgzQzkuMzA4ODQgMC42MDIwODMgMTEuNTY2IDEuNDIzNzQgMTMuMzUyMSAyLjkyMjcyTTIuNzI3MSA1Ljc1NjA1QzMuODk1ODkgNC43MTA2NSA1LjQwODk5IDQuMTMyNyA2Ljk3NzEgNC4xMzI3QzguNTQ1MiA0LjEzMjcgMTAuMDU4MyA0LjcxMDY1IDExLjIyNzEgNS43NTYwNU00Ljg1MjEgOC41ODkzOUM1LjExNzk4IDguMjg3OSA1LjQ0NDk4IDguMDQ2NDQgNS44MTEzNiA3Ljg4MTA1QzYuMTc3NzQgNy43MTU2NiA2LjU3NTEyIDcuNjMwMTMgNi45NzcxIDcuNjMwMTNDNy4zNzkwOCA3LjYzMDEzIDcuNzc2NDYgNy43MTU2NiA4LjE0Mjg0IDcuODgxMDVDOC41MDkyMiA4LjA0NjQ0IDguODM2MjEgOC4yODc5IDkuMTAyMSA4LjU4OTM5TTYuOTc3MSAxMS40MjI3SDcuMDQ3OTMiIHN0cm9rZS13aWR0aD0iMS4yMDQxNyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2U9IndoaXRlIi8+CjwvZz4KPC9zdmc+Cg==","battery":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE1LjUyNSIgaGVpZ2h0PSI4Ljc3NSIgdmlld0JveD0iMCAwIDE1LjUyNSA4Ljc3NSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTIuMTM3NSAwLjYzNzVIMTEuODg3NUMxMi43MTU5IDAuNjM3NSAxMy4zODc1IDEuMzA5MDcgMTMuMzg3NSAyLjEzNzVWNi42Mzc1QzEzLjM4NzUgNy40NjU5MyAxMi43MTU5IDguMTM3NSAxMS44ODc1IDguMTM3NUgyLjEzNzVDMS4zMDkwNyA4LjEzNzUgMC42Mzc1IDcuNDY1OTMgMC42Mzc1IDYuNjM3NVYyLjEzNzVDMC42Mzc1IDEuMzA5MDcgMS4zMDkwNyAwLjYzNzUgMi4xMzc1IDAuNjM3NVoiIHN0cm9rZS13aWR0aD0iMS4yNzUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlPSJ3aGl0ZSIvPgo8cGF0aCBpZD0iVmVjdG9yXzIiIGQ9Ik0xNC44ODc1IDIuODg3NVY1Ljg4NzVNMi44ODc1IDIuODg3NUgxMC4zODc1VjUuODg3NUgyLjg4NzVWMi44ODc1WiIgc3Ryb2tlLXdpZHRoPSIxLjI3NSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2U9IndoaXRlIi8+CjwvZz4KPC9zdmc+Cg==","bids":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE0LjM0NTgiIGhlaWdodD0iMTguMDEyNSIgdmlld0JveD0iMCAwIDE0LjM0NTggMTguMDEyNSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTMuMDQ3OTIgMS42NzI5MkgxMS4yOTc5QzEyLjU2MzYgMS42NzI5MiAxMy41ODk2IDIuNjk4OTMgMTMuNTg5NiAzLjk2NDU4VjE0Ljk2NDZDMTMuNTg5NiAxNi4yMzAyIDEyLjU2MzYgMTcuMjU2MyAxMS4yOTc5IDE3LjI1NjNIMy4wNDc5MkMxLjc4MjI2IDE3LjI1NjMgMC43NTYyNSAxNi4yMzAyIDAuNzU2MjUgMTQuOTY0NlYzLjk2NDU4QzAuNzU2MjUgMi42OTg5MyAxLjc4MjI2IDEuNjcyOTIgMy4wNDc5MiAxLjY3MjkyWiIgc3Ryb2tlLXdpZHRoPSIxLjUxMjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlPSIjMDA4NEMxIi8+CjxwYXRoIGlkPSJWZWN0b3JfMiIgZD0iTTQuNDIyOTIgOC4wODk1OEg5LjkyMjkyTTQuNDIyOTIgMTEuNzU2M0g4LjA4OTU4TTQuNDIyOTIgMC43NTYyNUg5LjkyMjkyVjQuNDIyOTJINC40MjI5MlYwLjc1NjI1WiIgc3Ryb2tlLXdpZHRoPSIxLjUxMjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlPSIjMDA4NEMxIi8+CjwvZz4KPC9zdmc+Cg==","acts":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE2LjE3OTIiIGhlaWdodD0iMTguMDEyNSIgdmlld0JveD0iMCAwIDE2LjE3OTIgMTguMDEyNSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTE1LjQyMjkgNS4zMzk1OFY0LjQyMjkyTDExLjc1NjMgMC43NTYyNUg0LjQyMjkyVjE3LjI1NjNIMTUuNDIyOVY1LjMzOTU4Wk0xMS43NTYzIDAuNzU2MjVWNS4zMzk1OEgxNS40MjI5TTAuNzU2MjUgMy41MDYyNVYxNy4yNTYzTTcuMTcyOTIgOS4wMDYyNUgxMi42NzI5TTcuMTcyOTIgMTIuNjcyOUgxMi42NzI5IiBzdHJva2Utd2lkdGg9IjEuNTEyNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2U9IiM2MTYyNjQiLz4KPC9nPgo8L3N2Zz4K","equipment":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE4LjAxMjUiIGhlaWdodD0iMTMuNTQyMiIgdmlld0JveD0iMCAwIDE4LjAxMjUgMTMuNTQyMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTEuNjcyOTIgMTIuNzg1OEMxLjAyNDc2IDExLjUyODEgMC43MTA5MTIgMTAuMTI1IDAuNzYxNTM0IDguNzExMDdDMC44MTIxNTUgNy4yOTcxNiAxLjIyNTU0IDUuOTIwMDIgMS45NjE5OCA0LjcxMTk4QzIuNjk4NDIgMy41MDM5NCAzLjczMzE1IDIuNTA1NTggNC45NjY3NyAxLjgxMjg0QzYuMjAwMzkgMS4xMjAxIDcuNTkxNDMgMC43NTYyNSA5LjAwNjI1IDAuNzU2MjVDMTAuNDIxMSAwLjc1NjI1IDExLjgxMjEgMS4xMjAxIDEzLjA0NTcgMS44MTI4NEMxNC4yNzkzIDIuNTA1NTggMTUuMzE0MSAzLjUwMzk0IDE2LjA1MDUgNC43MTE5OEMxNi43ODcgNS45MjAwMiAxNy4yMDAzIDcuMjk3MTYgMTcuMjUxIDguNzExMDdDMTcuMzAxNiAxMC4xMjUgMTYuOTg3NyAxMS41MjgxIDE2LjMzOTYgMTIuNzg1OE05LjAwNjI1IDguMjAyNDNMMTMuNTg5NiAzLjYxOTEiIHN0cm9rZS13aWR0aD0iMS41MTI1IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZT0iIzYxNjI2NCIvPgo8cGF0aCBpZD0iVmVjdG9yXzIiIGQ9Ik05LjkyMjkyIDguMjAyNDNDOS45MjI5MiA4LjcwODY5IDkuNTEyNTEgOS4xMTkxIDkuMDA2MjUgOS4xMTkxQzguNDk5OTkgOS4xMTkxIDguMDg5NTggOC43MDg2OSA4LjA4OTU4IDguMjAyNDNDOC4wODk1OCA3LjY5NjE3IDguNDk5OTkgNy4yODU3NiA5LjAwNjI1IDcuMjg1NzZDOS41MTI1MSA3LjI4NTc2IDkuOTIyOTIgNy42OTYxNyA5LjkyMjkyIDguMjAyNDNaIiBzdHJva2Utd2lkdGg9IjEuNTEyNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2U9IiM2MTYyNjQiLz4KPC9nPgo8L3N2Zz4K","guide":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE4LjAxMjUiIGhlaWdodD0iMTcuNDU1NSIgdmlld0JveD0iMCAwIDE4LjAxMjUgMTcuNDU1NSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTkuMDA2MjUgMi4wMzI1NFYyLjk0OTJNOS4wMDYyNSAyLjk0OTJWMTYuNjk5Mk05LjAwNjI1IDE2LjY5OTJDMTEuNzU2MyAxNC44NjU5IDEzLjU4OTYgMTMuOTQ5MiAxNy4yNTYzIDE0Ljg2NTlWMS4xMTU4N0MxMy41ODk2IDAuMTk5MjAzIDExLjc1NjMgMS4xMTU4NyA5LjAwNjI1IDIuOTQ5MkM2LjI1NjI1IDEuMTE1ODcgNC40MjI5MiAwLjE5OTIwMyAwLjc1NjI1IDEuMTE1ODdWMTQuODY1OUM0LjQyMjkyIDEzLjk0OTIgNi4yNTYyNSAxNC44NjU5IDkuMDA2MjUgMTYuNjk5MloiIHN0cm9rZS13aWR0aD0iMS41MTI1IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZT0iIzYxNjI2NCIvPgo8L2c+Cjwvc3ZnPgo=","back":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iYmxhY2siIGQ9Ik0yMCwxMUg3LjgzbDUuNTksLTUuNTlMMTIsNGwtOCw4IDgsOCAxLjQxLC0xLjQxTDcuODMsMTNIMjB2LTJ6Ii8+PC9zdmc+","calendar":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxOCAyMCI+PHBhdGggZmlsbD0iYmxhY2siIGQ9Ik0xNiwySDE1VjBIMTNWMkg1VjBIM1YySDJDMC44OSwyIDAuMDEsMi45IDAuMDEsNEwwLDE4QzAsMTkuMSAwLjg5LDIwIDIsMjBIMTZDMTcuMSwyMCAxOCwxOS4xIDE4LDE4VjRDMTgsMi45IDE3LjEsMiAxNiwyWk0xNiwxOEgyVjdIMTZWMThaTTQsOUg5VjE0SDRWOVoiLz48L3N2Zz4=","check":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iYmxhY2siIGQ9Ik05LDE2LjE3TDQuODMsMTJsLTEuNDIsMS40MUw5LDE5IDIxLDdsLTEuNDEsLTEuNDF6Ii8+PC9zdmc+","camera":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCI+PHBhdGggZmlsbD0iYmxhY2siIGQ9Ik02LDhWMkgxMFY4SDE2VjEySDEwVjE4SDZWMTJIMFY4SDZaTTEyLDIwVjE0SDE4VjhIMzJMMzUuNjYsMTJINDJDNDQuMiwxMiA0NiwxMy44IDQ2LDE2VjQwQzQ2LDQyLjIgNDQuMiw0NCA0Miw0NEgxMEM3LjgsNDQgNiw0Mi4yIDYsNDBWMjBIMTJaTTI2LDM4QzMxLjUyLDM4IDM2LDMzLjUyIDM2LDI4QzM2LDIyLjQ4IDMxLjUyLDE4IDI2LDE4QzIwLjQ4LDE4IDE2LDIyLjQ4IDE2LDI4QzE2LDMzLjUyIDIwLjQ4LDM4IDI2LDM4Wk0xOS42LDI4QzE5LjYsMzEuNTQgMjIuNDYsMzQuNCAyNiwzNC40QzI5LjU0LDM0LjQgMzIuNCwzMS41NCAzMi40LDI4QzMyLjQsMjQuNDYgMjkuNTQsMjEuNiAyNiwyMS42QzIyLjQ2LDIxLjYgMTkuNiwyNC40NiAxOS42LDI4WiIvPjwvc3ZnPg==","edit":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iYmxhY2siIGQ9Ik0zLDE3LjI1VjIxaDMuNzVMMTcuODEsOS45NGwtMy43NSwtMy43NUwzLDE3LjI1ek0yMC43MSw3LjA0YzAuMzksLTAuMzkgMC4zOSwtMS4wMiAwLC0xLjQxbC0yLjM0LC0yLjM0Yy0wLjM5LC0wLjM5IC0xLjAyLC0wLjM5IC0xLjQxLDBsLTEuODMsMS44MyAzLjc1LDMuNzUgMS44MywtMS44M3oiLz48L3N2Zz4="};
+  const root = document.getElementById('pd-five-hypotheses');
+  if (!root) return;
+  const views = {};
+  const H = {
+    escape: value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])),
+    icon: name => {
+      if (!pdIconAssets[name]) throw new Error('Unknown icon: ' + name);
+      return `<span class="pd-icon" aria-hidden="true" style="--pd-art:url('${pdIconAssets[name]}')"></span>`;
+    }
+  };
+  const queueRequests = [
+  { id:'000393', address:'Комсомольская, 15', visit:'13:00–14:00', date:'27.10', created:'26.10', state:'Согласована', kind:'visit', action:'Создать акт', phone:'+7 (901) 123-45-67' },
+  { id:'000397', address:'Строителей, 18, кв. 24', visit:'15:00–16:00', date:'27.10', created:'26.10', state:'Согласована', kind:'visit', action:'Создать акт', phone:'+7 (901) 123-45-68' },
+  { id:'000394', address:'Лесная, 7, кв. 12', due:'Осталось 15 мин', date:'27.10', created:'27.10', state:'Назначена', kind:'agreement', action:'Согласовать', phone:'+7 (901) 123-45-69' },
+  { id:'000395', address:'Советская, 8', due:'До 14:30', date:'27.10', created:'27.10', state:'Новая', kind:'agreement', action:'Принять заявку', phone:'+7 (901) 123-45-70' },
+  { id:'000398', address:'Мира, 11', visit:'10:00–11:00', date:'28.10', created:'26.10', state:'Согласована', kind:'visit', action:'Создать акт', phone:'+7 (901) 123-45-71' }
+];
+const queueVisit = item => `<article class="pd-visit" aria-label="Заявка №${item.id}">
+  <div class="pd-visit-time">${H.escape(item.visit.split('–')[0])}<br><span class="pd-meta">до ${H.escape(item.visit.split('–')[1])}</span></div>
+  <div class="pd-visit-info"><button class="pd-request-link" type="button" data-action="queue-detail" data-id="${item.id}"><span class="pd-title">${H.escape(item.address)}</span>${H.icon('chevron')}</button><p class="pd-muted">№${item.id} · Тольятти</p><p class="pd-meta">Создана ${item.created} · ${item.state}</p></div>
+  <div class="pd-actions"><button class="pd-action" type="button" data-action="queue-act" data-id="${item.id}">${item.action}</button><button class="pd-square" type="button" data-action="queue-call" data-id="${item.id}" aria-label="Позвонить по заявке №${item.id}">${H.icon('phone')}</button></div>
+</article>`;
+const queueUnagreed = item => `<article class="pd-stack" style="gap:8px" aria-label="Заявка №${item.id}">
+  <div class="pd-row pd-between"><span class="pd-inline-status"><span class="pd-dot ${item.state==='Новая'?'pd-red':'pd-amber'}"></span>${item.state}</span><span>${H.escape(item.due)}</span></div>
+  <button class="pd-request-link" type="button" data-action="queue-detail" data-id="${item.id}"><span class="pd-title">${H.escape(item.address)}</span>${H.icon('chevron')}</button>
+  <p class="pd-meta">№${item.id} · Тольятти · Создана ${item.created}</p><p class="pd-muted">${H.escape(item.phone)}</p>
+  <div class="pd-actions"><button class="pd-action" type="button" data-action="queue-agree" data-id="${item.id}">${item.action}</button><button class="pd-square" type="button" data-action="queue-call" data-id="${item.id}" aria-label="Позвонить по заявке №${item.id}">${H.icon('phone')}</button></div>
+</article>`;
+views.queue = {
+  title:'Заявки',nav:'bids', initial:()=>({period:'today',searchOpen:false,query:'',filter:'all',filterOpen:false,notice:'',destination:''}),
+  render:s=>{
+    if(s.destination) return `<div class="pd-stack"><button class="pd-small-action" data-action="queue-return" type="button">${H.icon('back')} К заявкам</button><section class="pd-section pd-stack"><h2 class="pd-title">${H.escape(s.destination)}</h2><p class="pd-muted">Этот экран в данной гипотезе не проектируется.</p></section></div>`;
+    const filtered=queueRequests.filter(x=>(s.period==='all'||x.date==='27.10')&&(s.filter==='all'||x.kind===s.filter)&&`${x.address} ${x.id} ${x.phone}`.toLowerCase().includes(s.query.toLowerCase().trim()));
+    const visits=filtered.filter(x=>x.kind==='visit'), agreements=filtered.filter(x=>x.kind==='agreement');
+    return `<div class="pd-stack"><div class="pd-toolbar-controls"><div class="pd-segment" role="group" aria-label="Период"><button type="button" data-action="queue-today" aria-pressed="${s.period==='today'}">Сегодня</button><button type="button" data-action="queue-all" aria-pressed="${s.period==='all'}">Все</button></div><button class="pd-square" type="button" data-action="queue-search" aria-label="Поиск" aria-expanded="${s.searchOpen}">${H.icon('search')}</button><button class="pd-square" type="button" data-action="queue-filter" aria-label="Фильтр" aria-expanded="${s.filterOpen}">${H.icon('funnel')}</button></div>
+    ${s.searchOpen?`<label class="pd-field"><span>Адрес, телефон или номер</span><input class="pd-input" data-field="query" value="${H.escape(s.query)}" type="search"><button class="pd-small-action" data-action="queue-find" type="button">Найти</button></label>`:''}
+    ${s.filterOpen?`<label class="pd-field"><span>Показать</span><select class="pd-input" data-field="filter"><option value="all"${s.filter==='all'?' selected':''}>Все заявки</option><option value="visit"${s.filter==='visit'?' selected':''}>Визиты</option><option value="agreement"${s.filter==='agreement'?' selected':''}>Требуют согласования</option></select></label>`:''}
+    ${agreements.length&&visits.length?`<button class="pd-small-action pd-between" data-action="queue-urgent" type="button"><span>Нужно согласовать: ${agreements.length}<br><span class="pd-meta">Ближайший срок — через 15 мин</span></span>${H.icon('chevron')}</button>`:''}${s.notice?`<p class="pd-schedule-line" role="status">${H.escape(s.notice)}</p>`:''}
+    ${visits.length?`<div class="pd-heading-row"><h2 class="pd-title">${s.period==='today'?'Визиты сегодня':'Согласованные визиты'}</h2><span class="pd-meta">${visits.length}</span></div><section class="pd-section">${visits.map(x=>(s.period==='all'?`<p class="pd-meta">${x.date}</p>`:'')+queueVisit(x)).join('')}</section>`:''}
+    ${agreements.length?`<div class="pd-heading-row"><h2 class="pd-title">Нужно согласовать</h2><span class="pd-meta">${agreements.length}</span></div><div class="pd-stack">${agreements.map(x=>`<section class="pd-section">${queueUnagreed(x)}</section>`).join('')}</div>`:''}
+    ${!filtered.length?'<p class="pd-muted">Заявки не найдены. Измените поиск или фильтр.</p>':''}</div>`;
+  },
+  action:(s,name,el)=>{
+    if(name==='queue-today'){s.period='today';return true;} if(name==='queue-all'){s.period='all';return true;}
+    if(name==='queue-search'){s.searchOpen=!s.searchOpen;if(!s.searchOpen)s.query='';return true;}
+    if(name==='queue-filter'){s.filterOpen=!s.filterOpen;return true;} if(name==='queue-find')return true; if(name==='queue-urgent'){s.filter='agreement';s.filterOpen=true;return true;}
+    if(name==='queue-return'){s.destination='';return true;}
+    if(name==='queue-detail'){s.destination=`Заявка №${el.dataset.id}`;return true;}
+    if(name==='queue-call'){const item=queueRequests.find(x=>x.id===el.dataset.id);s.notice=`Пример звонка: ${item.phone}. Реальный звонок не выполняется.`;return true;}
+    if(name==='queue-act'){s.destination=`Акт по заявке №${el.dataset.id}`;return true;}
+    if(name==='queue-agree'){s.notice='Короткое согласование показано в следующей гипотезе.';return true;}
+    return false;
+  }
+};
+views.agreement={
+  title:'Заявки',nav:'bids',initial:()=>({sheet:false,date:'2026-10-27',slot:'14:00–15:00',draftDate:'2026-10-27',draftSlot:'14:00–15:00',agreed:false,notice:'',invalid:false,details:false}),
+  render:s=>`${s.details?`<div class="pd-stack"><button type="button" class="pd-small-action" data-action="agree-return">${H.icon('back')} К заявкам</button><p class="pd-title">Заявка №000394</p><p class="pd-muted">Отдельный экран заявки ещё не проектируется.</p></div>`:`<div class="pd-stack"${s.sheet?' inert':''}><p class="pd-muted">Сегодня, 27 октября</p><section class="pd-section pd-stack"><div class="pd-row pd-between"><span class="pd-inline-status"><span class="pd-dot ${s.agreed?'':'pd-amber'}"></span>${s.agreed?'Согласована':'Назначена'}</span><span class="pd-meta">№000394</span></div><button class="pd-request-link" type="button" data-action="agree-detail"><span class="pd-title">Лесная, 7, кв. 12</span>${H.icon('chevron')}</button><p class="pd-muted">Тольятти · Анна Смирнова</p><p class="pd-text">+7 (901) 123-45-69</p>${s.agreed?`<p class="pd-schedule-line">Визит: ${H.escape(s.date.split('-').reverse().join('.'))}, ${H.escape(s.slot)}</p>`:'<p class="pd-schedule-line">Согласовать до 13:15</p>'}<div class="pd-actions"><button class="pd-action" type="button" data-action="${s.agreed?'agree-act':'agree-open'}">${s.agreed?'Создать акт':'Согласовать'}</button><button class="pd-square" type="button" data-action="agree-call" aria-label="Позвонить Анне Смирновой">${H.icon('phone')}</button></div></section>${s.notice?`<p class="pd-preview-message" role="status">${H.escape(s.notice)}</p>`:''}${s.agreed?'<button type="button" class="pd-small-action" data-action="agree-open">Изменить время визита</button>':''}</div>`}
+    ${s.sheet?`<div class="pd-sheet-wrap"><section class="pd-sheet pd-stack" role="dialog" aria-modal="true" aria-label="Согласовать время визита"><div class="pd-sheet-heading"><h2 class="pd-title">Время визита</h2><button class="pd-icon-button" type="button" data-action="agree-cancel" aria-label="Закрыть">${H.icon('close')}</button></div><p class="pd-muted">Лесная, 7, кв. 12 · №000394</p><label class="pd-field"><span>Дата</span><input class="pd-input" data-field="draftDate" type="date" value="${H.escape(s.draftDate)}"${s.invalid&&!s.draftDate?' aria-invalid="true"':''}></label><label class="pd-field"><span>Интервал</span><select class="pd-input" data-field="draftSlot">${['10:00–11:00','11:00–12:00','13:00–14:00','14:00–15:00','15:00–16:00'].map(x=>`<option${x===s.draftSlot?' selected':''}>${x}</option>`).join('')}</select></label>${s.invalid?'<p class="pd-error" role="alert">Укажите дату и интервал визита.</p>':''}<button class="pd-action pd-primary" type="button" data-action="agree-save">Согласовать визит</button><button class="pd-small-action" type="button" data-action="agree-cancel">Отмена</button></section></div>`:''}`,
+  action:(s,name)=>{
+    if(name==='agree-open'){s.draftDate=s.date;s.draftSlot=s.slot;s.sheet=true;s.invalid=false;return true;}
+    if(name==='agree-cancel'){s.sheet=false;return true;}
+    if(name==='agree-save'){if(!/^\d{4}-\d{2}-\d{2}$/.test(s.draftDate)||!s.draftSlot){s.invalid=true;return true;}s.date=s.draftDate;s.slot=s.draftSlot;s.sheet=false;s.agreed=true;s.notice='Время визита сохранено в макете. Список остался на месте.';return true;}
+    if(name==='agree-call'){s.notice='Пример звонка: +7 (901) 123-45-69. После разговора можно нажать «Согласовать». Реальный звонок не выполняется.';return true;}
+    if(name==='agree-detail'){s.details=true;return true;} if(name==='agree-return'){s.details=false;return true;}
+    if(name==='agree-act'){s.notice='Форму акта можно посмотреть в следующей гипотезе.';return true;}
+    return false;
+  }
+};
+
+
+// Loaded inside the shared hypothesis-preview IIFE. No document access or server calls.
+const actViewEscape = value => H.escape(String(value ?? ''));
+const actViewNumber = value => {
+  const text = String(value ?? '').trim().replace(',', '.');
+  return /^\d+(?:\.\d+)?$/.test(text) && Number.isFinite(Number(text));
+};
+const actViewField = (label, key, value, options = {}) => `<label class="pd-field">
+  <span class="pd-text">${actViewEscape(label)}</span>
+  <input class="pd-input" data-field="${key}" name="${key}" value="${actViewEscape(value)}"
+    ${options.decimal ? 'inputmode="decimal"' : ''} ${options.placeholder ? `placeholder="${actViewEscape(options.placeholder)}"` : ''}
+    ${options.error ? 'aria-invalid="true"' : ''} ${options.focus ? 'data-focus="true"' : ''} autocomplete="off">
+  ${options.error ? `<span class="pd-text" style="color:var(--pd-ink,#181818)">${actViewEscape(options.error)}</span>` : ''}
+</label>`;
+
+views.entry = {
+  title: 'Новый акт',
+  nav: 'acts',
+  initial: () => ({
+    address: 'Тольятти, Комсомольская, 15',
+    meterType: 'Бетар СГВ-15',
+    equipment: 'Поверочная установка № 0281',
+    editKnown: false,
+    serial: '',
+    reading: '',
+    reviewOpen: false,
+    candidateSerial: '20349876',
+    candidateReading: '126,438',
+    reviewed: false,
+    saved: false,
+    attempted: false,
+    notice: ''
+  }),
+  render: state => {
+    const errors = state.attempted ? {
+      serial: !String(state.serial).trim() ? 'Укажите заводской номер' : '',
+      reading: !actViewNumber(state.reading) ? 'Введите показание, например 126,438' : '',
+      address: !String(state.address).trim() ? 'Укажите адрес' : ''
+    } : {};
+    if (state.reviewOpen) return `<div class="pd-stack">
+      <button type="button" class="pd-small-action" data-action="entry-cancel-review">${H.icon('back')} К заполнению</button>
+      <div>
+        <h2 class="pd-title">Проверьте распознанное</h2>
+        <p class="pd-muted">При необходимости исправьте значения перед добавлением в акт.</p>
+      </div>
+      <section class="pd-section pd-stack" aria-label="Пример распознавания">
+        <div class="pd-row"><span class="pd-chip">Пример распознавания</span></div>
+        ${actViewField('Заводской номер', 'candidateSerial', state.candidateSerial)}
+        ${actViewField('Показание, м³', 'candidateReading', state.candidateReading, { decimal: true })}
+        ${state.notice ? `<p class="pd-error" role="status">${actViewEscape(state.notice)}</p>` : ''}
+      </section>
+      <button type="button" class="pd-action" data-action="entry-accept-recognition">Добавить в акт</button>
+      <button type="button" class="pd-small-action" data-action="entry-cancel-review">Ввести вручную</button>
+    </div>`;
+
+    if (state.saved) return `<div class="pd-stack">
+      <section class="pd-section pd-stack" aria-label="Сохранённый черновик">
+        <div class="pd-row">${H.icon('check')}<span class="pd-title">Черновик сохранён в макете</span></div>
+        <p class="pd-text">Заявка №000393</p>
+        <p class="pd-muted">${actViewEscape(String(state.address).trim() || 'Адрес не указан')}</p>
+        <div class="pd-separator"></div>
+        <p class="pd-text">${actViewEscape(String(state.meterType).trim() || 'Тип счётчика не указан')}</p>
+        <p class="pd-text">Заводской номер: ${actViewEscape(String(state.serial).trim() || 'не указан')}</p>
+        <p class="pd-text">Показание: ${String(state.reading).trim() ? actViewEscape(state.reading) + ' м³' : 'не указано'}</p>
+        <p class="pd-muted">Можно продолжить заполнение позже. Акт ещё не отправлен.</p>
+      </section>
+      <button type="button" class="pd-action" data-action="entry-continue">Продолжить заполнение</button>
+    </div>`;
+
+    return `<div class="pd-stack">
+      <section class="pd-section pd-stack" aria-label="Сведения из заявки">
+        <div class="pd-row pd-between">
+          <span class="pd-meta">Из заявки №000393</span>
+          <button type="button" class="pd-small-action" data-action="entry-toggle-known">${H.icon('edit')} ${state.editKnown ? 'Готово' : 'Изменить'}</button>
+        </div>
+        ${state.editKnown ? `
+          ${actViewField('Адрес', 'address', state.address, { error: errors.address })}
+          ${actViewField('Тип счётчика', 'meterType', state.meterType)}
+          ${actViewField('Оборудование', 'equipment', state.equipment)}` : `
+          <p class="pd-title">${actViewEscape(state.address)}</p>
+          <div class="pd-separator"></div>
+          <div><p class="pd-meta">Тип счётчика</p><p class="pd-text">${actViewEscape(state.meterType)}</p></div>
+          <div><p class="pd-meta">Оборудование</p><p class="pd-text">${actViewEscape(state.equipment)}</p></div>
+          ${errors.address ? `<p class="pd-error">${actViewEscape(errors.address)}</p>` : ''}`}
+      </section>
+      <section class="pd-section pd-stack" aria-label="Данные счётчика">
+        <div class="pd-row pd-between">
+          <h2 class="pd-title">Данные счётчика</h2>
+          ${state.reviewed ? `<span class="pd-inline-status">${H.icon('check')} Проверены</span>` : ''}
+        </div>
+        ${actViewField('Заводской номер', 'serial', state.serial, { error: errors.serial, placeholder: 'На корпусе счётчика' })}
+        ${actViewField('Показание, м³', 'reading', state.reading, { decimal: true, error: errors.reading, placeholder: 'Например, 126,438' })}
+        <button type="button" class="pd-small-action" data-action="entry-recognize">${H.icon('camera')} Пример распознавания</button>
+      </section>
+      <button type="button" class="pd-action" data-action="entry-save">Сохранить черновик</button>
+    </div>`;
+  },
+  action: (state, name) => {
+    if (name === 'entry-toggle-known') { state.editKnown = !state.editKnown; return true; }
+    if (name === 'entry-recognize') { state.reviewOpen = true; state.notice = ''; return true; }
+    if (name === 'entry-cancel-review') { state.reviewOpen = false; state.notice = ''; return true; }
+    if (name === 'entry-accept-recognition') {
+      if (!String(state.candidateSerial).trim() || !actViewNumber(state.candidateReading)) {
+        state.notice = 'Проверьте номер и числовое показание.';
+        return true;
+      }
+      state.serial = String(state.candidateSerial).trim();
+      state.reading = String(state.candidateReading).trim();
+      state.reviewed = true;
+      state.reviewOpen = false;
+      state.notice = '';
+      return true;
+    }
+    if (name === 'entry-save') {
+      state.attempted = false;
+      state.saved = true;
+      return true;
+    }
+    if (name === 'entry-continue') { state.saved = false; return true; }
+    return false;
+  }
+};
+
+const validationIssues = state => [
+  ...(!actViewNumber(state.reading) ? [{ id: 'reading', title: 'Укажите показание', detail: 'Счётчик горячей воды · №20349876', icon: 'edit' }] : []),
+  ...(!state.photoAttached ? [{ id: 'photo', title: 'Добавьте фото счётчика', detail: 'Счётчик горячей воды · №20349876', icon: 'camera' }] : [])
+];
+
+views.validation = {
+  title: 'Проверка акта',
+  nav: 'acts',
+  initial: () => ({
+    reading: '',
+    readingDraft: '',
+    photoAttached: false,
+    editing: '',
+    invalid: false,
+    ready: false
+  }),
+  render: state => {
+    if (state.editing === 'reading') return `<div class="pd-stack">
+      <button type="button" class="pd-small-action" data-action="validation-back">${H.icon('back')} К проверке акта</button>
+      <div><h2 class="pd-title">Показание счётчика</h2><p class="pd-muted">Горячая вода · №20349876</p></div>
+      <section class="pd-section pd-stack">
+        <p class="pd-text">Бетар СГВ-15</p>
+        ${actViewField('Показание, м³', 'readingDraft', state.readingDraft, {
+          decimal: true, focus: true, placeholder: 'Например, 126,438',
+          error: state.invalid ? 'Введите число без знака, например 126,438' : ''
+        })}
+      </section>
+      <button type="button" class="pd-action" data-action="validation-save-reading">Сохранить показание</button>
+    </div>`;
+
+    if (state.editing === 'photo') return `<div class="pd-stack">
+      <button type="button" class="pd-small-action" data-action="validation-back">${H.icon('back')} К проверке акта</button>
+      <div><h2 class="pd-title">Фото счётчика</h2><p class="pd-muted">Горячая вода · №20349876</p></div>
+      <section class="pd-section pd-stack">
+        <div class="pd-row">${H.icon('camera')}<p class="pd-text">Номер и показание должны быть читаемы.</p></div>
+        <p class="pd-muted">В этом макете можно добавить только демонстрационный пример.</p>
+      </section>
+      <button type="button" class="pd-action" data-action="validation-add-photo">Добавить пример фото</button>
+    </div>`;
+
+    const issues = validationIssues(state);
+    if (state.ready && !issues.length) return `<div class="pd-stack">
+      <section class="pd-section pd-stack">
+        <div class="pd-row">${H.icon('check')}<h2 class="pd-title">Акт готов к отправке</h2></div>
+        <p class="pd-text">Акт №000393</p>
+        <p class="pd-muted">Тольятти, Комсомольская, 15</p>
+        <div class="pd-separator"></div>
+        <p class="pd-text">Показание: ${actViewEscape(state.reading)} м³</p>
+        <p class="pd-text">Фото счётчика добавлено</p>
+        <p class="pd-muted">Отправка ещё не выполнена.</p>
+      </section>
+      <button type="button" class="pd-action" data-action="validation-return">Вернуться к акту</button>
+    </div>`;
+
+    return `<div class="pd-stack">
+      <section class="pd-section pd-stack" aria-label="Проверяемый акт">
+        <p class="pd-meta">Акт №000393</p>
+        <h2 class="pd-title">Комсомольская, 15</h2>
+        <p class="pd-muted">Тольятти</p>
+        <div class="pd-separator"></div>
+        <p class="pd-text">Бетар СГВ-15 · №20349876</p>
+      </section>
+      <div><h2 class="pd-title">${issues.length ? 'Что нужно исправить' : 'Все замечания устранены'}</h2>
+        <p class="pd-muted">${issues.length ? 'Перейдите к полю — остальные данные сохранятся.' : 'Можно повторно проверить готовность акта.'}</p></div>
+      ${issues.length ? `<section class="pd-section" aria-label="Причины неготовности">
+        ${issues.map((issue, index) => `<div ${index ? 'class="pd-separator"' : ''}></div>
+          <button type="button" class="pd-row pd-between" style="width:100%;min-height:72px;text-align:left;padding:8px 0;color:#181818" data-action="validation-fix-${issue.id}">
+            <span class="pd-row">${H.icon(issue.icon)}<span><span class="pd-text" style="display:block">${actViewEscape(issue.title)}</span><span class="pd-meta" style="display:block">${actViewEscape(issue.detail)}</span></span></span>
+            ${H.icon('chevron')}
+          </button>`).join('')}
+      </section>` : `<section class="pd-section pd-stack" aria-label="Исправленные данные">
+        <div class="pd-row">${H.icon('check')}<p class="pd-text">Показание: ${actViewEscape(state.reading)} м³</p></div>
+        <div class="pd-row">${H.icon('check')}<p class="pd-text">Фото счётчика добавлено</p></div>
+      </section>`}
+      ${state.reading && issues.length ? `<p class="pd-inline-status">${H.icon('check')} Показание сохранено: ${actViewEscape(state.reading)} м³</p>` : ''}
+      ${state.photoAttached && issues.length ? `<p class="pd-inline-status">${H.icon('check')} Фото счётчика добавлено</p>` : ''}
+      ${state.invalid && !state.editing ? '<p class="pd-error" role="status">Сначала исправьте указанные замечания.</p>' : ''}
+      <button type="button" class="pd-action" data-action="validation-check">Проверить готовность</button>
+    </div>`;
+  },
+  action: (state, name) => {
+    if (name === 'validation-fix-reading') {
+      state.editing = 'reading'; state.invalid = false; return true;
+    }
+    if (name === 'validation-fix-photo') { state.editing = 'photo'; state.invalid = false; return true; }
+    if (name === 'validation-back') { state.editing = ''; state.invalid = false; return true; }
+    if (name === 'validation-save-reading') {
+      state.invalid = !actViewNumber(state.readingDraft);
+      if (!state.invalid) { state.reading = String(state.readingDraft).trim(); state.editing = ''; }
+      return true;
+    }
+    if (name === 'validation-add-photo') { state.photoAttached = true; state.editing = ''; state.invalid = false; return true; }
+    if (name === 'validation-check') { state.ready = validationIssues(state).length === 0; state.invalid = !state.ready; return true; }
+    if (name === 'validation-return') { state.ready = false; return true; }
+    return false;
+  }
+};
+
+/* Hypothesis 5. Local state only: no network requests, timers or real uploads. */
+views.sync = {
+  title: 'Акты',
+  nav: 'acts',
+  initial: () => ({
+    online: false,
+    page: 'list',
+    feedback: '',
+    sentIds: [],
+    receipt: null,
+    documents: [
+      { id: '0416', address: 'Комсомольская, 15', status: 'queued' },
+      { id: '0417', address: 'Лесная, 7', status: 'draft', reason: 'Нет подписи клиента' },
+      { id: '0415', address: 'Строителей, 18', status: 'received' }
+    ]
+  }),
+  render: state => {
+    const e = H.escape;
+    const queued = state.documents.filter(item => item.status === 'queued');
+    const draft = state.documents.find(item => item.status === 'draft');
+    if (state.page === 'result' && state.receipt) {
+      return `<div class="pd-stack pd-sync-result">
+        <button type="button" class="pd-small-action" data-action="sync-back">${H.icon('back')} К списку актов</button>
+        <section class="pd-section pd-stack" aria-label="Результат отправки">
+          <div class="pd-row"><span aria-hidden="true">${H.icon('check')}</span><div class="pd-title">Акт передан</div></div>
+          <p class="pd-text">Сервер подтвердил получение акта №${e(state.receipt.ids.join(', №'))}.</p>
+          <p class="pd-muted">Повторно отправлять его не нужно.</p>
+        </section>
+        ${draft ? `<section class="pd-section pd-stack" aria-label="Неотправленный черновик">
+          <div class="pd-title">Черновик №${e(draft.id)} остался на телефоне</div>
+          <p class="pd-text">${e(draft.reason)}. Он не включался в отправку.</p>
+          <button type="button" class="pd-action" data-action="sync-draft">Проверить черновик</button>
+        </section>` : ''}
+      </div>`;
+    }
+    if (state.page === 'draft') {
+      return `<div class="pd-stack pd-sync-draft">
+        <button type="button" class="pd-small-action" data-action="sync-back">${H.icon('back')} К списку актов</button>
+        <section class="pd-section pd-stack">
+          <div class="pd-title">Черновик №${e(draft ? draft.id : '0417')}</div>
+          <p class="pd-muted">${e(draft ? draft.address : 'Лесная, 7')}</p>
+          <div class="pd-inline-status">${H.icon('check')} Сохранён на телефоне</div>
+          <div class="pd-error"><p class="pd-text">Для отправки нужна подпись клиента.</p></div>
+          <p class="pd-muted">Остальные заполненные сведения сохранены.</p>
+        </section>
+      </div>`;
+    }
+    const documents = state.documents.map(item => {
+      const status = item.status === 'received' ? 'Сервер подтвердил получение'
+        : item.status === 'draft' ? 'Черновик · сохранён на телефоне'
+        : state.online ? 'Готов к отправке' : 'Ожидает подключения';
+      const icon = item.status === 'received' ? 'check' : item.status === 'draft' ? 'edit' : 'upload';
+      return `<section class="pd-section pd-stack pd-sync-document" data-document-id="${e(item.id)}" data-document-status="${e(item.status)}" aria-label="Акт №${e(item.id)}">
+        <div class="pd-row pd-between"><div class="pd-title">Акт №${e(item.id)}</div><span aria-hidden="true">${H.icon(icon)}</span></div>
+        <p class="pd-muted">${e(item.address)}</p>
+        <div class="pd-inline-status pd-text">${e(status)}</div>
+        ${item.status === 'draft' ? `<p class="pd-text">${e(item.reason)}</p><button type="button" class="pd-small-action" data-action="sync-draft">Что нужно исправить ${H.icon('chevron')}</button>` : ''}
+      </section>`;
+    }).join('');
+    return `<div class="pd-stack pd-sync-list">
+      <section class="pd-section pd-stack pd-sync-connection" aria-label="Подключение">
+        <div class="pd-row"><span aria-hidden="true">${H.icon(state.online ? 'check' : 'offline')}</span><div class="pd-title">${state.online ? 'Есть интернет' : 'Нет интернета'}</div></div>
+        <p class="pd-text">${state.online ? 'Можно передать готовые акты.' : 'Акты сохранены на телефоне. Можно продолжать работу.'}</p>
+        ${!state.online ? '<button type="button" class="pd-small-action" data-action="sync-connect">Проверить подключение</button>' : ''}
+      </section>
+      <div class="pd-stack">
+        <button type="button" class="pd-action${state.online && queued.length ? ' pd-primary' : ''}" data-action="sync-send"${state.online && queued.length ? '' : ' disabled'}>${H.icon('upload')} ${queued.length ? 'Отправить готовый акт' : 'Готовые акты переданы'}</button>
+        ${queued.length ? `<p class="pd-meta">В отправку входит только акт №${e(queued[0].id)}.</p>` : ''}
+        ${state.feedback ? `<p class="pd-text" role="status">${e(state.feedback)}</p>` : ''}
+      </div>
+      <div class="pd-stack" aria-label="Состояния актов">${documents}</div>
+    </div>`;
+  },
+  action: (state, name) => {
+    if (name === 'sync-connect') {
+      state.online = true;
+      state.feedback = 'Подключение есть. Акт ещё не отправлен.';
+      return true;
+    }
+    if (name === 'sync-send') {
+      if (!state.online) {
+        state.feedback = 'Нет интернета. Акты остаются на телефоне.';
+        return true;
+      }
+      const queued = state.documents.filter(item => item.status === 'queued');
+      if (!queued.length) {
+        state.feedback = 'Повторная отправка не нужна: готовые акты уже получены сервером.';
+        return true;
+      }
+      const ids = queued.map(item => item.id);
+      queued.forEach(item => { item.status = 'received'; });
+      state.sentIds = [...new Set([...state.sentIds, ...ids])];
+      state.receipt = { ids };
+      state.page = 'result';
+      state.feedback = '';
+      return true;
+    }
+    if (name === 'sync-draft') {
+      state.page = 'draft';
+      return true;
+    }
+    if (name === 'sync-back') {
+      state.page = 'list';
+      return true;
+    }
+    return false;
+  }
+};
+
+  const explanations = {
+    queue:'Согласованные визиты идут по времени. Заявки без времени собраны отдельно. Порядок не меняется сам. Попробуйте поиск, фильтр и переключатель дат.',
+    agreement:'Звонок и согласование доступны из списка. Кнопка «Согласовать» открывает короткую форму, а не полный экран заявки. Все действия здесь демонстрационные.',
+    entry:'Доступные сведения уже перенесены. Их можно исправить. Пример распознавания сначала нужно проверить. Даже неполный черновик можно сохранить в макете.',
+    validation:'Каждая причина ведёт к конкретному полю. Исправление одной ошибки сохраняет остальные сведения. Фото добавляется только как демонстрационный пример.',
+    sync:'Сохранение на телефоне и получение сервером — разные состояния. Проверка подключения и отправка здесь моделируются, реальных обращений к серверу нет.'
+  };
+  const states = {};
+  const boxes = [...root.querySelectorAll('[data-view]')];
+  for (const phone of boxes) states[phone.dataset.view] = views[phone.dataset.view].initial();
+  function persist() {
+    if (!window.openai?.setWidgetState) return;
+    const data = JSON.parse(JSON.stringify(states));
+    window.openai.setWidgetState({modelContent:{concept:'Пять гипотез удобства',states:Object.fromEntries(Object.entries(data).map(([id,s])=>[id,{agreed:!!s.agreed,saved:!!s.saved,online:!!s.online,screen:s.enginePage||s.page||s.editing||'main'}]))},privateContent:{hypothesisStates:data}}).catch(()=>{});
+  }
+  function renderPhone(phone, resetScroll = false) {
+    const id=phone.dataset.view, view=views[id], s=states[id];
+    const old=phone.querySelector('.pd-body');
+    const oldScroll=old?.scrollTop||0;
+    const page=s.enginePage||'';
+    const nested=(id==='entry'||id==='validation')&&!page;
+    const title=page==='acts'?'Акты':page==='destination'?s.destinationTitle:view.title;
+    const icons=nested?`<button class="pd-icon-button" type="button" data-action="engine-help" aria-label="Подсказка">${H.icon('help')}</button><button class="pd-icon-button" type="button" data-action="engine-profile" aria-label="Профиль">${H.icon('profile')}</button>`:
+      `<span class="pd-icon-button" role="img" aria-label="Нет интернета" aria-hidden="${s.online!==false}">${s.online===false?H.icon('offline'):''}</span><button class="pd-icon-button" type="button" data-action="engine-help" aria-label="Подсказка">${H.icon('help')}</button><button class="pd-icon-button" type="button" data-action="engine-notifications" aria-label="Уведомления">${H.icon('bell')}</button><button class="pd-icon-button" type="button" data-action="engine-profile" aria-label="Профиль">${H.icon('profile')}</button>`;
+    const main=page==='acts'?`<div class="pd-stack"><h2 class="pd-title">Незавершённая работа</h2><section class="pd-section pd-stack"><p class="pd-text">Акт №000393</p><p class="pd-muted">Комсомольская, 15</p><button class="pd-action" data-action="engine-resume" type="button">Продолжить работу</button></section><p class="pd-meta">Здесь показан только возврат к текущему акту.</p></div>`:
+      page==='destination'?`<div class="pd-stack"><button class="pd-small-action" data-action="engine-resume" type="button">${H.icon('back')} Вернуться к примеру</button><p class="pd-muted">Этот раздел не входит в показ текущей гипотезы.</p></div>`:view.render(s);
+    phone.innerHTML=`<header class="pd-header"><div class="pd-system" aria-hidden="true"><span>9:41</span><span class="pd-system-icons">${H.icon('signal')}${H.icon('wifi')}${H.icon('battery')}</span></div><div class="pd-toolbar ${nested?'pd-nested':''}">${nested?`<button class="pd-icon-button" type="button" data-action="engine-back" aria-label="Назад">${H.icon('back')}</button>`:''}<h1>${H.escape(title)}</h1><div class="pd-header-icons">${icons}</div></div></header><main class="pd-body" aria-label="${H.escape(title)}">${main}</main><footer class="pd-footer"><nav class="pd-nav" aria-label="Основные разделы">${[['bids','Заявки'],['acts','Акты'],['equipment','Приборы'],['guide','Справочник']].map(([key,label])=>`<button type="button" data-action="engine-nav" data-destination="${key}"${view.nav===key?' aria-current="page"':''}><span class="pd-nav-mark">${H.icon(key)}</span><span>${label}</span></button>`).join('')}</nav><div class="pd-gesture" aria-hidden="true"></div></footer><span class="pd-live" role="status">${s.engineAnnouncement?H.escape(s.engineAnnouncement):''}</span>${s.engineHelp?`<div class="pd-overlay"><section class="pd-overlay-panel pd-stack" role="dialog" aria-modal="true" aria-label="О гипотезе"><h2 class="pd-title">Что можно попробовать</h2><p>${H.escape(explanations[id])}</p><button class="pd-action" data-action="engine-close-help" type="button">Понятно</button></section></div>`:''}`;
+    const body=phone.querySelector('.pd-body');
+    if (!resetScroll) body.scrollTop=oldScroll;
+    const dialog=phone.querySelector('[role="dialog"]');
+    if (dialog) {
+      phone.querySelector('.pd-header').setAttribute('inert','');
+      phone.querySelector('.pd-footer').setAttribute('inert','');
+      if(s.engineHelp) body.setAttribute('inert','');
+      dialog.querySelector('input, select, button')?.focus?.({preventScroll:true});
+    }
+  }
+  function restore(snapshot) {
+    const saved=snapshot?.privateContent?.hypothesisStates;
+    if(!saved||typeof saved!=='object')return;
+    for(const id of Object.keys(states)) {
+      const value=saved[id];
+      if(!value||typeof value!=='object'||Array.isArray(value))continue;
+      // Restore only fields belonging to the known demo-state contract.
+      const allowed=new Set([...Object.keys(views[id].initial()),'enginePage','destinationTitle','engineHelp','engineAnnouncement']);
+      for(const key of allowed)if(Object.hasOwn(value,key)) {
+        const v=value[key];
+        if(typeof v==='string'&&v.length<=2000||typeof v==='boolean'||typeof v==='number'||Array.isArray(v)&&v.length<=20||v===null||key==='receipt'&&typeof v==='object') states[id][key]=v;
+      }
+    }
+    boxes.forEach(phone=>renderPhone(phone));
+  }
+  for (const phone of boxes) {
+    phone.addEventListener('click',event=>{
+      const el=event.target.closest('[data-action]');
+      if(!el||el.disabled)return;
+      const id=phone.dataset.view,s=states[id],name=el.dataset.action;
+      let handled=true,resetScroll=false;
+      if(name==='engine-help')s.engineHelp=true;
+      else if(name==='engine-close-help')s.engineHelp=false;
+      else if(name==='engine-resume'){s.enginePage='';resetScroll=true;}
+      else if(name==='engine-back'){
+        if(id==='entry'&&s.reviewOpen)views[id].action(s,'entry-cancel-review',el);
+        else if(id==='entry'&&s.saved)views[id].action(s,'entry-continue',el);
+        else if(id==='validation'&&s.editing)views[id].action(s,'validation-back',el);
+        else {s.enginePage='acts';resetScroll=true;}
+      }
+      else if(name==='engine-nav'){
+        const dest=el.dataset.destination;
+        if(dest===views[id].nav){s.enginePage=dest==='acts'&&(id==='entry'||id==='validation')?'acts':'';}
+        else {s.enginePage='destination';s.destinationTitle={bids:'Заявки',acts:'Акты',equipment:'Приборы',guide:'Справочник'}[dest];}
+        resetScroll=true;
+      }
+      else if(name==='engine-profile'||name==='engine-notifications'){s.enginePage='destination';s.destinationTitle=name==='engine-profile'?'Профиль':'Уведомления';resetScroll=true;}
+      else handled=views[id].action(s,name,el);
+      if(handled){renderPhone(phone,resetScroll);persist();}
+    });
+    const update=event=>{
+      const field=event.target.closest('[data-field]');
+      if(!field)return;
+      const s=states[phone.dataset.view],key=field.dataset.field;
+      if(Object.hasOwn(s,key)&&typeof s[key]!=='object')s[key]=field.value;
+      if(event.type==='change'&&phone.dataset.view==='queue')renderPhone(phone);
+      persist();
+    };
+    phone.addEventListener('input',update);
+    phone.addEventListener('change',update);
+    phone.addEventListener('keydown',event=>{
+      const dialog=phone.querySelector('[role="dialog"]');
+      if(!dialog)return;
+      if(event.key==='Escape'){
+        const s=states[phone.dataset.view];
+        if(s.engineHelp)s.engineHelp=false; else if(phone.dataset.view==='agreement')views.agreement.action(s,'agree-cancel');
+        event.preventDefault();renderPhone(phone);persist();return;
+      }
+      if(event.key==='Tab'){
+        const fields=[...dialog.querySelectorAll('button:not([disabled]),input:not([disabled]),select:not([disabled]),a[href]')];
+        const first=fields[0],last=fields[fields.length-1];
+        if(event.shiftKey&&document.activeElement===first){event.preventDefault();last?.focus?.();}
+        else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first?.focus?.();}
+      }
+    });
+    renderPhone(phone);
+  }
+  restore(window.openai?.widgetState);
+  window.addEventListener('openai:set_globals',event=>restore(event.detail?.globals?.widgetState));
+})();
+
+
+</script>

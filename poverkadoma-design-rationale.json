@@ -1,0 +1,2011 @@
+{
+  "title": "Поверка дома — журнал обоснований для итоговой презентации",
+  "updated": "2026-11-05",
+  "deliverable": {
+    "requested_by_user": "В конце работы подготовить большую презентацию с обоснованием всех изменений, желательно со ссылками на исследования.",
+    "timing": "После завершения и согласования дизайна. Этот журнал — накопительная основа, не готовая презентация.",
+    "coverage": "Все итоговые изменения относительно оригинального приложения. Начальная запись ниже охватывает текущую итерацию; предыдущие решения ещё предстоит разобрать по одному.",
+    "slide_structure": [
+      "Роль и задача",
+      "Оригинал и выявленная проблема",
+      "Новый экран и изменение",
+      "Основание и точная ссылка",
+      "Ограничения применимости",
+      "Сохранённый функционал и доступ к нему",
+      "Результат проверки и открытые вопросы"
+    ],
+    "evidence_policy": "Различать эмпирические исследования, требования стандартов, экспертные эвристики, факты продукта, предпочтения пользователя и непроверенные гипотезы. Не выдавать рекомендации за экспериментальное доказательство и не приписывать исследованиям доказательство конкретного нашего макета. Для исследовательских статей сохранять авторов, год, DOI/URL, выборку/метод и ограничение переноса результата. Не заявлять рост эффективности без сравнительного теста."
+  },
+  "sources": [
+    {
+      "id": "N01",
+      "type": "expert_heuristic",
+      "title": "Aesthetic and Minimalist Design (Usability Heuristic #8)",
+      "author": "Therese Fessenden, Nielsen Norman Group",
+      "published": "2021-01-24",
+      "url": "https://www.nngroup.com/articles/aesthetic-minimalist-design/",
+      "checked": "2026-10-27",
+      "supports": "Редко нужная информация конкурирует с информацией, необходимой для текущей задачи. Минимализм должен сохранять полезность.",
+      "does_not_prove": "Не доказывает экспериментально, что именно наша карточка быстрее или удобнее, в том числе для пожилых поверителей."
+    },
+    {
+      "id": "W01",
+      "type": "standard_explanation",
+      "title": "WCAG 2.2 Understanding SC 1.4.1 Use of Color",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html",
+      "normative_url": "https://www.w3.org/TR/WCAG22/#use-of-color",
+      "checked": "2026-10-27",
+      "supports": "Цвет не должен быть единственным способом передачи значения. Срок и просрочка должны быть понятны из текста.",
+      "does_not_prove": "Это требование доступности, а не исследование эффективности выбранного расположения."
+    },
+    {
+      "id": "W02",
+      "type": "standard_explanation",
+      "title": "WCAG 2.2 Understanding SC 1.4.3 Contrast (Minimum)",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+      "normative_url": "https://www.w3.org/TR/WCAG22/#contrast-minimum",
+      "checked": "2026-10-27",
+      "supports": "Минимум 4.5:1 для обычного текста, 3:1 для крупного. Проверять контраст отдельно от сохранения фирменных цветов.",
+      "does_not_prove": "Прохождение отдельного критерия не означает соответствия всему WCAG или подтверждённого удобства."
+    }
+  ],
+  "changes": [
+    {
+      "id": "agreement-deadline-context",
+      "role": "Внутренний поверитель",
+      "status": "implemented_for_user_review",
+      "user_authorization": "Окей, попробуй — после предложения убрать постоянную шкалу и показывать срок только до согласования.",
+      "before": "Постоянная цветная шкала и подпись на каждой карточке, в том числе историческое опоздание согласования и остановка после отмены.",
+      "problem": "Шкалу можно принять за выполнение заявки или время до визита. Исторические показатели конкурируют с адресом, временем визита и следующим действием.",
+      "after": "Шкала удалена. До согласования — Согласовать до ЧЧ:ММ; при остатке 15 минут или меньше — выделенная текстовая подпись со временем. Для истёкшего срока — явная просрочка согласования. После согласования/отмены сведения доступны по Открыть.",
+      "product_evidence": [
+        "app/src/main/java/ru/poverkadoma/helpers/Extensions.kt:690-762 — час от создания, порог 15 минут, фиксация результата при согласовании и остановка после отмены",
+        "app/src/main/res/values/strings.xml:932-937 — существующие сообщения срока согласования"
+      ],
+      "sources": [
+        "N01",
+        "W01",
+        "W02"
+      ],
+      "hypothesis": "Список будет легче просматривать, а актуальный срок будет проще интерпретировать. Сравнительный пользовательский тест ещё не проводился.",
+      "preserved": [
+        "Номер, статус и дата создания",
+        "Адрес, телефон, визит/отмена",
+        "Индикаторы ошибки/очереди",
+        "Две исходные кнопки",
+        "Сведения о сроке и результате согласования в подробностях",
+        "Палитра, обводка, скругления, поля 16/12 и интервал 8px"
+      ],
+      "prototype_limits": "Даты и минуты — иллюстративный снимок состояния, не живой таймер. Основные бизнес-действия не подключены к серверу. Проверка DOM не подтверждает качество рендера, TalkBack и работу на устройстве.",
+      "validation_needed": [
+        "Сравнить с оригиналом поиск ближайшей заявки и заявки с истекающим сроком",
+        "Проверить понимание согласования отдельно от времени визита",
+        "Проверить на пожилых и менее опытных поверителях",
+        "Проверить узкий экран, крупный текст и реальные состояния синхронизации"
+      ]
+    },
+    {
+      "id": "status-legibility",
+      "role": "Внутренний поверитель",
+      "status": "superseded_by_card-composition",
+      "user_authorization": "Попробуй так сделать — после предложения увеличить подпись статуса до 16px и среднего начертания.",
+      "before": "Статус 14px, начертание 400, тёмный текст и цветная точка 6px.",
+      "after": "Статус 16px, начертание 500. Сохранены исходная цветная точка, тёмный текст, названия и положение справа сверху. Фон и рамка не добавлены.",
+      "rationale": "Усилить читаемость статуса при сохранении спокойной иерархии и визуального отличия от основной кнопки.",
+      "sources": [
+        "N01",
+        "W01"
+      ],
+      "evidence_limit": "Источники поддерживают иерархию и текстовую передачу значения; они не предписывают именно 16px/500. Это проектная гипотеза для проверки.",
+      "preserved": [
+        "Палитра и точка 6px",
+        "Названия статусов",
+        "Данные и действия карточек",
+        "Поля 16/12px и интервал 8px",
+        "Поддержка увеличения текста и переноса содержимого"
+      ],
+      "validation_needed": [
+        "Оценить читаемость и заметность в списке",
+        "Проверить переносы на узком экране и при 200% текста"
+      ],
+      "verification": "Сборка предпросмотра и существующие проверки DOM; визуальная проверка в браузере и на устройстве не выполнена.",
+      "user_feedback": "Композиция не устроила пользователя: разнобой размеров и жирности. Отдельное начертание статуса 500 заменено общим текстовым уровнем 16px/400."
+    },
+    {
+      "id": "card-composition",
+      "role": "Внутренний поверитель",
+      "status": "implemented_for_user_review",
+      "user_authorization": "Исправить разнобой размеров и жирности. Убрать кнопку Открыть и иначе показать кликабельность карточки.",
+      "before": "Несколько размеров 14/16/18/19px и начертаний 400/500/600/700; город и улица разного размера в одной строке; отдельная кнопка Открыть.",
+      "after": "Два уровня: основной текст 16px/400, адрес и основная кнопка 19px/700. Город и улица оформлены одинаково. Порядок: номер/статус, адрес/контакт/визит, дата создания/срок, основное действие. Карточка раскрывает подробности, справа шеврон; отдельной кнопки Открыть нет.",
+      "rationale": "Снизить конкуренцию текстовых акцентов и оставить явные роли содержания. Основная кнопка выполняет действие, карточка раскрывает сведения.",
+      "sources": [
+        "N01",
+        "W01",
+        "W02"
+      ],
+      "evidence_limit": "Точная шкала 16/19 и начертания — проектное решение, не научный норматив. 19px Bold для белого текста на исходном синем сохраняет ранее проверенный порог крупного текста. Удобство композиции пока не подтверждено пользовательским тестом.",
+      "interaction_contract": "Нативная кнопка раскрытия растянута на поверхность карточки; основные кнопки и раскрытые ссылки — отдельные соседние элементы выше неё. Нет вложенных кнопок, родительского обработчика срабатывания и перехвата кликов основного действия. Шеврон поворачивается при раскрытии, есть видимый клавиатурный фокус.",
+      "preserved": [
+        "Все данные четырёх исходных примеров",
+        "Основные действия и доступ к подробностям",
+        "Сведения о сроках и синхронизации",
+        "Исходная палитра, обводка и скругления",
+        "Поля 16/12px и интервал 8px",
+        "Поиск, увеличенный текст, длинные данные и сохранение раскрытия"
+      ],
+      "verification": "12 проверок DOM прошли, включая независимость раскрытия от основного действия и ссылки звонка. Сборка предпросмотра прошла. Раскладка, реальные области попадания, клавиатурная активация в браузере и TalkBack не проверены.",
+      "correction": "Раскрытие подробностей внутри карточки отменено пользователем. Типографика сохранена; навигация исправлена в card-opens-request-screen."
+    },
+    {
+      "id": "mobile-no-hover",
+      "status": "implemented_by_user_request",
+      "before": "При наведении на карточку её граница темнела.",
+      "after": "Выделение при наведении удалено.",
+      "basis": "Прямое требование пользователя: прототип мобильного приложения.",
+      "evidence_type": "user_requirement",
+      "research_claim": "Нет отдельного утверждения об исследовательском преимуществе."
+    },
+    {
+      "id": "card-opens-request-screen",
+      "status": "implemented_by_user_request",
+      "basis": "Прямое уточнение пользователя: при клике открывается отдельный экран заявки, который ещё не спроектирован.",
+      "before": "Карточка раскрывала подробности в списке.",
+      "after": "Нажатие переходит на отдельную явно обозначенную заглушку. Шеврон не поворачивается. Назад возвращает к прежнему списку и поиску, раздел Заявки также возвращает.",
+      "pending": "Проектирование отдельного экрана заявки со всеми исходными сведениями и действиями, включая историю сроков и звонок. Заглушка не является предложением его дизайна.",
+      "verification": "Сборка и 12 проверок DOM прошли. Проверены переход, отсутствие раскрытия, возврат, сохранение поиска, выбор правильного номера и восстановление состояния. Визуальная проверка в браузере и на устройстве не выполнена.",
+      "research_claim": "Коррекция по требованию продукта, не утверждение об исследовательском преимуществе."
+    },
+    {
+      "id": "compact-working-card",
+      "status": "implemented_for_user_review",
+      "basis": "Требование пользователя: по возможности выполнять работу из компактной карточки без открытия заявки.",
+      "before": "Звонок был удалён вместе с ошибочным раскрытием и откладывался до отдельного экрана.",
+      "after": "При наличии телефона в строке основного действия есть отдельная кнопка звонка 48×48. Нового ряда не добавлено. Используется исходная иконка приложения. Поверхность карточки открывает отдельный экран.",
+      "sources": [
+        "N01"
+      ],
+      "evidence_limit": "Требование продукта и проверяемая гипотеза о сокращении лишних переходов. Измерения скорости и рендера отсутствуют. Не утверждаем, что 100% действий должны выполняться в списке.",
+      "scope_limit": "Принятие, согласование, создание акта и возврат пока не подключены. Для всех статусов кнопка звонка зависит от наличия реального номера; недостающие данные не выдумывались.",
+      "pending": "Проверить весь рабочий путь внутреннего поверителя, достаточность сведений для выбора заявки, сценарии основных действий и пояснения проблем синхронизации. Проработать отдельный экран заявки.",
+      "verification": "Проверка ссылок и телефонного добавочного номера в DOM, независимая семантика элементов. Системный набор номера не запускался. При 200% тексте разрешено увеличение высоты; раскладка на устройстве ещё не проверена."
+    },
+    {
+      "id": "work-list-user-evaluation",
+      "status": "experiment_rejected_component_accepted",
+      "feedback": "Пользователю понравились только кнопки с обводкой. Остальная концепция не дала улучшения.",
+      "accepted": "Кнопки записаны в подтверждённые идеи как outlined-buttons.",
+      "conclusion": "Не считать гипотезу о преимуществе рабочего списка подтверждённой. Смена внешнего контейнера сама по себе не решает информационную плотность и сценарии работы.",
+      "source": "Прямая обратная связь пользователя, не пользовательский эксперимент с измерением.",
+      "reference": "poverkadoma-work-list-notes.json"
+    },
+    {
+      "id": "soft-capsule-and-independent-bar-corners",
+      "status": "implemented_by_user_request",
+      "basis": "Пользователь выбрал Мягкую капсулу из 10 вариантов и попросил синюю выбранную подпись Сегодня/Все, отдельное управление углами нижнего бара.",
+      "after": "Мягкое общее выделение иконки и подписи активного раздела, сокращённый промежуток между ними. Выбранный период обозначен синим текстом и светлой заливкой. Верхние углы нижнего бара 22px независимо переключаются на прямые; настройка сохраняется.",
+      "evidence_type": "user_preference_and_product_requirement",
+      "research_claim": "Предпочтение пользователя; нет утверждения об измеренном росте эффективности.",
+      "limits": "Мелкий синий текст на светлых поверхностях не достигает 4.5:1; цвет сохранён по прямому запросу. Скругления доступны для сравнения, окончательный выбор их состояния не зафиксирован. Другие разделы приложения пока не спроектированы."
+    },
+    {
+      "id": "bottom-navigation-spacing-refinement",
+      "status": "confirmed_by_user",
+      "basis": "Замечание пользователя о беспорядочных отступах в нижнем баре.",
+      "before": "Капсула 64px, сверху 8px, слот иконки 32px, системная область 28px.",
+      "after": "Более горизонтальная капсула 56px, сверху 12px; четыре равные колонки с промежутками 4px. Слот иконки 24px и интервал 4px. До системной полоски 16px, под ней 12px. Общая высота 100px сохранена. До375px все подписи12px, до359px интервалы между пунктами0, чтобы подпись Справочник не зажималась.",
+      "evidence_type": "designer_proposal_in_response_to_user_feedback",
+      "research_claim": "Композиционное предложение, не исследовательское доказательство улучшения.",
+      "limits": "Визуально оценено пользователем на показанном макете. Рендер на телефоне и проверка всех размеров экрана не выполнены.",
+      "user_feedback": "Выглядит неплохо."
+    },
+    {
+      "id": "blue-fill-gradient-comparison",
+      "status": "dark_gradient_rejected_by_user",
+      "basis": "Просьба пользователя добавить экспериментальный градиент и внешний селектор для сравнения.",
+      "after": "Шапка, основные заполненные кнопки и активный поиск переключаются между сплошным #0084C1 и общим градиентом #035679→#0084C1. Переключение сохраняется независимо от остальных внешних настроек.",
+      "palette_source": "poverkadoma-original-palette.html: #035679 и #0084C1. Исходный градиент #0084C1→#2DB0ED показан отдельно в оригинальной палитре; здесь предложен новый переход на тех же цветовых основаниях.",
+      "reason": "Тёмный край делает переход заметным, не осветляя фон под белыми иконками и подписью основных кнопок. Светлый исходный #2DB0ED даёт с белым только2.46:1, поэтому не использован в белотекстовых поверхностях.",
+      "evidence_type": "designer_proposal_and_computed_color_contrast",
+      "research_claim": "Нет утверждения о доказанном исследованием улучшении. Это эксперимент для оценки пользователем.",
+      "verification": "18 DOM-проверок состояния и событий прошли. Визуальный рендер на устройстве не проверен.",
+      "user_feedback": "Слишком тёмный градиентъ"
+    },
+    {
+      "id": "blue-fill-gradient-lightening",
+      "status": "rejected_as_indistinguishable_from_solid",
+      "basis": "Предыдущий тёмный переход отвергнут пользователем.",
+      "after": "Фирменный #0084C1→смесь65%#0084C1+35%#2DB0ED,110°. Переход заметно светлее прежнего; белые подписи/иконки, размеры и переключатель Сплошной/Градиент сохранены.",
+      "palette": "Только исходные синий и голубой. #035679 больше не участвует в заливке.",
+      "evidence_type": "user_feedback_and_computed_color_contrast",
+      "verification": "Сборка inline-макета прошла. Контраст белого по градиенту4.14→3.42:1; крупные жирные подписи и иконки не ниже3:1. Мелкий белый текст не достигает4.5:1. Проверки рендера на устройстве нет.",
+      "research_claim": "Осветление для визуальной оценки пользователем, не исследовательски подтверждённое улучшение.",
+      "user_feedback": "А сейчас градиент вообще не выглядит как градиент а выглядит как сплошная заливка"
+    },
+    {
+      "id": "blue-fill-full-original-gradient",
+      "status": "trial_after_user_feedback",
+      "basis": "Пользователь просит явно видимый градиент после слишком слабого перехода.",
+      "after": "Полный исходный #0084C1→#2DB0ED,90°. Без затемнения, смешивания и новых оттенков. Применяется общим токеном к топбару и синим заполненным кнопкам. Селектор Сплошной/Градиент сохранён.",
+      "evidence_type": "user_feedback_and_product_palette",
+      "research_claim": "Сравнение визуального характера заливки, не доказанное улучшение удобства.",
+      "open_issue": "Белый на полном светлом крае2.46:1 — недостаточно для иконок и крупного текста по порогу3:1. Потребуется последующая работа с размещением белого контента и светлой зоны. Ранее отвергнутый тёмный край не возвращать.",
+      "verification": "Сборка и проверка выходного фрагмента пройдены. Рендер на устройстве не проверен."
+    },
+    {
+      "id": "verifier-viewable-status-specimens",
+      "status": "implemented_by_user_request",
+      "basis": "Пользователь запросил по одному образцу каждого доступного поверителю статуса.",
+      "evidence_type": "current_product_code",
+      "correction": "Предыдущая справочная таблица перечисляла7 стадий модели, а не7 карточек главного экрана. Проверка обычного маршрута показывает4 в списке; ещё В работе доступна из связанного акта.",
+      "after": "Четыре исходные карточки сохранены; добавлена000397 В работе с действием Продолжить акт. Внешний переключатель позволяет убрать дополнительный образец и увидеть обычную очередь. Кнопка отменённой заявки названа Вернуть в работу.",
+      "sources": [
+        "app/src/main/java/ru/poverkadoma/ui/screens/main/MainViewModel.kt:417",
+        "app/src/main/java/ru/poverkadoma/ui/screens/act/component/ActContent.kt:181",
+        "app/src/main/java/ru/poverkadoma/ui/screens/act/ActViewModel.kt:1166"
+      ],
+      "limits": "Демонстрация компонента не меняет продуктовую доступность статусов. Выполнена/Завершена в главную очередь не добавлены. Бизнес-операции и акт остаются вне подключённого прототипа.",
+      "research_claim": "Соответствие текущим сценариям по коду; нет утверждения об измеренном улучшении."
+    },
+    {
+      "id": "ownership-and-day-grouping",
+      "status": "implemented_by_user_request",
+      "basis": "Явное принятие пользователем предложения Мои/Свободные и просьба группировать по дням и добавить больше примеров.",
+      "before": "Сегодня/Все менял только внешний вид. Лента состояла из5 исторических примеров, без групп по дням.",
+      "after": "Рабочее разделение Мои/Свободные, общий список и дата в фильтре.19 синтетических заявок в группах по дате визита; неизвестные даты и отменённые выделены отдельно. Поиск и даты работают совместно с принадлежностью.",
+      "evidence_type": "user_requirement_and_local_prototype_checks",
+      "research_claim": "Проверяемая гипотеза о более понятном выборе текущей работы и свободных заявок; скорость работы пользователей не измерялась.",
+      "tradeoff": "Быстрый выбор Сегодня перенесён из основного селектора в панель фильтра. Период и общий список сохранены, но не предлагаются как дополнительные постоянные кнопки верхней части.",
+      "verification": "20 DOM-проверок пройдены: разделы, сочетания фильтров, границы периода, группы и счётчики, поиск, возврат, сохранение и старые снимки.",
+      "limits": "Визуальный рендер, нативный календарь, цикл клавиатурного фокуса и TalkBack не проверены на устройстве. Бизнес-кнопки заявок остаются визуальными и не меняют серверные данные."
+    },
+    {
+      "id": "stage-based-feed-priority",
+      "status": "implemented_after_explicit_user_approval",
+      "basis": "Пользователь поставил под сомнение дату создания и группировку Свободных по дням из-за короткого срока согласования, затем одобрил предложенную перестройку.",
+      "before": "Свободные группировались по желаемой дате визита; дата создания занимала строку в каждой карточке. Мои начинались с Без даты визита.",
+      "after": "Свободные — единая очередь по сроку согласования. Мои — Нужно согласовать сверху, затем визиты по дням. Желаемая дата сохранена внутри карточки; дата создания перенесена в доступные сведения заглушки заявки.",
+      "evidence_type": "user_approved_workflow_hypothesis_and_local_checks",
+      "research_claim": "Предположение о снижении лишнего чтения и более понятном приоритете, не измеренный эффект исследования.",
+      "verification": "23 DOM-проверки пройдены, включая сортировку просрочки/неизвестных сроков, отсутствие календарных групп в Свободных, группу согласования независимо от даты визита и доступность даты создания после перехода.",
+      "limits": "Сроки иллюстративные, бизнес-операции не подключены. Рабочий календарь не реализован. Рендер и TalkBack на устройстве не проверены."
+    },
+    {
+      "id": "three-primary-destinations",
+      "status": "implemented_by_user_request",
+      "basis": "Пользователь сообщил о консультации с дизайнером: НЕПТОН используют редко, справочник редко и преимущественно на этапе акта.",
+      "before": "Заявки/Акты/Приборы/Справочник внизу, Профиль в шапке.",
+      "after": "Заявки/Акты/Профиль внизу. В шапке индикатор отсутствия связи, подсказки и уведомления. Редкие инструменты — прямыми пунктами Профиля; НЕПТОН/справочник также в Актах.",
+      "evidence_type": "user_reported_frequency_and_prior_workflow_audit",
+      "evidence_files": [
+        "internal-verifier-ux-audit.json",
+        "product-context.json",
+        "poverkadoma-main-navigation-audit.json"
+      ],
+      "recommendation": "Не заполнять четвёртое место автоматически. Наиболее содержательный кандидат — отправка и контроль ошибок актов: прежний аудит выявил трудности при сбоях. Это свидетельство важности сценария, не измеренной частоты посещения. Пока действия отправки/истории остаются в Актах.",
+      "tradeoff": "Приборы и справочник требуют дополнительного нажатия относительно прежней нижней вкладки; требование исходного бокового меню максимум два нажатия сохраняется как цель. Контекстные входы при проектировании акта обязательны.",
+      "verification": "34 DOM-only проверки;16 маршрутов по два нажатия до обозначенных заглушек. Проверены выбор вкладки, возврат, оригинальные варианты иконок и сохранение фильтров.",
+      "limits": "Исходные бизнес-функции не перенесены в этот HTML. Нельзя считать наличие ссылки доказательством полной доступности функции. Визуальный рендер, TalkBack, нативные формы/черновики и остальные роли не проверены."
+    }
+  ],
+  "deadline_indicator_study": {
+    "date": "2026-10-28",
+    "status": "10 альтернатив на выбор, ни одна не утверждена",
+    "user_request": "Показывать остаток на согласование тем заметнее, чем меньше осталось времени; прежний индикатор визуально не нравится.",
+    "baseline": "Текущая лента одобрена пользователем; главный макет не изменён.",
+    "comparison": "poverkadoma-deadline-preview.html",
+    "notes": "poverkadoma-deadline-notes.json",
+    "hypothesis": "Точное число минут поддерживает решение; усиление цветом, площадью сигнала или заполнением помогает обнаружить срочную заявку. Эффективность пока не измерена.",
+    "palette": "Оригинальные синий, янтарный, красный; светлые сигнальные подложки — исходные цвета с прозрачностью.",
+    "thresholds": "Демонстрационные: больше15мин,6–15мин,0–5мин,просрочка. Пороговые значения ещё не утверждены.",
+    "limits": "Снимки времени, не живой расчёт рабочего часа. Нет мигания или автоматических действий. Основные статусы заявок не переименованы.",
+    "verification": "14 проверок DOM/runtime/static пройдено. Рендеринг в браузере и на устройстве в этой итерации не подтверждён."
+  },
+  "deadline_indicator_compact_study": {
+    "date": "2026-10-29",
+    "status": "10 новых вариантов на выбор; стиль не утверждён",
+    "supersedes": "В первой серии крупные плашки и растущее заполнение не отвечают уточнённому запросу.",
+    "user_feedback": "Размер карточки не должно раздуть. Но и нельзя делать это тонкой бледной полосочкой. Логичнее сделать шкалу которая не заполняется а наоборот убавляется.",
+    "preview": "poverkadoma-deadline-compact-preview.html",
+    "semantics": "Оставшееся время, не потраченное. Все шкалы, сегменты, точки, столбики и кольцо убывают строго до нуля; минус не превращается в отрицательное заполнение.",
+    "compactness": "Вместо исходной22px строки индикатор рассчитан на28–32px при обычном тексте. Строки и карточки не имеют фиксированной высоты; фактическая геометрия и переносы не измерены в браузере.",
+    "palette": "Синий0084C1, янтарныйFFB21C, красныйD96161, исходное полеE9ECF2; тёмные цифры на янтарной и красной малой подложке, на синей шкале текста нет.",
+    "hypothesis": "Убывающая шкала показывает расход остатка; насыщенное выделение самого числа компенсирует исчезновение шкалы в последние минуты. Предпочтение направления задано пользователем, сравнительная эффективность не доказана.",
+    "thresholds": "Экспериментальные: больше15мин,6–15мин,0–5мин; ноль и просрочка подписаны отдельно. Не изменение бизнес-правил.",
+    "verification": "16 DOM/runtime/static проверок пройдено; все варианты корректно показывают40,15,5,1,0 и просрочку, включая частичные сегменты. Рендеринг и тест с пользователями не выполнены.",
+    "baseline": "Основной макет и первая серия не изменены."
+  },
+  "deadline_text_inside_study": {
+    "date": "2026-10-29",
+    "status": "requested_proposal_for_review",
+    "user_request": "Полоса на всю ширину, текст внутри; исчерпанная часть — тем же цветом, но бледным; небольшая высота, как на скриншоте.",
+    "preview": "poverkadoma-deadline-text-preview.html",
+    "geometry": "20px minimum at normal font scale,14px text with18px lineheight and1px vertical padding. Content can grow for larger text. Fits within existing12px card padding.",
+    "semantics": "Filled part means remaining fraction of illustrative60min; pale part is18% opacity of the identical original hue. At zero fill is empty and caption says expired.",
+    "legibility": "Blue fill has white clipped text; pale fill has dark text. Amber/red filled and pale parts use dark text. Visible text overlays match exactly; accessible meter announces one remaining-time value.",
+    "business_logic": "Same synthetic snapshots and experimental15/5min thresholds; no live SLA or backend changes.",
+    "validation": "Six states, word forms, exact remaining proportion and state persistence passed DOM checks. Rendering at20px not measured in a browser.",
+    "main_mockup": "Unchanged pending review.",
+    "header_refinement": {
+      "user_request": "Разместить сверху между номером и лейблом; убрать На согласование",
+      "placement": "Номер → убывающая шкала → статус. Предыдущая отдельная строка шкалы удалена.",
+      "visible_text": "15 минут;0минут;−10мин для просрочки. Полное значение доступно в имени meter.",
+      "geometry": "flex1 1 80px with8px gaps;20px minimum height. Can reflow at enlarged text.",
+      "verification": "Header DOM order, absence of removed prefix in visible text, matching clipped layers and six remaining-time states passed. Browser layout unverified."
+    },
+    "full_width_correction": {
+      "date": "2026-10-29",
+      "user_feedback": "Нихуя не на всю ширину — screenshot shows narrow gauge between number and status.",
+      "correction": "Removed inline header placement. Separate20px gauge row immediately below number/status and above address. Direct card child100% of inner width, retaining12px left/right padding. Duration-only label retained.",
+      "supersedes": "header_refinement placement",
+      "verification": "DOM order and100% style verified; gauge is outside24px chevron reserve. Rendering not verified.",
+      "status": "rejected_misinterpretation"
+    },
+    "gap_correction": {
+      "date": "2026-10-29",
+      "user_feedback": "От номера до шкалы куча места.",
+      "root_cause": "Previous request-number flex override had lower CSS specificity than imported .phone .request-number and did not remove flex-grow.",
+      "correction": "Restored single top row. Grid columns max-content minmax(80px,1fr) max-content with exactly8px gaps. Number and status take intrinsic width; gauge takes all remaining middle space. Selectors match imported specificity and appear later.",
+      "verification": "DOM order, effective final heading declaration, six duration states passed static checks. No rendered geometry measurement."
+    }
+  },
+  "button_timer_study": {
+    "date": "2026-10-29",
+    "status": "rejected_by_user",
+    "request": "Круговой индикатор прямо в кнопке Принять заявку;5 вариантов.",
+    "preview": "poverkadoma-button-timer-preview.html",
+    "variants": [
+      "Счётчик справа",
+      "Счётчик слева",
+      "Кольцо и время",
+      "Минуты под кольцом",
+      "Контурная кнопка"
+    ],
+    "hypothesis": "Combining remaining time and action reduces a separate row and may link urgency to taking the request. It also puts agreement-SLA time on acceptance action, so user may mistake deadline for acceptance alone; this needs user testing and explicit context before product implementation.",
+    "geometry": "48px minimum button. Circle24–36px within existing height,16px action caption; duration13–14px; smallest unit11px. No fixed text heights. Original card data retained; separate agreement row removed only in this comparison.",
+    "palette": "Blue fill has white caption and duration. Colored ring sits on white island. Warning/critical center changes to original amber/red so urgency remains visible even with nearly empty arc. Fifth variant explores original-white outlined blue button.",
+    "semantics": "Ring shows remaining time out of illustrative60min, empties toward zero. Zero and overdue keep action label. No assumption that expiry disables the action; no business operation wired.",
+    "thresholds": "15/5min demonstration thresholds, not newly approved product rules.",
+    "validation": "All5 variants and6time states, original data and call action, unique IDs, favorites and restoration passed DOM/runtime/static checks. Actual48px rendered height and320px wrapping not measured.",
+    "baseline": "Main approved prototype and previous horizontal-gauge comparison unchanged.",
+    "user_feedback": "Не, чот говно какое-то. Попробуй другие способы как сделать из кнопки ещё и индикатор."
+  },
+  "button_indicator_study": {
+    "date": "2026-10-29",
+    "status": "signal_variant_selected_by_user",
+    "request": "Другие способы сделать кнопку индикатором;10 вариантов после отклонения круговых.",
+    "preview": "poverkadoma-button-indicator-preview.html",
+    "variants": [
+      "Убывающая заливка",
+      "Уровень снизу",
+      "Шкала в основании",
+      "Шкала над надписью",
+      "Сегментированное основание",
+      "Боковой резерв",
+      "Окно времени",
+      "Две строки",
+      "Убывающий контур",
+      "Сигнальная заливка"
+    ],
+    "hypothesis": "Use existing action surface as remaining-time indicator to avoid an additional row or separate gauge. Preserve action name and exact remaining minutes.",
+    "semantics": "Nine variants use remaining fraction of illustrative60min. Signal variant uses exact number plus discrete urgency color. At zero amount becomes empty; overdue shows negative minutes. Thresholds15/5min remain demonstration settings.",
+    "palette": "Original blue,amber,red. Same-hue pale remainder. White text on saturated blue; dark text on pale,amber and red. Full-fill concepts use matching clipped text layers. Critical time remains highlighted when proportional mark becomes tiny.",
+    "compactness": "48px minimum action,16px caption,14px duration. No separate timer row; phone and call action retained. Perimeter is a quantitative SVG rounded rectangle,not an icon.",
+    "tradeoffs": {
+      "fill": "Whole-button depletion may resemble disabled/processing state; explicit action label retained.",
+      "level": "Vertical remaining amount is less familiar than horizontal scale.",
+      "base": "Preserves blue CTA; track may become very small near zero.",
+      "cap": "Separates white action surface from colored top mark.",
+      "segments": "Six intervals are easier to count but visually busier.",
+      "side": "Very compact; vertical direction needs validation.",
+      "window": "Distinct numeric window may look like a second action,although entire control is one button.",
+      "two-line": "Explicit action and time; denser type hierarchy.",
+      "perimeter": "Uses little surface but perimeter length is less directly readable.",
+      "signal": "Strong urgency; red action may be read as destructive. It is not proportional and requires testing."
+    },
+    "verification": "All10 shapes and6time states, exact proportions/partial segments/perimeter, text masks, original content, unique IDs, favorites and restore passed DOM/runtime/static checks. No browser or device render verified.",
+    "baseline": "Main approved prototype and previous experiments unchanged.",
+    "selected": "Сигнальная заливка",
+    "selection_feedback": "Имплементируй этот вариант. Но ещё сделай отступы с боков такими же как по вертикали"
+  },
+  "signal_action_implementation": {
+    "date": "2026-10-29",
+    "status": "applied_to_main_prototype",
+    "feedback": "Имплементируй этот вариант. Но ещё сделай отступы с боков такими же как по вертикали",
+    "preview": "poverkadoma-home-preview.html",
+    "changes": [
+      "Integrated exact remaining minutes into eligible action buttons",
+      "Whole-button original-blue/amber/red urgency colors",
+      "Removed duplicate deadline row",
+      "All primary buttons use equal12px padding and16px/24px typography; timer14px/24px",
+      "No fabricated time for missing deadlines; agreed/canceled/in-work keep their original actions"
+    ],
+    "continuity": "Deadline remains on Согласовать after acceptance; the same illustrative agreement deadline is shown until agreement. Absolute due time retained in accessible button label.",
+    "geometry": "12px padding each side plus24px line box produces48px single-line button. Content-driven height and wrapping preserved at200% text. Screen16px,card12px,card gap8px unchanged.",
+    "thresholds": "Existing demonstration15/5min urgency bands,not a real working-calendar calculation. No live countdown or backend behavior added.",
+    "verification": "23 DOM-only checks passed after updating deadline assertions, including16/15/5/0/negative boundaries,missing deadlines,feed sorting,filters,search,calling,request navigation and saved state. CSS declares equal12px padding. Browser/device rendering and actual layout sizes unverified.",
+    "remaining_risk": "Red acceptance can resemble a destructive action; precise action label is retained. Existing blue/white palette contrast limitation unchanged; no full WCAG claim."
+  },
+  "conditional_city_implementation": {
+    "date": "2026-10-29",
+    "status": "applied_to_main_prototype",
+    "feedback": "Согласен. Реализуй. И добавь селектор",
+    "preview": "poverkadoma-home-preview.html",
+    "problem": "Repeated same bold city lengthens every address and competes with street/house/apartment.",
+    "solution": "Single-city context omits visual city; explicit mixed-city context shows city before street in secondary616264,16px regular. Street remains19px bold. Full city stays in address and request-entry accessible labels.",
+    "control": "External Города selector,not an extra in-app row or actual production geography filter. One city/Multiple cities with deterministic syntheticTolyatti/Samara/Zhigulevsk fixtures. Long-data mode usesSPb/Vsevolozhsk/Gatchina.",
+    "state_contract": "Explicit cityScenario,sanitized and persisted in modelContent. Search/scopes/date filters preserve it. City is not hidden based on the current result count. Real Android implementation needs authoritative work-zone/filter context rather than list-page inference.",
+    "verification": "26 DOM-only checks passed,including city visibility in both modes,mixed geography after one-result search,long data,full accessible address,persistence and legacy fallback. Existing signal buttons,search,filters,calling and request navigation still pass. Browser rendering unverified."
+  },
+  "request_header_divider_trial": {
+    "date": "2026-10-29",
+    "status": "requested_trial_not_yet_approved",
+    "request": "Попробуй добавить девайдер под номером и лейблом",
+    "preview": "poverkadoma-home-preview.html",
+    "implementation": "1px bottom border on full-width request-head using originalCCC,4px inner bottom padding and existing4px card gap below. Shares12px card gutters and extends under reserved chevron space. Structural divider remains visible when decorative outlines are disabled.",
+    "verification": "26 existing DOM scenario checks pass. CSS width inherits full card content width; browser geometry not measured."
+  },
+  "compact_request_facts": {
+    "date": "2026-10-29",
+    "status": "applied_to_main_prototype",
+    "request": "Вместо Поверка воды1счётчик сделай1счётчик воды. Вместо надписи телефон иконку телефона. Вместо Визит иконка календаря рядом с датой и часов рядом со временем.",
+    "preview": "poverkadoma-home-preview.html",
+    "changes": [
+      "Shortened displayed work description without modifying original service metadata",
+      "Search supports both original service phrase and compact displayed wording",
+      "Replaced visible phone label with original phone glyph",
+      "Separated visit date and time into calendar/time blocks that wrap atomically",
+      "Preserved short desired/canceled contexts and full accessible descriptions",
+      "Omitted time icon when no actual time is supplied"
+    ],
+    "icons": {
+      "phone": "Existing24px original phone artwork scaled to16px and original616264 in a new localSVGasset.",
+      "calendar": "Existing Androidic_calendar.xml geometry converted toSVG without redrawing and set to original616264,16px tall.",
+      "clock": "Existing original Figma clock asset retained unchanged."
+    },
+    "layout": "No extra fixed-height blocks. Date/time chunks use4px icon-to-text gaps and8px inter-chunk gaps. Phone icon has4px top alignment. Screen16px,card12px and button12px spacing unchanged.",
+    "verification": "28 DOM/runtime checks pass,including compact singular/plural/gas examples,old and new work search,phone/calendar/clock presence,desired vs confirmed vs canceled context,ISOdate,missing time,calling,filters,scopes,geography and persistence. Browser rendering and TalkBack not verified.",
+    "scope": "HTML/CSS/JS design prototype only; Android repository resources were read as artwork sources and not modified.",
+    "meter_icon_refinement": {
+      "date": "2026-10-29",
+      "request": "Добавь иконку счётчика слева от надписи и убери слово желаемый",
+      "implementation": "Original Figma instrument/dial glyph,scaled into16px information slot in original616264 before counter quantity.4px gap,matching phone metadata alignment. No visual desired-date prefix; underlying requestedDate/time and full accessible context retained. Cancellation context unchanged.",
+      "verification": "28 DOM checks pass,including meter glyph on all populated work rows,absence of visible desired prefix,requested/confirmed/canceled contexts,missing times,search,call link and saved presentation. Browser render unverified."
+    }
+  },
+  "client_name_row": {
+    "date": "2026-10-29",
+    "status": "applied_to_main_prototype",
+    "request": "Добавь строчку с именем и слева от неё какую-нибудь иконку",
+    "preview": "poverkadoma-home-preview.html",
+    "layout": "New client-name row after counter quantity and immediately before phone. Original profile/person outline without enclosing circle reused at16px in616264;4px icon gap. Same16px metadata text,flow height and wrapping as phone. No new panel or avatar.",
+    "data": "Explicit synthetic clientName values for19 existing fixtures. Missing name omits the row. Long-data mode uses a full-length synthetic name. Search includes clientName; existing phone and work search remain.",
+    "accessibility": "Decorative person image hidden from assistive technology; full client label and value retained. No change to card entry or direct phone action.",
+    "verification": "29 DOM-only checks passed,including row order,name icon,full long name,case-insensitive name search,missing-name omission and prior scenarios. Browser wrapping and native assistive behavior unverified.",
+    "patronymics": {
+      "date": "2026-10-29",
+      "request": "Добавь отчество",
+      "change": "Explicit synthetic patronymics added to19 fixture names. Display format Имя Отчество Фамилия. No real identity inferred. Names wrap without fixed text heights.",
+      "search": "Full name and patronymic are searchable; multiword name search still finds first+last without typing patronymic.",
+      "verification": "29 DOM-only checks pass,including full name,patronymic and first+last searches."
+    }
+  },
+  "new_request_contact_reduction": {
+    "date": "2026-10-29",
+    "status": "applied_to_main_prototype",
+    "request": "Тогда убери — после предложения убрать имя,телефон и кнопку звонка только из Новой,сохранив номер заявки.",
+    "preview": "poverkadoma-home-preview.html",
+    "reason": "New unassigned card supports choosing whether to accept. Contacting and agreeing follows acceptance in the studied workflow.",
+    "change": "Only kind=new hides client-name row,phone row,and call action. Remaining primary action uses full row automatically. Identifier,service,address,date/time anddeadline are unchanged. Other states retain contact UI.",
+    "data": "Original contact fixtures and searchability retained; not an API/privacy-policy change. Prototype still does not simulate accepting a request or server-side transition.",
+    "verification": "29 DOM-only checks pass. AllNew cards have no name/phone/call nodes and retain number/work. Other states preserve calls including extension; long data,200% mode,search,filters and saved state still pass. Actual rendered height not measured."
+  },
+  "overdue_action_refinement": {
+    "date": "2026-10-29",
+    "status": "rejected_and_reverted",
+    "request": "Добавь варианты карточек с просроченным согласованием. Перед временем надпись просрочено на. Кнопку с таким статусом делай чёрной.",
+    "preview": "poverkadoma-home-preview.html",
+    "samples": [
+      "000413:Новая/free,10min overdue,requested visit4days ahead;contacts hidden",
+      "000414:Назначена/My,35min overdue;client and direct call retained"
+    ],
+    "appearance": "Original181818black with white text. Show explicit Просрочено на plus positive elapsed minutes. Red retained for approaching/zero deadline;business status unchanged.",
+    "layout": "Action left and overdue phrase/time right. Prefix13px,minutes14px. At<=389px counter stacks into Просрочено / наNмин;12px padding preserved. Text-driven height may increase8px to56px in this narrow layout,not clipped.",
+    "semantics": "Demonstration snapshots at09:41;actual working-calendar SLA or backend expiry/reassignment behavior is not simulated. Buttons remain visual business actions.",
+    "verification": "30 DOM-only checks pass,including samples at head of both queues,action names,contacts by state,unknown/zero/negative time,ordering,filters,search,calls and persistence. CSS specifies black/white;browser rendering and actual text widths unverified.",
+    "rollback_feedback": "Не,не красиво.Откати",
+    "rollback_scope": "Removed000413/000414. Restored red overdue signal and compact−Nmin label. Removed narrow-screen overdue-only layout. All earlier changes including8px dot preserved."
+  },
+  "unified_action_time_and_expired_samples": {
+    "date": "2026-10-29",
+    "status": "applied_to_main_prototype",
+    "request": "Сделай шрифт оставшегося времени таким же как шрифт надписи на кнопке и добавь пару карточек с истёкшим временем",
+    "typography": "Timer inherits primary action font,size,weight andlineheight:16px/24px600 atnormal scale. Tabular numbers remain.12px padding unchanged.",
+    "samples": [
+      "000413New/free,−10min;contacts hidden",
+      "000414appointed/My,−35min;contacts retained"
+    ],
+    "appearance": "Existing red signal and compact negative minutes;prior rejected black button and expanded overdue wording were not restored.",
+    "counts": "21total,13My including linked-act sample,8free",
+    "verification": "30 DOM-only checks passed,including both samples leading the respective feeds,compact labels,action names,contacts by state and prior scenarios. Font inheritance declared inCSS;browser computed styling not measured."
+  },
+  "primary_navigation_revision": {
+    "date": "2026-10-29",
+    "id": "three-primary-destinations",
+    "status": "implemented_by_user_request",
+    "basis": "Пользователь сообщил о консультации с дизайнером: НЕПТОН используют редко, справочник редко и преимущественно на этапе акта.",
+    "before": "Заявки/Акты/Приборы/Справочник внизу, Профиль в шапке.",
+    "after": "Заявки/Акты/Профиль внизу. В шапке индикатор отсутствия связи, подсказки и уведомления. Редкие инструменты — прямыми пунктами Профиля; НЕПТОН/справочник также в Актах.",
+    "evidence_type": "user_reported_frequency_and_prior_workflow_audit",
+    "evidence_files": [
+      "internal-verifier-ux-audit.json",
+      "product-context.json",
+      "poverkadoma-main-navigation-audit.json"
+    ],
+    "recommendation": "Не заполнять четвёртое место автоматически. Наиболее содержательный кандидат — отправка и контроль ошибок актов: прежний аудит выявил трудности при сбоях. Это свидетельство важности сценария, не измеренной частоты посещения. Пока действия отправки/истории остаются в Актах.",
+    "tradeoff": "Приборы и справочник требуют дополнительного нажатия относительно прежней нижней вкладки; требование исходного бокового меню максимум два нажатия сохраняется как цель. Контекстные входы при проектировании акта обязательны.",
+    "verification": "34 DOM-only проверки;16 маршрутов по два нажатия до обозначенных заглушек. Проверены выбор вкладки, возврат, оригинальные варианты иконок и сохранение фильтров.",
+    "limits": "Исходные бизнес-функции не перенесены в этот HTML. Нельзя считать наличие ссылки доказательством полной доступности функции. Визуальный рендер, TalkBack, нативные формы/черновики и остальные роли не проверены."
+  },
+  "request_detail_baseline": {
+    "date": "2026-10-29",
+    "status": "implemented_for_review",
+    "role": "Внутренний поверитель",
+    "source": "Figma H19 Обработка заявки; H32 agent-only screens excluded from the primary template",
+    "preview": "poverkadoma-request-preview.html",
+    "integration": "Нажатие карточки открывает подробности. Главный список и его оформление сохранены.",
+    "content": [
+      "Номер/статус",
+      "Сроки/синхронизация при наличии",
+      "Населённый пункт/адрес/карта",
+      "Дата/время визита",
+      "Количество ИПУ/стоимость/вид работ",
+      "Владелец/телефон/примечание",
+      "Комментарий",
+      "Результат/акт/причина и срок возврата по состоянию"
+    ],
+    "intentional_adaptations": [
+      "Общие отступы16/12,радиусы,тонкие обводки и палитра",
+      "Статус с точкой вместо старой плашки",
+      "Текстовый срок вместо старой двухсегментной шкалы",
+      "Нижняя навигация Заявки/Акты/Профиль вместо старого меню",
+      "Дата создания в нижней части подробностей по предыдущему решению",
+      "Демонстрационные подтверждения вместо серверных операций"
+    ],
+    "validation": "44 DOM-only checks passed. Original renders viewed; new render blocked by Browser Use local-file URL policy.",
+    "limitations": [
+      "Business confirmations are previews,not mutations",
+      "No native Android changes",
+      "Maps are original static source only in original sample;no geocoding",
+      "No live deadline,calendar,SMK/equipment,tariff or concurrency engine",
+      "Finished remains a distinct unverified terminal workflow",
+      "Dark theme and real-device accessibility are not verified"
+    ],
+    "analysis": "poverkadoma-request-analysis.md",
+    "proposal_status": "Recommendations in the analysis are not user-approved or silently applied",
+    "research": [
+      {
+        "url": "https://www.nngroup.com/articles/visibility-system-status/",
+        "use": "Rationale for visible draft and server confirmation states;not a measured effect in our app"
+      },
+      {
+        "url": "https://www.nngroup.com/articles/progressive-disclosure/",
+        "use": "Hypothesis for compact map and separation of frequent versus secondary content"
+      },
+      {
+        "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum",
+        "use": "Target-size guidance;48px project target distinguished from24px WCAGminimum"
+      }
+    ]
+  },
+  "request_detail_surface_revision": {
+    "date": "2026-10-29",
+    "status": "implemented_by_user_request",
+    "before": "Общая белая карточка формы,серые поля,нижняя навигация на вложенных экранах.",
+    "after": "Белый экран,отдельные белые плитки,бар только в корнях. Внешние переключатели теней/обводок продолжают действовать.",
+    "tradeoff": "Поперечные переходы из заявки теперь требуют дополнительного Назад. Это не скрывается прежними двухшаговыми проверками: QA запрещает взаимодействовать со скрытым баром.",
+    "verification": "44DOM-only checks,including hidden/visible bar states and draft preservation. No new rendered browser verification."
+  },
+  "uniform_screen_background": {
+    "date": "2026-10-29",
+    "status": "implemented_by_user_request",
+    "request": "Везде должен быть одинаковый задний фон",
+    "result": "Main roots,request details and secondary destinations share --background:#F2F4F9. White tiles stay #FFFFFF. No changes to navigation,spacing or data."
+  },
+  "request_number_revision": {
+    "date": "2026-10-29",
+    "status": "implemented_by_user_request",
+    "request": "Номер заявки в топбар;без знака номера в карточках и подробностях;часть номеров формата МСР-12341.",
+    "presentation": "В топбаре только «Заявка». Полный номер расположен ниже шапки рядом со статусом,без знака номера. На карточке также только номер без знака;префиксы и ведущие нули сохраняются.",
+    "numbers": "7 из21 карточки имеют синтетические номера МСР-12341…МСР-12347;остальные сохраняют цифровые номера. Номер — строка с сохранением префикса и ведущих нулей;внутренний ключ не подменяется отображаемым номером.",
+    "search": "Поиск учитывает полный отображаемый номер,цифровую часть и нормализованный ввод без дефиса. Открытие и восстановление используют стабильные ключи.",
+    "layout": "Шапка24px/32px600,как на главном экране;номер под шапкой19px700,как в исходной компоновке подробностей. Длинные номера переносятся. Стрелка Назад слева;перенос вправо не согласован.",
+    "verification": "46 DOM-only checks passed;rendered narrow-screen typography remains unverified.",
+    "placement_refinement": "Пользователь отменил перенос номера в топбар:в шапке просто Заявка,номер под шапкой."
+  },
+  "back_position_discussion": {
+    "status": "question_only_not_implemented",
+    "user_question": "Может стрелочку назад справа сделаем?",
+    "recommendation": "Оставить возврат слева как знакомый Android-паттерн;пользователь не давал указания переносить.",
+    "source": "https://developer.android.com/develop/ui/compose/components/app-bars",
+    "evidence": "Official API guidance places navigationIcon on the left and actions on the right;no claim of measured task performance in our app."
+  },
+  "request_detail_workflow_revision": {
+    "date": "2026-10-29",
+    "status": "historical_layout_superseded_by_request_detail_rectangles_revision",
+    "user_request": "Реализуй твои идеи без потери содержания. Сделай чтобы было красиво и удобно",
+    "preview": "poverkadoma-request-preview.html",
+    "runtime": "poverkadoma-request-workflow.js",
+    "layout": [
+      "Шапка Заявка24/32;номер и статус под ней,без знака номера",
+      "Пять отдельных белых плиток:адрес,контакт,визит,работы,примечания;единыйфонF2F4F9",
+      "Контакт перед визитом;звонок48×48 сохранён",
+      "Карта раскрывается по нажатию;вход в выбор маршрута сохранён",
+      "Основное действие в отдельной нижней панели вне прокрутки;нижняя навигация скрыта",
+      "Отмена,закрытие и изменение привязки доступны отдельно;в работе основное действие Продолжить акт",
+      "Сведения о заявке раскрывают дату создания,историю согласования,источник/агента и дату выполнения при наличии"
+    ],
+    "interaction": [
+      "По умолчанию чтение;явные Изменить данные/Готово;редактируемость соответствует прежним полям",
+      "Пропущенное обязательное поле превращает основную кнопку в понятный шаг Указать адрес/дату/время",
+      "Остаток согласования перенесён в основную сигнальную кнопку,по ранее выбранным цветам",
+      "Пояснение закрытого/неизвестного окна возврата видно рядом с основным действием",
+      "Локальные правки сохраняются в прежнем снимке черновиков;серверное подтверждение не имитируется",
+      "При смене адреса убирается только фотография карты,не значок раскрытия",
+      "Пожелание до согласования и подтверждённый визит имеют разные заголовки"
+    ],
+    "content_preservation": {
+      "baseline": "poverkadoma-request-content-baseline.json",
+      "samples": 8,
+      "verification": "Every original field value,number,creation date,phone link,map asset,linked act and original action availability compared against pre-edit inventory. 53 DOM-only checks pass.",
+      "changes_in_copy": "Количество ИПУ→Количество счётчиков;Стоимость→Стоимость заявки;Примечание→Примечание к заявке. Значения сохранены.",
+      "pricing_evidence": "BidViewModel.kt:updateCounterMeasures computes amount as quantity*amountForOneMeasure. Prototype keeps unknown rates unknown;changed quantity marks the old amount as requiring confirmation instead of inventing a recalculation."
+    },
+    "limits": [
+      "Business confirmation dialogs remain previews;no server transactions or act editor implementation",
+      "Deadline and cancellation values are illustrative snapshots,not live regulatory calendar calculations",
+      "Only original map thumbnail is available;route/geocoding provider remains a prototype entry",
+      "Native date/time restrictions,SMK/equipment,tariffs,concurrency and Finished workflow not fully implemented",
+      "Draft storage retains prior demo limit of8entries;not Android durable storage",
+      "New rendered layout,keyboard insets and TalkBack remain unverified:browser local-file access blocked previously"
+    ],
+    "research_basis": [
+      {
+        "url": "https://www.nngroup.com/articles/progressive-disclosure/",
+        "use": "Secondary history and map disclosure;frequent contact/visit remain visible"
+      },
+      {
+        "url": "https://www.nngroup.com/articles/visibility-system-status/",
+        "use": "Separate local draft,technical sync status and unconfirmed business action"
+      },
+      {
+        "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum",
+        "use": "Touch target guidance;project48px target is distinct fromWCAGminimum"
+      }
+    ],
+    "validation": "53 DOM-only checks;no pixel-perfect or10/10 claim"
+  },
+  "request_detail_rectangles_revision": {
+    "date": "2026-10-29",
+    "status": "implemented_for_review",
+    "basis": "Explicit user correction; visual preference still awaiting review",
+    "supersedes": [
+      "Global read/edit toggle",
+      "Grouped contact/visit/work cards",
+      "Collapsed map preview",
+      "Permanent empty note fields",
+      "Verbose missing-visit helper text"
+    ],
+    "layout": [
+      "16px screen gutters;12px inner padding and gaps between individual rectangles;4px spacing scale",
+      "One full address with city,16px regular type;visible horizontal map rectangle immediately below",
+      "Each data item has its own white rectangle;date/time and quantity/total price form two separate two-column rows",
+      "Call target48px stays right of the number even with large text;number wraps as needed",
+      "No global Edit data control or repeated Contact/Date and time/Work headings",
+      "Notes and verifier comment initially hidden;buttons distinguish existing content from empty fields;hiding never deletes data",
+      "Date and time rectangles open selectors directly;footer follows missing data and chains date then time when both are missing",
+      "Appointed footer labels:Указать дату и время / Указать дату / Указать время / Согласовать;New acceptance and other status actions preserved"
+    ],
+    "preservation": {
+      "baseline": "poverkadoma-request-content-baseline.json",
+      "samples": 8,
+      "verified": "Original field values after revealing notes,number,created date,phone link,map asset,linked act and action availability preserved. Shorter agreement wording intentional."
+    },
+    "validation": "57 DOM-only checks;CSS spacing declarations checked;rendered geometry,native picker and TalkBack not verified",
+    "limits": [
+      "No server operations or native Android implementation",
+      "Original map thumbnail only for its source sample;other/edited addresses show an honest unavailable preview with route entry",
+      "Visit intervals are demonstration options;organization calendar and server restrictions unimplemented",
+      "Drafts are local prototype state,not backend confirmation"
+    ],
+    "evidence_type": "user_requested_layout_and_local_dom_checks"
+  },
+  "request_detail_functional_revision": {
+    "date": "2026-10-29",
+    "status": "implemented_for_review",
+    "source": "Explicit latest user corrections",
+    "changes": [
+      "Removed Close actions;Back in the header remains available. Terminal states hide the empty action footer.",
+      "Captions are above individual data rectangles,not inside. Shared card minimum50px with12px padding;content can grow for long text.",
+      "Phone and call are siblings in a12px-gap grid;call50px is outside the number rectangle and aligned with its lower edge.",
+      "Buttons use the existing configurable shadow token;Cancel is original redD96161 with dark text.",
+      "Primary footer remains blue with white text and no timer. The deadline is the first card,above number/status.",
+      "Deadline text says agreement remaining/expired;colors match the main-card action thresholds:blue>15,amber6–15,red<=5oroverdue.",
+      "Date/time selection,field editing,notes,history,status help and Back operate locally.",
+      "Confirm acceptance/agreement/cancellation/restoration/replacement completion changes local state and updates the list;cancel reason and local state survive host restore.",
+      "Local act draft opens/creates/saves a comment;binding can be changed/removed. Full verification act editor remains outside this screen.",
+      "Map opens a provider selector with actual address links;call uses the supplied tel target. External launching depends on host/system handlers."
+    ],
+    "validation": "66 DOM-only checks passed,including8original inventory samples and local transition/persistence scenarios;no rendered geometry or native-phone verification",
+    "local_demo_contract": "No backend request. Local business state explicitly marked as changed in the prototype and persisted in private requestDrafts. Demo cancellation supports undo but does not invent a real organization restoration period.",
+    "limitations": [
+      "No live regulatory clock or organization calendar",
+      "Full act editor and real server transactions not implemented",
+      "Original map thumbnail only for its source address;other addresses use honest unavailable state",
+      "Phone/map handlers and rendered layout not executed on a device"
+    ],
+    "components": [
+      {
+        "name": "Deadline placement/colors",
+        "checked": "DOM order,copy,all urgency states;CSS fills",
+        "rendered": false
+      },
+      {
+        "name": "Captions and card height",
+        "checked": "DOM nesting,shared50px minimum,content-driven type/padding declarations",
+        "rendered": false
+      },
+      {
+        "name": "External call",
+        "checked": "Sibling relationship,grid declarations,correct tel link",
+        "rendered": false
+      },
+      {
+        "name": "Shadows and cancel",
+        "checked": "Scoped styles,existing external shadow token,red action fill",
+        "rendered": false
+      },
+      {
+        "name": "Primary action",
+        "checked": "No timer or urgency override;conditional labels and confirmation",
+        "rendered": false
+      },
+      {
+        "name": "Local workflow",
+        "checked": "Accept,agree,cancel,restore,complete,act draft,binding;offline recheck",
+        "rendered": false
+      },
+      {
+        "name": "Persistence/navigation",
+        "checked": "Restore without writing on load,list ownership,state,Back,removed original act binding",
+        "rendered": false
+      }
+    ],
+    "evidence_type": "user_requested_layout_and_local_behavior_checks"
+  },
+  "request_detail_usability_revision": {
+    "date": "2026-10-29",
+    "status": "implemented_by_user_request",
+    "changes": [
+      "Editable fields disclose a chevron for choices and the existing Android edit icon for address/name;read-only fields have no edit affordance.",
+      "Empty visit fields say Выбрать дату / Выбрать время.",
+      "One bottom-sheet editor contains labeled date and interval controls;Готово validates and saves both together;Cancel discards both pending changes.",
+      "Existing notes/comments have a two-line preview with the full accessible name;editing remains collapsed until requested.",
+      "Map preview says Построить маршрут;choosing a provider persists a private preference and subsequent taps use its address link directly;a separate Карты control allows changing the provider.",
+      "Changing quantity or service displays Уточняется instead of the old amount. Original pricing inputs persist so reopening cannot make an outdated amount appear current;reverting the original inputs restores the source amount.",
+      "Deadline stays below request number/status and reads На согласование осталось N мин or an explicit expired message.",
+      "Deadline is now a white ordinary card with the existing shadow and a4pxleftborder:originalblue>15min,amber6–15min,red<=5min/overdue. Full signal fill is superseded only on the detail screen."
+    ],
+    "preservation": "Eight source samples retain original field values and action availability apart from the explicitly removed Close button;original palette,16px gutters,12px padding/gaps,rounded geometry and independent shadow controls preserved.",
+    "validation": "72 DOM-only checks passed;42 local assets;self-contained detail preview remains below1MB.",
+    "limitations": [
+      "No rendered screen/native picker/real-phone verification",
+      "Native external map and phone handlers depend on the host",
+      "No real tariff,server transaction,geocoding or live working-calendar calculation",
+      "Full verification act editor remains outside this prototype"
+    ],
+    "source_asset": "Edit glyph reused from Android ic_baseline_edit_24.xml;no new icon geometry invented",
+    "evidence_type": "explicit_user_request_and_local_dom_checks",
+    "research_context": [
+      {
+        "url": "https://www.nngroup.com/articles/progressive-disclosure/",
+        "use": "Secondary editors remain on demand;existing important content is previewed;heuristic basis,not a measured result for this screen"
+      },
+      {
+        "url": "https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions.html",
+        "use": "Visible labels and meaningful empty-state cues;does not establish full accessibility compliance"
+      }
+    ]
+  },
+  "internal_verifier_complete_app": {
+    "status": "implemented_for_review",
+    "date": "2026-10-29",
+    "preview": "poverkadoma-verifier-app-preview.html",
+    "coverage_file": "poverkadoma-verifier-coverage.json",
+    "navigation_audit": "poverkadoma-verifier-navigation-audit.json",
+    "requirements": [
+      "All role screens and dialogs functional locally",
+      "Hints on every screen/dialog and a global disable setting",
+      "Registration and role-specific onboarding",
+      "Original destination paths not increased",
+      "Repeated shadow and spacing checks"
+    ],
+    "checks": {
+      "original": 72,
+      "integration": 17,
+      "total": 89,
+      "rendered": false
+    },
+    "basis": "Direct user request and existing product research;visual acceptance of new screens pending",
+    "intentional_changes": [
+      "Compact global section menu on secondary screens restores2tapreachability while keeping bottom bar hidden there",
+      "White individual inputs and cards;structural groups use captions without nested card shadows",
+      "Local demo transactions remain explicit;working-calendar/server/publication semantics are not inferred",
+      "Drafts and operation results persist separately;missing session photo bytes are not disguised as saved images"
+    ],
+    "presentation_followup": "Include all final accepted screen changes in the requested end-of-project presentation;do not treat this implementation report as user acceptance or empirical usability proof."
+  },
+  "polish_2026_10_30": {
+    "basis": "Explicit user corrections;product source read-only;DOM interaction checks. No new empirical effectiveness claim.",
+    "changes": [
+      {
+        "id": "no-side-menu",
+        "reason": "Не использовать боковое меню оригинала или его модальную копию. Основные разделы — Заявки/Акты/Профиль. На вложенных авторизованных рабочих экранах есть прямой вход в полноэкранный Профиль; там каждый исходный раздел доступен непосредственно. Не более двух навигационных нажатий."
+      },
+      {
+        "id": "surface-not-nested-elevation",
+        "reason": "Не добавлять отдельную тень кнопке, уже размещённой внутри карточки или диалога. Самостоятельные плитки, бары и плавающее действие используют общие регулируемые тени. Основные действия, включая Открыть акт, имеют синюю заливку и белый текст."
+      },
+      {
+        "id": "acts-fab",
+        "reason": "В корне Актов нет поиска и фильтра. Создать акт — плавающая кнопка над лентой, без дублирующего нижнего action-bar. Нижняя навигация остаётся навигацией."
+      },
+      {
+        "id": "agreement-from-feed",
+        "reason": "Согласовать на карточке открывает диалог с номером, телефоном, датой и интервалом. Не выполнять переход через экран заявки. Отмена, ошибка и офлайн сохраняют прежний статус."
+      },
+      {
+        "id": "product-owned-pickers",
+        "reason": "Внутри приложения вместо нативных браузерных popup использовать календарь и список/сетку вариантов в стиле продукта. Все видимые триггеры работают; пустые содержательные варианты, ошибки и возврат фокуса сохраняются."
+      },
+      {
+        "id": "per-screen-critical-review",
+        "reason": "Кроме ранее согласованных Заявок и Заявки, каждый экран оценивать по красоте, удобству, компактности, сценарию, отступам, композиции, цветам и кликабельности. DOM-проверка не доказывает эстетическое качество; до просмотра рендера экран не получает отметку визуально завершён."
+      }
+    ],
+    "review": "poverkadoma-verifier-critical-review.json",
+    "phone": "phone-agree-audit-report.json",
+    "automation": {
+      "id": "automation-2",
+      "frequency": "hourly",
+      "prompt": "Просмотри ещё раз каждый экран и попробуй сделать их гармоничнее и удобнее для пользователя"
+    }
+  },
+  "main_navigation_2026_10_30": {
+    "evidence": "Explicit user approval;existing Request DOM/CSS;actual local interaction checks. No empirical frequency claim.",
+    "decisions": [
+      {
+        "id": "settings-entry-personal-data",
+        "status": "confirmed_by_user",
+        "idea": "Настройки вместо глобального Профиля",
+        "user_feedback": "Окей. Сделай это для основного макета.",
+        "application": "Сверху — Уведомления и Настройки. Настройки начинаются компактной карточкой сотрудника с ФИО/организацией/лабораторией; она сразу открывает личные данные. Рабочие функции находятся в Актах и Инструментах. Старый маршрут profile нормализуется в settings."
+      },
+      {
+        "id": "common-request-header",
+        "status": "confirmed_by_user",
+        "idea": "Единая шапка по образцу заявки",
+        "user_feedback": "Топбар экранов отличается от топ бара заявки. Сделай чтоб везде было как заявки.",
+        "application": "Все экраны основного макета используют структуру и классы шапки заявки: реальные системные значки, toolbar с отступом4/gap8, кнопки48, back−12, заголовок24/32 с масштабированием, постоянный network-slot, общие цвет/радиусы/тень. Различается доступный набор действий по контексту."
+      }
+    ],
+    "latestCorrections": [
+      {
+        "id": "secondary-actions-white",
+        "name": "Белые второстепенные кнопки",
+        "status": "required_by_user",
+        "requirement": "Кнопки Выгрузка/История/Статистика и строки действий в настройках используют поверхность темы: белую в светлой теме. Основные синие действия, опасные действия и выбранные состояния сохраняют свою иерархию."
+      },
+      {
+        "id": "square-act-fab",
+        "name": "Компактное плавающее создание акта",
+        "status": "required_by_user",
+        "requirement": "Создать акт — квадратная кнопка56×56 с радиусом16, только плюс, полное доступное имя. В списке актов нет дополнительного резерва88px; остаётся обычный нижний отступ16px."
+      },
+      {
+        "id": "rounded-checkbox-and-picker-chevron",
+        "name": "Чекбоксы и стрелка селектора",
+        "status": "required_by_user",
+        "requirement": "Нативная семантика checkbox сохраняется; внешний вид24×24 с радиусом6, синим выбранным состоянием и белой отметкой. Текстовый символ стрелки селектора заменён иконкой chevron-down."
+      },
+      {
+        "id": "communications-selector",
+        "name": "Общий селектор уведомлений и сообщений",
+        "status": "required_by_user",
+        "requirement": "Над обеими лентами — селектор Уведомления/Сообщения, справа отдельная квадратная кнопка поддержки с иконкой. Категории сообщений остаются в сворачиваемом блоке."
+      },
+      {
+        "id": "sections-settings-only",
+        "name": "Разделы только в настройках",
+        "status": "required_by_user",
+        "requirement": "Кнопка Разделы видна только на экране Настройки. На остальных вложенных авторизованных экранах есть вход в Настройки. Это прямое исключение пользователя из прежнего универсального лимита двух переходов."
+      },
+      {
+        "id": "shared-request-act-list-cards",
+        "name": "Единое оформление карточек заявок и актов",
+        "status": "required_by_user",
+        "requirement": "Адрес в карточках заявок и актов снова жирный, уменьшен с19до17px при обычном масштабе; остальной текст16px. Акты используют ту же тонкую линию под номером и статусом, отступы12, радиусы22 и тень карточки. У вложенной основной кнопки собственной тени нет. Готовый к отправке акт имеет действие Выгрузить; неготовый — Продолжить акт. Ошибку отправки можно повторить, если все данные заполнены. Нажатие поверхности открывает сведения, а Выгрузить проверяет требования и запрашивает подтверждение. В истории отправленный акт доступен для просмотра. Размер17px и формулировка Продолжить акт выбраны исполнителем для текущей итерации и ещё не оценены пользователем."
+      }
+    ],
+    "navigation_audit": "poverkadoma-verifier-navigation-audit.json",
+    "verification": {
+      "checks": 28,
+      "routeCount": 39,
+      "rendered": false
+    },
+    "return_behavior": "Sections is entered only from Settings;choosing a destination replaces the transient map. Back returns to Settings;the work draft is preserved."
+  },
+  "water_timer_experiments": {
+    "date": "2026-10-31",
+    "source": "Explicit user feedback on Time tab and two new constraints",
+    "liked_direction": {
+      "id": "time-tab-in-request-action",
+      "status": "confirmed_by_user",
+      "idea": "Вкладка времени внутри кнопки",
+      "user_feedback": "Блин, прикольный варинат вкладка времени.",
+      "application": "Пользователю понравился вариант Вкладка времени из poverkadoma-action-timer-twenty.html. Использовать его как направление дальнейших экспериментов: основное действие слева, компактная зона остатка справа, единая кнопка. Волна запрошена как новый эксперимент, её принятие ещё не подтверждено."
+    },
+    "requirements": [
+      {
+        "id": "timer-experiments-preserve-button-height",
+        "name": "Не увеличивать кнопку ради индикатора",
+        "status": "required_by_user",
+        "user_feedback": "Высота кнопки не должна увеличиться",
+        "scope": "Новая серия вариантов кнопки; основной макет пока не изменён",
+        "requirement": "Взять48px из рабочего макета, а не56–64px из предыдущих экспериментов. Все20 новых вариантов имеют одинаковую высоту48px. Не выносить таймер на дополнительную строку вне кнопки."
+      },
+      {
+        "id": "timer-experiments-blue-majority",
+        "name": "Большая часть кнопки остаётся голубой",
+        "status": "required_by_user",
+        "user_feedback": "большая часть кнопки должна быть голубой как в оригинале",
+        "scope": "Новая серия вариантов кнопки; основной макет пока не изменён",
+        "requirement": "Основная заливка #0084c1 остаётся при всех сроках, включая просрочку. Цвет предупреждения меняется в компактной зоне таймера. Белые текст и иконки на насыщенном голубом. Правый таймер занимает31–33% ширины; дополнительные шкалы не заменяют основную голубую заливку."
+      }
+    ],
+    "artifact": "poverkadoma-water-timer-twenty.html",
+    "wave": "Static vertical wave;no looping motion or loading state",
+    "status": "20proposals,not a selection for the main prototype",
+    "geometry": {
+      "height": 48,
+      "blueAreaMinimumLowerBound": 0.565,
+      "method": "Conservative mathematical bound from declared CSS geometry,not measured rendered pixels"
+    },
+    "verification": {
+      "stateChecks": 1440,
+      "dialogChecks": 80,
+      "rendered": false
+    },
+    "main_prototype": "Not changed by this experiment"
+  },
+  "main_timer_preview": {
+    "date": "2026-10-31",
+    "requirement": {
+      "id": "deadline-preview-animation",
+      "name": "Ускоренная демонстрация срока",
+      "status": "required_by_user",
+      "requirement": "Снаружи макета расположен селектор Мягкая волна/Окошко/Вкладка без дорожки/Метка времени/Встречные формы. Два последних варианта добавлены по запросу от03.11.2026 для сравнения; исходный вариант по умолчанию сохранён. Один мягкий изгиб волны вместо двух острых. Демоцикл25→5мин за20секунд с удержанием5мин в течение2секунд и повтором. Цвет области таймера меняется резко,без интерполяции:выше15мин — исходная синяя заливка кнопки,6–15мин — #FFB21C,5мин и меньше — #D96161. Основная голубая заливка сохраняется,текст всегда белый. Зелёный старт и плавные переходы отменены пользователем. Есть пауза,перезапуск и ручное время. Это только демонстрация:сроки,статусы и черновики заявок не изменяются;каждый кадр не сохраняется в состоянии хоста. При reduced-motion демонстрация начинается на паузе.",
+      "artifact": "poverkadoma-verifier-app-preview.html"
+    },
+    "implementation": [
+      "poverkadoma-verifier-timer-preview.js",
+      "poverkadoma-verifier-timer-preview.css"
+    ],
+    "source_stability": "Visual override only;original request action handlers and domain state preserved",
+    "wave_geometry": "One period,3px amplitude,max slope below0.4;previous experiment two periods,5px amplitude,max slope1.31",
+    "normal_button_height": 48,
+    "large_text": "Content reflows rather than clipping at200%",
+    "verification": {
+      "checks": 32,
+      "report": "poverkadoma-verifier-qa.json",
+      "rendered": false
+    },
+    "phase_persistence": "Style,play/pause and manual time survive restore;auto-loop restarts at25on reload;host echoes do not reset active phase"
+  },
+  "acts_twenty_2026_11_02": {
+    "status": "20proposals_for_selection_not_accepted_main_design",
+    "artifact": "poverkadoma-acts-twenty.html",
+    "rules": [
+      {
+        "id": "buttons-distinct-from-cards",
+        "name": "Кнопка должна выглядеть кнопкой",
+        "status": "required_by_user",
+        "user_feedback": "По кнопкам должно быть понятно что это кнопки а не карточки",
+        "requirement": "Не оформлять обычное действие как крупную плитку с данными. У кнопки явная заливка или контур,понятный глагол действия,компактная геометрия и заметное состояние нажатия/фокуса. Карточка содержит информацию и переход,лейбл показывает состояние;лейблы не получают тень и оформление кнопок. Сохранять доступные области нажатия."
+      },
+      {
+        "id": "act-list-meter-identification",
+        "name": "Все счётчики видны в акте",
+        "status": "required_by_user",
+        "requirement": "Во всех новых вариантах списка актов для каждого счётчика показывать отдельную строку:регистрационный номер,тип СИ,заводской номер и методика поверки. Разрешать перенос внутри строки,не обрезать важные данные и не прятать их за раскрытием."
+      },
+      {
+        "id": "act-list-minimum-actions",
+        "name": "Минимум действий на карточке акта",
+        "status": "required_by_user",
+        "requirement": "Не добавлять кнопку Открыть. Карточка открывается нажатием на её поверхность,переход отмечен шевроном и доступным именем. У готового акта отдельная кнопка Выгрузить,независимая от перехода по карточке. Общая кнопка называется Выгрузить всё. Групповая отправка перечисляет готовые акты и требует подтверждения;черновики не отправляются."
+      }
+    ],
+    "source": "Existing acts module and user requirements;meter examples are synthetic,not asserted registry/method matches",
+    "constantElements": [
+      "Original blue/green/amber/red palette",
+      "Common request-based header",
+      "Requests/Acts/Tools bottom navigation",
+      "Green56px creation FAB",
+      "All four meter fields on every row",
+      "Upload all and ready-only Upload,with confirmation"
+    ],
+    "experiments": [
+      "Grouping by readiness,date or client",
+      "Address/document/meter hierarchy",
+      "Quiet labels,tonal labels,corner labels,accent rails",
+      "Compact versus full-width upload actions",
+      "Fixed versus scrolling utility controls",
+      "Readiness guidance without an extra Open button"
+    ],
+    "stateContract": "Each variant has an independent local demonstration session. Only preferences and liked variants persist. The main application prototype is unchanged.",
+    "verification": {
+      "date": "2026-11-02",
+      "checks": 11,
+      "passed": [
+        "Twenty named,independent screen compositions boot without saving",
+        "Every act card includes one visible row per meter with registry,type,serial and method",
+        "All screens expose Upload all,History and an original-green centered creation FAB",
+        "All twenty native card hit targets open a distinct act screen and return without expanding cards",
+        "Upload confirms independently of opening the act,cancel is safe and single upload affects only one act",
+        "Upload all transmits two ready acts only and History preserves every meter row without Upload controls",
+        "Draft editing can supply missing meter identifiers and becomes ready without adding an Open button",
+        "Creation,ready filtering,context help,settings and root navigation have real local interactions",
+        "Dark/light themes,narrow widths,long data and empty states retain all required identifiers and controls",
+        "Liked variants and design preferences persist without serializing demonstration business data",
+        "Labels and buttons have separate visual grammar;card overlays never swallow their Upload sibling"
+      ],
+      "variants": 20,
+      "initialActCards": 80,
+      "initialMeterRows": 100,
+      "requiredMeterFields": 400,
+      "bulkUpload": "Two ready acts;draft and failed act stay local;confirmation required",
+      "interactionScope": "Native card and upload hit targets,bulk confirmation,history/statistics,editing,creation,help,settings,local root navigation",
+      "mainPrototypeChanged": false,
+      "bytes": 47537,
+      "visualVerification": "DOM and source CSS only;rendered geometry,touch behavior and human discoverability remain unverified",
+      "limitations": [
+        "Data is synthetic,not a verified registry/method match",
+        "Workflow examples reset on reload;only display preferences and liked designs persist",
+        "Secondary Requests and Tools are limited previews;the main application remains the authoritative full workflow"
+      ]
+    }
+  },
+  "acts_selected_2026_11_02": {
+    "basis": "Выбор пользователя из двадцати макетов:лейблы «Рабочей ленты» и синяя полоска «Счётчиков в фокусе». Это предпочтение пользователя,а не результат сравнительного исследования.",
+    "appliedTo": "poverkadoma-verifier-app-preview.html",
+    "changes": [
+      "Цветные лейблы заявок,актов,истории и инструментов без теней и оформления кнопок.",
+      "Синяя полоска у блока всех счётчиков;в каждой строке фактические рег.номер,тип,заводской номер и методика.",
+      "Удалена кнопка Продолжить акт из карточек актов;шеврон и независимое открытие всей карточки сохранены.",
+      "Кнопка готового акта Выгрузить сохранена;Выгрузить всё открывает существующий экран проверки с выбранными готовыми актами и явным подтверждением отправки.",
+      "Кнопки в двадцати вариантах приведены к принятой гарнитуре и16/24/600 вместо19/24/700.",
+      "Два новых примера:акт без владельца и акт с двумя счётчиками,у второго отсутствует фото."
+    ],
+    "savedState": "Версия набора примеров2. Старые сохранения дополняются без потери существующих данных;не создаются повторные номера. Удалённые пользователем примеры после миграции не восстанавливаются. Лимит15актов сохраняется.",
+    "verification": {
+      "main": 36,
+      "base": 72,
+      "twentyVariants": 11,
+      "type": "DOM и исходный CSS;отрисовка и устройство не проверены в этой итерации."
+    },
+    "navigation": {
+      "pathCases": 54,
+      "starts": "Three main roots only",
+      "destinations": 18,
+      "maximumRootNavigationTaps": 2,
+      "nestedPolicy": "Sections launcher visible only on Settings; other nested pages use Settings/Back and can take more than two taps by explicit user change",
+      "verification": "Actual visible DOM control activation"
+    },
+    "limitations": [
+      "Нет сравнительного тестирования с поверителями.",
+      "Визуальная геометрия,обнаруживаемость и реальные области касания требуют проверки в отрисованном макете.",
+      "Фотографии и отправка демонстрационные;серверные операции не выполняются."
+    ]
+  },
+  "request_card_alignment_2026_11_02": {
+    "user_request": "Шеврон справа посередине карточки;лейбл визуально посередине между верхней гранью и разделителем.",
+    "implementation": [
+      "Шеврон закреплён на50% высоты карточки со сдвигом на половину собственной высоты.",
+      "Над и под строкой номера/лейбла по8px;перераспределены прежние отступы12+4 без увеличения общей высоты заголовка.",
+      "Убрано резервирование места под шеврон в заголовке;в блоке сведений справа оставлено24px,чтобы длинный текст не перекрывал знак перехода.",
+      "Изменения ограничены карточками заявок с data-request-id;карточки актов не затронуты."
+    ],
+    "verification": "Исходный CSS и36 проверок DOM прошли;отрисованная геометрия и устройство в этой итерации не проверены."
+  },
+  "acts_toolbar_alignment_2026_11_02": {
+    "user_request": "Вернуть шеврон;в Актах повторить отступы и выравнивание лейбла из заявок;Выгрузить всё — синяя;История и Статистика — квадратные кнопки с иконками.",
+    "supersedes": "request_card_alignment_2026_11_02:только расположение шеврона и резерв места справа от текста. Центрирование лейбла сохранено.",
+    "implementation": [
+      "Шеврон возвращён в правую верхнюю часть карточки заявки;убран дополнительный правый отступ у сведений.",
+      "Список Актов:16px от боковых краёв,12px от шапки до строки кнопок и от неё до групп,8px между карточками и между заголовком группы и карточкой,20px между группами — как в ленте заявок.",
+      "Лейблы карточек актов выровнены как у заявок:8px сверху и снизу строки до разделителя,при сохранении места справа для шеврона.",
+      "Выгрузить всё использует основной синий стиль с белым текстом.",
+      "История и Статистика используют общий square-button48×48,радиус14,тень и контур кнопки поиска. Иконки history и chart-no-axes-combined из существующей общей системы Lucide;сохранены доступные названия."
+    ],
+    "verification": {
+      "checks": 36,
+      "navigation": "54пути из трёх основных разделов,максимум2навигационных нажатия.",
+      "scope": "DOM и исходный CSS;отрисовка и касания на устройстве не проверены."
+    }
+  },
+  "card_header_chevron_center_2026_11_02": {
+    "request": "Сделай галочку по центру между краем и дивайдером",
+    "implementation": "Шеврон перенесён в строку номера и лейбла,позиционируется на50% её высоты со сдвигом на половину собственной высоты. Строка имеет равные отступы до верхнего края карточки и разделителя. Увеличенный шрифт и переносы меняют высоту строки,центр шеврона следует за ней. Общая кнопка открытия карточки и самостоятельные кнопки действий сохранены.",
+    "scope": "Карточки заявок и актов в основном макете.",
+    "verification": "36 проверок DOM;отрисовка на устройстве не проверена."
+  },
+  "act_card_layouts_2026_11_02": {
+    "status": "20 предложений для выбора;не утверждённые решения.",
+    "artifact": "poverkadoma-act-card-layouts.html",
+    "basis": "Текущий макет,пожелания пользователя и задачи поиска акта/проверки готовности. Привычный список следует общей логике старого интерфейса,но не заявляется точной копией оригинального кадра.",
+    "constraints": [
+      "Исходная палитра,Segoe UI,основные кнопки16/24/600,отступы с шагом4,внутри карточки12.",
+      "Без синей вертикальной полоски и отдельной кнопки Открыть или Продолжить акт.",
+      "В каждом варианте доступны все четыре идентификационных поля каждого счётчика.",
+      "Лейблы цветные,с текстом;проблемы не кодируются одним цветом."
+    ],
+    "alternatives": [
+      {
+        "name": "Привычный список",
+        "reason": "Номер и лейбл сверху,адрес и дата следом;тонкая линия отделяет компактные строки счётчиков."
+      },
+      {
+        "name": "Адрес первым",
+        "reason": "Адрес служит главным ориентиром,счётчики собраны на общей подложке,данные распределены по двум колонкам."
+      },
+      {
+        "name": "Паспорт акта",
+        "reason": "Отдельная строка номера и статуса;поля счётчиков построены как подпись и значение."
+      },
+      {
+        "name": "Общая подложка",
+        "reason": "Светлый блок счётчиков занимает полную внутреннюю ширину карточки и отделяет их от шапки без вертикального акцента."
+      },
+      {
+        "name": "Отдельные счётчики",
+        "reason": "Каждый счётчик имеет собственный тонкий контур без тени;группировка определяется границами."
+      },
+      {
+        "name": "Две строки на счётчик",
+        "reason": "Тип и заводской номер стоят выше,реестр и методика ниже;предупреждение завершает строку счётчика."
+      },
+      {
+        "name": "Поля в две колонки",
+        "reason": "У каждого значения своя подпись;можно сравнивать данные по стабильным позициям."
+      },
+      {
+        "name": "Статус внизу",
+        "reason": "Верх карточки содержит идентификацию;готовность вынесена к зоне действия."
+      },
+      {
+        "name": "Общая таблица",
+        "reason": "Подписи колонок приведены один раз для всех счётчиков;на узкой ширине разрешены переносы значений."
+      },
+      {
+        "name": "Номер как заголовок",
+        "reason": "Номер акта получает акцент,адрес становится обычным текстом;счётчики пронумерованы."
+      },
+      {
+        "name": "Дата рядом с номером",
+        "reason": "Дата объединена с номером в метаданные;лейбл расположен рядом с адресной частью."
+      },
+      {
+        "name": "Только отступы",
+        "reason": "Шапка и счётчики разделены пустым пространством;без дополнительных контуров и полос."
+      },
+      {
+        "name": "Контур блока счётчиков",
+        "reason": "Одна общая рамка с подписью отделяет набор счётчиков от сведений акта."
+      },
+      {
+        "name": "Разделитель с подписью",
+        "reason": "Подпись Счётчики встроена в горизонтальное разделение,а номер каждого счётчика помогает ориентироваться в предупреждениях."
+      },
+      {
+        "name": "Заводской номер справа",
+        "reason": "Тип и заводской номер образуют первую строку,методика занимает нижнюю строку целиком."
+      },
+      {
+        "name": "Светлая шапка",
+        "reason": "Подложку получает идентификационная часть;счётчики остаются на чистой поверхности."
+      },
+      {
+        "name": "Дата в нижней строке",
+        "reason": "Адрес и счётчики поднимаются выше,дата завершает карточку перед действием."
+      },
+      {
+        "name": "Карточка документа",
+        "reason": "Пунктирное горизонтальное разделение и поля подпись–значение напоминают структуру документа."
+      },
+      {
+        "name": "Сначала проблема",
+        "reason": "Общее предупреждение в мягком выделенном блоке появляется до списка счётчиков."
+      },
+      {
+        "name": "Проверка по счётчикам",
+        "reason": "Дата становится первым ориентиром;у полностью заполненного счётчика есть текст Заполнен,у проблемного — конкретная причина."
+      }
+    ],
+    "problemModel": {
+      "act": "Пропуски владельца/адреса показываются на уровне акта.",
+      "meter": "Нет фото или методики относится к конкретному счётчику;фото отмечается прямо в его строке,методика — в соответствующем поле.",
+      "transmission": "Ошибка отправки отделена от ошибок заполнения,данные остаются доступными;есть подтверждаемое повторное действие.",
+      "presentation": "Предлагаются компактная строка,мягкий блок,чип,отметка с иконкой,нижняя сводка и статус рядом с действием."
+    },
+    "examples": [
+      "Готов к выгрузке",
+      "Не заполнены данные акта",
+      "Нет фото второго счётчика",
+      "Не заполнены данные и нет фото",
+      "Не выбрана методика",
+      "Ошибка выгрузки"
+    ],
+    "interactions": "Карточка открывает локальное редактирование примера;владелец,адрес и поля счётчиков редактируются,фото можно выбрать с устройства. Выгрузка подтверждается и меняет только текущий пример. На сервер ничего не отправляется.",
+    "mainPrototype": "Синяя полоска удалена. Временно использована тонкая нейтральная горизонтальная линия;это не означает одобрение пользователем выбранной компоновки.",
+    "verification": {
+      "date": "2026-11-02",
+      "variants": 20,
+      "examples": 6,
+      "checks": 9,
+      "passed": [
+        "Twenty named card layouts boot without saving and use distinct structural configurations",
+        "All six examples preserve four visible identification fields for every meter in every layout",
+        "Act-level omissions and missing photos are shown at the correct scope without color-only signals",
+        "Every native card target opens an editable example and Cancel leaves its data untouched",
+        "Supplying owner and a photo fixes the actual second meter and enables only that example for upload",
+        "Upload is independent from opening, requires confirmation and affects only the selected layout",
+        "Failed transmission stays separate from missing data and offers a working explicit retry",
+        "Theme,width,long data and enlarged text keep all layouts and meter identifiers present",
+        "Display preferences restore without saves and host echoes do not erase edited local examples"
+      ],
+      "initialMeterRows": 40,
+      "initialIdentificationFields": 160,
+      "bytes": 37775,
+      "mainChange": "Blue meter rail removed;temporary neutral horizontal separator retained pending selection.",
+      "verification": "DOM and source CSS only;rendered geometry,device touch and discoverability remain unverified.",
+      "limitations": [
+        "Synthetic meter data is not an authoritative registry/method combination.",
+        "Card examples support local editing and simulated upload;this is a layout study,not the full application.",
+        "Only display preferences persist across reloads."
+      ]
+    },
+    "evidenceLimits": "Это дизайнерские гипотезы. Сравнительного теста с поверителями и визуальной проверки отрисовки на устройстве в этой итерации нет.",
+    "superseded_by": "compact_card_layouts_2026_11_02"
+  },
+  "compact_card_layouts_2026_11_02": {
+    "status": "Вторая итерация20 компоновок для выбора;не утверждённый итоговый дизайн.",
+    "artifact": "poverkadoma-act-card-layouts.html",
+    "basis": "Нам важна максимальная компактность карточки",
+    "changes": [
+      "Номер,полная дата работ и статус объединены в строку метаданных;в специальных вариантах дата или статус совмещены с нижним действием.",
+      "Убраны отдельные заголовки каждого счётчика и повторяющееся слово Заполнен;в нумерованных вариантах индекс включён в строку типа СИ.",
+      "Четыре поля счётчика занимают две компактные логические строки или свободно переносящуюся строку. Вертикальные формы и отдельная строка шапки таблицы исключены.",
+      "Нет фото включено в строку заводского номера соответствующего счётчика.",
+      "Готов к выгрузке сокращено до Готов в лейбле;полная формулировка сохранена в доступном имени.",
+      "Уменьшены промежутки между блоками и вложенные отступы информационных групп;12px внешнего внутреннего отступа карточки и исходные размеры текста сохранены.",
+      "Пространство сцены сравнения уменьшено;размер карточки определяется содержимым."
+    ],
+    "preserved": [
+      "Исходная палитра и гарнитура",
+      "Номер,полный адрес и полная дата",
+      "Все четыре поля каждого счётчика без обрезки",
+      "Текстовые предупреждения и привязка к нужному счётчику",
+      "Кнопка48px и независимое открытие всей карточки",
+      "Редактирование примера,фото и подтверждаемая локальная выгрузка"
+    ],
+    "variants": [
+      "Привычный список",
+      "Адрес первым",
+      "Паспорт акта",
+      "Общая подложка",
+      "Отдельные счётчики",
+      "Две строки на счётчик",
+      "Поля в две колонки",
+      "Статус внизу",
+      "Сжатый реестр",
+      "Номер как заголовок",
+      "Метаданные одной строкой",
+      "Только отступы",
+      "Контур блока счётчиков",
+      "Разделитель с подписью",
+      "Заводской номер справа",
+      "Светлая шапка",
+      "Дата в нижней строке",
+      "Карточка документа",
+      "Сначала проблема",
+      "Проверка по счётчикам"
+    ],
+    "verification": {
+      "date": "2026-11-02",
+      "variants": 20,
+      "examples": 6,
+      "checks": 9,
+      "passed": [
+        "Twenty named card layouts boot without saving and use distinct structural configurations",
+        "All six examples preserve four visible identification fields for every meter in every layout",
+        "Act-level omissions and missing photos are shown at the correct scope without color-only signals",
+        "Every native card target opens an editable example and Cancel leaves its data untouched",
+        "Supplying owner and a photo fixes the actual second meter and enables only that example for upload",
+        "Upload is independent from opening, requires confirmation and affects only the selected layout",
+        "Failed transmission stays separate from missing data and offers a working explicit retry",
+        "Theme,width,long data and enlarged text keep all layouts and meter identifiers present",
+        "Display preferences restore without saves and host echoes do not erase edited local examples"
+      ],
+      "initialMeterRows": 40,
+      "initialIdentificationFields": 160,
+      "bytes": 43083,
+      "mainChange": "Blue meter rail removed;temporary neutral horizontal separator retained pending selection.",
+      "verification": "DOM and source CSS only;rendered geometry,device touch and discoverability remain unverified.",
+      "limitations": [
+        "Synthetic meter data is not an authoritative registry/method combination.",
+        "Card examples support local editing and simulated upload;this is a layout study,not the full application.",
+        "Only display preferences persist across reloads."
+      ]
+    },
+    "limits": "Снижение высоты заложено компоновкой,но пиксельная высота и её изменение не измерены в реальном рендере. Длинные значения не скрываются ради фиксированной высоты."
+  },
+  "red_act_warnings_2026_11_02": {
+    "basis": "Прямое требование пользователя:предупреждения должны быть красными.",
+    "appliedTo": "Все20 компоновок в poverkadoma-act-card-layouts.html",
+    "change": "Иконки предупреждений,подложки отсутствующих значений и отметок Нет фото используют исходный красный #D96161. Контрастный основной текст и геометрия сохранены.",
+    "verification": {
+      "date": "2026-11-02",
+      "variants": 20,
+      "examples": 6,
+      "checks": 9,
+      "passed": [
+        "Twenty named card layouts boot without saving and use distinct structural configurations",
+        "All six examples preserve four visible identification fields for every meter in every layout",
+        "Act-level omissions and missing photos are shown at the correct scope without color-only signals",
+        "Every native card target opens an editable example and Cancel leaves its data untouched",
+        "Supplying owner and a photo fixes the actual second meter and enables only that example for upload",
+        "Upload is independent from opening, requires confirmation and affects only the selected layout",
+        "Failed transmission stays separate from missing data and offers a working explicit retry",
+        "Theme,width,long data and enlarged text keep all layouts and meter identifiers present",
+        "Display preferences restore without saves and host echoes do not erase edited local examples"
+      ],
+      "initialMeterRows": 40,
+      "initialIdentificationFields": 160,
+      "bytes": 43069,
+      "mainChange": "Blue meter rail removed;temporary neutral horizontal separator retained pending selection.",
+      "verification": "DOM and source CSS only;rendered geometry,device touch and discoverability remain unverified.",
+      "limitations": [
+        "Synthetic meter data is not an authoritative registry/method combination.",
+        "Card examples support local editing and simulated upload;this is a layout study,not the full application.",
+        "Only display preferences persist across reloads."
+      ]
+    }
+  },
+  "chosen_act_card_2026_11_02": {
+    "basis": "Пользователь выбрал сочетание шапки Привычный список и двух колонок Метаданные одной строкой,попросил индикаторы слева и действие заполнения.",
+    "appliedTo": "poverkadoma-verifier-app-preview.html",
+    "implementation": [
+      "Шапка:номер,дата работ,цветной лейбл,шеврон;затем полный адрес и общие пропуски акта.",
+      "Одна линия отделяет шапку от счётчиков;синей полоски нет.",
+      "Счётчик:24px индикатор,8px промежуток,две адаптивные колонки. Все четыре поля сохранены.",
+      "Индикатор вычисляется существующей полной проверкой meterIssues,включающей фото,измерения,методику,условия,оборудование и заключение. Зелёная галочка не означает пригодность счётчика.",
+      "Недоступность фото показана текстом у заводского номера и значком camera-off;иные ошибки — circle-alert.",
+      "Дополнить акт ведёт напрямую к первой ошибке акта или счётчика. Выгрузить сохраняет проверку предварительных требований и подтверждение. Полный черновик до проверки имеет Проверить акт.",
+      "История остаётся доступной для просмотра без кнопок редактирования/выгрузки.",
+      "Подсказка списка объясняет значения значков и действие заполнения."
+    ],
+    "copyDecision": "Название Дополнить акт выбрано исполнителем по разрешению пользователя подобрать формулировку.",
+    "assumption": "Обрезанная фраза если что-то в акте не д… понята как сохранение предупреждения об общих незаполненных данных под адресом.",
+    "verification": {
+      "passed": 38,
+      "checks": [
+        "Full application boots with the approved request feed and no save on load",
+        "Every implemented route renders without a placeholder and has contextual help",
+        "Original destinations remain within two actual navigation taps from the three main roots without a Profile menu",
+        "The native accessible hint checkbox turns hints off and on and restores both saved states",
+        "Nested dialog help preserves the original dialog values",
+        "Custom setting selectors use icon chevrons and apply theme and font scale across screens",
+        "A request opens the full act editor and keeps the binding after returning",
+        "Whole-app state and drafts restore without duplicate save events",
+        "Communications use shared Notification/Message segments and an icon-only Support action",
+        "All implemented routes use the Request header DOM and shared typography; roots keep the same bottom navigation",
+        "Act drafts survive the Settings shortcut, Back to Acts, reopening and a host-state reload",
+        "Old saved Profile routes migrate to Settings without resurrecting the old all-functions menu",
+        "The section gateway is entered only from Settings and returns there without a leaked history step",
+        "Registration validates email and consent,checks a local code and connects only the internal role",
+        "Logout preserves drafts and blocks returning to working screens without signing in",
+        "A linked act deletion and simulated upload produce consistent request states",
+        "Large states are losslessly packed or explicitly warn without sending an oversized snapshot",
+        "Surface elevation is shared while nested controls avoid extra shadows and primary actions stay blue",
+        "White secondary surfaces and rounded checkbox CSS keep primary,checked,disabled and focus states distinct",
+        "Document acknowledgement uses the rounded native checkbox and still requires explicit confirmation before upload",
+        "Acts uses an icon-only square floating creation button without inflated list-bottom padding",
+        "Act list cards share request hierarchy,divider,fonts and independent surface/action hit targets",
+        "Each act lists all four meter identifiers and ties missing photos to the actual meter",
+        "Selected act cards separate global issues from per-meter completion and preserve all meter data",
+        "Complete act actions navigate directly to the first missing global field or meter material without uploading",
+        "Legacy saved acts gain the two examples once without losing work or resurrecting deleted examples",
+        "Colored status labels and neutral meter separation retain standard action typography",
+        "Bulk upload opens the existing review with all ready acts selected and leaves drafts unselected",
+        "Direct act upload validates prerequisites,requires confirmation and removes only the transmitted act",
+        "List agreement opens its own dialog, survives host echoes and commits visible custom date/time choices without leaving Requests",
+        "Agreement cancellation and offline failure keep the user on the feed and do not invent a confirmed visit",
+        "Request date and time tiles open working custom selectors and preserve the underlying editor across host echoes",
+        "External review controls open actual full-app routes and preserve the shared network slot",
+        "Malformed saved routes and display settings cannot create an unreadable or unsupported screen",
+        "The main prototype exposes three timer styles outside the phone,uses a softer single wave and keeps the normal button48px",
+        "The timer switches sharply from blue to orange at15 and red at5,holds the endpoint and loops without saving or modifying request data",
+        "Pause,manual time,restart,style switches and restored state work without detaching source actions",
+        "Animation phase survives host echoes and list rebuilds;reduced motion starts paused until explicit Play"
+      ],
+      "routeCount": 39,
+      "headerContract": {
+        "routesChecked": 39,
+        "structure": "Request contract,detail toolbar,title class,three real system icons,persistent network slot,shared Back control",
+        "typography": "Shared24px/32px scaled title;no generated-toolbar alternate font geometry",
+        "verification": "DOM and source CSS;not rendered geometry"
+      },
+      "navigation": {
+        "pathCases": 54,
+        "starts": "Three main roots only",
+        "destinations": 18,
+        "maximumRootNavigationTaps": 2,
+        "nestedPolicy": "Sections launcher visible only on Settings; other nested pages use Settings/Back and can take more than two taps by explicit user change",
+        "verification": "Actual visible DOM control activation"
+      },
+      "seedSnapshotBytes": 10932,
+      "fragmentBytes": 913429,
+      "limitations": [
+        "DOM-only: layout, real-browser rendering and touch/device behavior remain unverified; custom calendar and option interactions are exercised in DOM",
+        "Camera, real file selection, downloads and external handlers remain unverified",
+        "All backend,ARSHIN and hardware transactions are demonstration-local"
+      ]
+    },
+    "limits": "Проверены DOM,переходы и исходный CSS. Отрисовка,фактические высоты и касания на устройстве не проверены."
+  },
+  "act_photo_preview_2026_11_02": {
+    "basis": "Прямые правки пользователя:готовые акты сверху,без уведомлений в шапке,квадратные фото счётчиков.",
+    "appliedTo": "poverkadoma-verifier-app-preview.html",
+    "changes": [
+      "Изменён порядок групп,готовые к выгрузке первыми.",
+      "Удалены уведомления о пропусках из шапки карточек.",
+      "Вместо значков состояния — фото40×40 с радиусом8;при отсутствии/недоступности фото — красная подложка16% и camera-off.",
+      "Фото из выбранного пользователем файла используется через локальный ObjectURL. Для учебного примера использована фотография из исходного FIG,изображение преобразовано в JPEG для встраивания в автономный макет.",
+      "Остальные проверки,две колонки,кнопка Дополнить акт и подтверждение выгрузки сохранены."
+    ],
+    "asset": {
+      "source": "Поверка дома (1).fig",
+      "sourceEntry": "images/c526c2949c9766c67f27fae0fa15b06e3fb54924",
+      "original": "poverkadoma-meter-reference-c526c294.png",
+      "webAsset": "poverkadoma-meter-demo.jpg",
+      "scope": "Учебное изображение;не подтверждает соответствие номерам в демонстрационных данных."
+    },
+    "questionEvidence": {
+      "source": "app/src/main/java/ru/poverkadoma/ui/screens/act_meter/model/ValidatorForActMeter.kt:437",
+      "optionTypes": "app/src/main/java/ru/poverkadoma/data/model/Options.kt:6",
+      "fields": [
+        "Фото",
+        "Рег.номер,тип СИ,заводской номер,методика",
+        "Место установки",
+        "Условия поверки до/после в зависимости от режима",
+        "Объёмы,показания,расход,время и погрешность проливов",
+        "Фото эталона и стадий измерения при фотофиксации"
+      ],
+      "qualification": "Набор обязательных полей различается по режимам и типу поверителя;не трактовать каждый пункт обязательным во всех сценариях."
+    },
+    "verification": {
+      "passed": 38,
+      "checks": [
+        "Full application boots with the approved request feed and no save on load",
+        "Every implemented route renders without a placeholder and has contextual help",
+        "Original destinations remain within two actual navigation taps from the three main roots without a Profile menu",
+        "The native accessible hint checkbox turns hints off and on and restores both saved states",
+        "Nested dialog help preserves the original dialog values",
+        "Custom setting selectors use icon chevrons and apply theme and font scale across screens",
+        "A request opens the full act editor and keeps the binding after returning",
+        "Whole-app state and drafts restore without duplicate save events",
+        "Communications use shared Notification/Message segments and an icon-only Support action",
+        "All implemented routes use the Request header DOM and shared typography; roots keep the same bottom navigation",
+        "Act drafts survive the Settings shortcut, Back to Acts, reopening and a host-state reload",
+        "Old saved Profile routes migrate to Settings without resurrecting the old all-functions menu",
+        "The section gateway is entered only from Settings and returns there without a leaked history step",
+        "Registration validates email and consent,checks a local code and connects only the internal role",
+        "Logout preserves drafts and blocks returning to working screens without signing in",
+        "A linked act deletion and simulated upload produce consistent request states",
+        "Large states are losslessly packed or explicitly warn without sending an oversized snapshot",
+        "Surface elevation is shared while nested controls avoid extra shadows and primary actions stay blue",
+        "White secondary surfaces and rounded checkbox CSS keep primary,checked,disabled and focus states distinct",
+        "Document acknowledgement uses the rounded native checkbox and still requires explicit confirmation before upload",
+        "Acts uses an icon-only square floating creation button without inflated list-bottom padding",
+        "Act list cards share request hierarchy,divider,fonts and independent surface/action hit targets",
+        "Each act lists all four meter identifiers and ties missing photos to the actual meter",
+        "Ready acts come first and photo squares replace status icons without hiding other missing data",
+        "Complete act actions navigate directly to the first missing global field or meter material without uploading",
+        "Legacy saved acts gain the two examples once without losing work or resurrecting deleted examples",
+        "Colored status labels and neutral meter separation retain standard action typography",
+        "Bulk upload opens the existing review with all ready acts selected and leaves drafts unselected",
+        "Direct act upload validates prerequisites,requires confirmation and removes only the transmitted act",
+        "List agreement opens its own dialog, survives host echoes and commits visible custom date/time choices without leaving Requests",
+        "Agreement cancellation and offline failure keep the user on the feed and do not invent a confirmed visit",
+        "Request date and time tiles open working custom selectors and preserve the underlying editor across host echoes",
+        "External review controls open actual full-app routes and preserve the shared network slot",
+        "Malformed saved routes and display settings cannot create an unreadable or unsupported screen",
+        "The main prototype exposes three timer styles outside the phone,uses a softer single wave and keeps the normal button48px",
+        "The timer switches sharply from blue to orange at15 and red at5,holds the endpoint and loops without saving or modifying request data",
+        "Pause,manual time,restart,style switches and restored state work without detaching source actions",
+        "Animation phase survives host echoes and list rebuilds;reduced motion starts paused until explicit Play"
+      ],
+      "routeCount": 39,
+      "headerContract": {
+        "routesChecked": 39,
+        "structure": "Request contract,detail toolbar,title class,three real system icons,persistent network slot,shared Back control",
+        "typography": "Shared24px/32px scaled title;no generated-toolbar alternate font geometry",
+        "verification": "DOM and source CSS;not rendered geometry"
+      },
+      "navigation": {
+        "pathCases": 54,
+        "starts": "Three main roots only",
+        "destinations": 18,
+        "maximumRootNavigationTaps": 2,
+        "nestedPolicy": "Sections launcher visible only on Settings; other nested pages use Settings/Back and can take more than two taps by explicit user change",
+        "verification": "Actual visible DOM control activation"
+      },
+      "seedSnapshotBytes": 10932,
+      "fragmentBytes": 978668,
+      "limitations": [
+        "DOM-only: layout, real-browser rendering and touch/device behavior remain unverified; custom calendar and option interactions are exercised in DOM",
+        "Camera, real file selection, downloads and external handlers remain unverified",
+        "All backend,ARSHIN and hardware transactions are demonstration-local"
+      ]
+    },
+    "limits": "DOM и исходный CSS проверены;отрисовка и касания на устройстве не проверены. После перезагрузки пользовательские фото нужно выбрать повторно,если их локальный ObjectURL больше недоступен."
+  },
+  "act_fill_and_field_examples_2026_11_02": {
+    "basis": "Прямое исправление пользователя:неполный акт — черновик,полный — можно выгружать;единая кнопка Заполнить акт;подписанные поля с красным текстом пропусков и короткая МП.",
+    "changes": [
+      "На карточках только Заполнить акт или Выгрузить. Прежние Дополнить акт и Проверить акт удалены из карточек.",
+      "Готовность вычисляется полной локальной проверкой обязательных данных. При изменении поля статус автоматически становится draft или ready;устаревший сохранённый флаг не определяет отображение.",
+      "Лента и выбор готовых для общей выгрузки используют ту же готовность. Ошибки транспорта и отправленная история сохраняются.",
+      "Рег. №:,Тип СИ:,Зав. №:,МП: подписаны во всех строках счётчиков. Пустое поле имеет точный текст не заполнен и красный цвет,содержимое не скрывается.",
+      "Методика в учебных примерах заменена на МИ 1592-2015. В старых сохранениях заменяются только известные демонстрационные заглушки;пользовательские значения сохраняются.",
+      "Добавлены a6 без рег.номера,a7 без типа СИ,a8 без заводского номера,a9 без методики;остальные данные и фото в этих примерах заполнены."
+    ],
+    "samples": {
+      "version": 3,
+      "total": 9,
+      "nextNumber": 10,
+      "migration": "Версия2 дополняется четырьмя примерами однократно;версия1 также получает более ранние примеры. Удалённые примеры не восстанавливаются после перехода,дубли номеров не создаются,предел15актов сохранён."
+    },
+    "scope": "Основной макет. Существующий экран проверки ошибок остаётся вспомогательным экраном и не служит барьером готовности карточки.",
+    "verification": {
+      "passed": 41,
+      "checks": [
+        "Full application boots with the approved request feed and no save on load",
+        "Every implemented route renders without a placeholder and has contextual help",
+        "Original destinations remain within two actual navigation taps from the three main roots without a Profile menu",
+        "The native accessible hint checkbox turns hints off and on and restores both saved states",
+        "Nested dialog help preserves the original dialog values",
+        "Custom setting selectors use icon chevrons and apply theme and font scale across screens",
+        "A request opens the full act editor and keeps the binding after returning",
+        "Whole-app state and drafts restore without duplicate save events",
+        "Communications use shared Notification/Message segments and an icon-only Support action",
+        "All implemented routes use the Request header DOM and shared typography; roots keep the same bottom navigation",
+        "Act drafts survive the Settings shortcut, Back to Acts, reopening and a host-state reload",
+        "Old saved Profile routes migrate to Settings without resurrecting the old all-functions menu",
+        "The section gateway is entered only from Settings and returns there without a leaked history step",
+        "Registration validates email and consent,checks a local code and connects only the internal role",
+        "Logout preserves drafts and blocks returning to working screens without signing in",
+        "A linked act deletion and simulated upload produce consistent request states",
+        "Large states are losslessly packed or explicitly warn without sending an oversized snapshot",
+        "Surface elevation is shared while nested controls avoid extra shadows and primary actions stay blue",
+        "White secondary surfaces and rounded checkbox CSS keep primary,checked,disabled and focus states distinct",
+        "Document acknowledgement uses the rounded native checkbox and still requires explicit confirmation before upload",
+        "Acts uses an icon-only square floating creation button without inflated list-bottom padding",
+        "Act list cards share request hierarchy,divider,fonts and independent surface/action hit targets",
+        "Each act lists all four meter identifiers and ties missing photos to the actual meter",
+        "Ready acts come first and photo squares replace status icons without hiding other missing data",
+        "Complete act actions navigate directly to the first missing global field or meter material without uploading",
+        "Every empty meter parameter has its label,exact empty copy and red state in a separate example",
+        "Filling the last required field makes a draft immediately uploadable without a review gate",
+        "Version-two snapshots receive field examples and the requested method while preserving custom data and deletions",
+        "Legacy saved acts gain examples once without losing work or resurrecting deleted examples",
+        "Colored status labels and neutral meter separation retain standard action typography",
+        "Bulk upload opens the existing review with all ready acts selected and leaves drafts unselected",
+        "Direct act upload validates prerequisites,requires confirmation and removes only the transmitted act",
+        "List agreement opens its own dialog, survives host echoes and commits visible custom date/time choices without leaving Requests",
+        "Agreement cancellation and offline failure keep the user on the feed and do not invent a confirmed visit",
+        "Request date and time tiles open working custom selectors and preserve the underlying editor across host echoes",
+        "External review controls open actual full-app routes and preserve the shared network slot",
+        "Malformed saved routes and display settings cannot create an unreadable or unsupported screen",
+        "The main prototype exposes three timer styles outside the phone,uses a softer single wave and keeps the normal button48px",
+        "The timer switches sharply from blue to orange at15 and red at5,holds the endpoint and loops without saving or modifying request data",
+        "Pause,manual time,restart,style switches and restored state work without detaching source actions",
+        "Animation phase survives host echoes and list rebuilds;reduced motion starts paused until explicit Play"
+      ],
+      "routeCount": 39,
+      "headerContract": {
+        "routesChecked": 39,
+        "structure": "Request contract,detail toolbar,title class,three real system icons,persistent network slot,shared Back control",
+        "typography": "Shared24px/32px scaled title;no generated-toolbar alternate font geometry",
+        "verification": "DOM and source CSS;not rendered geometry"
+      },
+      "navigation": {
+        "pathCases": 54,
+        "starts": "Three main roots only",
+        "destinations": 18,
+        "maximumRootNavigationTaps": 2,
+        "nestedPolicy": "Sections launcher visible only on Settings; other nested pages use Settings/Back and can take more than two taps by explicit user change",
+        "verification": "Actual visible DOM control activation"
+      },
+      "seedSnapshotBytes": 16204,
+      "fragmentBytes": 979765,
+      "limitations": [
+        "DOM-only: layout, real-browser rendering and touch/device behavior remain unverified; custom calendar and option interactions are exercised in DOM",
+        "Camera, real file selection, downloads and external handlers remain unverified",
+        "All backend,ARSHIN and hardware transactions are demonstration-local"
+      ]
+    },
+    "limitations": "Проверены DOM,переходы,сохранения и исходный CSS. Отрисовка и касания на устройстве не проверены."
+  },
+  "act_value_only_fields_2026_11_02": {
+    "basis": "Прямое изменение пользователя:заполненные поля без подписей,незаполненные без двоеточия.",
+    "change": "У заполненных полей только значение. У незаполненных название и текст не заполнен без двоеточия,красный цвет сохранён. Названия полей остаются в доступных именах. Готовность,содержимое,две колонки и примеры пропусков сохранены.",
+    "verification": {
+      "passed": 41,
+      "checks": [
+        "Full application boots with the approved request feed and no save on load",
+        "Every implemented route renders without a placeholder and has contextual help",
+        "Original destinations remain within two actual navigation taps from the three main roots without a Profile menu",
+        "The native accessible hint checkbox turns hints off and on and restores both saved states",
+        "Nested dialog help preserves the original dialog values",
+        "Custom setting selectors use icon chevrons and apply theme and font scale across screens",
+        "A request opens the full act editor and keeps the binding after returning",
+        "Whole-app state and drafts restore without duplicate save events",
+        "Communications use shared Notification/Message segments and an icon-only Support action",
+        "All implemented routes use the Request header DOM and shared typography; roots keep the same bottom navigation",
+        "Act drafts survive the Settings shortcut, Back to Acts, reopening and a host-state reload",
+        "Old saved Profile routes migrate to Settings without resurrecting the old all-functions menu",
+        "The section gateway is entered only from Settings and returns there without a leaked history step",
+        "Registration validates email and consent,checks a local code and connects only the internal role",
+        "Logout preserves drafts and blocks returning to working screens without signing in",
+        "A linked act deletion and simulated upload produce consistent request states",
+        "Large states are losslessly packed or explicitly warn without sending an oversized snapshot",
+        "Surface elevation is shared while nested controls avoid extra shadows and primary actions stay blue",
+        "White secondary surfaces and rounded checkbox CSS keep primary,checked,disabled and focus states distinct",
+        "Document acknowledgement uses the rounded native checkbox and still requires explicit confirmation before upload",
+        "Acts uses an icon-only square floating creation button without inflated list-bottom padding",
+        "Act list cards share request hierarchy,divider,fonts and independent surface/action hit targets",
+        "Each act lists all four meter identifiers and ties missing photos to the actual meter",
+        "Ready acts come first and photo squares replace status icons without hiding other missing data",
+        "Complete act actions navigate directly to the first missing global field or meter material without uploading",
+        "Every empty meter parameter has its label,exact empty copy and red state in a separate example",
+        "Filling the last required field makes a draft immediately uploadable without a review gate",
+        "Version-two snapshots receive field examples and the requested method while preserving custom data and deletions",
+        "Legacy saved acts gain examples once without losing work or resurrecting deleted examples",
+        "Colored status labels and neutral meter separation retain standard action typography",
+        "Bulk upload opens the existing review with all ready acts selected and leaves drafts unselected",
+        "Direct act upload validates prerequisites,requires confirmation and removes only the transmitted act",
+        "List agreement opens its own dialog, survives host echoes and commits visible custom date/time choices without leaving Requests",
+        "Agreement cancellation and offline failure keep the user on the feed and do not invent a confirmed visit",
+        "Request date and time tiles open working custom selectors and preserve the underlying editor across host echoes",
+        "External review controls open actual full-app routes and preserve the shared network slot",
+        "Malformed saved routes and display settings cannot create an unreadable or unsupported screen",
+        "The main prototype exposes three timer styles outside the phone,uses a softer single wave and keeps the normal button48px",
+        "The timer switches sharply from blue to orange at15 and red at5,holds the endpoint and loops without saving or modifying request data",
+        "Pause,manual time,restart,style switches and restored state work without detaching source actions",
+        "Animation phase survives host echoes and list rebuilds;reduced motion starts paused until explicit Play"
+      ],
+      "routeCount": 39,
+      "headerContract": {
+        "routesChecked": 39,
+        "structure": "Request contract,detail toolbar,title class,three real system icons,persistent network slot,shared Back control",
+        "typography": "Shared24px/32px scaled title;no generated-toolbar alternate font geometry",
+        "verification": "DOM and source CSS;not rendered geometry"
+      },
+      "navigation": {
+        "pathCases": 54,
+        "starts": "Three main roots only",
+        "destinations": 18,
+        "maximumRootNavigationTaps": 2,
+        "nestedPolicy": "Sections launcher visible only on Settings; other nested pages use Settings/Back and can take more than two taps by explicit user change",
+        "verification": "Actual visible DOM control activation"
+      },
+      "seedSnapshotBytes": 16204,
+      "fragmentBytes": 979857,
+      "limitations": [
+        "DOM-only: layout, real-browser rendering and touch/device behavior remain unverified; custom calendar and option interactions are exercised in DOM",
+        "Camera, real file selection, downloads and external handlers remain unverified",
+        "All backend,ARSHIN and hardware transactions are demonstration-local"
+      ]
+    }
+  },
+  "act_card_number_sign_2026_11_02": {
+    "basis": "Добавь № перед номером",
+    "scope": "Номер акта в карточке списка",
+    "change": "Добавлен визуальный префикс № без изменения сохранённого номера.",
+    "verification": "Сборка и41 проверка DOM прошли.",
+    "status": "Отменено после уточнения пользователя:речь о заводском номере счётчика."
+  },
+  "meter_serial_number_sign_2026_11_02": {
+    "basis": "Уточнение пользователя:№ перед заводским номером.",
+    "change": "Перед заполненным заводским номером отображается №;ошибочный префикс перед номером акта удалён. Незаполненные поля и сохранённые значения не меняются.",
+    "verification": "Сборка и41 проверка DOM прошли."
+  },
+  "act_card_label_space_2026_11_02": {
+    "basis": "Починить первую строку карточек,чтобы лейбл помещался полностью.",
+    "change": "Дата убрана из первой строки и размещена рядом с адресом ниже. Верхняя строка — адаптивная сетка с собственной шириной лейбла;номер получает оставшееся пространство и может переноситься. На узких карточках и при большом шрифте лейбл получает отдельную строку. Размеры текста не уменьшены,многоточие не используется.",
+    "verification": "Сборка и41 проверка DOM прошли. Реальная отрисовка и геометрия на устройстве не проверены.",
+    "status": "Отклонено пользователем:дату следовало сохранить в строке и сделать гибкими промежутки."
+  },
+  "act_card_dynamic_header_gaps_2026_11_02": {
+    "basis": "Уточнение пользователя:динамические отступы между номером,датой и лейблом.",
+    "change": "Дата возвращена в первую строку. Свободное место распределяется space-between при нулевом фиксированном горизонтальном gap. Шеврон участвует в потоке,лишний отступ под него убран. Лейбл сохраняет собственную ширину,размер шрифта не меняется.",
+    "verification": "Сборка и41 проверка DOM прошли;реальная отрисовка не проверена."
+  },
+  "act_card_three_group_row_2026_11_02": {
+    "basis": "Точное уточнение пользователя о структуре Row.",
+    "change": "Номер,дата,группа лейбл+шеврон — ровно три дочерних элемента. Между группами автоматическое свободное место;шейврон больше не четвёртый самостоятельный элемент. Полный текст Готово к выгрузке восстановлен.",
+    "verification": "Сборка и41 проверка DOM прошли,включая число/порядок трёх групп и полный текст лейбла. Геометрия в реальном браузере не измерена."
+  },
+  "act_composition_exploration_2026_11_02": {
+    "basis": "Пользователь считает предыдущую версию близкой к идеалу,но просит20 вариантов композиции без больших пустот и тесноты;поменять шрифты номера и адреса.",
+    "status": "Awaiting user selection; typography change explicitly requested and applied to main prototype.",
+    "artifact": "poverkadoma-act-card-layouts.html",
+    "headers": [
+      {
+        "id": "row",
+        "principle": "Номер с датой сверху,адрес и статус ниже. Полный лейбл не конкурирует с номером и датой в одной строке.",
+        "tradeoff": "Полный адрес может занять несколько строк в оставшейся слева колонке."
+      },
+      {
+        "id": "balanced",
+        "principle": "Номер и статус сверху;адрес и дата ниже.",
+        "tradeoff": "Дата привязана к строке адреса,а не к номеру."
+      },
+      {
+        "id": "blocks",
+        "principle": "Номер и адрес слева,дата и статус справа.",
+        "tradeoff": "Самая строгая вертикальная ось,но длинный адрес повышает карточку."
+      },
+      {
+        "id": "footer",
+        "principle": "Номер,дата и адрес наверху;статус объединён с действием внизу.",
+        "tradeoff": "Статус удаляется от номера;при крупном шрифте действие переносится целиком."
+      },
+      {
+        "id": "address",
+        "principle": "Адрес перед номером;дата рядом с номером,полный статус отдельной строкой.",
+        "tradeoff": "Выше остальных шапок,зато данные не конкурируют за ширину."
+      }
+    ],
+    "meters": [
+      {
+        "id": "grid",
+        "principle": "Фото слева;тип и заводской номер сверху,регистрационный номер и МП снизу."
+      },
+      {
+        "id": "family",
+        "principle": "Слева тип и методика;справа два номера с общей правой осью."
+      },
+      {
+        "id": "lines",
+        "principle": "Фото слева;пары значений идут компактно друг за другом без растянутых колонок."
+      },
+      {
+        "id": "right",
+        "principle": "Фото справа;тип и заводской номер слева,методика и регистрационный номер справа."
+      }
+    ],
+    "preserved": [
+      "Четыре обязательных реквизита на каждом счётчике.",
+      "№ только перед заводским номером.",
+      "Заполненные значения без подписи;незаполненные красным,без двоеточия.",
+      "Фото40px или красный квадрат с камерой при его отсутствии.",
+      "Полный лейбл Готово к выгрузке;шеврон в потоке,никаких синих боковых полос.",
+      "Клик карточки открывает редактируемый учебный пример;кнопки Заполнить акт и Выгрузить работают отдельно.",
+      "Тонкая обводка,скругления,палитра и стандартная типографика кнопок."
+    ],
+    "typography": "В основном макете и20 предложениях номер17/700,адрес14/20/400. Остальные экраны и карточки заявок не менялись.",
+    "controls": "Общие9 примеров акта,1–3 счётчика,ширины320–430px,тема,длинные данные и увеличение текста.",
+    "verification": {
+      "gallery": {
+        "date": "2026-11-02",
+        "variants": 20,
+        "headerModes": 5,
+        "meterModes": 4,
+        "examples": 9,
+        "checks": 7,
+        "passed": [
+          "Twenty unique compositions combine five headers and four meter arrangements with one initial slide and no initial save",
+          "Nine shared examples keep every meter and all four fields; missing values have exact red labels without colons",
+          "Each card opens an editor; cancel is safe; primary upload independently confirms and marks only its own variant",
+          "Repairing actual missing fields and second-meter photo enables upload for only the edited composition",
+          "Count,theme,width,long values and text scaling preserve all fields without clipping rules or network activity",
+          "Host state restores preferences without writes and echoes preserve local edits and open dialogs",
+          "Requested number/address typography swap and palette remain scoped to act cards; controls retain standard typography"
+        ],
+        "bytes": 96040,
+        "verification": "Source and DOM interaction checks only; rendered geometry, touch behavior and visual balance require review in the displayed mockup.",
+        "limitations": [
+          "Local example editing and simulated upload only.",
+          "Display preferences persist; edited sample data does not persist across reload.",
+          "Twenty alternatives are proposals, not approved design decisions."
+        ]
+      },
+      "main": {
+        "passed": 41,
+        "checks": [
+          "Full application boots with the approved request feed and no save on load",
+          "Every implemented route renders without a placeholder and has contextual help",
+          "Original destinations remain within two actual navigation taps from the three main roots without a Profile menu",
+          "The native accessible hint checkbox turns hints off and on and restores both saved states",
+          "Nested dialog help preserves the original dialog values",
+          "Custom setting selectors use icon chevrons and apply theme and font scale across screens",
+          "A request opens the full act editor and keeps the binding after returning",
+          "Whole-app state and drafts restore without duplicate save events",
+          "Communications use shared Notification/Message segments and an icon-only Support action",
+          "All implemented routes use the Request header DOM and shared typography; roots keep the same bottom navigation",
+          "Act drafts survive the Settings shortcut, Back to Acts, reopening and a host-state reload",
+          "Old saved Profile routes migrate to Settings without resurrecting the old all-functions menu",
+          "The section gateway is entered only from Settings and returns there without a leaked history step",
+          "Registration validates email and consent,checks a local code and connects only the internal role",
+          "Logout preserves drafts and blocks returning to working screens without signing in",
+          "A linked act deletion and simulated upload produce consistent request states",
+          "Large states are losslessly packed or explicitly warn without sending an oversized snapshot",
+          "Surface elevation is shared while nested controls avoid extra shadows and primary actions stay blue",
+          "White secondary surfaces and rounded checkbox CSS keep primary,checked,disabled and focus states distinct",
+          "Document acknowledgement uses the rounded native checkbox and still requires explicit confirmation before upload",
+          "Acts uses an icon-only square floating creation button without inflated list-bottom padding",
+          "Act list cards share request hierarchy,divider,fonts and independent surface/action hit targets",
+          "Each act lists all four meter identifiers and ties missing photos to the actual meter",
+          "Ready acts come first and photo squares replace status icons without hiding other missing data",
+          "Complete act actions navigate directly to the first missing global field or meter material without uploading",
+          "Every empty meter parameter has its label,exact empty copy and red state in a separate example",
+          "Filling the last required field makes a draft immediately uploadable without a review gate",
+          "Version-two snapshots receive field examples and the requested method while preserving custom data and deletions",
+          "Legacy saved acts gain examples once without losing work or resurrecting deleted examples",
+          "Colored status labels and neutral meter separation retain standard action typography",
+          "Bulk upload opens the existing review with all ready acts selected and leaves drafts unselected",
+          "Direct act upload validates prerequisites,requires confirmation and removes only the transmitted act",
+          "List agreement opens its own dialog, survives host echoes and commits visible custom date/time choices without leaving Requests",
+          "Agreement cancellation and offline failure keep the user on the feed and do not invent a confirmed visit",
+          "Request date and time tiles open working custom selectors and preserve the underlying editor across host echoes",
+          "External review controls open actual full-app routes and preserve the shared network slot",
+          "Malformed saved routes and display settings cannot create an unreadable or unsupported screen",
+          "The main prototype exposes three timer styles outside the phone,uses a softer single wave and keeps the normal button48px",
+          "The timer switches sharply from blue to orange at15 and red at5,holds the endpoint and loops without saving or modifying request data",
+          "Pause,manual time,restart,style switches and restored state work without detaching source actions",
+          "Animation phase survives host echoes and list rebuilds;reduced motion starts paused until explicit Play"
+        ],
+        "routeCount": 39,
+        "headerContract": {
+          "routesChecked": 39,
+          "structure": "Request contract,detail toolbar,title class,three real system icons,persistent network slot,shared Back control",
+          "typography": "Shared24px/32px scaled title;no generated-toolbar alternate font geometry",
+          "verification": "DOM and source CSS;not rendered geometry"
+        },
+        "navigation": {
+          "pathCases": 54,
+          "starts": "Three main roots only",
+          "destinations": 18,
+          "maximumRootNavigationTaps": 2,
+          "nestedPolicy": "Sections launcher visible only on Settings; other nested pages use Settings/Back and can take more than two taps by explicit user change",
+          "verification": "Actual visible DOM control activation"
+        },
+        "seedSnapshotBytes": 16204,
+        "fragmentBytes": 981302,
+        "limitations": [
+          "DOM-only: layout, real-browser rendering and touch/device behavior remain unverified; custom calendar and option interactions are exercised in DOM",
+          "Camera, real file selection, downloads and external handlers remain unverified",
+          "All backend,ARSHIN and hardware transactions are demonstration-local"
+        ]
+      },
+      "visual": "Реальная геометрия и эстетическая оценка не проверены в браузере. DOM-проверки не являются доказательством красоты или удобства."
+    },
+    "evidence": "Предложения композиции — дизайнерские гипотезы для выбора пользователя. Исследования,доказывающие превосходство одной конкретной компоновки,не заявляются."
+  },
+  "act_requisite_groups_selection_2026_11_03": {
+    "basis": "Берём вариант группы реквезитов",
+    "source": "poverkadoma-act-card-layouts.html:balanced-family",
+    "status": "Chosen by user; applied to main prototype.",
+    "change": "Вариант Группы реквизитов (balanced-family):номер17px/700 и полный лейбл с шевроном в верхней строке,адрес14px/400 и дата работ во второй. Затем горизонтальный разделитель. Фото40px слева;тип СИ и МП в левой колонке,заводской и регистрационный номера в правой с выравниванием вправо. Заполненные поля без подписей,№ только перед заводским номером. Пустые поля красные с названием и не заполнен без двоеточия. Заполнить акт для черновика,Выгрузить для полного акта. Карточка открывает сведения.",
+    "preserved": "Состояния,клики карточки,редактирование,пропуски,фото,сортировка готовых актов и выгрузка не изменены.",
+    "verification": "DOM and source checks. Runtime visual fidelity remains unverified."
+  },
+  "request_summary_ten_2026_11_03": {
+    "basis": "Пользователь просит10 красивых и максимально компактных вариантов сводки номера,статуса и срока согласования по приложенному скриншоту.",
+    "status": "Proposals awaiting selection.",
+    "artifact": "poverkadoma-request-summary-ten.html",
+    "variants": [
+      "Строгая строка",
+      "Срок у номера",
+      "Две колонки",
+      "Нижняя лента",
+      "Сигнальный край",
+      "Под номером",
+      "Общий лейбл",
+      "Срок первым",
+      "Три опоры",
+      "Без подложки"
+    ],
+    "decisions": [
+      "Сохранены номер заявки,статус Назначена и точная длительность срока.",
+      "В компактных схемах сокращена формулировка срока,полная доступная подпись сохраняет смысл согласования.",
+      "Срок и статус независимы:истечение срока не подменяет назначенный статус.",
+      "Шрифт номера16/24/700,основной текст14/20,лейбл13/20;читаемость не достигается уменьшением текста до микрошрифта.",
+      "Предложены две строки,две колонки,срок у номера,под номером,общая полоса,приоритет срока и вариант без подложки.",
+      "Использована исходная палитра,скругления и отсутствие лишних теней внутри общего блока."
+    ],
+    "controls": "Шесть состояний срока,ширины320–430,светлая/тёмная тема,длинный номер и крупный текст.",
+    "verification": {
+      "date": "2026-11-03",
+      "variants": 10,
+      "examples": 6,
+      "displayConfigurations": 8,
+      "bytes": 15590,
+      "passed": "DOM boot,all data states,unchanged status,preferences,host echo and long/large text preservation",
+      "verification": "DOM and source only; no rendered size or aesthetic score claimed."
+    },
+    "limitations": "Реальная высота,переносы и эстетика в браузере не измерены. Снижение высоты в процентах не заявляется."
+  },
+  "request_summary_bottom_band_2026_11_03": {
+    "basis": "Берём вариант Нижняя лента. И сделай эту карточку белой и с тенью как остальные",
+    "status": "Chosen by user and applied.",
+    "change": "Экран Заявка:единая белая карточка номера и статуса с общей тенью var(--shadow-card),тонкой обводкой и скруглением12px. Номер и лейбл в верхней строке;срок согласования в нижней ленте на всю ширину карточки. Лента —12% исходного сигнального цвета на поверхности темы,без собственной тени. Иконка часов цветная,текст основного цвета. Текст и номер переносятся,кнопка статуса сохраняет44px область нажатия. Если срока нет,лента скрыта.",
+    "preserved": "Номер и статус не меняются;пояснение статуса по нажатию сохранено. Оставшееся,истёкшее и просроченное время используют существующую логику. Тень зависит от общего переключателя теней и глубины;тёмная тема использует свою поверхность.",
+    "verification": "Existing workflow DOM checks and source review. Rendered geometry remains unverified."
+  },
+  "request_summary_alignment_2026_11_03": {
+    "basis": "Скриншот и просьба исправить центровку.",
+    "cause": "Общий стиль лейблов задавал align-self:flex-start,переопределяя центрирование внутри кнопки статуса.",
+    "change": "Узкое переопределение align-self:center для лейбла внутри сводки заявки;содержимое нижней ленты центрируется единым блоком.",
+    "verification": "41 существующая DOM-проверка прошла. Геометрия после изменения визуально не измерена."
+  },
+  "label_saturation_and_red_actions_2026_11_03": {
+    "basis": "Белый шрифт в красных кнопках;внешний селектор насыщенных лейблов без точки и с белым шрифтом.",
+    "changes": [
+      "Исправлен цвет текста красных действий в светлой и тёмной теме.",
+      "Селектор Мягко/Насыщенно находится над телефоном и сохраняется через существующее состояние макета.",
+      "Статусные цвета,тексты,размеры,скругления и действия не изменены.",
+      "Насыщенное оформление использует исходный полный цвет статуса,включая жёлтый и зелёный."
+    ],
+    "verification": "42 проверки DOM и исходников прошли,включая смену режима,переходы,восстановление и собственные события сохранения.",
+    "limitations": "Реальная отрисовка и контрастность насыщенных статусов на устройстве не проверены. Белый цвет текста и оригинальные заливки заданы пользователем."
+  },
+  "shared_request_clock_2026_11_03": {
+    "basis": "Насыщенный фон нижней ленты с белым текстом;все индикаторы времени привязаны к циклу30…−10.",
+    "change": "Экран Заявка:белая карточка номера и статуса с общей тенью. Нижняя лента имеет насыщенную заливку сигнального цвета,белый текст и белую иконку. Срок синхронизирован с карточками единым демонстрационным циклом30 →0 →−10 минут:40секунд спуска,2секунды на−10,затем повтор. До15мин синий,от15до5 оранжевый,5и меньше красный. При отрицательном значении явно написано Просрочено на N мин. У согласованных и последующих статусов лента не появляется.",
+    "implementation": "Один источник фазы и цвета. Время продолжает идти на экране заявки и других экранах. Перерисовка данных заявки немедленно восстанавливает представление текущего времени. Пауза и ручное отрицательное значение сохраняются;старый цикл25…5 мигрирует в новый.",
+    "preserved": "Изменяется только отображение демонстрационного времени;модели заявок,черновики,исторические даты и действия не изменяются. Кадры анимации не сохраняются в состояние хоста.",
+    "verification": "43 проверки DOM прошли:полный цикл,ноль,отрицательные значения,синхронизация экрана и списка,цвета,восстановление,миграция и скрытие срока после согласования.",
+    "limits": "Отрисовка и взаимодействие на устройстве визуально не проверены."
+  },
+  "request_locality_2026_11_05": {
+    "basis": "Показать населённый пункт отдельной строкой на карточке заявки и отдельным блоком на экране заявки.",
+    "change": "На каждой карточке заявки населённый пункт всегда показан отдельной строкой над улицей и домом,в том числе при единственном рабочем городе. На экране заявки населённый пункт находится отдельной строкой в общей белой карточке адреса и отделён тонким горизонтальным разделителем. Полный адрес сохраняется в данных,доступном имени,редакторе и маршруте. Крупный текст и длинные значения могут переноситься без обрезания.",
+    "decision": "Выбрана единая адресная карточка с разделителем:не добавляется отдельная внешняя поверхность и вторая тень.",
+    "verification": "44 проверки рабочего макета прошли,включая оба географических режима,редактирование улицы с сохранением населённого пункта и полного маршрута.",
+    "visual": "Реальная отрисовка после изменения не проверена."
+  },
+  "tools_header_network_spacing_2026_11_05": {
+    "basis": "Заголовок Инструменты в одну строку;стандартные расстояния онлайн и сжатые офлайн.",
+    "change": "На корневом экране Инструменты при наличии сети пустой network-slot визуально скрыт,заголовок не переносится,интервалы между кнопками стандартные8px. Без сети промежутки группы становятся0px,неинтерактивный индикатор занимает24px вместо48px. Рисунки иконок и шрифт заголовка не увеличивать и не уменьшать;кнопки действий сохраняют48×48. Правило ограничено шапкой Инструментов. При недостатке места группа может перейти на следующую строку без перекрытия.",
+    "verification": "45 DOM-проверок рабочего макета прошли. Геометрия браузером не измерена."
+  },
+  "tools_equal_header_intervals_2026_11_05": {
+    "basis": "Расстояние между иконками и текстом должно быть равным.",
+    "change": "В шапке Инструментов заголовок и все видимые иконки образуют единый ряд с равномерным распределением места. Заголовок не растягивает отдельный пустой промежуток. Учитывать внутренний отступ рисунка в кнопке:компенсация после текста12px онлайн и10px офлайн. Онлайн равные слоты48px,индикатор сети скрыт вместе со слотом. Офлайн все слоты44px,в том числе индикатор,расстояния сжимаются одинаково. Высота кнопок48px,рисунки иконок и размер заголовка сохраняются.",
+    "verification": "Структура и работа переключения сети проверяются существующими проверками;геометрия в браузере не измерена."
+  }
+}

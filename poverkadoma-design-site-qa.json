@@ -1,0 +1,32 @@
+{
+  "date": "2026-11-05",
+  "checks": 9,
+  "passed": [
+    "Local site boots with27 experiment series,231 variants,16 analyses and13 role profiles",
+    "Every generated preview has valid inline JavaScript and local dependencies",
+    "Experiment feed searches,filters and orders the actual saved series",
+    "All research materials and role-specific contexts render with their source content",
+    "All scenario profiles refer to existing models and initialize a standalone EPC viewer",
+    "The actual EPC viewer generates SVG for every role and all47 processes with bundled Dagre",
+    "Export preserves sprite lookup keys and every rendered icon has an embedded image;phone sizing overrides the old844px canvas last",
+    "Beautiful outer controls operate the original prototype including labels,shadows,corners and timer",
+    "All local source resources exist and the site needs neither a server API nor a build on the host"
+  ],
+  "manifest": {
+    "buildDate": "2026-11-05",
+    "experiments": 27,
+    "variants": 231,
+    "analyses": 16,
+    "profiles": 13,
+    "processes": 47,
+    "files": [
+      "poverkadoma-design-site.html",
+      "poverkadoma-design-site.css",
+      "poverkadoma-design-site.js",
+      "poverkadoma-design-site-data.js"
+    ],
+    "bytes": 13379512,
+    "verification": "Static package; no production services,credentials or raw Confluence exports included."
+  },
+  "verification": "DOM integration and source checks only; real browser geometry,frame script execution and mobile interaction remain unverified."
+}

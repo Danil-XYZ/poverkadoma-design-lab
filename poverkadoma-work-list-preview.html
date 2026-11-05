@@ -1,0 +1,551 @@
+<div id="pd-work-list-preview" class="viz-dotted-background">
+  <div class="prototype-layout">
+  <aside class="prototype-controls" id="prototype-controls" aria-label="Состояние макета">
+    <div class="prototype-control-row">
+    <span>Интернет</span>
+    <div class="network-selector" role="group" aria-label="Подключение к интернету">
+      <button type="button" data-network="online" aria-pressed="true">Есть</button>
+      <button type="button" data-network="offline" aria-pressed="false">Нет</button>
+    </div>
+    </div>
+    <div class="prototype-control-row">
+      <span>Низ топбара</span>
+      <div class="network-selector" role="group" aria-label="Нижние углы топбара">
+        <button type="button" data-corners="rounded" aria-pressed="true">Скруглить</button>
+        <button type="button" data-corners="square" aria-pressed="false">Прямые</button>
+      </div>
+    </div>
+    <details class="prototype-checks">
+      <summary>Проверка карточек</summary>
+      <div class="prototype-control-row">
+        <label for="card-data">Данные</label>
+        <select id="card-data"><option value="normal">Обычные</option><option value="long">Длинные</option></select>
+      </div>
+      <div class="prototype-control-row">
+        <label for="card-text">Размер текста</label>
+        <select id="card-text"><option value="normal">100%</option><option value="large">200%</option></select>
+      </div>
+    </details>
+    <span class="visually-hidden" id="connection-status" role="status"></span>
+  </aside>
+  <div class="phone" id="app" data-concept="working-list">
+    <header class="topbar">
+      <div class="systembar" aria-hidden="true">
+        <span>9:41</span>
+        <div class="system-icons"><span data-icon="signal"></span><span data-icon="wifi"></span><span data-icon="battery"></span></div>
+      </div>
+      <div class="toolbar">
+        <h1>Заявки</h1>
+        <div class="toolbar-actions">
+          <span class="network-slot"><span class="icon-button" id="offline-indicator" role="img" aria-label="Нет подключения к интернету" hidden><span data-icon="offline"></span></span></span>
+          <button class="cursor-interaction icon-button" type="button" aria-label="Подсказки"><span data-icon="help"></span></button>
+          <button class="cursor-interaction icon-button" type="button" aria-label="Уведомления"><span data-icon="bell"></span></button>
+          <button class="cursor-interaction icon-button" type="button" aria-label="Профиль"><span data-icon="profile"></span></button>
+        </div>
+      </div>
+    </header>
+    <main class="requests-viewport" aria-label="Заявки">
+    <section class="list-tools" aria-label="Управление заявками">
+      <div class="tools-row">
+        <div class="date-selector" role="group" aria-label="Период заявок">
+          <button type="button" data-period="today" aria-pressed="false">Сегодня</button>
+          <button type="button" data-period="all" aria-pressed="true">Все</button>
+        </div>
+        <button class="cursor-interaction square-button" id="search-toggle" type="button" aria-label="Поиск" aria-expanded="false" aria-controls="search-field"><span data-icon="search"></span></button>
+        <button class="cursor-interaction square-button" type="button" aria-label="Фильтр"><span data-icon="funnel"></span></button>
+      </div>
+      <div class="search-field" id="search-field" hidden>
+        <span data-icon="search-muted"></span>
+        <input id="search-input" type="search" placeholder="Адрес, телефон или номер" aria-label="Адрес, телефон или номер" autocomplete="off">
+        <button class="cursor-interaction icon-button" id="search-close" type="button" aria-label="Закрыть поиск"><span data-icon="close"></span></button>
+      </div>
+    </section>
+      <div class="requests" id="requests" role="list"></div>
+      <p class="empty-state" id="empty-state" hidden>Заявки не найдены</p>
+      <span class="visually-hidden" role="status" id="result-status"></span>
+    </main>
+    <section class="request-placeholder" id="request-screen" aria-labelledby="request-screen-title" hidden>
+      <button class="cursor-interaction request-back" id="request-back" type="button">Назад к заявкам</button>
+      <h2 id="request-screen-title">Заявка</h2>
+      <p>Экран заявки ещё не спроектирован.</p>
+    </section>
+    <footer class="bottom-bar">
+      <nav class="bottom-navigation" aria-label="Основные разделы">
+        <button class="cursor-interaction nav-item" type="button" aria-current="page"><span class="nav-mark"><span data-icon="bids"></span></span><span>Заявки</span></button>
+        <button class="cursor-interaction nav-item" type="button"><span class="nav-mark"><span data-icon="acts"></span></span><span>Акты</span></button>
+        <button class="cursor-interaction nav-item" type="button"><span class="nav-mark"><span data-icon="equipment"></span></span><span>Приборы</span></button>
+        <button class="cursor-interaction nav-item" type="button"><span class="nav-mark"><span data-icon="guide"></span></span><span>Справочник</span></button>
+      </nav>
+      <div class="gesture-area" aria-hidden="true"><span></span></div>
+    </footer>
+  </div>
+  </div>
+</div>
+<style>
+#pd-work-list-preview{
+  --blue: #0084c1;
+  --background: #f2f4f9;
+  --surface: #fff;
+  --field: #e9ecf2;
+  --ink: #181818;
+  --secondary: #616264;
+  --line: #ccc;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --screen-gutter: var(--space-4);
+  --card-padding: var(--space-3);
+  font-family: "Segoe UI", sans-serif;
+  color: var(--ink);
+  font-synthesis: none;
+  color-scheme: light;
+}
+#pd-work-list-preview *{ box-sizing: border-box; }
+#pd-work-list-preview{ margin: 0; min-height: 100vh; min-height: 100dvh; display: grid; place-items: center; padding: var(--space-8) var(--space-4); background: #171717; }
+#pd-work-list-preview .prototype-layout{ width: min(390px, 100%); display: flex; flex-direction: column; gap: var(--space-4); }
+#pd-work-list-preview .prototype-controls{ width: 100%; display: flex; flex-direction: column; gap: var(--space-2); color: #fff; font-size: 15px; line-height: 22px; }
+#pd-work-list-preview .prototype-control-row{ width: 100%; min-height: 44px; display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); }
+#pd-work-list-preview .network-selector{ display: flex; border-radius: 14px; background: var(--field); }
+#pd-work-list-preview .network-selector{ flex-shrink: 0; }
+#pd-work-list-preview .network-selector button{ min-width: 76px; height: 44px; padding: 0 var(--space-3); border-radius: 13px; color: var(--secondary); }
+#pd-work-list-preview .network-selector [aria-pressed="true"]{ background: var(--surface); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); font-weight: 600; }
+#pd-work-list-preview .prototype-checks{ width: 100%; }
+#pd-work-list-preview .prototype-checks summary{ min-height: 24px; line-height: 24px;  }
+#pd-work-list-preview .prototype-checks[open]{ display: flex; flex-direction: column; gap: var(--space-2); }
+#pd-work-list-preview .prototype-checks select{ min-height: 44px; max-width: 60%; padding: 0 var(--space-3); border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--ink); font: inherit; }
+#pd-work-list-preview button, #pd-work-list-preview input{ font: inherit; }
+#pd-work-list-preview button{ color: inherit;  -webkit-tap-highlight-color: transparent; }
+#pd-work-list-preview button{ appearance: none; border: 0; background: transparent; padding: 0; }
+#pd-work-list-preview button:focus-visible, #pd-work-list-preview input:focus-visible{ outline: 2px solid var(--blue); outline-offset: var(--space-1); }
+#pd-work-list-preview .topbar button:focus-visible{ outline-color: #fff; }
+#pd-work-list-preview [hidden]{ display: none !important; }
+#pd-work-list-preview .phone{ --card-font-scale: 1; width: 100%; height: min(844px, calc(100dvh - 208px)); min-height: 480px; display: flex; flex-direction: column; overflow: hidden; position: relative; border-radius: 28px; background: var(--background); }
+#pd-work-list-preview .phone[data-card-text="large"]{ --card-font-scale: 2; }
+#pd-work-list-preview .prototype-layout:has(.prototype-checks[open]) .phone{ height: min(844px, calc(100dvh - 304px)); }
+#pd-work-list-preview .topbar{ flex: 0 0 88px; background: var(--blue); color: #fff; padding: var(--space-2) var(--screen-gutter) var(--space-2); border-radius: 0 0 22px 22px; }
+#pd-work-list-preview .phone[data-topbar-corners="square"] .topbar{ border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+#pd-work-list-preview .systembar{ height: 20px; display: flex; align-items: flex-start; justify-content: space-between; font-size: 13px; font-weight: 600; line-height: 18px; }
+#pd-work-list-preview .system-icons{ display: flex; gap: var(--space-1); width: 60px; height: 18px; }
+#pd-work-list-preview .toolbar{ display: flex; align-items: center; gap: var(--space-2); margin-top: var(--space-1); height: 48px; }
+#pd-work-list-preview h1{ margin: 0; flex: 1; min-width: 0; font-size: 24px; font-weight: 600; line-height: 32px; }
+#pd-work-list-preview .toolbar-actions{ display: flex; flex: 0 0 216px; gap: var(--space-2); }
+#pd-work-list-preview .icon-button{ width: 48px; height: 48px; flex: 0 0 48px; display: flex; align-items: center; justify-content: center; color: inherit; }
+#pd-work-list-preview .network-slot{ display: block; width: 48px; height: 48px; flex: 0 0 48px; }
+#pd-work-list-preview .icon{ position: relative; display: inline-block; flex-shrink: 0; overflow: hidden; }
+#pd-work-list-preview .icon img{ position: absolute; display: block; max-width: none; pointer-events: none; }
+#pd-work-list-preview .list-tools{ flex: 0 0 auto; display: flex; flex-direction: column; gap: var(--space-3); margin: var(--space-3) var(--screen-gutter); }
+#pd-work-list-preview .tools-row{ display: flex; gap: var(--space-2); align-items: center; }
+#pd-work-list-preview .date-selector{ display: flex; flex: 1; min-width: 0; height: 48px; border-radius: 14px; background: var(--field); }
+#pd-work-list-preview .date-selector button{ flex: 1; min-width: 0; height: 48px; border-radius: 13px; font-size: 16px; line-height: 22px; color: var(--secondary); }
+#pd-work-list-preview .date-selector [aria-pressed="true"]{ color: var(--ink); font-weight: 600; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+#pd-work-list-preview .square-button{ flex: 0 0 48px; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
+#pd-work-list-preview .square-button[aria-expanded="true"]{ background: var(--blue); color: #fff; border-color: var(--blue); }
+#pd-work-list-preview .search-field{ display: flex; align-items: center; gap: var(--space-2); height: 48px; padding-left: var(--space-3); border: 1px solid var(--blue); border-radius: 14px; background: var(--surface); }
+#pd-work-list-preview .search-field input{ min-width: 0; width: 100%; flex: 1; height: 44px; padding: 0; border: 0; background: transparent; color: var(--ink); font-size: 16px; line-height: 22px; }
+#pd-work-list-preview .search-field input::placeholder{ opacity: 1; color: var(--secondary); }
+#pd-work-list-preview .search-field input::-webkit-search-cancel-button{ display: none; }
+#pd-work-list-preview .search-field input:focus{ outline: none; }
+#pd-work-list-preview .search-field:focus-within{ box-shadow: 0 0 0 1px var(--blue); }
+#pd-work-list-preview .requests-viewport{ flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; scrollbar-width: none; padding: 0 0 var(--space-4); overscroll-behavior: contain; }
+#pd-work-list-preview .requests-viewport::-webkit-scrollbar{ display: none; }
+#pd-work-list-preview .requests{ display: flex; flex-direction: column; gap: var(--space-2); margin: 0 var(--screen-gutter); }
+#pd-work-list-preview .request{ --card-body-font: calc(16px * var(--card-font-scale)); --card-accent-font: calc(19px * var(--card-font-scale)); position: relative; isolation: isolate; display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-1); padding: var(--card-padding); border: 1px solid var(--line); border-radius: 22px; background: var(--surface); font-size: var(--card-body-font); line-height: 1.4; font-weight: 400; }
+#pd-work-list-preview .request > *{ width: 100%; }
+#pd-work-list-preview .request-head{ display: flex; flex-direction: column; padding-right: var(--space-6); }
+#pd-work-list-preview .request-heading{ display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-2); align-items: center; justify-content: space-between; }
+#pd-work-list-preview .request-number{ display: flex; flex: 1 1 auto; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-2); min-width: 0; color: var(--secondary); }
+#pd-work-list-preview .request-id{ min-width: 0; overflow-wrap: anywhere; }
+#pd-work-list-preview .request-sync{ display: inline-flex; flex: 0 1 auto; align-items: center; gap: var(--space-1); color: var(--secondary); }
+#pd-work-list-preview .request-sync.error{ color: var(--ink); }
+#pd-work-list-preview .request-created{ color: var(--secondary); overflow-wrap: anywhere; }
+#pd-work-list-preview .request-state{ display: flex; flex: 0 1 auto; align-items: center; gap: var(--space-1); min-width: 0; overflow-wrap: anywhere; }
+#pd-work-list-preview .status-dot{ display: block; width: 6px; height: 6px; flex: 0 0 6px; border-radius: 50%; }
+#pd-work-list-preview .request[data-state="new"] .status-dot{ background: #d96262; }
+#pd-work-list-preview .request[data-state="appointed"] .status-dot{ background: #ffb21c; }
+#pd-work-list-preview .request[data-state="agreed"] .status-dot{ background: #1b9dd9; }
+#pd-work-list-preview .request[data-state="canceled"] .status-dot{ background: var(--ink); }
+#pd-work-list-preview .deadline-summary{ display: flex; flex-wrap: wrap; align-items: baseline; column-gap: var(--space-2); row-gap: var(--space-1); }
+#pd-work-list-preview .deadline-caption{ display: inline-flex; align-items: center; gap: var(--space-1); min-width: 0; color: var(--secondary); overflow-wrap: anywhere; }
+#pd-work-list-preview .deadline-caption.urgent{ color: var(--ink); }
+#pd-work-list-preview .request-facts{ display: flex; flex-direction: column; gap: 0; }
+#pd-work-list-preview .request-facts p{ margin: 0; }
+#pd-work-list-preview .request-address{ font-size: var(--card-accent-font); line-height: 1.3; font-weight: 700; overflow-wrap: anywhere; }
+#pd-work-list-preview .request-city{ color: inherit; font-size: inherit; font-weight: inherit; }
+#pd-work-list-preview .field-label{ color: inherit; font-size: inherit; font-weight: inherit; }
+#pd-work-list-preview .request-phone, #pd-work-list-preview .request-date{ color: var(--secondary); overflow-wrap: anywhere; }
+#pd-work-list-preview .request-actions{ position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-2); }
+#pd-work-list-preview .request-actions:has(.request-call){ grid-template-columns: minmax(0, 1fr) 48px; }
+#pd-work-list-preview .request-action.request-call{ width: 48px; padding: 0; text-decoration: none; }
+#pd-work-list-preview .request-action{ display: flex; align-items: center; justify-content: center; gap: var(--space-2); min-height: 48px; min-width: 0; padding: var(--space-2) var(--space-3); border-radius: 14px; background: var(--field); font-weight: 400; font-size: var(--card-body-font); line-height: 1.4; text-align: center; color: #000; overflow-wrap: anywhere; }
+#pd-work-list-preview .request-action > .action-label{ flex: 1; min-width: 0; }
+#pd-work-list-preview .request-action.primary{ color: #fff; background: var(--blue); padding-inline: var(--space-2); font-size: var(--card-accent-font); line-height: 1.3; font-weight: 700; }
+#pd-work-list-preview .request-entry{ position: absolute; z-index: 1; inset: 0; padding: 0; border: 0; border-radius: inherit; background: transparent; }
+#pd-work-list-preview .request-entry > .icon{ position: absolute; top: calc(var(--card-padding) + var(--space-1)); right: var(--card-padding); }
+#pd-work-list-preview .request-entry:focus-visible{ outline: 2px solid var(--ink); outline-offset: 2px; }
+#pd-work-list-preview .request:has(.request-entry:active){ background: var(--background); }
+#pd-work-list-preview .request-placeholder{ flex: 1; min-height: 0; overflow: auto; padding: var(--screen-gutter); background: var(--background); font-size: 16px; line-height: 1.4; }
+#pd-work-list-preview .request-placeholder h2{ margin: var(--space-6) 0 var(--space-2); font-size: 20px; overflow-wrap: anywhere; }
+#pd-work-list-preview .request-placeholder p{ margin: 0; color: var(--secondary); }
+#pd-work-list-preview .request-back{ min-height: 48px; padding: var(--space-2) var(--space-3); border: 1px solid var(--line); border-radius: 14px; background: var(--surface); color: var(--ink); font-size: 16px; }
+#pd-work-list-preview .phone[data-card-text="large"] .request-actions{ grid-template-columns: minmax(0, 1fr); }
+#pd-work-list-preview .phone[data-card-text="large"] .request-number, #pd-work-list-preview .phone[data-card-text="large"] .request-state, #pd-work-list-preview .phone[data-card-text="large"] .request-created{ flex-basis: 100%; }
+#pd-work-list-preview .phone[data-card-text="large"] .deadline-caption{ flex-basis: 100%; text-align: left; }
+#pd-work-list-preview .phone[data-card-text="large"] .request-number{ flex-direction: column; align-items: flex-start; }
+#pd-work-list-preview .request-action:focus-visible{ outline: 2px solid var(--ink); outline-offset: var(--space-1); }
+#pd-work-list-preview .bottom-bar{ flex: 0 0 100px; padding-top: var(--space-2); position: relative; background: var(--surface); box-shadow: inset 0 1px 0 var(--line); }
+#pd-work-list-preview .bottom-navigation{ display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding-inline: var(--screen-gutter); }
+#pd-work-list-preview .nav-item{ height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-1); color: var(--secondary); font-size: 13px; font-weight: 400; line-height: 20px; }
+#pd-work-list-preview .nav-item[aria-current="page"]{ color: var(--ink); }
+#pd-work-list-preview .nav-mark{ width: 56px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 12px; }
+#pd-work-list-preview .nav-item[aria-current="page"] .nav-mark{ background: var(--field); }
+#pd-work-list-preview .gesture-area{ height: 28px; display: flex; justify-content: center; padding-top: var(--space-4); }
+#pd-work-list-preview .gesture-area span{ width: 112px; height: 4px; border-radius: 2px; background: #000; }
+#pd-work-list-preview .empty-state{ margin: var(--space-6) var(--screen-gutter); color: var(--secondary); font-size: 16px; text-align: center; }
+#pd-work-list-preview .visually-hidden{ position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (max-width: 430px){#pd-work-list-preview{ padding: 0; }
+#pd-work-list-preview .prototype-controls{ padding: 0 var(--space-3); }
+#pd-work-list-preview .phone{ width: 100%; height: calc(100dvh - 144px); min-height: 0; border-radius: 0; }
+#pd-work-list-preview .prototype-layout:has(.prototype-checks[open]) .phone{ height: calc(100dvh - 240px); }
+ }
+@media (max-width: 359px){#pd-work-list-preview h1{ font-size: 20px; }
+#pd-work-list-preview .toolbar-actions{ flex-basis: 204px; gap: var(--space-1); }
+#pd-work-list-preview .request-state{ flex-basis: auto; }
+#pd-work-list-preview .request-state.agreed{ flex-basis: auto; }
+ }
+
+
+/* Separate list experiment: the baseline files remain untouched. */
+#pd-work-list-preview .requests{ gap: 0; border: 1px solid var(--line); border-radius: 22px; overflow: hidden; background: var(--surface); }
+#pd-work-list-preview .request{ border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: transparent; }
+#pd-work-list-preview .request:last-child{ border-bottom: 0; }
+#pd-work-list-preview .request-address{ padding-right: var(--space-6); }
+#pd-work-list-preview .request-head{ padding-right: 0; }
+#pd-work-list-preview .request-heading{ align-items: baseline; }
+#pd-work-list-preview .request-locality{ min-width: 0; overflow-wrap: anywhere; }
+#pd-work-list-preview .request-entry:focus-visible{ outline-offset: -2px; }
+#pd-work-list-preview .request-action.primary{ color: var(--blue); background: var(--surface); border: 1px solid var(--blue); }
+
+
+#pd-work-list-preview { display: grid; place-items: center; width: 100%; padding: 16px 0; min-height: 0; background: transparent; }
+#pd-work-list-preview .phone { width: min(390px, 100%); height: 844px !important; min-height: 0; border-radius: 28px; flex: none; }
+#pd-work-list-preview .prototype-controls { color: var(--foreground, #616264); }
+#pd-work-list-preview .cursor-interaction { cursor: inherit; }
+</style>
+<script>
+(() => {
+  'use strict';
+  const assetData = {"poverkadoma-home-asset-046ee.svg":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE3LjciIGhlaWdodD0iMTcuNyIgdmlld0JveD0iMCAwIDE3LjcgMTcuNyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTEzLjg1IDcuMzVDMTMuODUgMTAuOTM5OSAxMC45Mzk5IDEzLjg1IDcuMzUgMTMuODVDMy43NjAxNSAxMy44NSAwLjg1IDEwLjkzOTkgMC44NSA3LjM1QzAuODUgMy43NjAxNSAzLjc2MDE1IDAuODUgNy4zNSAwLjg1QzEwLjkzOTkgMC44NSAxMy44NSAzLjc2MDE1IDEzLjg1IDcuMzVaIiBzdHJva2Utd2lkdGg9IjEuNyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2U9IiMxODE4MTgiLz4KPHBhdGggaWQ9IlZlY3Rvcl8yIiBkPSJNMTIuMzUgMTIuMzVMMTYuODUgMTYuODUiIHN0cm9rZS13aWR0aD0iMS43IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZT0iIzE4MTgxOCIvPgo8L2c+Cjwvc3ZnPgo=","poverkadoma-home-asset-067dc.svg":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE3LjciIGhlaWdodD0iMTYuNyIgdmlld0JveD0iMCAwIDE3LjcgMTYuNyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTAuODUwMDEyIDAuODVIMTYuODVMMTAuODUgNy44NVYxMy44NUw2Ljg1MDAxIDE1Ljg1VjcuODVMMC44NTAwMTIgMC44NVoiIHN0cm9rZS13aWR0aD0iMS43IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZT0iIzE4MTgxOCIvPgo8L2c+Cjwvc3ZnPgo=","poverkadoma-home-asset-0ef23.svg":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE1LjUyNSIgaGVpZ2h0PSI4Ljc3NSIgdmlld0JveD0iMCAwIDE1LjUyNSA4Ljc3NSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTIuMTM3NSAwLjYzNzVIMTEuODg3NUMxMi43MTU5IDAuNjM3NSAxMy4zODc1IDEuMzA5MDcgMTMuMzg3NSAyLjEzNzVWNi42Mzc1QzEzLjM4NzUgNy40NjU5MyAxMi43MTU5IDguMTM3NSAxMS44ODc1IDguMTM3NUgyLjEzNzVDMS4zMDkwNyA4LjEzNzUgMC42Mzc1IDcuNDY1OTMgMC42Mzc1IDYuNjM3NVYyLjEzNzVDMC42Mzc1IDEuMzA5MDcgMS4zMDkwNyAwLjYzNzUgMi4xMzc1IDAuNjM3NVoiIHN0cm9rZS13aWR0aD0iMS4yNzUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlPSJ3aGl0ZSIvPgo8cGF0aCBpZD0iVmVjdG9yXzIiIGQ9Ik0xNC44ODc1IDIuODg3NVY1Ljg4NzVNMi44ODc1IDIuODg3NUgxMC4zODc1VjUuODg3NUgyLjg4NzVWMi44ODc1WiIgc3Ryb2tlLXdpZHRoPSIxLjI3NSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2U9IndoaXRlIi8+CjwvZz4KPC9zdmc+Cg==","poverkadoma-home-asset-10c0c.svg":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjEyLjQ4NzUiIGhlaWdodD0iMTAuMjM3NSIgdmlld0JveD0iMCAwIDEyLjQ4NzUgMTAuMjM3NSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTAuNjE4NzUgNS4xMTg3NUgxMS44Njg3TTcuMzY4NzUgOS42MTg3NUwxMS44Njg3IDUuMTE4NzVMNy4zNjg3NSAwLjYxODc1IiBzdHJva2Utd2lkdGg9IjEuMjM3NSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2U9IndoaXRlIi8+CjwvZz4KPC9zdmc+Cg==","poverkadoma-home-asset-256b0.svg":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjEzLjk1NDIiIGhlaWdodD0iMTIuMDI0OCIgdmlld0JveD0iMCAwIDEzLjk1NDIgMTIuMDI0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTAuNjAyMDk3IDIuOTIyNzJDMi4zODgxOCAxLjQyMzc0IDQuNjQ1MzUgMC42MDIwODMgNi45NzcxIDAuNjAyMDgzQzkuMzA4ODQgMC42MDIwODMgMTEuNTY2IDEuNDIzNzQgMTMuMzUyMSAyLjkyMjcyTTIuNzI3MSA1Ljc1NjA1QzMuODk1ODkgNC43MTA2NSA1LjQwODk5IDQuMTMyNyA2Ljk3NzEgNC4xMzI3QzguNTQ1MiA0LjEzMjcgMTAuMDU4MyA0LjcxMDY1IDExLjIyNzEgNS43NTYwNU00Ljg1MjEgOC41ODkzOUM1LjExNzk4IDguMjg3OSA1LjQ0NDk4IDguMDQ2NDQgNS44MTEzNiA3Ljg4MTA1QzYuMTc3NzQgNy43MTU2NiA2LjU3NTEyIDcuNjMwMTMgNi45NzcxIDcuNjMwMTNDNy4zNzkwOCA3LjYzMDEzIDcuNzc2NDYgNy43MTU2NiA4LjE0Mjg0IDcuODgxMDVDOC41MDkyMiA4LjA0NjQ0IDguODM2MjEgOC4yODc5IDkuMTAyMSA4LjU4OTM5TTYuOTc3MSAxMS40MjI3SDcuMDQ3OTMiIHN0cm9rZS13aWR0aD0iMS4yMDQxNyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2U9IndoaXRlIi8+CjwvZz4KPC9zdmc+Cg==","poverkadoma-home-asset-2852a.svg":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjIzLjYxNjMiIGhlaWdodD0iMTUuNTU1NyIgdmlld0JveD0iMCAwIDIzLjYxNjMgMTUuNTU1NyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTYuMzgxMTUgMTMuNzA1N0g1LjM4MTE1QzQuMzIwMjggMTMuODM4MyAzLjI1MDE5IDEzLjU0NDEgMi40MDYyNyAxMi44ODc3QzEuNTYyMzYgMTIuMjMxMyAxLjAxMzc2IDExLjI2NjYgMC44ODExNDcgMTAuMjA1N0MwLjc0ODUzOSA5LjE0NDg0IDEuMDQyNzkgOC4wNzQ3NSAxLjY5OTE3IDcuMjMwODRDMi4zNTU1NCA2LjM4NjkyIDMuMzIwMjggNS44MzgzMiA0LjM4MTE1IDUuNzA1NzFDNC42MTE1NSA0LjUxOTc3IDUuMTk0NiAzLjQzMTAxIDYuMDUzOTkgMi41ODE5QzYuOTEzMzggMS43MzI4IDguMDA5MDggMS4xNjI5IDkuMTk3NzEgMC45NDY3ODVDMTAuMzg2MyAwLjczMDY3MSAxMS42MTI1IDAuODc4NDEgMTIuNzE1OCAxLjM3MDY3QzEzLjgxOTEgMS44NjI5MyAxNC43NDggMi42NzY3OCAxNS4zODExIDMuNzA1NzFDMTYuNzA3MiAzLjE3NTI4IDE4LjE4OTcgMy4xOTMzNSAxOS41MDI1IDMuNzU1OTZDMjAuODE1MiA0LjMxODU3IDIxLjg1MDcgNS4zNzk2MyAyMi4zODExIDYuNzA1NzFDMjIuOTExNiA4LjAzMTc5IDIyLjg5MzUgOS41MTQyOCAyMi4zMzA5IDEwLjgyN0MyMS43NjgzIDEyLjEzOTggMjAuNzA3MiAxMy4xNzUzIDE5LjM4MTEgMTMuNzA1N0gxNy4zODExTTkuMzgxMTUgMTIuNzA1N0wxMS4zODExIDE0LjcwNTdMMTUuMzgxMSAxMC43MDU3IiBzdHJva2Utd2lkdGg9IjEuNyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2U9IndoaXRlIi8+CjwvZz4KPC9zdmc+Cg==","poverkadoma-home-asset-291e1.svg":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE1LjcwMDEiIGhlaWdodD0iMTkuNyIgdmlld0JveD0iMCAwIDE1LjcwMDEgMTkuNyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTUuODUwMDIgMTguODVIOS44NTAwMk03Ljg1MDAyIDEuODVWMC44NU0yLjg1MDAyIDEzLjg1VjguODVDMi44NTAwMiA3LjUyMzkyIDMuMzc2ODEgNi4yNTIxNSA0LjMxNDQ5IDUuMzE0NDdDNS4yNTIxNyA0LjM3Njc4IDYuNTIzOTQgMy44NSA3Ljg1MDAyIDMuODVDOS4xNzYxMSAzLjg1IDEwLjQ0NzkgNC4zNzY3OCAxMS4zODU2IDUuMzE0NDdDMTIuMzIzMiA2LjI1MjE1IDEyLjg1IDcuNTIzOTIgMTIuODUgOC44NVYxMy44NUwxNC44NSAxNS44NUgwLjg1MDAyNUwyLjg1MDAyIDEzLjg1WiIgc3Ryb2tlLXdpZHRoPSIxLjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlPSJ3aGl0ZSIvPgo8L2c+Cjwvc3ZnPgo=","poverkadoma-home-asset-2b648.svg":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjYiIGhlaWdodD0iNiIgdmlld0JveD0iMCAwIDYgNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBpZD0iJiMyMDg7JiMxNTY7JiMyMDg7JiMxODE7JiMyMDk7JiMxMzA7JiMyMDg7JiMxODY7JiMyMDg7JiMxNzY7ICYjMjA5OyYjMTI5OyYjMjA5OyYjMTMwOyYjMjA4OyYjMTc2OyYjMjA5OyYjMTMwOyYjMjA5OyYjMTMxOyYjMjA5OyYjMTI5OyYjMjA4OyYjMTc2OyIgY3g9IjMiIGN5PSIzIiByPSIzIiBmaWxsPSIjMUI5REQ5Ii8+Cjwvc3ZnPgo=","poverkadoma-home-asset-4e616.svg":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjExLjgyOTIiIGhlaWdodD0iMTEuODI5MiIgdmlld0JveD0iMCAwIDExLjgyOTIgMTEuODI5MiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTAuNjAyMDgzIDExLjIyNzFWOS4xMDIwOE00LjE0Mzc1IDExLjIyNzFWNi4yNjg3NU03LjY4NTQyIDExLjIyNzFWMy40MzU0Mk0xMS4yMjcxIDExLjIyNzFWMC42MDIwODMiIHN0cm9rZS13aWR0aD0iMS4yMDQxNyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2U9IndoaXRlIi8+CjwvZz4KPC9zdmc+Cg==","poverkadoma-home-asset-5f0fc.svg":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE2LjE3OTIiIGhlaWdodD0iMTguMDEyNSIgdmlld0JveD0iMCAwIDE2LjE3OTIgMTguMDEyNSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTE1LjQyMjkgNS4zMzk1OFY0LjQyMjkyTDExLjc1NjMgMC43NTYyNUg0LjQyMjkyVjE3LjI1NjNIMTUuNDIyOVY1LjMzOTU4Wk0xMS43NTYzIDAuNzU2MjVWNS4zMzk1OEgxNS40MjI5TTAuNzU2MjUgMy41MDYyNVYxNy4yNTYzTTcuMTcyOTIgOS4wMDYyNUgxMi42NzI5TTcuMTcyOTIgMTIuNjcyOUgxMi42NzI5IiBzdHJva2Utd2lkdGg9IjEuNTEyNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2U9IiM2MTYyNjQiLz4KPC9nPgo8L3N2Zz4K","poverkadoma-home-asset-6e3a1.svg":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE4LjAxMjUiIGhlaWdodD0iMTcuNDU1NSIgdmlld0JveD0iMCAwIDE4LjAxMjUgMTcuNDU1NSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTkuMDA2MjUgMi4wMzI1NFYyLjk0OTJNOS4wMDYyNSAyLjk0OTJWMTYuNjk5Mk05LjAwNjI1IDE2LjY5OTJDMTEuNzU2MyAxNC44NjU5IDEzLjU4OTYgMTMuOTQ5MiAxNy4yNTYzIDE0Ljg2NTlWMS4xMTU4N0MxMy41ODk2IDAuMTk5MjAzIDExLjc1NjMgMS4xMTU4NyA5LjAwNjI1IDIuOTQ5MkM2LjI1NjI1IDEuMTE1ODcgNC40MjI5MiAwLjE5OTIwMyAwLjc1NjI1IDEuMTE1ODdWMTQuODY1OUM0LjQyMjkyIDEzLjk0OTIgNi4yNTYyNSAxNC44NjU5IDkuMDA2MjUgMTYuNjk5MloiIHN0cm9rZS13aWR0aD0iMS41MTI1IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZT0iIzYxNjI2NCIvPgo8L2c+Cjwvc3ZnPgo=","poverkadoma-home-asset-81c20.svg":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE5LjciIGhlaWdodD0iMTkuNyIgdmlld0JveD0iMCAwIDE5LjcgMTkuNyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTE4Ljg1IDkuODVDMTguODUgMTQuODIwNiAxNC44MjA2IDE4Ljg1IDkuODUgMTguODVDNC44Nzk0NCAxOC44NSAwLjg1IDE0LjgyMDYgMC44NSA5Ljg1QzAuODUgNC44Nzk0NCA0Ljg3OTQ0IDAuODUgOS44NSAwLjg1QzE0LjgyMDYgMC44NSAxOC44NSA0Ljg3OTQ0IDE4Ljg1IDkuODVaIiBzdHJva2Utd2lkdGg9IjEuNyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2U9IndoaXRlIi8+CjxwYXRoIGlkPSJWZWN0b3JfMiIgZD0iTTYuODUgNS44NUM2Ljg1IDUuMDU0MzUgNy4xNjYwNyA0LjI5MTI5IDcuNzI4NjggMy43Mjg2OEM4LjI5MTI5IDMuMTY2MDcgOS4wNTQzNSAyLjg1IDkuODUgMi44NUMxMC42NDU2IDIuODUgMTEuNDA4NyAzLjE2NjA3IDExLjk3MTMgMy43Mjg2OEMxMi41MzM5IDQuMjkxMjkgMTIuODUgNS4wNTQzNSAxMi44NSA1Ljg1QzEyLjg1IDguODUgOS44NSA3Ljg1IDkuODUgMTAuODVNOS44NSAxNC44NVYxNC45NSIgc3Ryb2tlLXdpZHRoPSIxLjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlPSJ3aGl0ZSIvPgo8L2c+Cjwvc3ZnPgo=","poverkadoma-home-asset-9eb3b.svg":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjYiIGhlaWdodD0iNiIgdmlld0JveD0iMCAwIDYgNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBpZD0iJiMyMDg7JiMxNTY7JiMyMDg7JiMxODE7JiMyMDk7JiMxMzA7JiMyMDg7JiMxODY7JiMyMDg7JiMxNzY7ICYjMjA5OyYjMTI5OyYjMjA5OyYjMTMwOyYjMjA4OyYjMTc2OyYjMjA5OyYjMTMwOyYjMjA5OyYjMTMxOyYjMjA5OyYjMTI5OyYjMjA4OyYjMTc2OyIgY3g9IjMiIGN5PSIzIiByPSIzIiBmaWxsPSIjRkZCMjFDIi8+Cjwvc3ZnPgo=","poverkadoma-home-asset-a6f16.svg":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE5LjciIGhlaWdodD0iMTkuNyIgdmlld0JveD0iMCAwIDE5LjcgMTkuNyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTE4Ljg1IDkuODVDMTguODUgMTQuODIwNiAxNC44MjA2IDE4Ljg1IDkuODUgMTguODVDNC44Nzk0NCAxOC44NSAwLjg1IDE0LjgyMDYgMC44NSA5Ljg1QzAuODUgNC44Nzk0NCA0Ljg3OTQ0IDAuODUgOS44NSAwLjg1QzE0LjgyMDYgMC44NSAxOC44NSA0Ljg3OTQ0IDE4Ljg1IDkuODVaIiBzdHJva2Utd2lkdGg9IjEuNyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2U9IndoaXRlIi8+CjxwYXRoIGlkPSJWZWN0b3JfMiIgZD0iTTEyLjg1IDYuODVDMTIuODUgOC41MDY4NSAxMS41MDY5IDkuODUgOS44NSA5Ljg1QzguMTkzMTUgOS44NSA2Ljg1IDguNTA2ODUgNi44NSA2Ljg1QzYuODUgNS4xOTMxNSA4LjE5MzE1IDMuODUgOS44NSAzLjg1QzExLjUwNjkgMy44NSAxMi44NSA1LjE5MzE1IDEyLjg1IDYuODVaIiBzdHJva2Utd2lkdGg9IjEuNyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2U9IndoaXRlIi8+CjxwYXRoIGlkPSJWZWN0b3JfMyIgZD0iTTMuODUgMTYuODVDMy44NSAxMC44NSAxNS44NSAxMC44NSAxNS44NSAxNi44NSIgc3Ryb2tlLXdpZHRoPSIxLjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlPSJ3aGl0ZSIvPgo8L2c+Cjwvc3ZnPgo=","poverkadoma-home-asset-b4c6b.svg":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjUuMDQ1ODMiIGhlaWdodD0iOS4xMjkxNyIgdmlld0JveD0iMCAwIDUuMDQ1ODMgOS4xMjkxNyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTAuNDgxMjUgMC40ODEyNUw0LjU2NDU4IDQuNTY0NThMMC40ODEyNSA4LjY0NzkyIiBzdHJva2Utd2lkdGg9IjAuOTYyNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2U9IiM2MTYyNjQiLz4KPC9nPgo8L3N2Zz4K","poverkadoma-home-asset-b65ac.svg":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjEyLjQzMzMiIGhlaWdodD0iMTIuNDMzMyIgdmlld0JveD0iMCAwIDEyLjQzMzMgMTIuNDMzMyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTExLjg4MzMgNi4yMTY2N0MxMS44ODMzIDkuMzQ2MjggOS4zNDYyOCAxMS44ODMzIDYuMjE2NjcgMTEuODgzM0MzLjA4NzA1IDExLjg4MzMgMC41NSA5LjM0NjI4IDAuNTUgNi4yMTY2N0MwLjU1IDMuMDg3MDUgMy4wODcwNSAwLjU1IDYuMjE2NjcgMC41NUM5LjM0NjI4IDAuNTUgMTEuODgzMyAzLjA4NzA1IDExLjg4MzMgNi4yMTY2N1oiIHN0cm9rZS13aWR0aD0iMS4xIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZT0iIzYxNjI2NCIvPgo8cGF0aCBpZD0iVmVjdG9yXzIiIGQ9Ik02LjIxNjY3IDIuODgzMzNWNi4yMTY2N0w4LjIxNjY3IDcuNTUiIHN0cm9rZS13aWR0aD0iMS4xIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZT0iIzYxNjI2NCIvPgo8L2c+Cjwvc3ZnPgo=","poverkadoma-home-asset-bd2d2.svg":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE4LjAxMjUiIGhlaWdodD0iMTMuNTQyMiIgdmlld0JveD0iMCAwIDE4LjAxMjUgMTMuNTQyMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTEuNjcyOTIgMTIuNzg1OEMxLjAyNDc2IDExLjUyODEgMC43MTA5MTIgMTAuMTI1IDAuNzYxNTM0IDguNzExMDdDMC44MTIxNTUgNy4yOTcxNiAxLjIyNTU0IDUuOTIwMDIgMS45NjE5OCA0LjcxMTk4QzIuNjk4NDIgMy41MDM5NCAzLjczMzE1IDIuNTA1NTggNC45NjY3NyAxLjgxMjg0QzYuMjAwMzkgMS4xMjAxIDcuNTkxNDMgMC43NTYyNSA5LjAwNjI1IDAuNzU2MjVDMTAuNDIxMSAwLjc1NjI1IDExLjgxMjEgMS4xMjAxIDEzLjA0NTcgMS44MTI4NEMxNC4yNzkzIDIuNTA1NTggMTUuMzE0MSAzLjUwMzk0IDE2LjA1MDUgNC43MTE5OEMxNi43ODcgNS45MjAwMiAxNy4yMDAzIDcuMjk3MTYgMTcuMjUxIDguNzExMDdDMTcuMzAxNiAxMC4xMjUgMTYuOTg3NyAxMS41MjgxIDE2LjMzOTYgMTIuNzg1OE05LjAwNjI1IDguMjAyNDNMMTMuNTg5NiAzLjYxOTEiIHN0cm9rZS13aWR0aD0iMS41MTI1IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZT0iIzYxNjI2NCIvPgo8cGF0aCBpZD0iVmVjdG9yXzIiIGQ9Ik05LjkyMjkyIDguMjAyNDNDOS45MjI5MiA4LjcwODY5IDkuNTEyNTEgOS4xMTkxIDkuMDA2MjUgOS4xMTkxQzguNDk5OTkgOS4xMTkxIDguMDg5NTggOC43MDg2OSA4LjA4OTU4IDguMjAyNDNDOC4wODk1OCA3LjY5NjE3IDguNDk5OTkgNy4yODU3NiA5LjAwNjI1IDcuMjg1NzZDOS41MTI1MSA3LjI4NTc2IDkuOTIyOTIgNy42OTYxNyA5LjkyMjkyIDguMjAyNDNaIiBzdHJva2Utd2lkdGg9IjEuNTEyNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2U9IiM2MTYyNjQiLz4KPC9nPgo8L3N2Zz4K","poverkadoma-home-asset-call.svg":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjMTgxODE4IiBkPSJNMjAuMDEsMTUuMzhjLTEuMjMsMCAtMi40MiwtMC4yIC0zLjUzLC0wLjU2IC0wLjM1LC0wLjEyIC0wLjc0LC0wLjAzIC0xLjAxLDAuMjRsLTEuNTcsMS45N2MtMi44MywtMS4zNSAtNS40OCwtMy45IC02Ljg5LC02LjgzbDEuOTUsLTEuNjZjMC4yNywtMC4yOCAwLjM1LC0wLjY3IDAuMjQsLTEuMDIgLTAuMzcsLTEuMTEgLTAuNTYsLTIuMyAtMC41NiwtMy41MyAwLC0wLjU0IC0wLjQ1LC0wLjk5IC0wLjk5LC0wLjk5SDQuMTlDMy42NSwzIDMsMy4yNCAzLDMuOTkgMywxMy4yOCAxMC43MywyMSAyMC4wMSwyMWMwLjcxLDAgMC45OSwtMC42MyAwLjk5LC0xLjE4di0zLjQ1YzAsLTAuNTQgLTAuNDUsLTAuOTkgLTAuOTksLTAuOTl6Ii8+PC9zdmc+DQo=","poverkadoma-home-asset-f11c6.svg":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE0LjM0NTgiIGhlaWdodD0iMTguMDEyNSIgdmlld0JveD0iMCAwIDE0LjM0NTggMTguMDEyNSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTMuMDQ3OTIgMS42NzI5MkgxMS4yOTc5QzEyLjU2MzYgMS42NzI5MiAxMy41ODk2IDIuNjk4OTMgMTMuNTg5NiAzLjk2NDU4VjE0Ljk2NDZDMTMuNTg5NiAxNi4yMzAyIDEyLjU2MzYgMTcuMjU2MyAxMS4yOTc5IDE3LjI1NjNIMy4wNDc5MkMxLjc4MjI2IDE3LjI1NjMgMC43NTYyNSAxNi4yMzAyIDAuNzU2MjUgMTQuOTY0NlYzLjk2NDU4QzAuNzU2MjUgMi42OTg5MyAxLjc4MjI2IDEuNjcyOTIgMy4wNDc5MiAxLjY3MjkyWiIgc3Ryb2tlLXdpZHRoPSIxLjUxMjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlPSIjMDA4NEMxIi8+CjxwYXRoIGlkPSJWZWN0b3JfMiIgZD0iTTQuNDIyOTIgOC4wODk1OEg5LjkyMjkyTTQuNDIyOTIgMTEuNzU2M0g4LjA4OTU4TTQuNDIyOTIgMC43NTYyNUg5LjkyMjkyVjQuNDIyOTJINC40MjI5MlYwLjc1NjI1WiIgc3Ryb2tlLXdpZHRoPSIxLjUxMjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlPSIjMDA4NEMxIi8+CjwvZz4KPC9zdmc+Cg==","poverkadoma-home-asset-f340c.svg":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjEyLjQ4NzUiIGhlaWdodD0iMTAuMjM3NSIgdmlld0JveD0iMCAwIDEyLjQ4NzUgMTAuMjM3NSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTAuNjE4NzUgNS4xMTg3NUgxMS44Njg3TTcuMzY4NzUgOS42MTg3NUwxMS44Njg3IDUuMTE4NzVMNy4zNjg3NSAwLjYxODc1IiBzdHJva2Utd2lkdGg9IjEuMjM3NSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2U9IiMwMDg0QzEiLz4KPC9nPgo8L3N2Zz4K","poverkadoma-home-asset-f8b10.svg":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjYiIGhlaWdodD0iNiIgdmlld0JveD0iMCAwIDYgNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBpZD0iJiMyMDg7JiMxNTY7JiMyMDg7JiMxODE7JiMyMDk7JiMxMzA7JiMyMDg7JiMxODY7JiMyMDg7JiMxNzY7ICYjMjA5OyYjMTI5OyYjMjA5OyYjMTMwOyYjMjA4OyYjMTc2OyYjMjA5OyYjMTMwOyYjMjA5OyYjMTMxOyYjMjA5OyYjMTI5OyYjMjA4OyYjMTc2OyIgY3g9IjMiIGN5PSIzIiByPSIzIiBmaWxsPSIjRDk2MTYxIi8+Cjwvc3ZnPgo=","poverkadoma-home-asset-help-open.svg":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE5LjciIGhlaWdodD0iMTkuNyIgdmlld0JveD0iMCAwIDE5LjcgMTkuNyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KCjxwYXRoIGlkPSJWZWN0b3JfMiIgZD0iTTYuODUgNS44NUM2Ljg1IDUuMDU0MzUgNy4xNjYwNyA0LjI5MTI5IDcuNzI4NjggMy43Mjg2OEM4LjI5MTI5IDMuMTY2MDcgOS4wNTQzNSAyLjg1IDkuODUgMi44NUMxMC42NDU2IDIuODUgMTEuNDA4NyAzLjE2NjA3IDExLjk3MTMgMy43Mjg2OEMxMi41MzM5IDQuMjkxMjkgMTIuODUgNS4wNTQzNSAxMi44NSA1Ljg1QzEyLjg1IDguODUgOS44NSA3Ljg1IDkuODUgMTAuODVNOS44NSAxNC44NVYxNC45NSIgc3Ryb2tlLXdpZHRoPSIxLjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlPSJ3aGl0ZSIvPgo8L2c+Cjwvc3ZnPgo=","poverkadoma-home-asset-offline.svg":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjI0IiBoZWlnaHQ9IjE4IiB2aWV3Qm94PSIwIDAgMjQgMTgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGlkPSJPZmZsaW5lIiBkPSJNMTkuMzU1IDYuMDM1QzE4LjY3NSAyLjU5NSAxNS42NCAwIDEyIDBDMTAuNTI1IDAgOS4xNSAwLjQzNSA3Ljk5IDEuMTdMOS40NSAyLjYzQzEwLjIxNSAyLjIzNSAxMS4wOCAyIDEyIDJDMTUuMDQgMiAxNy41IDQuNDYgMTcuNSA3LjVWOEgxOUMyMC42NTUgOCAyMiA5LjM0NSAyMiAxMUMyMiAxMi4xMzUgMjEuMzY1IDEzLjExIDIwLjQzNSAxMy42MkwyMS44ODUgMTUuMDdDMjMuMTYgMTQuMTY1IDI0IDEyLjY4NSAyNCAxMUMyNCA4LjM2IDIxLjk0NSA2LjIyIDE5LjM1NSA2LjAzNVpNMyAxLjI3NUw1Ljc1IDQuMDE1QzIuNTYgNC4xNSAwIDYuNzc1IDAgMTBDMCAxMy4zMTUgMi42ODUgMTYgNiAxNkgxNy43MjVMMTkuNzI1IDE4TDIxIDE2LjczTDQuMjc1IDBMMyAxLjI3NVpNNy43MjUgNkwxNS43MjUgMTRINkMzLjc5IDE0IDIgMTIuMjEgMiAxMEMyIDcuNzkgMy43OSA2IDYgNkg3LjcyNVoiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo=","poverkadoma-home-asset-profile-open.svg":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE5LjciIGhlaWdodD0iMTkuNyIgdmlld0JveD0iMCAwIDE5LjcgMTkuNyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KCjxwYXRoIGlkPSJWZWN0b3JfMiIgZD0iTTEyLjg1IDYuODVDMTIuODUgOC41MDY4NSAxMS41MDY5IDkuODUgOS44NSA5Ljg1QzguMTkzMTUgOS44NSA2Ljg1IDguNTA2ODUgNi44NSA2Ljg1QzYuODUgNS4xOTMxNSA4LjE5MzE1IDMuODUgOS44NSAzLjg1QzExLjUwNjkgMy44NSAxMi44NSA1LjE5MzE1IDEyLjg1IDYuODVaIiBzdHJva2Utd2lkdGg9IjEuNyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2U9IndoaXRlIi8+CjxwYXRoIGlkPSJWZWN0b3JfMyIgZD0iTTMuODUgMTYuODVDMy44NSAxMC44NSAxNS44NSAxMC44NSAxNS44NSAxNi44NSIgc3Ryb2tlLXdpZHRoPSIxLjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlPSJ3aGl0ZSIvPgo8L2c+Cjwvc3ZnPgo=","poverkadoma-home-asset-progress-agreed.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAR8AAAAFCAYAAAB8begEAAAACXBIWXMAAAAnAAAAJwEqCZFPAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAAA55JREFUeAGNmAGy5CAIRNE5yT/sXjtu4grzaDF/rZqaSaLYNDSYaX9+fkaze7Rm/f6MMebvee8ez3Xv3Xy0+5mtOc9Ia9az57r5ta9be7jNz21T160N5tywse45jnFd1hxPtc+a6/fnHtxH8BBz/3wCh/rg8+a3+um4xP4AP2+YiT3wAx+vfSS7CwttxFhzEscS74kVMTfipe/wIbiGT8wV3U/johxHfOFr2Hv8c9/WOufAith34mTcEBPi+bo9wmbiXfjiXv67Ly7Chi9DfDxXgpeF78Ebfkm++d5uMfLK9WO25QYx2+LjWrph1rmtRi2LDeeLHHOc9D/xEQvWuv67b+DOJ8KxIDYF4T4Gkq8tMk2e83vOhVgfYnRe2IfdQfHQmTXvuXZbiq3RF66XBKS/6iM/ysHGk/OgzxAAXUsuLi+a2ZnAf+JCh/NGXpgkjjX5K4WDBXkIv9yj4ivsmcTLvgIaBxtJ4LLfXFsIrsrTrZBanXPdi7TV8Uk+jdyUU05I7nIk/lDkLuSWFra03vaRijnutaLIJi2Cqzf9s0AN2dPvqf6Jc8C+YW5vqKo0tpFWJBfvc/6AcLguEYk1KlJee5E6BYN7VgnUikTwuTMBWz5V6RwOt61cGAJGnJ7gVUJb+3YZ5ci757BdxIrJhLdyL7MydsS/+SuxUjtaFKoYsxCMAsslp8Vk9+Crj0es7YQXtqbYR31C1m8tOBSkDxZMFfWJe+7z23hmMW/CrhZ2FDHVhl9fh0YR34XtuR42Kh1zDxYWamA2e3vR/z06QbkITcWF51XlqzreaUPOiYpZnFboMBNnFNhc/Mfga4EVbJpg4+C/P5vHWC3Odk7GdOqgTdt9dl8vFNL4CBbFzt+zA73EwFp7FUR6jSwK2Sm+Jfc4IdAGXx3CLuz01rZTXgjS/r0q0vf53NebpRO48qR4S8HST8x3nKqBTeyrCR+bp+qETYSYx0inXuVzawit/V8BbPspM1590bQbbY7zqT81y1afmAxz/IiRg1Akpp5wVFxVgiRwEoAu758nsipbPAmobT5TZ+OEAEE/2HsRzMp/duqE3SwFbi34YsSJ6XUIR34SS4IUwRKf/r5O3Vh4nUliklBMwkOh+g3HvBYfJq51j3z6tVqsikicjM02Pti1o8kdGgu/9Z7m9PXm69KM/jfK3KzEWubt4ozr2PCH7wcMKb/ZrDTnhAs7FGHNfzbWUv8jv641/nfnXPA/qsXVX0quAQ1LuGASAAAAAElFTkSuQmCC","poverkadoma-home-asset-progress-appointed.png":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAR8AAAAFCAYAAAB8begEAAAACXBIWXMAAAAnAAAAJwEqCZFPAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAAA+ZJREFUeAGNWAu26yAIBO++39Le0uTWz+CAJL2e0yY1isNvINX//5q1pjKGqoqZrPv9ZZ+JMb9W7DVie43uPTbXjvshAHvWehGSOL/H/tba2vcZjWRALstYm9ae3vvCw9h0yRrLtKnLdTxiW5+JWIQgMWZgOrKbHw+9HRP0bNsGnZ4RZtjnPDuYIYfM43giPomY3Vd2/NHhg8biHHOQW8iecBWwyX9k0yfMQc8dS02Pf7fpkx2iLYZffxATbmLzOdeDj79iTNyPOG8Hsa+FnJbttx6STD1xI8k3Ozk85gYuxB2fNbD8tCn3xKqGGJu2Gng3Ns+TFAds7oiPZ6Mt4JuZN9aP/7DOdi6yzshlIR3Jzr5GYl6IaMz/phdmnxhHfDA1GAlXDhgAYq2ceEhLB7ivQ9mov3lQr/OHAt1ljMDLOJh4jIK7wsaOhawLGxIw708JwcGX5fBnrmnv+2AHfsbk5XtJjiVbPI3w3KKMrOPETHZxWzJJEzFXuuNqyb4sL8fEYyztAYKykqRjoDeJ88e2Up4B4lnE0K7nOebESUvjPOPeJOj4Se4oPgCkOZlpzyQBkuv+oU9IcK39+qxzmk92dV/2Q/L9D/mvVBB4fpsl+K/K/7x3xFFrqhd78kI+IQcXrqj81d7InIG7A/MHRbkT639zhlH3wsHyhHl8ZgBu2eh6sqF4uGwnW5JbOAcBzl1PxlzZiAMwBwTbGQN7QzJk/IUdABpEZFIT3pJfF6F1T76Tm5BreTsRC6JTTZW/GLnIVGeNAscJ/VpkVC/CQcF0P0kkTCs6KujwpPO3MZZx3AR7uF525Rifgd/9oVD41eSyy5F5/37O/9Ng8LPzPNoa8dKMQI09M4DNbkBeLSUIyvfZKXygrxETblGzs3JSsoGswpZwXOwt74FXObPskvCstZKcc4W5q+xBFPcSZqqGILtgg9XrBqwggit5WkqwrI8GCEkde62o2S9Qi0nJK3yrz79fzXDe8/lMzmN0u6sqRibjqrDkuZ46xCpWKt1HjFVd91p/9GRyznnCRURfML/Gpn4n/Q0k+F9TES7Sv8agMcef8j8MNAqZrVYVL9jQ4vtxTq4QdFUV0di9zMAomDQqrKUslsNdzrz0qi200tGn/WvluVF98/+bqgHizkQWAtXnLXQLvBZr8B9CTpSRsHIRn5SdZ/gfivcUncXiokjQMdHkPtMTSq6z95KlQ+rWZrwMe1LnA/tWY8XKUYP9lQkMRQ33/BtzOTG4OHFMd9pXYYs5E3EhxpcdU9xo7HJZ1pHHHXDclzHE+E66JLl+TnwblFzwRfOr040X3VPv+3zS/Vv+jwL+C6+O5DJniEmUAAAAAElFTkSuQmCC","poverkadoma-home-asset-upload.svg":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE4IiBoZWlnaHQ9IjE4IiB2aWV3Qm94PSIwIDAgMTggMTgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIGlkPSJpY29ucy9maWxlL2ljX2Nsb3VkX3VwbG9hZF80OHB4IiBjbGlwLXBhdGg9InVybCgjY2xpcDBfMF8xMjcpIj4KPGcgaWQ9IlZlY3RvciI+CjwvZz4KPHBhdGggaWQ9IlZlY3Rvcl8yIiBkPSJNMTQuNTE2MiA3LjUyNjI1QzE0LjAwNjIgNC45NDYyNSAxMS43MyAzIDkgM0M2LjgzMjUgMyA0Ljk1Mzc1IDQuMjMgNC4wMTI1IDYuMDI2MjVDMS43NTg3NSA2LjI3IDAgOC4xNzg3NSAwIDEwLjVDMCAxMi45ODYyIDIuMDEzNzUgMTUgNC41IDE1SDE0LjI1QzE2LjMyIDE1IDE4IDEzLjMyIDE4IDExLjI1QzE4IDkuMjcgMTYuNDU4NyA3LjY2NSAxNC41MTYyIDcuNTI2MjVaTTEwLjUgOS43NVYxMi43NUg3LjVWOS43NUg1LjI1TDkgNkwxMi43NSA5Ljc1SDEwLjVaIiBmaWxsPSIjRkZCMjFDIi8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDBfMF8xMjciPgo8cmVjdCB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIGZpbGw9IndoaXRlIi8+CjwvY2xpcFBhdGg+CjwvZGVmcz4KPC9zdmc+Cg==","poverkadoma-home-asset-warning.svg":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE4IiBoZWlnaHQ9IjE4IiB2aWV3Qm94PSIwIDAgMTggMTgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIGlkPSJ3YXJuaW5nLXRyaWFuZ2xlX18yNTkiPgo8cGF0aCBpZD0iU2hhcGUiIGQ9Ik0xNi4zMTI1IDE2Ljg3NUgxLjY4NzVDMC43NTYgMTYuODc1IDAgMTYuMTE5IDAgMTUuMTg3NUMwIDE0Ljg2NTggMC4wOSAxNC41NjU0IDAuMjQ2Mzc1IDE0LjMxTDcuNzY0NzUgMS44NDk1QzguMDA3NzUgMS40MTc1IDguNDcwMTMgMS4xMjUgOSAxLjEyNUM5LjU4NSAxLjEyNSAxMC4wODY4IDEuNDgwNSAxMC4zMDI3IDEuOTg2NzVMMTcuNzQ4IDE0LjI5OTlDMTcuOTA3NyAxNC41NTc1IDE4IDE0Ljg2MjQgMTggMTUuMTg3NUMxOCAxNi4xMTkgMTcuMjQ0IDE2Ljg3NSAxNi4zMTI1IDE2Ljg3NVpNMTAuMTI1IDEzLjVDMTAuMTI1IDEyLjg3OSA5LjYyMSAxMi4zNzUgOSAxMi4zNzVDOC4zNzkgMTIuMzc1IDcuODc1IDEyLjg3OSA3Ljg3NSAxMy41QzcuODc1IDE0LjEyMSA4LjM3OSAxNC42MjUgOSAxNC42MjVDOS42MjEgMTQuNjI1IDEwLjEyNSAxNC4xMjEgMTAuMTI1IDEzLjVaTTEwLjEyNSA2Ljc1QzEwLjEyNSA2LjEyOSA5LjYyMSA1LjYyNSA5IDUuNjI1QzguMzc5IDUuNjI1IDcuODc1IDYuMTI5IDcuODc1IDYuNzVWMTAuMTI1QzcuODc1IDEwLjc0NiA4LjM3OSAxMS4yNSA5IDExLjI1QzkuNjIxIDExLjI1IDEwLjEyNSAxMC43NDYgMTAuMTI1IDEwLjEyNVY2Ljc1WiIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGZpbGw9IiNGNzA3MDciLz4KPC9nPgo8L3N2Zz4K","poverkadoma-home-expanded-3f90b.svg":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE3LjciIGhlaWdodD0iMTcuNyIgdmlld0JveD0iMCAwIDE3LjcgMTcuNyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTEzLjg1IDcuMzVDMTMuODUgMTAuOTM5OSAxMC45Mzk5IDEzLjg1IDcuMzUgMTMuODVDMy43NjAxNSAxMy44NSAwLjg1IDEwLjkzOTkgMC44NSA3LjM1QzAuODUgMy43NjAxNSAzLjc2MDE1IDAuODUgNy4zNSAwLjg1QzEwLjkzOTkgMC44NSAxMy44NSAzLjc2MDE1IDEzLjg1IDcuMzVaIiBzdHJva2Utd2lkdGg9IjEuNyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2U9IndoaXRlIi8+CjxwYXRoIGlkPSJWZWN0b3JfMiIgZD0iTTEyLjM1IDEyLjM1TDE2Ljg1IDE2Ljg1IiBzdHJva2Utd2lkdGg9IjEuNyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2U9IndoaXRlIi8+CjwvZz4KPC9zdmc+Cg==","poverkadoma-home-expanded-9b5fb.svg":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE3LjciIGhlaWdodD0iMTcuNyIgdmlld0JveD0iMCAwIDE3LjcgMTcuNyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTEzLjg1IDcuMzVDMTMuODUgMTAuOTM5OSAxMC45Mzk5IDEzLjg1IDcuMzUgMTMuODVDMy43NjAxNSAxMy44NSAwLjg1IDEwLjkzOTkgMC44NSA3LjM1QzAuODUgMy43NjAxNSAzLjc2MDE1IDAuODUgNy4zNSAwLjg1QzEwLjkzOTkgMC44NSAxMy44NSAzLjc2MDE1IDEzLjg1IDcuMzVaIiBzdHJva2Utd2lkdGg9IjEuNyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2U9IiM2MTYyNjQiLz4KPHBhdGggaWQ9IlZlY3Rvcl8yIiBkPSJNMTIuMzUgMTIuMzVMMTYuODUgMTYuODUiIHN0cm9rZS13aWR0aD0iMS43IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZT0iIzYxNjI2NCIvPgo8L2c+Cjwvc3ZnPgo=","poverkadoma-home-expanded-e33be.svg":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjEzLjciIGhlaWdodD0iMTMuNyIgdmlld0JveD0iMCAwIDEzLjcgMTMuNyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9Ikdyb3VwIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTAuODUgMC44NUw2Ljg1IDYuODVNNi44NSA2Ljg1TDEyLjg1IDEyLjg1TTYuODUgNi44NUwxMi44NSAwLjg1TTYuODUgNi44NUwwLjg1IDEyLjg1IiBzdHJva2Utd2lkdGg9IjEuNyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2U9IiM2MTYyNjQiLz4KPC9nPgo8L3N2Zz4K"};
+  // Current design vectors; profile/help retain their artwork with only the outer ring removed.
+  // Offline, warning and upload glyphs come from the original Figma frame 591:6361.
+  // Sizes below describe the wrapper, not an enlargement of the vector artwork.
+  const icons = {
+    clock: ['b65ac', 16, 1.7833, 1.7833],
+    chevron: ['b4c6b', 14, 4.7688, 2.4354],
+    'arrow-white': ['10c0c', 18, 2.3813, 3.8813],
+    arrow: ['f340c', 18, 2.3813, 3.8813],
+    bids: ['f11c6', 22, 3.8271, 1.9938],
+    acts: ['5f0fc', 22, 2.9104, 1.9938],
+    equipment: ['bd2d2', 22, 1.9938, 3.7146],
+    guide: ['6e3a1', 22, 1.9938, 2.5508],
+    signal: ['4e616', 17, 2.9396, 2.2313],
+    wifi: ['256b0', 17, 1.5229, 2.6085],
+    battery: ['0ef23', 18, 1.6125, 4.6125],
+    offline: ['offline', 24, 0, 3],
+    warning: ['warning', 18, 0, 0],
+    upload: ['upload', 18, 0, 0],
+    call: ['call', 24, 0, 0],
+    help: ['help-open', 24, 2.15, 2.15],
+    bell: ['291e1', 24, 4.15, 2.15],
+    profile: ['profile-open', 24, 2.15, 2.15],
+    search: ['046ee', 24, 3.15, 3.15],
+    funnel: ['067dc', 24, 3.15, 4.15],
+    'search-white': ['3f90b', 24, 3.15, 3.15, true],
+    'search-muted': ['9b5fb', 24, 3.15, 3.15, true],
+    close: ['e33be', 24, 5.15, 5.15, true]
+  };
+  // Original Figma examples. Deadline times and remaining minutes are illustrative snapshots, not live timers.
+  // The original app measures the agreement deadline from creation (60 minutes);
+  // agreed requests retain their agreement result, while canceled requests stop timing.
+  const requests = [
+    { id: '000395', city: 'Тольятти', created: '20.12.2020', address: 'Комсомольская, 15', phone: '+7 (901) 123-45-67', phoneLabel: 'Телефон', state: 'Новая', kind: 'new', action: 'Принять заявку', agreementDue: '20.12.2020, 14:30', agreementTime: '14:30', agreementMinutesLeft: 40 },
+    { id: '000394', city: 'Тольятти', created: '20.12.2020', address: 'Комсомольская, 15', phone: '+7 (901) 123-45-67', phoneLabel: 'Контактный номер', state: 'Назначена', kind: 'appointed', action: 'Согласовать', agreementDue: '20.12.2020, 14:05', agreementTime: '14:05', agreementMinutesLeft: 15, indicator: 'warning', syncState: 'error', syncLabel: 'Ошибка', syncDescription: 'Не удалось отправить изменения заявки. Они сохранены на устройстве. Проверьте связь перед повторной отправкой.' },
+    { id: '000393', city: 'Тольятти', created: '20.12.2020', address: 'Комсомольская, 15', visit: '22.12.2020, 13:00 - 14:00', state: 'Согласована', kind: 'agreed', action: 'Создать акт', agreementHistory: 'Заявка согласована на 20 минут позже контрольного срока. Это срок согласования, а не опоздание на визит.', indicator: 'upload', syncState: 'queued', syncLabel: 'В очереди', syncDescription: 'Изменения сохранены на устройстве и ожидают отправки на сервер.' },
+    { id: '000396', city: 'Тольятти', created: '20.12.2020', address: 'Комсомольская, 15', canceled: '22.12.2020, 13:00', state: 'Отменена', kind: 'canceled', action: 'Вернуть', agreementHistory: 'Контроль срока согласования прекращён после отмены заявки.', indicator: 'upload', syncState: 'queued', syncLabel: 'В очереди', syncDescription: 'Изменения сохранены на устройстве и ожидают отправки на сервер.' }
+  ];
+  const root = document.getElementById('pd-work-list-preview');
+  const app = root.querySelector('.phone');
+  const list = root.querySelector('#requests');
+  const toggle = root.querySelector('#search-toggle');
+  const field = root.querySelector('#search-field');
+  const input = root.querySelector('#search-input');
+  const close = root.querySelector('#search-close');
+  const empty = root.querySelector('#empty-state');
+  const resultStatus = root.querySelector('#result-status');
+  const controls = root.querySelector('#prototype-controls');
+  const networkButtons = controls.querySelectorAll('[data-network]');
+  const cornerButtons = controls.querySelectorAll('[data-corners]');
+  const offlineIndicator = root.querySelector('#offline-indicator');
+  const connectionStatus = root.querySelector('#connection-status');
+  const cardData = root.querySelector('#card-data');
+  const cardText = root.querySelector('#card-text');
+  const requestScreen = root.querySelector('#request-screen');
+  const requestScreenTitle = root.querySelector('#request-screen-title');
+  const requestBack = root.querySelector('#request-back');
+  const homeHeader = app.querySelector('.topbar');
+  const homeList = app.querySelector('.requests-viewport');
+  let selectedRequestId = '';
+  app.dataset.screen = 'requests';
+
+  function openRequest(id, focus = true) {
+    const card = [...list.querySelectorAll('.request')].find(item => item.dataset.requestId === id);
+    if (!card) return;
+    selectedRequestId = id;
+    requestScreenTitle.textContent = `Заявка №${id}`;
+    homeHeader.hidden = true;
+    homeList.hidden = true;
+    requestScreen.hidden = false;
+    app.dataset.screen = 'request';
+    if (focus) requestBack.focus?.({ preventScroll: true });
+  }
+  function showRequests(focus = true) {
+    const previousId = selectedRequestId;
+    selectedRequestId = '';
+    requestScreen.hidden = true;
+    homeHeader.hidden = false;
+    homeList.hidden = false;
+    app.dataset.screen = 'requests';
+    if (focus) [...list.querySelectorAll('.request')].find(item => item.dataset.requestId === previousId)?.querySelector('.request-entry')?.focus?.({ preventScroll: true });
+  }
+  requestBack.addEventListener('click', () => showRequests());
+  app.querySelector('.bottom-navigation .nav-item').addEventListener('click', () => showRequests());
+
+  function setCardChecks(data = 'normal', text = 'normal') {
+    cardData.value = data === 'long' ? 'long' : 'normal';
+    cardText.value = text === 'large' ? 'large' : 'normal';
+    app.dataset.cardData = cardData.value;
+    app.dataset.cardText = cardText.value;
+    renderRequests();
+  }
+  cardData.addEventListener('change', () => setCardChecks(cardData.value, cardText.value));
+  cardText.addEventListener('change', () => setCardChecks(cardData.value, cardText.value));
+  app.dataset.cardData = 'normal';
+  app.dataset.cardText = 'normal';
+
+  function setNetwork(online, announce = false) {
+    app.dataset.offline = String(!online);
+    offlineIndicator.hidden = online;
+    networkButtons.forEach(button => button.setAttribute('aria-pressed', String((button.dataset.network === 'online') === online)));
+    if (announce) connectionStatus.textContent = online ? 'Есть интернет' : 'Нет интернета';
+  }
+  networkButtons.forEach(button => button.addEventListener('click', () => setNetwork(button.dataset.network === 'online', true)));
+  setNetwork(true);
+
+  function setCorners(rounded) {
+    app.dataset.topbarCorners = rounded ? 'rounded' : 'square';
+    cornerButtons.forEach(button => button.setAttribute('aria-pressed', String((button.dataset.corners === 'rounded') === rounded)));
+  }
+  cornerButtons.forEach(button => button.addEventListener('click', () => setCorners(button.dataset.corners === 'rounded')));
+  setCorners(true);
+
+  function icon(kind) {
+    const [file, size, x, y, expanded] = icons[kind];
+    const slot = document.createElement('span');
+    slot.className = 'icon';
+    slot.dataset.iconKind = kind;
+    slot.setAttribute('aria-hidden', 'true');
+    slot.style.width = size + 'px';
+    slot.style.height = size + 'px';
+    const img = document.createElement('img');
+    img.src = assetData[`poverkadoma-home-${expanded ? 'expanded' : 'asset'}-${file}.svg`];
+    img.alt = '';
+    img.draggable = false;
+    img.style.left = x + 'px';
+    img.style.top = y + 'px';
+    slot.append(img);
+    return slot;
+  }
+  app.querySelectorAll('[data-icon]').forEach(slot => slot.replaceWith(icon(slot.dataset.icon)));
+
+  function renderRequests() {
+    const query = input.value.toLocaleLowerCase('ru').trim();
+    const data = app.dataset.cardData === 'long' ? requests.map((item, index) => ({
+      ...item,
+      id: `2026-${item.id}-000128`,
+      city: 'Санкт-Петербург',
+      address: 'проспект Большой Сампсониевский, дом 126, корпус 2, квартира 108',
+      ...(item.phone ? { phone: '+7 (901) 123-45-67, доб. 128', phoneDial: '+79011234567;ext=128' } : {}),
+      ...(index === 1 ? { syncDescription: 'Изменения заявки сохранены на устройстве. Сервер не подтвердил получение. Проверьте подключение и уточните состояние заявки перед повторной отправкой.' } : {})
+    })) : requests;
+    const normalized = value => value.toLocaleLowerCase('ru').replace(/[^\p{L}\p{N}]/gu, '');
+    const normalizedQuery = normalized(query);
+    const matching = data.filter(item => `${item.address} ${item.city} ${item.phone || ''} ${item.id}`.toLocaleLowerCase('ru').includes(query) || (normalizedQuery.length > 0 && normalized(`${item.phone || ''} ${item.id}`).includes(normalizedQuery)));
+    list.replaceChildren(...matching.map(item => {
+      const card = document.createElement('article');
+      card.className = 'request';
+      card.setAttribute('role', 'listitem');
+      card.dataset.requestId = item.id;
+      card.setAttribute('aria-label', `Заявка №${item.id}`);
+      card.dataset.state = item.kind;
+      const head = document.createElement('div');
+      head.className = 'request-head';
+      const top = document.createElement('div');
+      top.className = 'request-heading';
+      const number = document.createElement('div');
+      number.className = 'request-number';
+      const numberLabel = document.createElement('span');
+      numberLabel.className = 'request-id';
+      numberLabel.textContent = '№ ' + item.id;
+      const locality = document.createElement('span');
+      locality.className = 'request-locality';
+      locality.textContent = '· ' + item.city;
+      number.append(numberLabel, locality);
+      if (item.indicator && item.syncState) {
+        const sync = document.createElement('span');
+        sync.className = 'request-sync ' + item.syncState;
+        sync.append(icon(item.indicator), document.createTextNode(item.syncLabel));
+        number.append(sync);
+      }
+      const state = document.createElement('div');
+      state.className = 'request-state' + (item.state === 'Согласована' ? ' agreed' : '');
+      const dot = document.createElement('span');
+      dot.className = 'status-dot';
+      dot.setAttribute('aria-hidden', 'true');
+      state.append(dot, document.createTextNode(item.state));
+      const created = document.createElement('time');
+      created.className = 'request-created';
+      created.dateTime = item.created.split('.').reverse().join('-');
+      created.textContent = 'Создана ' + item.created;
+      created.setAttribute('aria-label', 'Дата создания: ' + item.created);
+      top.append(number, state);
+      head.append(top);
+      const deadline = document.createElement('div');
+      deadline.className = 'deadline-summary';
+      deadline.append(created);
+      if (['new', 'appointed'].includes(item.kind) && Number.isFinite(item.agreementMinutesLeft)) {
+        const minutes = item.agreementMinutesLeft;
+        const urgent = minutes <= 15;
+        const deadlineCaption = document.createElement('span');
+        deadlineCaption.className = 'deadline-caption' + (urgent ? ' urgent' : '');
+        if (urgent) deadlineCaption.append(icon('clock'));
+        deadlineCaption.append(document.createTextNode(minutes < 0
+          ? `Согласование просрочено на ${Math.abs(minutes)} мин`
+          : minutes === 0 ? 'Срок согласования истекает сейчас'
+          : urgent ? `Согласовать: ещё ${minutes} мин` : `Согласовать до ${item.agreementTime}`));
+        deadlineCaption.setAttribute('aria-label', `${deadlineCaption.textContent}. Срок согласования: ${item.agreementDue}`);
+        deadline.append(deadlineCaption);
+      }
+      const details = document.createElement('div');
+      details.className = 'request-facts';
+      const address = document.createElement('p');
+      address.className = 'request-address';
+
+      address.setAttribute('aria-label', 'Адрес: ' + item.city + ', ' + item.address);
+      address.append(document.createTextNode(item.address));
+      details.append(address);
+      if (item.phone) {
+        const phone = document.createElement('p');
+        phone.className = 'request-phone';
+        const label = document.createElement('span');
+        label.className = 'field-label';
+        label.textContent = item.phoneLabel + ': ';
+        phone.append(label, document.createTextNode(item.phone));
+        details.append(phone);
+      }
+      if (item.visit || item.canceled) {
+        const date = document.createElement('p');
+        date.className = 'request-date';
+        date.textContent = (item.canceled ? 'Отмена: ' : 'Визит: ') + (item.canceled || item.visit).replace(' - ', '–');
+        details.append(date);
+      }
+      const actions = document.createElement('div');
+      actions.className = 'request-actions';
+      const action = document.createElement('button');
+      action.type = 'button';
+      action.className = 'request-action primary';
+      action.setAttribute('aria-label', `${item.action}, заявка №${item.id}`);
+      const label = document.createElement('span');
+      label.className = 'action-label';
+      label.textContent = item.action;
+      action.append(label);
+      const open = document.createElement('button');
+      open.type = 'button';
+      open.className = 'request-entry';
+      open.append(icon('chevron'));
+      open.setAttribute('aria-label', `Открыть заявку №${item.id}: ${item.city}, ${item.address}`);
+      open.addEventListener('click', () => openRequest(item.id));
+      actions.append(action);
+      if (item.phone) {
+        const dial = item.phoneDial || item.phone.replace(/[^+\d]/g, '');
+        if (/^\+?\d{7,15}(?:;ext=\d{1,6})?$/.test(dial)) {
+          const call = document.createElement('a');
+          call.className = 'request-action request-call';
+          call.href = 'tel:' + dial;
+          call.setAttribute('aria-label', `Позвонить по номеру ${item.phone}, заявка №${item.id}`);
+          call.append(icon('call'));
+          actions.append(call);
+        }
+      }
+      card.append(open, address, head, details, deadline, actions);
+      return card;
+    }));
+    empty.hidden = matching.length !== 0;
+    resultStatus.textContent = query ? `Найдено заявок: ${matching.length}` : '';
+  }
+
+  function setSearch(open, focus = true) {
+    field.hidden = !open;
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.replaceChildren(icon(open ? 'search-white' : 'search'));
+    if (open && focus) input.focus({ preventScroll: true });
+    if (!open) {
+      input.value = '';
+      renderRequests();
+      if (focus) toggle.focus({ preventScroll: true });
+    }
+  }
+  toggle.addEventListener('click', () => setSearch(field.hidden));
+  close.addEventListener('click', () => setSearch(false));
+  input.addEventListener('input', renderRequests);
+  input.addEventListener('keydown', event => {
+    if (event.key === 'Escape') setSearch(false);
+  });
+  // Historical Figma examples. The period selector previews its appearance;
+  // live date filtering belongs to the next functional prototype step.
+  app.querySelectorAll('[data-period]').forEach(button => button.addEventListener('click', () => {
+    app.querySelectorAll('[data-period]').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+  }));
+  renderRequests();
+
+  const persist = () => window.openai?.setWidgetState?.({
+    modelContent: { concept: 'Рабочий список', screen: selectedRequestId ? 'Заявка' : 'Заявки', searchOpen: !field.hidden, offline: app.dataset.offline === 'true', roundedTopbar: app.dataset.topbarCorners !== 'square', cardData: app.dataset.cardData, cardText: app.dataset.cardText },
+    privateContent: { query: input.value.slice(0, 200), period: app.querySelector('[data-period][aria-pressed="true"]')?.dataset.period, selectedRequestId }
+  }).catch(() => {});
+  const restore = state => {
+    if (!state) return;
+    const saved = state.privateContent || {};
+    showRequests(false);
+    setNetwork(!state.modelContent?.offline);
+    setCorners(state.modelContent?.roundedTopbar !== false);
+    setCardChecks(state.modelContent?.cardData, state.modelContent?.cardText);
+    setSearch(Boolean(state.modelContent?.searchOpen), false);
+    input.value = String(saved.query || '').slice(0, 200);
+    if (saved.period) app.querySelectorAll('[data-period]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.period === saved.period)));
+    renderRequests();
+    if (typeof saved.selectedRequestId === 'string' && saved.selectedRequestId.length < 120) openRequest(saved.selectedRequestId, false);
+  };
+  restore(window.openai?.widgetState);
+  [toggle, close, requestBack, ...networkButtons, ...cornerButtons, ...app.querySelectorAll('[data-period]'), app.querySelector('.bottom-navigation .nav-item')].forEach(button => button.addEventListener('click', persist));
+  input.addEventListener('input', persist);
+  input.addEventListener('keydown', event => { if (event.key === 'Escape') persist(); });
+  cardData.addEventListener('change', persist);
+  cardText.addEventListener('change', persist);
+  list.addEventListener('click', event => { if (event.target.closest('.request-entry')) persist(); });
+  window.addEventListener('openai:set_globals', event => restore(event.detail?.globals?.widgetState));
+
+})();
+
+</script>

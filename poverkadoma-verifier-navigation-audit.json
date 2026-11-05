@@ -1,0 +1,249 @@
+{
+  "scope": "Main full prototype;authenticated closed-modal screens;actual DOM navigation",
+  "original": "Меню→пункт=2",
+  "destinations": [
+    {
+      "title": "Выгрузить все акты",
+      "key": "upload",
+      "fromRequests": [
+        "Акты",
+        "Выгрузка"
+      ],
+      "fromNested": [
+        "Настройки",
+        "Разделы",
+        "Выгрузить все акты"
+      ],
+      "tapsFromRequests": 2,
+      "tapsFromNested": 3,
+      "verification": "Root paths tested by real DOM clicks. Sections entry exists only on Settings; nested paths may take three taps under the latest explicit user change."
+    },
+    {
+      "title": "История",
+      "key": "history",
+      "fromRequests": [
+        "Акты",
+        "История"
+      ],
+      "fromNested": [
+        "Настройки",
+        "Разделы",
+        "История"
+      ],
+      "tapsFromRequests": 2,
+      "tapsFromNested": 3,
+      "verification": "Root paths tested by real DOM clicks. Sections entry exists only on Settings; nested paths may take three taps under the latest explicit user change."
+    },
+    {
+      "title": "Статистика",
+      "key": "statistics",
+      "fromRequests": [
+        "Акты",
+        "Статистика"
+      ],
+      "fromNested": [
+        "Настройки",
+        "Разделы",
+        "Статистика"
+      ],
+      "tapsFromRequests": 2,
+      "tapsFromNested": 3,
+      "verification": "Root paths tested by real DOM clicks. Sections entry exists only on Settings; nested paths may take three taps under the latest explicit user change."
+    },
+    {
+      "title": "Приборы",
+      "key": "equipment",
+      "fromRequests": [
+        "Инструменты",
+        "Приборы"
+      ],
+      "fromNested": [
+        "Настройки",
+        "Разделы",
+        "Приборы"
+      ],
+      "tapsFromRequests": 2,
+      "tapsFromNested": 3,
+      "verification": "Root paths tested by real DOM clicks. Sections entry exists only on Settings; nested paths may take three taps under the latest explicit user change."
+    },
+    {
+      "title": "Идентификационные бирки",
+      "key": "tags",
+      "fromRequests": [
+        "Инструменты",
+        "Бирки"
+      ],
+      "fromNested": [
+        "Настройки",
+        "Разделы",
+        "Идентификационные бирки"
+      ],
+      "tapsFromRequests": 2,
+      "tapsFromNested": 3,
+      "verification": "Root paths tested by real DOM clicks. Sections entry exists only on Settings; nested paths may take three taps under the latest explicit user change."
+    },
+    {
+      "title": "Условия хранения",
+      "key": "storage",
+      "fromRequests": [
+        "Инструменты",
+        "Условия хранения"
+      ],
+      "fromNested": [
+        "Настройки",
+        "Разделы",
+        "Условия хранения"
+      ],
+      "tapsFromRequests": 2,
+      "tapsFromNested": 3,
+      "verification": "Root paths tested by real DOM clicks. Sections entry exists only on Settings; nested paths may take three taps under the latest explicit user change."
+    },
+    {
+      "title": "Подключение к НЕПТОН",
+      "key": "nepton",
+      "fromRequests": [
+        "Инструменты",
+        "НЕПТОН"
+      ],
+      "fromNested": [
+        "Настройки",
+        "Разделы",
+        "Подключение к НЕПТОН"
+      ],
+      "tapsFromRequests": 2,
+      "tapsFromNested": 3,
+      "verification": "Root paths tested by real DOM clicks. Sections entry exists only on Settings; nested paths may take three taps under the latest explicit user change."
+    },
+    {
+      "title": "Справочник",
+      "key": "guide",
+      "fromRequests": [
+        "Инструменты",
+        "Справочник СИ"
+      ],
+      "fromNested": [
+        "Настройки",
+        "Разделы",
+        "Справочник"
+      ],
+      "tapsFromRequests": 2,
+      "tapsFromNested": 3,
+      "verification": "Root paths tested by real DOM clicks. Sections entry exists only on Settings; nested paths may take three taps under the latest explicit user change."
+    },
+    {
+      "title": "Поиск в АРШИН",
+      "key": "arshin",
+      "fromRequests": [
+        "Инструменты",
+        "АРШИН"
+      ],
+      "fromNested": [
+        "Настройки",
+        "Разделы",
+        "Поиск в АРШИН"
+      ],
+      "tapsFromRequests": 2,
+      "tapsFromNested": 3,
+      "verification": "Root paths tested by real DOM clicks. Sections entry exists only on Settings; nested paths may take three taps under the latest explicit user change."
+    },
+    {
+      "title": "Документы",
+      "key": "documents",
+      "fromRequests": [
+        "Инструменты",
+        "Документы СМК"
+      ],
+      "fromNested": [
+        "Настройки",
+        "Разделы",
+        "Документы"
+      ],
+      "tapsFromRequests": 2,
+      "tapsFromNested": 3,
+      "verification": "Root paths tested by real DOM clicks. Sections entry exists only on Settings; nested paths may take three taps under the latest explicit user change."
+    },
+    {
+      "title": "Личный кабинет",
+      "key": "account",
+      "fromRequests": [
+        "Настройки",
+        "Карточка сотрудника"
+      ],
+      "fromNested": [
+        "Настройки",
+        "Карточка сотрудника"
+      ],
+      "tapsFromRequests": 2,
+      "tapsFromNested": 2,
+      "verification": "Root paths tested by real DOM clicks. Sections entry exists only on Settings; nested paths may take three taps under the latest explicit user change."
+    },
+    {
+      "title": "Настройки",
+      "key": "settings",
+      "fromRequests": [
+        "Настройки"
+      ],
+      "fromNested": [
+        "Настройки"
+      ],
+      "tapsFromRequests": 1,
+      "tapsFromNested": 1,
+      "verification": "Root paths tested by real DOM clicks. Sections entry exists only on Settings; nested paths may take three taps under the latest explicit user change."
+    },
+    {
+      "title": "Сообщения",
+      "key": "messages",
+      "fromRequests": [
+        "Уведомления",
+        "Сообщения"
+      ],
+      "fromNested": [
+        "Настройки",
+        "Разделы",
+        "Сообщения"
+      ],
+      "tapsFromRequests": 2,
+      "tapsFromNested": 3,
+      "verification": "Root paths tested by real DOM clicks. Sections entry exists only on Settings; nested paths may take three taps under the latest explicit user change."
+    },
+    {
+      "title": "Обратная связь",
+      "key": "feedback",
+      "fromRequests": [
+        "Уведомления",
+        "Поддержка"
+      ],
+      "fromNested": [
+        "Настройки",
+        "Разделы",
+        "Обратная связь"
+      ],
+      "tapsFromRequests": 2,
+      "tapsFromNested": 3,
+      "verification": "Root paths tested by real DOM clicks. Sections entry exists only on Settings; nested paths may take three taps under the latest explicit user change."
+    }
+  ],
+  "bottomNavigation": [
+    "Заявки",
+    "Акты",
+    "Профиль"
+  ],
+  "nestedBottomBar": false,
+  "universalReachability": "Original role destinations are direct menu items. Modal dismissal/business confirmations are outside the compared closed-modal navigation path.",
+  "date": "2026-10-30",
+  "limitations": [
+    "The two-tap limit is verified for the three main roots,not all nested screens,under the latest explicit user instruction.",
+    "Counts exclude scrolling,input and operation confirmations.",
+    "Open modal must first be dismissed.",
+    "Rendered geometry,discoverability and device touches are not verified by DOM checks."
+  ],
+  "top": [
+    "notifications",
+    "settings"
+  ],
+  "bottom": [
+    "requests",
+    "acts",
+    "tools"
+  ]
+}

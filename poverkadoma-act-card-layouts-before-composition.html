@@ -1,0 +1,306 @@
+<div id="pd-act-card-layouts" data-density="compact" aria-label="Компоновки карточки акта">
+  <style>
+    #pd-act-card-layouts { font-family:"Segoe UI",sans-serif; color-scheme:light dark; --ac-bg:light-dark(#F2F4F9,#181818); --ac-surface:light-dark(#FFFFFF,#242424); --ac-field:light-dark(#E9ECF2,#343434); --ac-ink:light-dark(#181818,#FFFFFF); --ac-muted:light-dark(#616264,#C6C6C6); --ac-line:light-dark(#CCCCCC,#616264); --ac-blue:#0084C1; --ac-white:#FFFFFF; --ac-green:#43BE83; --ac-amber:#FFB21C; --ac-red:#D96161; --ac-scale:1; color:var(--ac-ink); position:relative; }
+    #pd-act-card-layouts[data-appearance="light"] { color-scheme:light; }
+    #pd-act-card-layouts[data-appearance="dark"] { color-scheme:dark; }
+    #pd-act-card-layouts .ac-lab, #pd-act-card-layouts .ac-stage, #pd-act-card-layouts .ac-dialog { box-sizing:border-box; }
+    #pd-act-card-layouts .ac-lab *, #pd-act-card-layouts .ac-stage *, #pd-act-card-layouts .ac-dialog * { box-sizing:border-box; }
+    #pd-act-card-layouts .ac-lab { display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; margin:0 0 12px; color:var(--ac-ink); }
+    #pd-act-card-layouts .ac-lab label { display:flex; flex-wrap:wrap; align-items:center; gap:8px; font-size:14px; line-height:20px; }
+    #pd-act-card-layouts .ac-lab select { min-height:44px; min-width:0; max-width:100%; padding:8px 12px; border:1px solid var(--ac-line); border-radius:12px; background:var(--ac-surface); color:var(--ac-ink); font:inherit; font-size:16px; }
+    #pd-act-card-layouts .ac-stage { width:100%; min-height:420px; display:flex; justify-content:center; align-items:flex-start; padding:12px 0; }
+    #pd-act-card-layouts[data-long="true"] .ac-stage { min-height:560px; }
+    #pd-act-card-layouts[data-large="true"] .ac-stage { min-height:720px; }
+    #pd-act-card-layouts .ac-product { width:100%; max-width:var(--ac-width,390px); padding:16px; border-radius:24px; background:var(--ac-bg); font-size:calc(16px * var(--ac-scale)); line-height:1.5; }
+    #pd-act-card-layouts .ac-card { position:relative; isolation:isolate; display:flex; flex-direction:column; gap:8px; padding:12px; border:1px solid var(--ac-line); border-radius:22px; background:var(--ac-surface); box-shadow:0 4px 14px #18181820,0 1px 3px #18181810; min-width:0; }
+    #pd-act-card-layouts .ac-card p { margin:0; }
+    #pd-act-card-layouts .ac-head { display:flex; flex-direction:column; gap:4px; min-width:0; }
+    #pd-act-card-layouts .ac-top { position:relative; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:4px 8px; padding-right:20px; min-width:0; }
+    #pd-act-card-layouts .ac-number { min-width:0; overflow-wrap:anywhere; color:var(--ac-muted); font-size:calc(14px * var(--ac-scale)); line-height:calc(20px * var(--ac-scale)); }
+    #pd-act-card-layouts .ac-address { overflow-wrap:anywhere; font-size:calc(17px * var(--ac-scale)); line-height:1.35; font-weight:700; }
+    #pd-act-card-layouts .ac-meta { display:flex; flex-wrap:wrap; align-items:center; gap:4px 12px; color:var(--ac-muted); font-size:calc(14px * var(--ac-scale)); line-height:calc(20px * var(--ac-scale)); }
+    #pd-act-card-layouts .ac-date { display:inline-flex; align-items:center; gap:4px; }
+    #pd-act-card-layouts .ac-status { --ac-tone:var(--ac-blue); display:inline-flex; align-items:center; gap:4px; width:fit-content; max-width:100%; padding:2px 8px; border-radius:6px; background:color-mix(in srgb,var(--ac-tone) 16%,var(--ac-surface)); color:var(--ac-ink); font-size:calc(13px * var(--ac-scale)); line-height:calc(20px * var(--ac-scale)); font-weight:400; }
+    #pd-act-card-layouts .ac-status::before { content:""; width:8px; height:8px; flex:0 0 8px; border-radius:50%; background:var(--ac-tone); }
+    #pd-act-card-layouts .ac-card[data-status="draft"] .ac-status { --ac-tone:var(--ac-amber); }
+    #pd-act-card-layouts .ac-card[data-status="error"] .ac-status { --ac-tone:var(--ac-red); }
+    #pd-act-card-layouts .ac-card[data-status="ready"] .ac-status, #pd-act-card-layouts .ac-card[data-status="sent"] .ac-status { --ac-tone:var(--ac-green); }
+    #pd-act-card-layouts .ac-icon { display:inline-flex; align-items:center; justify-content:center; width:16px; height:20px; flex:0 0 16px; color:inherit; }
+    #pd-act-card-layouts .ac-icon svg { width:16px; height:16px; stroke-width:1.7; }
+    #pd-act-card-layouts .ac-chevron { position:absolute; right:0; top:50%; transform:translateY(-50%); color:var(--ac-muted); pointer-events:none; }
+    #pd-act-card-layouts .ac-meter-area { min-width:0; display:flex; flex-direction:column; gap:8px; }
+    #pd-act-card-layouts .ac-meter-heading { display:flex; gap:8px; align-items:center; color:var(--ac-muted); font-size:calc(14px * var(--ac-scale)); line-height:20px; font-weight:600; }
+    #pd-act-card-layouts .ac-meter-heading::after { content:""; flex:1; height:1px; background:var(--ac-line); }
+    #pd-act-card-layouts .ac-meters { display:flex; flex-direction:column; gap:8px; min-width:0; }
+    #pd-act-card-layouts .ac-meter { min-width:0; display:flex; flex-direction:column; gap:4px; font-size:calc(14px * var(--ac-scale)); line-height:1.45; }
+    #pd-act-card-layouts .ac-meter + .ac-meter { border-top:1px solid var(--ac-line); padding-top:8px; }
+    #pd-act-card-layouts .ac-meter-title { display:flex; align-items:center; flex-wrap:wrap; gap:4px 8px; color:var(--ac-muted); font-size:inherit; font-weight:400; }
+    #pd-act-card-layouts .ac-meter-title > .ac-meter-index { font-size:calc(13px * var(--ac-scale)); }
+    #pd-act-card-layouts .ac-fields { display:flex; flex-wrap:wrap; gap:0 8px; min-width:0; }
+    #pd-act-card-layouts .ac-field { min-width:0; overflow-wrap:anywhere; color:var(--ac-muted); }
+    #pd-act-card-layouts .ac-field[data-field="type"] { color:var(--ac-ink); font-weight:600; }
+    #pd-act-card-layouts .ac-field-label { font-weight:400; color:var(--ac-muted); }
+    #pd-act-card-layouts .ac-missing-value { color:var(--ac-ink); background:color-mix(in srgb,var(--ac-red) 18%,var(--ac-surface)); border-radius:4px; padding:0 4px; }
+    #pd-act-card-layouts .ac-warning { display:flex; align-items:flex-start; gap:6px; min-width:0; font-size:calc(14px * var(--ac-scale)); line-height:1.45; color:var(--ac-ink); }
+    #pd-act-card-layouts .ac-warning > .ac-icon { color:var(--ac-red); }
+    #pd-act-card-layouts .ac-warning[data-tone="error"] > .ac-icon { color:var(--ac-red); }
+    #pd-act-card-layouts .ac-warning-text { min-width:0; overflow-wrap:anywhere; }
+    #pd-act-card-layouts .ac-photo-warning { width:fit-content; max-width:100%; color:var(--ac-ink); font-size:inherit; }
+    #pd-act-card-layouts .ac-photo-warning[data-presentation="chip"] { padding:2px 6px; border-radius:6px; background:color-mix(in srgb,var(--ac-red) 18%,var(--ac-surface)); }
+    #pd-act-card-layouts .ac-photo-warning[data-presentation="stamp"] > .ac-icon { width:24px; height:24px; flex-basis:24px; border-radius:8px; color:var(--ac-ink); background:color-mix(in srgb,var(--ac-red) 24%,var(--ac-surface)); }
+    #pd-act-card-layouts .ac-notice { display:flex; flex-direction:column; gap:4px; min-width:0; }
+    #pd-act-card-layouts .ac-notice[data-presentation="band"] { padding:8px; border-radius:10px; background:color-mix(in srgb,var(--ac-red) 12%,var(--ac-surface)); }
+    #pd-act-card-layouts .ac-notice[data-presentation="chips"] { flex-direction:row; flex-wrap:wrap; }
+    #pd-act-card-layouts .ac-notice[data-presentation="chips"] .ac-warning { padding:2px 6px; border-radius:6px; background:color-mix(in srgb,var(--ac-red) 16%,var(--ac-surface)); }
+    #pd-act-card-layouts .ac-notice[data-presentation="error"] { padding:8px; border-radius:10px; background:color-mix(in srgb,var(--ac-red) 12%,var(--ac-surface)); }
+    #pd-act-card-layouts .ac-entry { position:absolute; inset:0; z-index:1; width:100%; border:0; border-radius:inherit; padding:0; background:transparent; }
+    #pd-act-card-layouts .ac-entry:focus-visible { outline:2px solid var(--ac-ink); outline-offset:2px; }
+    #pd-act-card-layouts .ac-entry:active { background:color-mix(in srgb,var(--ac-field) 25%,transparent); }
+    #pd-act-card-layouts .ac-button { position:relative; z-index:2; display:flex; align-items:center; justify-content:center; gap:8px; width:100%; min-width:0; min-height:48px; padding:12px; border:0; border-radius:14px; background:var(--ac-blue); color:var(--ac-white); font:inherit; font-size:calc(16px * var(--ac-scale)); line-height:calc(24px * var(--ac-scale)); font-weight:600; text-align:center; overflow-wrap:anywhere; }
+    #pd-act-card-layouts .ac-button:active { filter:brightness(.94); }
+    #pd-act-card-layouts .ac-button-secondary { background:var(--ac-surface); border:1px solid var(--ac-line); color:var(--ac-blue); }
+    #pd-act-card-layouts .ac-footer { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+    #pd-act-card-layouts .ac-footer:empty { display:none; }
+    #pd-act-card-layouts .ac-separator-rule .ac-meter-area { border-top:1px solid var(--ac-line); padding-top:8px; }
+    #pd-act-card-layouts .ac-separator-well .ac-meter-area { background:var(--ac-field); border-radius:12px; padding:8px; }
+    #pd-act-card-layouts .ac-separator-bleed .ac-meter-area { margin:0 -12px; padding:12px; background:var(--ac-field); }
+    #pd-act-card-layouts .ac-separator-outline .ac-meter-area { border:1px solid var(--ac-line); border-radius:12px; padding:8px; }
+    #pd-act-card-layouts .ac-separator-space .ac-meter-area { padding-top:4px; }
+    #pd-act-card-layouts .ac-separator-dashed .ac-meter-area { border-top:1px dashed var(--ac-line); padding-top:8px; }
+    #pd-act-card-layouts .ac-separator-caption .ac-meter-heading::before { content:""; width:20px; height:1px; background:var(--ac-line); }
+    #pd-act-card-layouts .ac-meter-mode-compact .ac-meter-title { display:none; }
+    #pd-act-card-layouts .ac-meter-mode-compact .ac-field[data-field="type"] { order:-1; }
+    #pd-act-card-layouts .ac-meter-mode-split .ac-fields { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:2px 12px; }
+    #pd-act-card-layouts .ac-meter-mode-split .ac-field[data-field="type"] { order:-2; }
+    #pd-act-card-layouts .ac-meter-mode-split .ac-field[data-field="serial"] { order:-1; }
+    #pd-act-card-layouts .ac-meter-mode-grid .ac-fields { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:4px 12px; }
+    #pd-act-card-layouts .ac-meter-mode-grid .ac-field-label { display:block; font-size:calc(13px * var(--ac-scale)); }
+    #pd-act-card-layouts .ac-meter-mode-boxed .ac-meter { padding:8px; border:1px solid var(--ac-line); border-radius:12px; }
+    #pd-act-card-layouts .ac-meter-mode-boxed .ac-meter + .ac-meter { padding-top:8px; }
+    #pd-act-card-layouts .ac-meter-mode-boxed .ac-field[data-field="method"] { flex-basis:100%; }
+    #pd-act-card-layouts .ac-meter-mode-serial .ac-fields { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:2px 12px; }
+    #pd-act-card-layouts .ac-meter-mode-serial .ac-field[data-field="type"] { grid-column:1; grid-row:1; }
+    #pd-act-card-layouts .ac-meter-mode-serial .ac-field[data-field="serial"] { grid-column:2; grid-row:1; text-align:right; }
+    #pd-act-card-layouts .ac-meter-mode-serial .ac-field[data-field="method"] { grid-column:1/-1; }
+    #pd-act-card-layouts .ac-meter-mode-ledger .ac-fields { display:grid; grid-template-columns:minmax(0,1fr); gap:0; }
+    #pd-act-card-layouts .ac-meter-mode-ledger .ac-field { display:grid; grid-template-columns:72px minmax(0,1fr); gap:8px; }
+    #pd-act-card-layouts .ac-meter-mode-ledger .ac-field-label { color:var(--ac-muted); }
+    #pd-act-card-layouts .ac-meter-mode-table .ac-table-head, #pd-act-card-layouts .ac-meter-mode-table .ac-fields { display:grid; grid-template-columns:1fr .85fr 1.2fr 1.3fr; gap:8px; align-items:start; }
+    #pd-act-card-layouts .ac-table-head { color:var(--ac-muted); font-size:calc(13px * var(--ac-scale)); line-height:1.4; }
+    #pd-act-card-layouts .ac-meter-mode-table .ac-field-label { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
+    #pd-act-card-layouts .ac-meter-mode-table .ac-meter-title { display:none; }
+    #pd-act-card-layouts .ac-meter-mode-table .ac-photo-warning { margin-top:4px; }
+    #pd-act-card-layouts .ac-meter-mode-numbered .ac-meter { position:relative; padding-left:28px; }
+    #pd-act-card-layouts .ac-meter-mode-numbered .ac-meter-index { position:absolute; left:0; top:0; width:20px; height:20px; display:grid; place-items:center; border-radius:6px; background:var(--ac-field); color:var(--ac-muted); }
+    #pd-act-card-layouts .ac-meter-mode-numbered .ac-meter + .ac-meter .ac-meter-index { top:8px; }
+    #pd-act-card-layouts .ac-meter-mode-numbered .ac-meter-title { height:0; }
+    #pd-act-card-layouts .ac-meter-mode-numbered .ac-field[data-field="type"] { order:-1; }
+    #pd-act-card-layouts .ac-meter-mode-checks .ac-meter-title { justify-content:space-between; }
+    #pd-act-card-layouts .ac-meter-check { display:inline-flex; gap:4px; align-items:center; color:var(--ac-muted); }
+    #pd-act-card-layouts .ac-meter-check .ac-icon { color:var(--ac-green); }
+    #pd-act-card-layouts .ac-head-address .ac-top { order:1; }
+    #pd-act-card-layouts .ac-head-address .ac-meta { order:2; }
+    #pd-act-card-layouts .ac-head-number .ac-number { font-size:calc(17px * var(--ac-scale)); line-height:24px; font-weight:600; color:var(--ac-ink); }
+    #pd-act-card-layouts .ac-head-number .ac-address { font-size:calc(16px * var(--ac-scale)); font-weight:400; }
+    #pd-act-card-layouts .ac-head-passport .ac-top { border-bottom:1px solid var(--ac-line); padding-bottom:8px; margin-bottom:4px; }
+    #pd-act-card-layouts .ac-head-tinted .ac-head { margin:-12px -12px 0; padding:12px; border-radius:21px 21px 0 0; background:var(--ac-field); }
+    #pd-act-card-layouts .ac-head-ticket .ac-top { padding-bottom:8px; margin-bottom:4px; border-bottom:1px dashed var(--ac-line); }
+    #pd-act-card-layouts .ac-head-calendar .ac-meta { order:-1; font-size:calc(16px * var(--ac-scale)); color:var(--ac-ink); }
+    #pd-act-card-layouts .ac-head-calendar .ac-top { order:1; }
+    #pd-act-card-layouts .ac-head-inline .ac-top { justify-content:flex-start; }
+    #pd-act-card-layouts .ac-head-inline .ac-number { margin-right:auto; }
+    #pd-act-card-layouts .ac-head-inline .ac-top > .ac-date { font-size:calc(13px * var(--ac-scale)); color:var(--ac-muted); }
+    #pd-act-card-layouts .ac-head-inline .ac-status { margin-top:4px; }
+    #pd-act-card-layouts .ac-status-summary { display:flex; flex-wrap:wrap; align-items:center; gap:4px 8px; padding-top:8px; border-top:1px solid var(--ac-line); }
+    #pd-act-card-layouts .ac-photo-warning[data-presentation="end"] { align-self:flex-end; }
+    #pd-act-card-layouts .ac-issue-count { font-size:calc(13px * var(--ac-scale)); color:var(--ac-muted); }
+    #pd-act-card-layouts .ac-preview-wrap { display:grid; min-width:0; }
+    #pd-act-card-layouts .ac-carousel-wrap { grid-area:1/1; min-width:0; }
+    #pd-act-card-layouts .ac-dialog-layer { position:relative; grid-area:1/1; z-index:10; padding:12px; background:#18181866; display:flex; align-items:flex-start; justify-content:center; border-radius:16px; }
+    #pd-act-card-layouts .ac-dialog-layer[hidden] { display:none; }
+    #pd-act-card-layouts .ac-dialog { width:100%; max-width:430px; display:flex; flex-direction:column; gap:12px; padding:16px; background:var(--ac-surface); color:var(--ac-ink); border-radius:22px; box-shadow:0 12px 32px #18181830; font:16px/1.5 "Segoe UI",sans-serif; }
+    #pd-act-card-layouts .ac-dialog-top { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+    #pd-act-card-layouts .ac-dialog h2 { margin:0; font-size:20px; line-height:28px; font-weight:600; }
+    #pd-act-card-layouts .ac-close { width:44px; height:44px; display:grid; place-items:center; padding:0; background:var(--ac-field); color:var(--ac-ink); border:0; border-radius:12px; }
+    #pd-act-card-layouts .ac-dialog-body { display:flex; flex-direction:column; gap:12px; }
+    #pd-act-card-layouts .ac-input { display:flex; flex-direction:column; gap:4px; font-size:14px; }
+    #pd-act-card-layouts .ac-input input { width:100%; min-width:0; padding:10px 12px; min-height:48px; border:1px solid var(--ac-line); border-radius:12px; background:var(--ac-surface); color:var(--ac-ink); font:16px/24px "Segoe UI",sans-serif; }
+    #pd-act-card-layouts .ac-dialog-meter { display:flex; flex-direction:column; gap:8px; padding-top:8px; border-top:1px solid var(--ac-line); }
+    #pd-act-card-layouts .ac-dialog-meter h3 { margin:0; font-size:16px; line-height:24px; font-weight:600; }
+    #pd-act-card-layouts .ac-dialog-note { margin:0; color:var(--ac-muted); font-size:14px; line-height:20px; }
+    #pd-act-card-layouts .ac-dialog-actions { display:flex; flex-wrap:wrap; gap:8px; }
+    #pd-act-card-layouts .ac-dialog-actions > .ac-button { flex:1 1 120px; }
+    /* Compact revision: reduce structural rows, preserve type size and complete values. */
+    #pd-act-card-layouts[data-density="compact"] .ac-card { gap:4px; }
+    #pd-act-card-layouts[data-density="compact"] .ac-top > .ac-date { font-size:calc(14px * var(--ac-scale)); line-height:calc(20px * var(--ac-scale)); color:var(--ac-muted); }
+    #pd-act-card-layouts[data-density="compact"] .ac-head-inline .ac-status { margin-top:0; }
+    #pd-act-card-layouts[data-density="compact"] .ac-head-passport .ac-top, #pd-act-card-layouts[data-density="compact"] .ac-head-ticket .ac-top { padding-bottom:4px; margin-bottom:0; }
+    #pd-act-card-layouts[data-density="compact"] .ac-head-calendar .ac-top { order:0; }
+    #pd-act-card-layouts[data-density="compact"] .ac-meter-area, #pd-act-card-layouts[data-density="compact"] .ac-meters { gap:4px; }
+    #pd-act-card-layouts[data-density="compact"] .ac-meter-area { position:relative; }
+    #pd-act-card-layouts[data-density="compact"] .ac-meter { gap:0; }
+    #pd-act-card-layouts[data-density="compact"] .ac-meter + .ac-meter { padding-top:4px; }
+    #pd-act-card-layouts[data-density="compact"] .ac-fields { display:grid; grid-template-columns:fit-content(40%) minmax(0,1fr); grid-template-areas:"type serial" "reg method"; gap:0 8px; align-items:baseline; }
+    #pd-act-card-layouts[data-density="compact"] .ac-field { display:block; min-width:0; }
+    #pd-act-card-layouts[data-density="compact"] .ac-field[data-field="reg"] { grid-area:reg; order:2; }
+    #pd-act-card-layouts[data-density="compact"] .ac-field[data-field="type"] { grid-area:type; order:0; }
+    #pd-act-card-layouts[data-density="compact"] .ac-field[data-field="serial"] { grid-area:serial; order:1; text-align:left; }
+    #pd-act-card-layouts[data-density="compact"] .ac-field[data-field="method"] { grid-area:method; order:3; }
+    #pd-act-card-layouts[data-density="compact"] .ac-field-label { display:inline; }
+    #pd-act-card-layouts[data-density="compact"] .ac-meter-mode-ledger .ac-field { grid-template-columns:none; }
+    #pd-act-card-layouts[data-density="compact"] .ac-meter-mode-table .ac-field-label { position:static; width:auto; height:auto; overflow:visible; clip-path:none; }
+    #pd-act-card-layouts[data-density="compact"] .ac-meter-mode-compact .ac-fields, #pd-act-card-layouts[data-density="compact"] .ac-meter-mode-table .ac-fields { display:flex; flex-wrap:wrap; gap:0 8px; }
+    #pd-act-card-layouts[data-density="compact"] .ac-meter-mode-boxed .ac-meter { padding:4px; }
+    #pd-act-card-layouts[data-density="compact"] .ac-meter-mode-boxed .ac-field[data-field="method"] { flex-basis:auto; }
+    #pd-act-card-layouts[data-density="compact"] .ac-meter-mode-numbered .ac-meter { padding-left:0; }
+    #pd-act-card-layouts[data-density="compact"] .ac-inline-index { display:inline-grid; place-items:center; min-width:16px; padding:0 3px; margin-right:4px; border-radius:4px; background:var(--ac-field); color:var(--ac-muted); font-size:calc(13px * var(--ac-scale)); line-height:calc(20px * var(--ac-scale)); font-weight:400; }
+    #pd-act-card-layouts[data-density="compact"] .ac-field > .ac-meter-check { margin-left:4px; vertical-align:middle; }
+    #pd-act-card-layouts[data-density="compact"] .ac-photo-warning { display:inline-flex; vertical-align:baseline; gap:4px; margin-left:4px; font-size:inherit; line-height:calc(20px * var(--ac-scale)); }
+    #pd-act-card-layouts[data-density="compact"] .ac-photo-warning[data-presentation="chip"] { padding:0 4px; }
+    #pd-act-card-layouts[data-density="compact"] .ac-photo-warning[data-presentation="stamp"] > .ac-icon { width:16px; height:20px; flex-basis:16px; border-radius:0; background:transparent; color:var(--ac-red); }
+    #pd-act-card-layouts[data-density="compact"] .ac-separator-well .ac-meter-area, #pd-act-card-layouts[data-density="compact"] .ac-separator-outline .ac-meter-area { padding:4px; }
+    #pd-act-card-layouts[data-density="compact"] .ac-separator-bleed .ac-meter-area { padding:4px 12px; }
+    #pd-act-card-layouts[data-density="compact"] .ac-separator-caption .ac-meter-area { border-top:1px solid var(--ac-line); margin-top:4px; padding-top:calc(8px * var(--ac-scale)); }
+    #pd-act-card-layouts[data-density="compact"] .ac-meter-heading { position:absolute; top:calc(-8px * var(--ac-scale)); left:8px; padding:0 4px; background:var(--ac-surface); font-size:calc(13px * var(--ac-scale)); line-height:calc(16px * var(--ac-scale)); font-weight:400; }
+    #pd-act-card-layouts[data-density="compact"] .ac-meter-heading::before, #pd-act-card-layouts[data-density="compact"] .ac-meter-heading::after { display:none; }
+    #pd-act-card-layouts[data-density="compact"] .ac-notice { flex-direction:row; flex-wrap:wrap; gap:0 8px; }
+    #pd-act-card-layouts[data-density="compact"] .ac-notice[data-presentation="band"], #pd-act-card-layouts[data-density="compact"] .ac-notice[data-presentation="error"] { padding:4px; }
+    #pd-act-card-layouts[data-density="compact"] .ac-notice[data-presentation="chips"] .ac-warning { padding:0 4px; }
+    #pd-act-card-layouts[data-density="compact"] .ac-status-summary { padding-top:0; border-top:0; }
+    #pd-act-card-layouts[data-density="compact"] .ac-footer > .ac-button, #pd-act-card-layouts[data-density="compact"] .ac-status-summary > .ac-button { flex:1 1 112px; width:auto; }
+    @media(max-width:350px) { #pd-act-card-layouts .ac-stage { min-height:500px; } #pd-act-card-layouts .ac-product { padding:12px; } #pd-act-card-layouts[data-long="true"] .ac-stage { min-height:720px; } #pd-act-card-layouts[data-large="true"] .ac-stage { min-height:1000px; } }
+  </style>
+  <div class="ac-lab" aria-label="Пример данных для сравнения">
+    <label for="ac-example">Пример акта
+      <select id="ac-example">
+        <option value="both" selected>Не заполнен акт и нет фото</option>
+        <option value="ready">Готов к выгрузке</option>
+        <option value="global">Не заполнены данные акта</option>
+        <option value="photo">Нет фото второго счётчика</option>
+        <option value="meter">Не выбрана методика</option>
+        <option value="error">Ошибка выгрузки</option>
+      </select>
+    </label>
+  </div>
+  <div class="ac-preview-wrap"><div class="ac-carousel-wrap"><div class="viz-carousel viz-dotted-background" aria-label="Двадцать компоновок карточки акта" data-previous-label="Назад" data-next-label="Далее">
+    <section data-variant="Привычный список" data-layout="familiar"><div class="ac-stage"><div class="ac-product"></div></div></section>
+    <section data-variant="Адрес первым" data-layout="address" hidden><div class="ac-stage"><div class="ac-product"></div></div></section>
+    <section data-variant="Паспорт акта" data-layout="passport" hidden><div class="ac-stage"><div class="ac-product"></div></div></section>
+    <section data-variant="Общая подложка" data-layout="well" hidden><div class="ac-stage"><div class="ac-product"></div></div></section>
+    <section data-variant="Отдельные счётчики" data-layout="boxes" hidden><div class="ac-stage"><div class="ac-product"></div></div></section>
+    <section data-variant="Две строки на счётчик" data-layout="rows" hidden><div class="ac-stage"><div class="ac-product"></div></div></section>
+    <section data-variant="Поля в две колонки" data-layout="columns" hidden><div class="ac-stage"><div class="ac-product"></div></div></section>
+    <section data-variant="Статус внизу" data-layout="bottom" hidden><div class="ac-stage"><div class="ac-product"></div></div></section>
+    <section data-variant="Сжатый реестр" data-layout="table" hidden><div class="ac-stage"><div class="ac-product"></div></div></section>
+    <section data-variant="Номер как заголовок" data-layout="number" hidden><div class="ac-stage"><div class="ac-product"></div></div></section>
+    <section data-variant="Метаданные одной строкой" data-layout="inline" hidden><div class="ac-stage"><div class="ac-product"></div></div></section>
+    <section data-variant="Только отступы" data-layout="spaces" hidden><div class="ac-stage"><div class="ac-product"></div></div></section>
+    <section data-variant="Контур блока счётчиков" data-layout="outline" hidden><div class="ac-stage"><div class="ac-product"></div></div></section>
+    <section data-variant="Разделитель с подписью" data-layout="caption" hidden><div class="ac-stage"><div class="ac-product"></div></div></section>
+    <section data-variant="Заводской номер справа" data-layout="serial" hidden><div class="ac-stage"><div class="ac-product"></div></div></section>
+    <section data-variant="Светлая шапка" data-layout="tinted" hidden><div class="ac-stage"><div class="ac-product"></div></div></section>
+    <section data-variant="Дата в нижней строке" data-layout="datefoot" hidden><div class="ac-stage"><div class="ac-product"></div></div></section>
+    <section data-variant="Карточка документа" data-layout="ticket" hidden><div class="ac-stage"><div class="ac-product"></div></div></section>
+    <section data-variant="Сначала проблема" data-layout="problem" hidden><div class="ac-stage"><div class="ac-product"></div></div></section>
+    <section data-variant="Проверка по счётчикам" data-layout="checks" hidden><div class="ac-stage"><div class="ac-product"></div></div></section>
+  </div></div>
+  <div class="ac-dialog-layer" id="ac-dialog-layer" hidden>
+    <div class="ac-dialog" role="dialog" aria-modal="true" aria-labelledby="ac-dialog-title">
+      <div class="ac-dialog-top"><h2 id="ac-dialog-title"></h2><button class="ac-close cursor-interaction" type="button" aria-label="Закрыть диалог"><i data-lucide="x" aria-hidden="true"></i></button></div>
+      <div class="ac-dialog-body"></div>
+      <div class="ac-dialog-actions"></div>
+    </div>
+  </div></div>
+  <script>
+  (()=>{
+    const root=document.getElementById('pd-act-card-layouts');
+    const sections=[...root.querySelectorAll('[data-layout]')];
+    const config={
+      familiar:{head:'classic',meter:'compact',separator:'rule',notice:'under',photo:'line'},
+      address:{head:'address',meter:'split',separator:'well',notice:'under',photo:'chip'},
+      passport:{head:'passport',meter:'ledger',separator:'space',notice:'footer',photo:'line'},
+      well:{head:'classic',meter:'split',separator:'bleed',notice:'under',photo:'chip'},
+      boxes:{head:'address',meter:'boxed',separator:'space',notice:'footer',photo:'line'},
+      rows:{head:'classic',meter:'split',separator:'rule',notice:'footer',photo:'end'},
+      columns:{head:'classic',meter:'grid',separator:'caption',notice:'under',photo:'chip'},
+      bottom:{head:'classic',meter:'compact',separator:'rule',notice:'footer',photo:'line',status:'footer'},
+      table:{head:'address',meter:'table',separator:'rule',notice:'under',photo:'line'},
+      number:{head:'number',meter:'numbered',separator:'caption',notice:'footer',photo:'line'},
+      inline:{head:'inline',meter:'split',separator:'rule',notice:'under',photo:'chip'},
+      spaces:{head:'address',meter:'compact',separator:'space',notice:'footer',photo:'line',noRowLines:true},
+      outline:{head:'classic',meter:'compact',separator:'outline',notice:'under',photo:'chip'},
+      caption:{head:'classic',meter:'numbered',separator:'caption',notice:'footer',photo:'line'},
+      serial:{head:'address',meter:'serial',separator:'rule',notice:'under',photo:'end'},
+      tinted:{head:'tinted',meter:'split',separator:'space',notice:'under',photo:'chip'},
+      datefoot:{head:'address',meter:'compact',separator:'well',notice:'footer',photo:'line',date:'footer'},
+      ticket:{head:'ticket',meter:'ledger',separator:'dashed',notice:'footer',photo:'stamp'},
+      problem:{head:'classic',meter:'split',separator:'well',notice:'first',photo:'chip',band:true},
+      checks:{head:'calendar',meter:'checks',separator:'caption',notice:'footer',photo:'stamp',status:'footer'}
+    };
+    const prefs={appearance:'light',width:'390',largeText:false,longData:false};
+    let example='both',states=new Map(),returnFocus=null,activeKey='';
+    const el=(tag,cls='',value)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(value!==undefined)n.textContent=value;return n;};
+    const icon=name=>{const n=el('span','ac-icon'),i=el('i');i.dataset.lucide=name;i.setAttribute('aria-hidden','true');n.setAttribute('aria-hidden','true');n.append(i);return n;};
+    const paintIcons=()=>globalThis.lucide?.createIcons?.({attrs:{width:16,height:16,'stroke-width':1.7}});
+    const clone=v=>JSON.parse(JSON.stringify(v));
+    function seed(){const a={number:'23-2026-00018',date:'2026-11-02',address:'Тольятти, ул. Строителей, 18, кв. 24',owner:'Ирина Викторовна Орлова',sendError:false,sent:false,meters:[{reg:'37523-08',type:'СГВ-15',serial:'24010518',method:'МП-01 · учебный пример',photo:'Счётчик-1.jpg'},{reg:'37523-08',type:'СХВ-15',serial:'24010519',method:'МП-01 · учебный пример',photo:'Счётчик-2.jpg'}]};if(['global','both'].includes(example))a.owner='';if(['photo','both'].includes(example))a.meters[1].photo='';if(example==='meter')a.meters[1].method='';if(example==='error')a.sendError=true;return a;}
+    const get=key=>{if(!states.has(key))states.set(key,seed());return states.get(key);};
+    const issues=a=>[...(!a.owner.trim()?[{scope:'act',field:'owner',text:'Не указан владелец'}]:[]),...(!a.address.trim()?[{scope:'act',field:'address',text:'Не указан адрес'}]:[]),...a.meters.flatMap((m,index)=>[...(!m.photo?[{scope:'meter',index,field:'photo',text:'Нет фото'}]:[]),...['reg','type','serial','method'].filter(f=>!m[f].trim()).map(field=>({scope:'meter',index,field,text:{reg:'Не указан рег. номер',type:'Не выбран тип СИ',serial:'Нет заводского номера',method:'Не выбрана методика'}[field]}))])];
+    const status=a=>a.sent?'sent':a.sendError?'error':issues(a).length?'draft':'ready';
+    const statusName={ready:'Готов к выгрузке',draft:'Черновик',error:'Не выгружен',sent:'Выгружен'};
+    function statusLabel(a){const n=el('span','ac-status',status(a)==='ready'?'Готов':statusName[status(a)]);n.setAttribute('aria-label','Статус: '+statusName[status(a)]);return n;}
+    function dateLabel(a){const n=el('span','ac-date',a.date.split('-').reverse().join('.'));n.setAttribute('aria-label','Дата работ: '+n.textContent);return n;}
+    function warning(text,{tone='warning',glyph='triangle-alert',cls=''}={}){const n=el('div','ac-warning '+cls);n.dataset.tone=tone;n.append(icon(glyph),el('span','ac-warning-text',text));return n;}
+    function actNotice(a,c){const all=issues(a).filter(i=>i.scope==='act');if(!all.length&&!a.sendError)return null;const n=el('div','ac-notice');n.dataset.presentation=a.sendError?'error':c.band?'band':c.notice==='footer'?'chips':'plain';for(const item of all)n.append(warning(item.text));if(a.sendError)n.append(warning('Нет интернета. Акт сохранён.',{tone:'error',glyph:'cloud-off'}));return n;}
+    function fieldValue(m,field){if(field==='type'&&prefs.longData)return (m[field]||'Тип СИ не выбран')+' — учебный счётчик с длинным названием';if(field==='method'&&m[field]&&prefs.longData)return m[field]+', расширенная редакция для проверки переноса строк';return m[field]||{reg:'Не указан',type:'Тип СИ не выбран',serial:'Не указан',method:'Не выбрана'}[field];}
+    function meter(a,m,index,c){
+      const row=el('div','ac-meter');row.dataset.meterIndex=String(index);row.setAttribute('aria-label','Счётчик '+(index+1));
+      const local=issues(a).filter(i=>i.scope==='meter'&&i.index===index),fields=el('div','ac-fields');
+      for(const [field,label]of [['reg','Рег. '],['type',''],['serial','Зав. '],['method','МП: ']]){
+        const item=el('span','ac-field');item.dataset.field=field;
+        if(field==='type'&&c.meter==='numbered')item.append(el('span','ac-inline-index',String(index+1)));
+        item.append(el('span','ac-field-label',label),el('span',m[field]?'':'ac-missing-value',fieldValue(m,field)));
+        if(field==='type'&&c.meter==='checks'&&!local.length){const check=el('span','ac-meter-check');check.setAttribute('aria-label','Счётчик заполнен');check.append(icon('circle-check'));item.append(check);}
+        if(field==='serial'&&!m.photo){const note=el('span','ac-warning ac-photo-warning');note.dataset.presentation=c.photo;note.dataset.missingPhoto=String(index+1);note.setAttribute('aria-label','Счётчик '+(index+1)+': нет фото');note.append(icon('camera-off'),el('span','ac-warning-text','Нет фото'));item.append(note);}
+        fields.append(item);
+      }
+      row.append(fields);if(c.noRowLines&&index>0){row.style.borderTop='0';row.style.paddingTop='4px';}return row;
+    }
+    function meterArea(a,c){const area=el('section','ac-meter-area');area.setAttribute('aria-label','Счётчики акта');if(['caption','outline'].includes(c.separator))area.append(el('div','ac-meter-heading','Счётчики'));const list=el('div','ac-meters');a.meters.forEach((m,i)=>list.append(meter(a,m,i,c)));area.append(list);return area;}
+    function action(label,fn,secondary=false){const b=el('button','ac-button cursor-interaction'+(secondary?' ac-button-secondary':''),label);b.type='button';b.addEventListener('click',fn);return b;}
+    function render(key){
+      const section=sections.find(n=>n.dataset.layout===key),product=section.querySelector('.ac-product'),c=config[key],a=get(key),card=el('article','ac-card ac-head-'+c.head+' ac-meter-mode-'+c.meter+' ac-separator-'+c.separator);
+      card.dataset.status=status(a);card.dataset.actCard=key;
+      const head=el('div','ac-head'),top=el('div','ac-top'),chevron=icon('chevron-right');chevron.classList.add('ac-chevron');
+      if(c.head==='calendar')top.append(dateLabel(a));
+      top.append(el('span','ac-number',a.number));
+      if(c.date!=='footer'&&c.head!=='calendar')top.append(dateLabel(a));
+      if(c.status!=='footer')top.append(statusLabel(a));
+      top.append(chevron);head.append(top,el('p','ac-address',prefs.longData?'Тольятти, ул. Александра Сергеевича Пушкина, 123, корп. 2, кв. 124':a.address||'Адрес не указан'));
+      const notice=actNotice(a,c);card.append(head);if(notice&&c.notice!=='footer')card.append(notice);card.append(meterArea(a,c));
+      const foot=el('div',c.status==='footer'?'ac-status-summary':'ac-footer');
+      if(notice&&c.notice==='footer')foot.append(notice);
+      if(c.date==='footer')foot.append(dateLabel(a));
+      if(c.status==='footer')foot.append(statusLabel(a));
+      const open=el('button','ac-entry cursor-interaction');open.type='button';open.setAttribute('aria-label','Открыть акт '+a.number+'. '+statusName[status(a)]+'. '+a.address);open.dataset.openCard=key;open.addEventListener('click',()=>openEditor(key,open));card.append(open);
+      if(!issues(a).length&&!a.sent){const send=action(a.sendError?'Повторить выгрузку':'Выгрузить',()=>confirmUpload(key));send.dataset.upload=key;if(foot.childNodes.length)foot.append(send);else card.append(send);}
+      if(foot.childNodes.length)card.append(foot);
+      product.replaceChildren(card);paintIcons();
+    }
+    function renderAll(){root.dataset.appearance=prefs.appearance;root.dataset.large=String(prefs.largeText);root.dataset.long=String(prefs.longData);root.style.setProperty('--ac-scale',prefs.largeText?'1.4':'1');root.style.setProperty('--ac-width',prefs.width+'px');sections.forEach(s=>render(s.dataset.layout));}
+    const layer=root.querySelector('#ac-dialog-layer'),dialogBody=layer.querySelector('.ac-dialog-body'),dialogActions=layer.querySelector('.ac-dialog-actions'),dialogTitle=layer.querySelector('#ac-dialog-title');
+    function close(){layer.hidden=true;const target=returnFocus?.isConnected?returnFocus:root.querySelector('[data-layout="'+activeKey+'"] [data-open-card]');target?.focus?.();}
+    function show(title,key){activeKey=key;returnFocus=document.activeElement;dialogTitle.textContent=title;dialogBody.replaceChildren();dialogActions.replaceChildren();layer.hidden=false;layer.querySelector('.ac-close').focus?.();}
+    layer.querySelector('.ac-close').addEventListener('click',close);layer.addEventListener('click',e=>{if(e.target===layer)close();});root.addEventListener('keydown',e=>{if(e.key==='Escape'&&!layer.hidden)close();if(e.key==='Tab'&&!layer.hidden){const nodes=[...layer.querySelectorAll('button,input,select')].filter(n=>!n.disabled&&!n.hidden);const first=nodes[0],last=nodes.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last?.focus?.();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first?.focus?.();}}});
+    function input(label,value,type='text'){const wrap=el('label','ac-input',label),field=el('input');field.type=type;field.value=value;field.setAttribute('aria-label',label);wrap.append(field);return {wrap,field};}
+    function openEditor(key,trigger){show('Акт '+get(key).number,key);returnFocus=trigger;const draft=clone(get(key)),owner=input('Владелец',draft.owner),address=input('Адрес',draft.address);dialogBody.append(owner.wrap,address.wrap,el('p','ac-dialog-note','Дата работ: '+draft.date.split('-').reverse().join('.')));const meterInputs=[];draft.meters.forEach((m,index)=>{const block=el('section','ac-dialog-meter');block.append(el('h3','','Счётчик '+(index+1)));const fields={};for(const [field,label]of [['reg','Регистрационный номер'],['type','Тип СИ'],['serial','Заводской номер'],['method','Методика поверки']]){fields[field]=input(label,m[field]);block.append(fields[field].wrap);}const photoName=el('p','ac-dialog-note',m.photo||'Фото не добавлено'),file=el('input');file.type='file';file.accept='image/*';file.setAttribute('aria-label','Фото счётчика '+(index+1));file.addEventListener('change',()=>{const selected=file.files?.[0];if(selected){m.photo=selected.name;photoName.textContent=selected.name;}});block.append(photoName,file);meterInputs.push(fields);dialogBody.append(block);});dialogBody.append(el('p','ac-dialog-note','Изменения применяются только к этому примеру. Данные счётчиков учебные.'));dialogActions.append(action('Отмена',close,true),action('Сохранить',()=>{draft.owner=owner.field.value.trim();draft.address=address.field.value.trim();meterInputs.forEach((fields,i)=>{for(const field of Object.keys(fields))draft.meters[i][field]=fields[field].field.value.trim();});draft.sent=false;states.set(key,draft);render(key);close();}));paintIcons();}
+    function confirmUpload(key){show('Выгрузить акт?',key);dialogBody.append(el('p','ac-dialog-note','В этом примере акт будет отмечен выгруженным. Отправка на сервер не выполняется.'));dialogActions.append(action('Отмена',close,true),action('Выгрузить',()=>{const a=get(key);if(issues(a).length)return;a.sent=true;a.sendError=false;render(key);close();}));paintIcons();}
+    root.querySelector('#ac-example').addEventListener('change',e=>{example=e.target.value;states=new Map();close();renderAll();persist();});
+    function persist(){window.openai?.setWidgetState?.({modelContent:{subject:'Поверка дома — компоновки карточки акта',example,appearance:prefs.appearance},privateContent:{actCardLayouts:{version:1,example,...prefs}}})?.catch?.(()=>{});}
+    function restore(value){const saved=value?.privateContent?.actCardLayouts;if(!saved||saved.version!==1)return;if(['ready','global','photo','both','meter','error'].includes(saved.example)){if(example!==saved.example)states=new Map();example=saved.example;root.querySelector('#ac-example').value=example;}if(['auto','light','dark'].includes(saved.appearance))prefs.appearance=saved.appearance;if(['320','360','390','430'].includes(String(saved.width)))prefs.width=String(saved.width);prefs.largeText=saved.largeText===true;prefs.longData=saved.longData===true;renderAll();}
+    renderAll();restore(window.openai?.widgetState);window.addEventListener('openai:set_globals',e=>{if(layer.hidden)restore(e.detail?.globals?.widgetState);});
+    if(globalThis.Tweak){const t=new Tweak({container:root,onChange:()=>{renderAll();persist();}});t.addSelect(prefs,'appearance',{label:'Тема',options:[{value:'light',label:'Светлая'},{value:'dark',label:'Тёмная'},{value:'auto',label:'Системная'}]});t.addSelect(prefs,'width',{label:'Ширина',options:[{value:'320',label:'320 px'},{value:'360',label:'360 px'},{value:'390',label:'390 px'},{value:'430',label:'430 px'}]});t.addToggle(prefs,'largeText',{label:'Увеличенный текст'});t.addToggle(prefs,'longData',{label:'Длинные данные'});}
+    root.actCardLayouts={getConfig:()=>clone(config),getState:key=>clone(get(key)),getPreferences:()=>({...prefs}),setExample:value=>{if(!['ready','global','photo','both','meter','error'].includes(value))return;example=value;root.querySelector('#ac-example').value=value;states=new Map();close();renderAll();},renderAll,issues:key=>issues(get(key)),close};
+  })();
+  </script>
+</div>

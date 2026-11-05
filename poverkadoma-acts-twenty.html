@@ -1,0 +1,276 @@
+<div id="pd-acts-twenty" class="viz-dotted-background">
+  <div class="viz-carousel" aria-label="Двадцать вариантов экрана Акты" data-previous-label="Предыдущий" data-next-label="Следующий">
+    <section data-variant="Рабочая лента" data-design="work"></section>
+    <section data-variant="По готовности" data-design="readiness" hidden></section>
+    <section data-variant="Все и готовые" data-design="modes" hidden></section>
+    <section data-variant="По дням" data-design="days" hidden></section>
+    <section data-variant="Адрес первым" data-design="address" hidden></section>
+    <section data-variant="Номер первым" data-design="number" hidden></section>
+    <section data-variant="Счётчики в фокусе" data-design="meters" hidden></section>
+    <section data-variant="Документ с полями" data-design="document" hidden></section>
+    <section data-variant="Компактный реестр" data-design="register" hidden></section>
+    <section data-variant="Мягкие поверхности" data-design="soft" hidden></section>
+    <section data-variant="Акцентная кромка" data-design="rail" hidden></section>
+    <section data-variant="Боковая отметка" data-design="margin" hidden></section>
+    <section data-variant="Тихий лейбл" data-design="quiet" hidden></section>
+    <section data-variant="Статус под адресом" data-design="subtitle" hidden></section>
+    <section data-variant="Короткий подвал" data-design="footer" hidden></section>
+    <section data-variant="Закреплённые действия" data-design="pinned" hidden></section>
+    <section data-variant="По клиентам" data-design="clients" hidden></section>
+    <section data-variant="Что осталось сделать" data-design="checks" hidden></section>
+    <section data-variant="Этапы готовности" data-design="steps" hidden></section>
+    <section data-variant="Собранный документ" data-design="assembled" hidden></section>
+  </div>
+  <span class="ax-live" role="status" aria-live="polite"></span>
+</div>
+<style>
+  #pd-acts-twenty { --ax-blue:#0084c1; --ax-blue-light:#2db0ed; --ax-green:#43be83; --ax-amber:#ffb21c; --ax-red:#d96161; --ax-bg:#f2f4f9; --ax-surface:#fff; --ax-field:#e9ecf2; --ax-ink:#181818; --ax-muted:#616264; --ax-line:#ccc; --ax-white:#fff; --ax-width:390px; font-family:"Segoe UI",sans-serif; color-scheme:light; position:relative; }
+  #pd-acts-twenty[data-theme="dark"] { --ax-bg:#000; --ax-surface:#242427; --ax-field:#303035; --ax-ink:#fff; --ax-muted:#b8b8bc; --ax-line:#616264; color-scheme:dark; }
+  #pd-acts-twenty [data-design] { min-height:900px; padding:16px 0 24px; }
+  #pd-acts-twenty .ax-stage { width:min(var(--ax-width),100%); margin:0 auto; }
+  #pd-acts-twenty .ax-phone, #pd-acts-twenty .ax-phone *, #pd-acts-twenty .ax-like { box-sizing:border-box; }
+  #pd-acts-twenty .ax-phone { height:820px; width:100%; display:flex; flex-direction:column; background:var(--ax-bg); color:var(--ax-ink); border-radius:28px; overflow:hidden; position:relative; font-size:16px; line-height:1.4; }
+  #pd-acts-twenty .ax-phone [hidden] { display:none; }
+  #pd-acts-twenty .ax-icon { width:20px; height:20px; display:inline-flex; align-items:center; justify-content:center; flex:none; }
+  #pd-acts-twenty .ax-icon svg { width:100%; height:100%; stroke-width:1.7; }
+  #pd-acts-twenty .ax-top { color:var(--ax-white); background:var(--ax-blue); border-radius:0 0 22px 22px; padding:8px 16px 8px; flex:none; position:relative; z-index:3; box-shadow:0 4px 10px #18181816; }
+  #pd-acts-twenty .ax-system { display:flex; justify-content:space-between; align-items:center; font-size:12px; line-height:16px; padding:0 4px; }
+  #pd-acts-twenty .ax-system-icons { display:flex; gap:4px; }
+  #pd-acts-twenty .ax-system .ax-icon { width:14px; height:14px; }
+  #pd-acts-twenty .ax-toolbar { display:flex; align-items:center; gap:4px; margin-top:4px; min-height:44px; }
+  #pd-acts-twenty .ax-toolbar h2 { font-size:24px; line-height:32px; font-weight:600; min-width:0; flex:1; margin:0; }
+  #pd-acts-twenty .ax-toolbar-actions { display:flex; gap:4px; }
+  #pd-acts-twenty .ax-icon-button { display:grid; place-items:center; width:44px; height:44px; border:0; border-radius:12px; padding:0; color:inherit; background:transparent; flex:none; }
+  #pd-acts-twenty .ax-back { margin-left:-12px; }
+  #pd-acts-twenty .ax-body { flex:1; min-height:0; overflow:auto; padding:16px 16px 20px; scrollbar-width:none; }
+  #pd-acts-twenty .ax-body::-webkit-scrollbar { display:none; }
+  #pd-acts-twenty .ax-phone[data-route="acts"] .ax-body { padding-bottom:80px; }
+  #pd-acts-twenty .ax-list { display:flex; flex-direction:column; gap:8px; }
+  #pd-acts-twenty .ax-group { display:flex; flex-direction:column; gap:8px; }
+  #pd-acts-twenty .ax-group + .ax-group { margin-top:8px; }
+  #pd-acts-twenty .ax-group-title { display:flex; align-items:baseline; justify-content:space-between; gap:8px; font-size:15px; line-height:22px; margin:0 0 0; font-weight:600; }
+  #pd-acts-twenty .ax-group-title span:last-child { font-size:14px; color:var(--ax-muted); font-weight:400; }
+  #pd-acts-twenty .ax-utility { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:8px; margin-bottom:12px; }
+  #pd-acts-twenty .ax-button { display:flex; align-items:center; justify-content:center; gap:8px; min-height:48px; padding:10px 12px; min-width:0; border:1px solid var(--ax-blue); border-radius:12px; background:var(--ax-blue); color:var(--ax-white); font:inherit; font-size:16px; line-height:24px; font-weight:600; text-align:center; touch-action:manipulation; }
+  #pd-acts-twenty .ax-button .ax-icon { width:20px; height:20px; }
+  #pd-acts-twenty .ax-button-secondary { background:var(--ax-surface); border-color:var(--ax-line); color:var(--ax-ink); font-size:16px; font-weight:600; }
+  #pd-acts-twenty .ax-button-outline { background:var(--ax-surface); color:var(--ax-blue); }
+  #pd-acts-twenty[data-theme="dark"] .ax-button-outline { color:var(--ax-white); }
+  #pd-acts-twenty .ax-button:disabled { color:var(--ax-muted); background:var(--ax-field); border-color:var(--ax-line); }
+  #pd-acts-twenty .ax-utility .ax-button-secondary { padding-left:12px; padding-right:12px; }
+  #pd-acts-twenty .ax-card { --ax-status-color:var(--ax-green); position:relative; isolation:isolate; display:flex; flex-direction:column; gap:4px; padding:12px; border:1px solid var(--ax-line); border-radius:20px; background:var(--ax-surface); box-shadow:0 2px 7px #1818180a; }
+  #pd-acts-twenty .ax-card[data-status="draft"] { --ax-status-color:var(--ax-amber); }
+  #pd-acts-twenty .ax-card[data-status="error"] { --ax-status-color:var(--ax-red); }
+  #pd-acts-twenty .ax-card-head { display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:4px 8px; padding-right:20px; padding-bottom:4px; border-bottom:1px solid var(--ax-line); }
+  #pd-acts-twenty .ax-number { font-size:16px; line-height:22px; font-weight:400; color:var(--ax-muted); overflow-wrap:anywhere; }
+  #pd-acts-twenty .ax-label { display:inline-flex; align-items:center; gap:4px; font-size:13px; line-height:20px; font-weight:400; color:var(--ax-ink); align-self:flex-start; }
+  #pd-acts-twenty .ax-label-dot { width:8px; height:8px; background:var(--ax-status-color); border-radius:50%; flex:none; }
+  #pd-acts-twenty .ax-address { margin:0; font-size:17px; line-height:24px; font-weight:700; overflow-wrap:anywhere; }
+  #pd-acts-twenty .ax-meta { display:flex; align-items:center; flex-wrap:wrap; gap:4px 12px; font-size:14px; line-height:20px; color:var(--ax-muted); }
+  #pd-acts-twenty .ax-meta > span { display:inline-flex; align-items:center; gap:4px; }
+  #pd-acts-twenty .ax-meta .ax-icon { width:16px; height:16px; }
+  #pd-acts-twenty .ax-meters { display:flex; flex-direction:column; gap:4px; margin-top:4px; }
+  #pd-acts-twenty .ax-meter-row { display:flex; flex-wrap:wrap; gap:0 6px; font-size:14px; line-height:20px; color:var(--ax-muted); overflow-wrap:anywhere; }
+  #pd-acts-twenty .ax-meter-row + .ax-meter-row { padding-top:4px; border-top:1px solid color-mix(in srgb,var(--ax-line) 60%,transparent); }
+  #pd-acts-twenty .ax-meter-field { min-width:0; overflow-wrap:anywhere; }
+  #pd-acts-twenty .ax-meter-field:not(:last-child):after { content:" ·"; color:var(--ax-muted); }
+  #pd-acts-twenty .ax-meter-field strong { font-weight:600; color:var(--ax-ink); }
+  #pd-acts-twenty .ax-meter-index { display:none; }
+  #pd-acts-twenty .ax-card-foot { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:4px; position:relative; z-index:2; pointer-events:none; }
+  #pd-acts-twenty .ax-upload { flex:1; pointer-events:auto; }
+  #pd-acts-twenty .ax-entry { position:absolute; inset:0; z-index:1; border:0; border-radius:inherit; padding:0; background:transparent; color:var(--ax-muted); }
+  #pd-acts-twenty .ax-entry > .ax-icon { position:absolute; top:12px; right:8px; width:16px; height:20px; }
+  #pd-acts-twenty .ax-card > :not(.ax-entry):not(.ax-card-foot) { pointer-events:none; }
+  #pd-acts-twenty .ax-button:focus-visible, #pd-acts-twenty .ax-entry:focus-visible, #pd-acts-twenty .ax-icon-button:focus-visible, #pd-acts-twenty .ax-bottom-item:focus-visible { outline:2px solid var(--ax-ink); outline-offset:2px; }
+  #pd-acts-twenty .ax-button:active, #pd-acts-twenty .ax-fab:active { filter:brightness(.95); }
+  #pd-acts-twenty .ax-entry:active { background:#18181806; }
+  #pd-acts-twenty .ax-bottom { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:4px; padding:8px 16px 18px; border-radius:22px 22px 0 0; background:var(--ax-surface); box-shadow:0 -4px 12px #18181810; position:relative; flex:none; z-index:3; }
+  #pd-acts-twenty .ax-bottom:after { content:""; position:absolute; left:calc(50% - 48px); bottom:6px; width:96px; height:4px; border-radius:2px; background:var(--ax-ink); }
+  #pd-acts-twenty .ax-bottom-item { display:flex; align-items:center; justify-content:center; flex-direction:column; gap:2px; min-height:48px; border:0; border-radius:16px; color:var(--ax-muted); background:transparent; font:inherit; font-size:13px; line-height:18px; }
+  #pd-acts-twenty .ax-bottom-item[aria-current="page"] { background:var(--ax-field); color:var(--ax-blue); font-weight:600; }
+  #pd-acts-twenty .ax-fab { position:absolute; bottom:92px; right:16px; width:56px; height:56px; display:grid; place-items:center; padding:0; border:0; border-radius:16px; background:var(--ax-green); color:var(--ax-white); box-shadow:0 4px 12px #18181829; z-index:4; }
+  #pd-acts-twenty .ax-fab .ax-icon { width:24px; height:24px; }
+  #pd-acts-twenty .ax-like { display:flex; justify-content:center; align-items:center; gap:8px; min-height:44px; margin:12px auto 0; padding:8px 16px; border:1px solid var(--ax-line); border-radius:12px; font:inherit; font-size:14px; background:var(--ax-surface); color:var(--ax-ink); }
+  #pd-acts-twenty .ax-like[aria-pressed="true"] { border-color:var(--ax-blue); font-weight:700; }
+  #pd-acts-twenty .ax-like[aria-pressed="true"] .ax-icon { color:var(--ax-blue); }
+  #pd-acts-twenty .ax-like .ax-icon { width:16px; height:16px; }
+  #pd-acts-twenty .ax-summary { margin:0 0 12px; color:var(--ax-muted); font-size:14px; line-height:20px; }
+  #pd-acts-twenty .ax-segments { display:flex; background:var(--ax-surface); border:1px solid var(--ax-line); border-radius:12px; padding:3px; gap:4px; margin-bottom:12px; }
+  #pd-acts-twenty .ax-segments button { flex:1; min-height:40px; border:0; border-radius:9px; background:transparent; color:var(--ax-muted); font:inherit; font-size:15px; font-weight:600; }
+  #pd-acts-twenty .ax-segments button[aria-pressed="true"] { background:var(--ax-field); color:var(--ax-blue); }
+  #pd-acts-twenty .ax-explanation { margin:0; font-size:14px; line-height:20px; color:var(--ax-muted); }
+  #pd-acts-twenty .ax-note { display:flex; align-items:flex-start; gap:6px; font-size:14px; line-height:20px; color:var(--ax-muted); margin:4px 0 0; }
+  #pd-acts-twenty .ax-note .ax-icon { color:var(--ax-status-color); width:16px; height:20px; }
+  #pd-acts-twenty .ax-stages { display:flex; gap:8px; flex-wrap:wrap; margin-top:4px; color:var(--ax-muted); font-size:13px; line-height:20px; }
+  #pd-acts-twenty .ax-stages > span { display:flex; gap:3px; align-items:center; }
+  #pd-acts-twenty .ax-stages .ax-icon { width:14px; height:14px; color:var(--ax-green); }
+  #pd-acts-twenty .ax-pinned { padding:12px 16px 0; flex:none; background:var(--ax-bg); }
+  #pd-acts-twenty .ax-pinned .ax-utility { margin-bottom:0; }
+  #pd-acts-twenty .ax-empty { padding:24px 0; text-align:center; color:var(--ax-muted); }
+  #pd-acts-twenty .ax-empty h3 { font-size:17px; font-weight:600; color:var(--ax-ink); margin:8px 0; }
+  #pd-acts-twenty .ax-form { display:flex; flex-direction:column; gap:12px; }
+  #pd-acts-twenty .ax-field { display:flex; flex-direction:column; gap:4px; font-size:14px; color:var(--ax-muted); }
+  #pd-acts-twenty .ax-field input, #pd-acts-twenty .ax-field textarea, #pd-acts-twenty .ax-field select { width:100%; min-height:48px; padding:12px; border:1px solid var(--ax-line); border-radius:12px; background:var(--ax-surface); color:var(--ax-ink); font:inherit; font-size:16px; line-height:22px; }
+  #pd-acts-twenty .ax-field textarea { min-height:74px; resize:vertical; }
+  #pd-acts-twenty .ax-form h3 { margin:4px 0 0; font-size:17px; }
+  #pd-acts-twenty .ax-form .ax-button { flex:none; }
+  #pd-acts-twenty .ax-detail-status { margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+  #pd-acts-twenty .ax-detail-status strong { font-size:19px; }
+  #pd-acts-twenty .ax-overlay { position:absolute; inset:0; z-index:10; background:#18181880; display:flex; align-items:center; justify-content:center; padding:16px; }
+  #pd-acts-twenty .ax-dialog { max-height:90%; overflow:auto; width:100%; border-radius:22px; padding:20px; background:var(--ax-surface); color:var(--ax-ink); box-shadow:0 8px 30px #18181833; }
+  #pd-acts-twenty .ax-dialog h3 { margin:0 0 12px; font-size:20px; line-height:28px; }
+  #pd-acts-twenty .ax-dialog p { margin:0 0 12px; font-size:16px; line-height:24px; }
+  #pd-acts-twenty .ax-dialog-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+  #pd-acts-twenty .ax-dialog-actions .ax-button { flex:1 1 auto; }
+  #pd-acts-twenty .ax-dialog-list { padding:0; margin:0; list-style:none; display:flex; flex-direction:column; gap:8px; font-size:14px; }
+  #pd-acts-twenty .ax-dialog-list li { display:flex; flex-direction:column; gap:2px; }
+  #pd-acts-twenty .ax-dialog-list span { color:var(--ax-muted); }
+  #pd-acts-twenty .ax-stat { display:flex; justify-content:space-between; gap:12px; padding:12px 0; border-bottom:1px solid var(--ax-line); }
+  #pd-acts-twenty .ax-stat strong { font-size:20px; }
+  #pd-acts-twenty .ax-live { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  /* Twenty deliberate compositions. Data rows and native hit targets stay shared. */
+  #pd-acts-twenty [data-design="work"] .ax-label { padding:1px 6px; background:color-mix(in srgb,var(--ax-status-color) 16%,var(--ax-surface)); border-radius:6px; }
+  #pd-acts-twenty [data-design="readiness"] .ax-card-head .ax-label { display:none; }
+  #pd-acts-twenty [data-design="readiness"] .ax-card-head { border-bottom:0; padding-bottom:0; }
+  #pd-acts-twenty [data-design="modes"] .ax-label { font-weight:600; }
+  #pd-acts-twenty [data-design="modes"] .ax-card-foot .ax-button { min-height:44px; }
+  #pd-acts-twenty [data-design="days"] .ax-card-head { border-bottom:0; }
+  #pd-acts-twenty [data-design="days"] .ax-meta .ax-date { display:none; }
+  #pd-acts-twenty [data-design="days"] .ax-card { border-radius:16px; }
+  #pd-acts-twenty [data-design="address"] .ax-address { order:-2; padding-right:20px; }
+  #pd-acts-twenty [data-design="address"] .ax-card-head { order:-1; border-bottom:0; }
+  #pd-acts-twenty [data-design="address"] .ax-meter-row:first-child { border-top:1px solid var(--ax-line); padding-top:4px; }
+  #pd-acts-twenty [data-design="number"] .ax-number { font-weight:700; font-size:19px; line-height:24px; color:var(--ax-ink); }
+  #pd-acts-twenty [data-design="number"] .ax-address { font-size:16px; font-weight:400; }
+  #pd-acts-twenty [data-design="number"] .ax-label { padding:1px 6px; background:var(--ax-field); border-radius:4px; }
+  #pd-acts-twenty [data-design="meters"] .ax-address { font-weight:400; font-size:16px; }
+  #pd-acts-twenty [data-design="meters"] .ax-meters { margin-top:4px; border-left:3px solid var(--ax-blue); padding-left:8px; }
+  #pd-acts-twenty [data-design="meters"] .ax-meter-row { color:var(--ax-ink); }
+  #pd-acts-twenty [data-design="meters"] .ax-label { order:-1; }
+  #pd-acts-twenty [data-design="document"] .ax-card { border-radius:16px; gap:6px; }
+  #pd-acts-twenty [data-design="document"] .ax-meter-index { display:block; width:100%; font-size:13px; color:var(--ax-muted); }
+  #pd-acts-twenty [data-design="document"] .ax-meters { gap:6px; }
+  #pd-acts-twenty [data-design="document"] .ax-meter-field strong { font-weight:400; }
+  #pd-acts-twenty [data-design="register"] .ax-card { border-radius:12px; gap:2px; box-shadow:none; }
+  #pd-acts-twenty [data-design="register"] .ax-address { font-size:16px; line-height:22px; }
+  #pd-acts-twenty [data-design="register"] .ax-number { font-variant-numeric:tabular-nums; }
+  #pd-acts-twenty [data-design="register"] .ax-card-foot { justify-content:flex-end; }
+  #pd-acts-twenty [data-design="register"] .ax-upload { flex:none; min-width:144px; }
+  #pd-acts-twenty [data-design="soft"] .ax-card { border-radius:24px; border-color:transparent; box-shadow:0 5px 16px #18181812; }
+  #pd-acts-twenty [data-design="soft"] .ax-label { padding:1px 6px; border-radius:6px; background:color-mix(in srgb,var(--ax-status-color) 17%,var(--ax-surface)); }
+  #pd-acts-twenty [data-design="soft"] .ax-card-head { border-bottom:0; }
+  #pd-acts-twenty [data-design="soft"] .ax-meters { padding-top:6px; border-top:1px solid var(--ax-line); }
+  #pd-acts-twenty [data-design="rail"] .ax-card { border-left:4px solid var(--ax-status-color); padding-left:10px; }
+  #pd-acts-twenty [data-design="rail"] .ax-label-dot { display:none; }
+  #pd-acts-twenty [data-design="rail"] .ax-label { order:-1; font-weight:600; }
+  #pd-acts-twenty [data-design="rail"] .ax-card-foot { justify-content:flex-end; }
+  #pd-acts-twenty [data-design="rail"] .ax-upload { flex:none; min-width:144px; }
+  #pd-acts-twenty [data-design="margin"] .ax-card { padding-left:36px; }
+  #pd-acts-twenty [data-design="margin"] .ax-margin-symbol { position:absolute; top:13px; left:10px; color:var(--ax-status-color); }
+  #pd-acts-twenty [data-design="margin"] .ax-margin-symbol .ax-icon { width:18px; height:18px; }
+  #pd-acts-twenty [data-design="margin"] .ax-label-dot { display:none; }
+  #pd-acts-twenty [data-design="margin"] .ax-card-head { border-bottom:0; }
+  #pd-acts-twenty [data-design="quiet"] .ax-card-head { padding-bottom:6px; }
+  #pd-acts-twenty [data-design="quiet"] .ax-label-dot { width:6px; height:6px; }
+  #pd-acts-twenty [data-design="quiet"] .ax-label { font-size:14px; color:var(--ax-muted); }
+  #pd-acts-twenty [data-design="quiet"] .ax-meta { order:3; }
+  #pd-acts-twenty [data-design="quiet"] .ax-card-foot { order:4; }
+  #pd-acts-twenty [data-design="subtitle"] .ax-card-head { border-bottom:0; }
+  #pd-acts-twenty [data-design="subtitle"] .ax-card > .ax-label { margin:0 0 2px; }
+  #pd-acts-twenty [data-design="subtitle"] .ax-meta { font-size:13px; }
+  #pd-acts-twenty [data-design="footer"] .ax-card-head { border-bottom:0; }
+  #pd-acts-twenty [data-design="footer"] .ax-card-foot .ax-meta { font-size:13px; }
+  #pd-acts-twenty [data-design="footer"] .ax-upload { flex:none; min-width:136px; }
+  #pd-acts-twenty [data-design="pinned"] .ax-label { padding:1px 6px; background:color-mix(in srgb,var(--ax-status-color) 15%,var(--ax-surface)); border-radius:6px; }
+  #pd-acts-twenty [data-design="clients"] .ax-group-title { align-items:flex-start; }
+  #pd-acts-twenty [data-design="clients"] .ax-card { border-radius:16px; }
+  #pd-acts-twenty [data-design="clients"] .ax-card-head { border-bottom:0; }
+  #pd-acts-twenty [data-design="checks"] .ax-card-head { border-bottom:0; }
+  #pd-acts-twenty [data-design="checks"] .ax-label { padding:1px 6px; background:color-mix(in srgb,var(--ax-status-color) 15%,var(--ax-surface)); border-radius:4px; }
+  #pd-acts-twenty [data-design="steps"] .ax-label-dot { display:none; }
+  #pd-acts-twenty [data-design="steps"] .ax-label { font-weight:600; }
+  #pd-acts-twenty [data-design="assembled"] .ax-card { gap:4px; }
+  #pd-acts-twenty [data-design="assembled"] .ax-meters { background:var(--ax-field); border-radius:8px; padding:8px; }
+  #pd-acts-twenty [data-design="assembled"] .ax-card-head { border-bottom:0; }
+  #pd-acts-twenty [data-design="assembled"] .ax-label { padding:1px 6px; background:var(--ax-field); border-radius:4px; }
+  @media(max-width:350px) { #pd-acts-twenty .ax-utility { grid-template-columns:minmax(0,1fr); } #pd-acts-twenty .ax-utility .ax-button-secondary { min-height:40px; } #pd-acts-twenty .ax-card-head { align-items:flex-start; } #pd-acts-twenty .ax-card-foot { flex-wrap:wrap; } }
+</style>
+<script>
+(() => {
+  const root=document.getElementById('pd-acts-twenty');
+  const sections=[...root.querySelectorAll('[data-design]')],keys=sections.map(n=>n.dataset.design),names=new Map(sections.map(n=>[n.dataset.design,n.dataset.variant]));
+  const preferences={theme:'light',width:390,longData:false,empty:false,liked:[]};
+  const seed=[
+    {id:'a1',number:'23-2026-00001',date:'02.11.2026',owner:'Анна Сергеевна Смирнова',address:'Тольятти, ул. Комсомольская, 15, кв. 24',status:'ready',meters:[{reg:'37523-08',type:'СГВ-15',serial:'24010518',method:'Учебная МП-01'},{reg:'37523-08',type:'СХВ-15',serial:'24010519',method:'Учебная МП-01'}]},
+    {id:'a2',number:'23-2026-00002',date:'02.11.2026',owner:'Сергей Александрович Петров',address:'Тольятти, Молодёжный б-р, 8, кв. 56',status:'draft',meters:[{reg:'',type:'СГВ-15',serial:'24010620',method:''}]},
+    {id:'a3',number:'23-2026-00003',date:'01.11.2026',owner:'Ирина Викторовна Орлова',address:'Тольятти, ул. Строителей, 18, кв. 24',status:'error',meters:[{reg:'37523-08',type:'СГВ-15',serial:'24010804',method:'Учебная МП-01'}]},
+    {id:'a4',number:'23-2026-00004',date:'01.11.2026',owner:'Анна Сергеевна Смирнова',address:'Тольятти, ул. Комсомольская, 15, кв. 24',status:'ready',meters:[{reg:'37523-08',type:'СХВ-15',serial:'24010923',method:'Учебная МП-01'}]}
+  ];
+  const states=new Map();
+  const clone=value=>JSON.parse(JSON.stringify(value));
+  const el=(tag,cls='',value)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(value!==undefined)n.textContent=value;return n;};
+  const icon=name=>{const n=el('span','ax-icon'),i=el('i');n.setAttribute('aria-hidden','true');i.setAttribute('data-lucide',name);i.setAttribute('aria-hidden','true');n.append(i);return n;};
+  const button=(label,fn,kind='primary',glyph)=>{const b=el('button','ax-button cursor-interaction'+(kind==='secondary'?' ax-button-secondary':kind==='outline'?' ax-button-outline':''));b.type='button';if(glyph)b.append(icon(glyph));b.append(el('span','',label));b.addEventListener('click',fn);return b;};
+  const iconButton=(label,glyph,fn)=>{const b=el('button','ax-icon-button cursor-interaction');b.type='button';b.setAttribute('aria-label',label);b.append(icon(glyph));b.addEventListener('click',fn);return b;};
+  const statusName={ready:'Готов к выгрузке',draft:'Черновик',error:'Не выгружен',sent:'Выгружен'};
+  function state(key){if(!states.has(key))states.set(key,{route:'acts',filter:'all',historyTab:'history',active:'',acts:clone(seed),hints:true,notifications:[],entry:'acts'});return states.get(key);}
+  const acts=key=>preferences.empty?[]:state(key).acts;
+  function label(act,key){const n=el('span','ax-label');n.setAttribute('aria-label','Статус: '+statusName[act.status]);let name=statusName[act.status];if(['register','number','steps'].includes(key)&&act.status==='ready')name='Готов';if(key==='checks'&&act.status==='draft')name='Нужно заполнить';n.append(el('span','ax-label-dot'),el('span','',name));return n;}
+  function meterRow(m,index){const row=el('div','ax-meter-row');row.dataset.meterIndex=String(index);row.setAttribute('aria-label','Счётчик '+(index+1));row.append(el('span','ax-meter-index','Счётчик '+(index+1)));const fields=[['reg','Рег. ',m.reg||'не указан'],['type','',m.type||'тип не выбран'],['serial','Зав. ',m.serial||'не указан'],['method','МП: ',m.method||'не выбрана']];for(const [key,prefix,raw]of fields){const item=el('span','ax-meter-field');item.dataset.field=key;item.append(el('span','',prefix),el(key==='type'?'strong':'span','',preferences.longData&&key==='type'?raw+' — учебный счётчик с длинным названием':preferences.longData&&key==='method'&&m.method?raw+', редакция для проверки длинных данных':raw));row.append(item);}return row;}
+  function metadata(act){const n=el('div','ax-meta'),date=el('span','ax-date'),meters=el('span');date.append(icon('calendar-days'),el('span','',act.date));meters.append(icon('gauge'),el('span','',act.meters.length+' '+(act.meters.length===1?'счётчик':'счётчика')));n.append(date,meters);return n;}
+  function card(key,act,readonly=false){const n=el('article','ax-card');n.dataset.actId=act.id;n.dataset.status=act.status;n.setAttribute('role','listitem');const head=el('div','ax-card-head'),number=el('span','ax-number',act.number),tag=label(act,key),address=el('p','ax-address',preferences.longData?'Тольятти, ул. Александра Сергеевича Пушкина, 123, корп. 2, кв. 124':act.address),meta=metadata(act),meters=el('div','ax-meters');head.append(number);if(key!=='subtitle')head.append(tag);for(const [i,meter]of act.meters.entries())meters.append(meterRow(meter,i));const open=el('button','ax-entry cursor-interaction');open.type='button';open.dataset.openAct=act.id;open.setAttribute('aria-label','Акт '+act.number+'. '+statusName[act.status]+'. '+act.address+'. Перейти к сведениям');open.append(icon('chevron-right'));open.addEventListener('click',()=>{const s=state(key);s.active=act.id;s.entry=s.route;s.route='detail';render(key);});n.append(open,head,address);if(key==='subtitle')n.append(tag);if(key!=='footer')n.append(meta);n.append(meters);
+    if(key==='margin'){const symbol=el('span','ax-margin-symbol');symbol.append(icon(act.status==='ready'?'file-check-2':act.status==='error'?'file-warning':'file-pen-line'));n.append(symbol);}
+    if(key==='checks'&&act.status!=='ready'&&!readonly){const note=el('p','ax-note'),missing=[['reg','рег. номер'],['type','тип СИ'],['serial','заводской номер'],['method','методика']].filter(([field])=>act.meters.some(m=>!m[field].trim())).map(([,name])=>name);note.append(icon(act.status==='error'?'circle-alert':'pencil'),el('span','',act.status==='error'?'Отправка не завершена. Откройте акт и проверьте состояние.':missing.length?'Не заполнено: '+missing.join(', '):'Продолжите оформление акта.'));n.append(note);}
+    if(key==='steps'&&!readonly){const stages=el('div','ax-stages');for(const [name,done]of [['Тип СИ',act.meters.every(m=>m.type.trim())],['Номера',act.meters.every(m=>m.reg.trim()&&m.serial.trim())],['Методика',act.meters.every(m=>m.method.trim())]]){const p=el('span');p.append(icon(done?'check':'circle'),el('span','',name));stages.append(p);}n.append(stages);}
+    const foot=el('div','ax-card-foot');if(key==='footer')foot.append(meta);if(act.status==='ready'&&!readonly){const upload=button('Выгрузить',()=>confirmUpload(key,[act]),['register','quiet','footer'].includes(key)?'outline':'primary','upload');upload.classList.add('ax-upload');upload.dataset.uploadAct=act.id;foot.append(upload);}if(foot.childNodes.length)n.append(foot);return n;
+  }
+  function utility(key){const n=el('div','ax-utility'),ready=acts(key).filter(a=>a.status==='ready'),all=button('Выгрузить всё',()=>confirmUpload(key,acts(key).filter(a=>a.status==='ready')),'primary','upload');all.dataset.uploadAll='';all.disabled=ready.length===0;const history=button('История',()=>{state(key).route='history';state(key).historyTab='history';render(key);},'secondary','history');history.dataset.openHistory='';n.append(all,history);return n;}
+  function segments(items,active,fn){const n=el('div','ax-segments');n.setAttribute('role','group');for(const [value,title]of items){const b=el('button','cursor-interaction',title);b.type='button';b.setAttribute('aria-pressed',String(value===active));b.dataset.segment=value;b.addEventListener('click',()=>fn(value));n.append(b);}return n;}
+  function empty(text,description){const n=el('div','ax-empty');n.append(icon('files'),el('h3','',text),el('p','ax-explanation',description));return n;}
+  function list(key,body,phone){const s=state(key),local=acts(key).filter(a=>a.status!=='sent');if(key==='pinned'){const pinned=el('div','ax-pinned');pinned.append(utility(key));phone.insertBefore(pinned,body);}else body.append(utility(key));
+    if(key==='modes')body.append(segments([['all','Все · '+local.length],['ready','Готовые · '+local.filter(a=>a.status==='ready').length]],s.filter,value=>{s.filter=value;render(key);}));
+    if(key==='checks')body.append(el('p','ax-summary','Готовы к выгрузке: '+local.filter(a=>a.status==='ready').length+' из '+local.length));
+    if(!local.length){body.append(empty('Актов на устройстве нет','Создайте акт кнопкой «+» или посмотрите историю.'));return;}
+    const content=el('div','ax-list');content.setAttribute('role','list');let groups;
+    if(key==='readiness')groups=[['Требуют внимания',local.filter(a=>a.status==='error')],['Черновики',local.filter(a=>a.status==='draft')],['Готовы к выгрузке',local.filter(a=>a.status==='ready')]];
+    else if(key==='days')groups=[...new Set(local.map(a=>a.date))].map(date=>[date,local.filter(a=>a.date===date)]);
+    else if(key==='clients')groups=[...new Set(local.map(a=>a.owner))].map(owner=>[owner,local.filter(a=>a.owner===owner)]);
+    else groups=[['',key==='modes'&&s.filter==='ready'?local.filter(a=>a.status==='ready'):local]];
+    for(const [name,items]of groups){if(!items.length)continue;const group=el('section','ax-group');if(name){const heading=el('h3','ax-group-title');heading.append(el('span','',name),el('span','',String(items.length)));group.append(heading);}for(const act of items)group.append(card(key,act));content.append(group);}body.append(content);
+  }
+  function formField(caption,value,onInput,kind='input'){const label=el('label','ax-field'),input=el(kind);input.value=value;input.setAttribute('aria-label',caption);input.maxLength=160;label.append(el('span','',caption),input);input.addEventListener('input',()=>onInput(input.value.slice(0,160)));return label;}
+  function valid(act){return Boolean(act.owner.trim()&&act.address.trim()&&act.meters.length&&act.meters.every(m=>m.reg.trim()&&m.type.trim()&&m.serial.trim()&&m.method.trim()));}
+  function detail(key,body){const s=state(key),act=s.acts.find(a=>a.id===s.active);if(!act){body.append(empty('Акт не найден','Вернитесь к списку актов.'));return;}const info=el('div','ax-detail-status');info.append(el('strong','',act.number),label(act,key));body.append(info);const form=el('div','ax-form'),editing=clone(act);if(act.status==='sent'){form.append(el('p','ax-explanation',act.owner),el('p','ax-address',act.address),metadata(act));for(const [i,m]of act.meters.entries())form.append(meterRow(m,i));body.append(form);return;}
+    form.append(formField('Владелец',editing.owner,v=>editing.owner=v),formField('Адрес',editing.address,v=>editing.address=v,'textarea'));
+    editing.meters.forEach((meter,i)=>{form.append(el('h3','','Счётчик '+(i+1)),formField('Рег. номер · счётчик '+(i+1),meter.reg,v=>meter.reg=v),formField('Тип СИ · счётчик '+(i+1),meter.type,v=>meter.type=v),formField('Заводской номер · счётчик '+(i+1),meter.serial,v=>meter.serial=v),formField('Методика · счётчик '+(i+1),meter.method,v=>meter.method=v));});
+    form.append(button('Сохранить',()=>{Object.assign(act,editing);act.status=valid(act)?'ready':'draft';s.route='acts';render(key);announce('Изменения применены к образцу акта.');},'primary'));
+    if(act.status==='ready'||act.status==='error')form.append(button(act.status==='error'?'Проверить и выгрузить':'Выгрузить',()=>{Object.assign(act,editing);if(!valid(act)){dialog(key,'Акт ещё не готов','Заполните регистрационный номер,тип,заводской номер и методику каждого счётчика.');return;}act.status='ready';confirmUpload(key,[act]);},'secondary','upload'));body.append(form);
+  }
+  function history(key,body){const s=state(key),sent=acts(key).filter(a=>a.status==='sent');body.append(segments([['history','История'],['statistics','Статистика']],s.historyTab,value=>{s.historyTab=value;render(key);}));if(s.historyTab==='statistics'){for(const [name,value]of [['Выгружено актов',sent.length],['Счётчиков в выгруженных актах',sent.reduce((sum,a)=>sum+a.meters.length,0)],['Готовы на устройстве',acts(key).filter(a=>a.status==='ready').length],['Черновики',acts(key).filter(a=>a.status==='draft').length]]){const row=el('div','ax-stat');row.append(el('span','',name),el('strong','',String(value)));body.append(row);}return;}
+    if(!sent.length){body.append(empty('История пока пуста','После выгрузки акты появятся здесь.'));return;}const list=el('div','ax-list');list.setAttribute('role','list');for(const act of sent)list.append(card(key,act,true));body.append(list);
+  }
+  function create(key,body){const s=state(key),draft={id:'a'+Date.now(),number:'23-2026-'+String(s.acts.length+1).padStart(5,'0'),date:'02.11.2026',owner:'',address:'',status:'draft',meters:[{reg:'',type:'',serial:'',method:''}]};const f=el('div','ax-form');f.append(formField('Номер акта',draft.number,v=>draft.number=v),formField('Владелец',draft.owner,v=>draft.owner=v),formField('Адрес',draft.address,v=>draft.address=v,'textarea'),button('Создать акт',()=>{if(!draft.number.trim()){dialog(key,'Укажите номер','Введите номер акта с бланка.');return;}if(s.acts.some(a=>a.number===draft.number)){dialog(key,'Номер уже есть','Укажите другой номер акта.');return;}s.acts.unshift(draft);s.active=draft.id;s.route='detail';render(key);},'primary'));body.append(f);}
+  function requests(key,body){body.append(el('p','ax-summary','Демонстрация перехода между основными разделами'));const list=el('div','ax-list');list.setAttribute('role','list');for(const a of acts(key).slice(0,3)){const c=el('article','ax-card'),open=el('button','ax-entry cursor-interaction');open.type='button';open.setAttribute('aria-label','Перейти к связанной заявке: '+a.address);open.append(icon('chevron-right'));open.addEventListener('click',()=>dialog(key,'Заявка',a.owner+'\n'+a.address+'\nРабота со связанным актом доступна в разделе «Акты».'));c.append(open,el('span','ax-number','МСР-'+(12341+Number(a.id.slice(1)||0))),el('p','ax-address',a.address),metadata(a));list.append(c);}body.append(list);}
+  function tools(key,body){for(const [name,glyph,description]of [['Приборы','gauge','Здесь выбирают поверочную установку и проверяют срок её поверки.'],['Бирки','tag','Здесь выбирают идентификационные бирки для акта.'],['Условия хранения','thermometer','Температура,влажность и другие условия подготовки.'],['Документы СМК','file-check-2','Руководство по качеству и методики поверки.'],['Справочник СИ','book-open','Поиск типа СИ по реестру с переносом его данных в акт.'],['АРШИН','search-check','Проверка сведений о средстве измерений.'],['НЕПТОН','radio','Работа с подключённым устройством.']])body.append(button(name,()=>dialog(key,name,description),'secondary',glyph));body.classList.add('ax-form');}
+  function notifications(key,body){const messages=state(key).notifications;if(!messages.length){body.append(empty('Новых уведомлений нет','Результаты учебной выгрузки появятся здесь.'));return;}for(const message of messages)body.append(el('p','ax-explanation',message));}
+  function paintIcons(){globalThis.lucide?.createIcons?.({attrs:{width:20,height:20}});}
+  function render(key){const section=root.querySelector('[data-design="'+key+'"]'),s=state(key),stage=el('div','ax-stage'),phone=el('div','ax-phone');phone.dataset.route=s.route;const header=el('header','ax-top'),system=el('div','ax-system'),statusIcons=el('span','ax-system-icons');system.setAttribute('aria-hidden','true');statusIcons.append(icon('signal'),icon('wifi'),icon('battery-full'));system.append(el('span','','9:41'),statusIcons);const toolbar=el('div','ax-toolbar'),isRoot=['acts','requests','tools'].includes(s.route);if(!isRoot){const back=iconButton('Назад','arrow-left',()=>{s.route=s.route==='detail'&&s.entry==='history'?'history':'acts';render(key);});back.classList.add('ax-back');toolbar.append(back);}const title={acts:'Акты',detail:'Акт',history:'История',new:'Новый акт',requests:'Заявки',tools:'Инструменты',notifications:'Уведомления'}[s.route]||'Акты';toolbar.append(el('h2','',title));const topActions=el('div','ax-toolbar-actions');if(s.hints)topActions.append(iconButton('Подсказки','circle-help',()=>dialog(key,'Как пользоваться','Нажмите карточку,чтобы перейти к акту. Данные всех счётчиков видны сразу. «Выгрузить» отправляет один готовый акт,«Выгрузить всё» — все готовые акты после подтверждения. Черновики остаются на устройстве.')));if(isRoot)topActions.append(iconButton('Уведомления','bell',()=>{s.route='notifications';render(key);}));topActions.append(iconButton('Настройки','settings',()=>settings(key)));toolbar.append(topActions);header.append(system,toolbar);const body=el('main','ax-body');body.setAttribute('aria-label',title);phone.append(header,body);
+    if(s.route==='acts')list(key,body,phone);else if(s.route==='detail')detail(key,body);else if(s.route==='history')history(key,body);else if(s.route==='new')create(key,body);else if(s.route==='requests')requests(key,body);else if(s.route==='tools')tools(key,body);else notifications(key,body);
+    if(isRoot){const nav=el('nav','ax-bottom');nav.setAttribute('aria-label','Основные разделы');for(const [route,name,glyph]of [['requests','Заявки','clipboard-list'],['acts','Акты','files'],['tools','Инструменты','wrench']]){const n=el('button','ax-bottom-item cursor-interaction');n.type='button';n.dataset.nav=route;if(route===s.route)n.setAttribute('aria-current','page');n.append(icon(glyph),el('span','',name));n.addEventListener('click',()=>{s.route=route;render(key);});nav.append(n);}phone.append(nav);}
+    if(s.route==='acts'){const fab=el('button','ax-fab cursor-interaction');fab.type='button';fab.setAttribute('aria-label','Создать акт');fab.append(icon('plus'));fab.addEventListener('click',()=>{s.route='new';render(key);});phone.append(fab);}
+    const like=el('button','ax-like cursor-interaction');like.type='button';like.setAttribute('aria-pressed',String(preferences.liked.includes(key)));like.setAttribute('aria-label','Нравится вариант '+names.get(key));like.append(icon('heart'),el('span','',preferences.liked.includes(key)?'В избранном':'Нравится этот вариант'));like.addEventListener('click',()=>{preferences.liked=preferences.liked.includes(key)?preferences.liked.filter(x=>x!==key):[...preferences.liked,key];like.setAttribute('aria-pressed',String(preferences.liked.includes(key)));like.querySelector('span:last-child').textContent=preferences.liked.includes(key)?'В избранном':'Нравится этот вариант';save();});stage.append(phone,like);section.replaceChildren(stage);paintIcons();
+  }
+  let activeDialog=null;
+  function closeDialog(){if(!activeDialog)return;const {node,trigger}=activeDialog;activeDialog=null;node.remove();trigger?.focus?.();}
+  function dialog(key,title,message,actions=[{label:'Понятно',kind:'primary',run:closeDialog}],content){closeDialog();const phone=root.querySelector('[data-design="'+key+'"] .ax-phone'),overlay=el('div','ax-overlay'),panel=el('section','ax-dialog');panel.setAttribute('role','dialog');panel.setAttribute('aria-modal','true');const heading=el('h3','',title);heading.id='ax-dialog-title-'+key;panel.setAttribute('aria-labelledby',heading.id);panel.append(heading);if(message)panel.append(el('p','',message));if(content)panel.append(content);const buttons=el('div','ax-dialog-actions');for(const action of actions)buttons.append(button(action.label,action.run,action.kind||'secondary'));panel.append(buttons);overlay.append(panel);activeDialog={node:overlay,trigger:document.activeElement};phone.append(overlay);overlay.addEventListener('click',e=>{if(e.target===overlay)closeDialog();});overlay.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();closeDialog();}if(e.key==='Tab'){const all=[...panel.querySelectorAll('button,input,select,textarea')].filter(n=>!n.disabled),first=all[0],last=all.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus?.();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus?.();}}});buttons.querySelector('button')?.focus?.();paintIcons();return panel;}
+  function confirmUpload(key,items){const ready=items.filter(a=>a.status==='ready');if(!ready.length){dialog(key,'Готовых актов нет','Откройте черновик и заполните данные всех счётчиков.');return;}const listing=el('ul','ax-dialog-list');for(const act of ready){const n=el('li');n.append(el('strong','',act.number),el('span','',act.address));listing.append(n);}const other=acts(key).filter(a=>a.status!=='ready'&&a.status!=='sent').length;dialog(key,ready.length===1?'Выгрузить акт?':'Выгрузить готовые акты?',ready.length+' '+(ready.length===1?'акт':'акта')+' будут выгружены в учебном примере.'+(items.length>1&&other?' Черновики и акты с ошибкой останутся на устройстве.':''),[{label:'Отмена',run:closeDialog},{label:ready.length===1?'Выгрузить':'Выгрузить всё',kind:'primary',run:()=>{closeDialog();for(const act of ready)act.status='sent';const s=state(key);s.notifications.push('Выгружено актов: '+ready.length);s.route='acts';render(key);dialog(key,'Готово','Учебная выгрузка завершена. Акты доступны в истории.',[{label:'К актам',run:closeDialog},{label:'История',run:()=>{closeDialog();s.route='history';s.historyTab='history';render(key);}}]);}}],listing);}
+  function settings(key){const form=el('div','ax-form'),theme=formField('Тема',preferences.theme,()=>{},'select'),select=theme.querySelector('select');for(const [value,name]of [['light','Светлая'],['dark','Тёмная']]){const option=el('option','',name);option.value=value;if(value===preferences.theme)option.selected=true;select.append(option);}select.value=preferences.theme;select.addEventListener('change',()=>{preferences.theme=select.value;applyTheme();save();});const hint=el('label','ax-field'),check=el('input');check.type='checkbox';check.checked=state(key).hints;check.style.width='24px';check.style.height='24px';check.addEventListener('change',()=>state(key).hints=check.checked);hint.append(el('span','','Подсказки на экранах'),check);form.append(theme,hint);dialog(key,'Настройки','',[{label:'Готово',kind:'primary',run:()=>{closeDialog();render(key);}}],form);}
+  function announce(text){root.querySelector('.ax-live').textContent=text;}
+  function applyTheme(){root.dataset.theme=preferences.theme;root.style.setProperty('--ax-width',preferences.width+'px');}
+  function save(){window.openai?.setWidgetState?.({modelContent:{subject:'Поверка дома — двадцать вариантов Актов',liked:preferences.liked.map(key=>names.get(key)),theme:preferences.theme,longData:preferences.longData,empty:preferences.empty},privateContent:{actsTwenty:{...preferences}}})?.catch?.(()=>{});}
+  function restore(value){const p=value?.privateContent?.actsTwenty;if(!p)return;preferences.theme=p.theme==='dark'?'dark':'light';preferences.width=Number.isFinite(p.width)?Math.max(320,Math.min(430,p.width)):390;preferences.longData=p.longData===true;preferences.empty=p.empty===true;preferences.liked=Array.isArray(p.liked)?p.liked.filter(key=>names.has(key)):[];applyTheme();for(const key of keys)render(key);}
+  function renderAll(){closeDialog();applyTheme();for(const key of keys)render(key);}
+  restore(window.openai?.widgetState);renderAll();window.addEventListener('openai:set_globals',e=>{if(JSON.stringify(e.detail?.globals?.widgetState?.privateContent?.actsTwenty)===JSON.stringify(preferences))return;restore(e.detail?.globals?.widgetState);});
+  if(globalThis.Tweak){const tweak=new Tweak({container:root,onChange:()=>{renderAll();save();}});tweak.addSelect(preferences,'theme',{label:'Тема',options:[{label:'Светлая',value:'light'},{label:'Тёмная',value:'dark'}]});tweak.addSlider(preferences,'width',{label:'Ширина макета',min:320,max:430,step:1,unit:'px'});tweak.addToggle(preferences,'longData',{label:'Длинные данные'});tweak.addToggle(preferences,'empty',{label:'Пустой список'});}
+})();
+</script>

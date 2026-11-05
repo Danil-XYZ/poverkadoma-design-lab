@@ -1,0 +1,43 @@
+/* Tonal,non-elevated status labels approved from the Work feed variant. */
+.phone .request-state, .phone .v-status, .phone .v-tool-status, .phone .detail-status-badge { --label-tone: var(--blue); display:inline-flex; align-items:center; align-self:flex-start; gap:4px; max-width:100%; padding:2px 8px; border:0; border-radius:6px; background:color-mix(in srgb,var(--label-tone) 16%,var(--surface)); color:var(--ink); box-shadow:none; font-family:inherit; font-size:calc(13px * var(--card-font-scale)); line-height:calc(20px * var(--card-font-scale)); font-weight:400; }
+.phone .request[data-state="new"] .request-state, .phone .v-status[data-state="error"], .phone .v-tool-status[data-tone="danger"], .phone .v-act-list-card[data-act-state="error"] .request-state { --label-tone:#d96161; }
+.phone .request[data-state="appointed"] .request-state, .phone .v-status[data-state="draft"], .phone .v-status[data-state="uncertain"], .phone .v-tool-status[data-tone="warning"], .phone .v-act-list-card[data-act-state="draft"] .request-state, .phone .v-act-list-card[data-act-state="uncertain"] .request-state { --label-tone:#ffb21c; }
+.phone .request[data-state="completed"] .request-state, .phone .v-status[data-state="ready"], .phone .v-status[data-state="sent"], .phone .v-tool-status[data-tone="success"], .phone .v-tool-status[data-tone="ready"], .phone .v-act-list-card[data-act-state="ready"] .request-state, .phone .v-act-list-card[data-act-state="sent"] .request-state { --label-tone:#43be83; }
+.phone .request[data-state="canceled"] .request-state, .phone .request[data-state="final"] .request-state, .phone .v-tool-status[data-tone="neutral"] { --label-tone:var(--secondary); }
+.phone .request-state .status-dot, .phone .v-status::before, .phone .v-tool-status::before { background:var(--label-tone); }
+.phone[data-label-appearance="solid"] .request-state, .phone[data-label-appearance="solid"] .v-status, .phone[data-label-appearance="solid"] .v-tool-status, .phone[data-label-appearance="solid"] .detail-status-badge { background:var(--label-tone); color:#fff; }
+.phone[data-label-appearance="solid"] .request-state .status-dot, .phone[data-label-appearance="solid"] .detail-status-badge .status-dot, .phone[data-label-appearance="solid"] .v-status::before, .phone[data-label-appearance="solid"] .v-tool-status::before { display:none; }
+.phone .request[data-request-id] .request-state, .phone .v-act-list-card .request-state { align-self:center; }
+.phone .v-act-list-card .request-head { margin-top:0; padding-right:0; padding-bottom:var(--space-2); gap:4px; }
+.phone .v-act-list-card .request-heading { display:flex; flex-wrap:wrap; width:100%; min-width:0; align-items:center; justify-content:space-between; padding-right:0; gap:4px 8px; }
+.phone .v-act-status-group { display:flex; flex:0 0 auto; align-items:center; gap:4px; }
+.phone .v-act-list-card .request-state { flex:none; white-space:nowrap; overflow-wrap:normal; }
+.phone .v-act-list-card .request-facts { display:flex; flex-direction:row; flex-wrap:wrap; min-width:0; align-items:baseline; justify-content:space-between; gap:4px 8px; }
+.phone .v-act-list-card .request-number { flex:0 1 auto; color:var(--ink); font-size:calc(17px * var(--card-font-scale)); line-height:1.3; font-weight:700; }
+.phone .v-act-list-card .request-address { flex:1; min-width:0; color:var(--secondary); font-size:calc(14px * var(--card-font-scale)); line-height:calc(20px * var(--card-font-scale)); font-weight:400; }
+.phone .v-act-status-group > .icon[data-icon-kind="chevron"] { position:relative; transform:none; flex:0 0 14px; }
+.phone .v-act-date { flex:0 0 auto; color:var(--secondary); font-size:calc(14px * var(--card-font-scale)); line-height:calc(20px * var(--card-font-scale)); white-space:nowrap; }
+.phone .detail-status-badge { --label-tone:var(--detail-status-color,var(--blue)); }
+.phone .detail-identity-row .detail-status-badge { align-self:center; }
+.phone .request-detail .detail-status { padding:0; background:transparent; box-shadow:none; border-radius:0; }
+.phone .v-act-meter-list { display:flex; flex-direction:column; gap:8px; margin:0; min-width:0; }
+.phone .v-act-meter-row { display:grid; grid-template-columns:40px minmax(0,1fr); align-items:center; gap:0 8px; min-width:0; color:var(--secondary); font-size:calc(14px * var(--card-font-scale)); line-height:calc(20px * var(--card-font-scale)); }
+.phone .v-act-meter-row + .v-act-meter-row { padding-top:8px; border-top:1px solid var(--line); }
+.phone .v-act-meter-fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); grid-template-areas:"type serial" "method reg"; align-items:baseline; gap:0 8px; min-width:0; }
+.phone .v-act-meter-field[data-meter-field="type"] { grid-area:type; }
+.phone .v-act-meter-field[data-meter-field="serial"] { grid-area:serial; }
+.phone .v-act-meter-field[data-meter-field="reg"] { grid-area:reg; }
+.phone .v-act-meter-field[data-meter-field="method"] { grid-area:method; }
+.phone .v-act-meter-field[data-meter-field="serial"], .phone .v-act-meter-field[data-meter-field="reg"] { text-align:right; }
+.phone .v-act-meter-photo { display:grid; place-items:center; align-self:center; width:40px; height:40px; overflow:hidden; border-radius:8px; background:var(--field); }
+.phone .v-act-meter-photo[data-state="missing"] { color:#d96161; background:color-mix(in srgb,#d96161 16%,var(--surface)); }
+.phone .v-act-meter-photo img { display:block; width:100%; height:100%; object-fit:cover; }
+.phone .v-act-meter-field { min-width:0; overflow-wrap:anywhere; }
+.phone .v-act-meter-field[data-incomplete="true"] { color:var(--ink); background:color-mix(in srgb,#d96161 16%,var(--surface)); border-radius:4px; }
+.phone .v-act-meter-field strong { color:var(--ink); font-weight:600; }
+.phone .v-act-meter-field[data-empty="true"] { color:#d96161; background:transparent; }
+.phone .v-act-meter-field[data-empty="true"] strong { color:inherit; }
+.phone .v-meter-photo-warning { display:inline; margin-left:4px; padding:0 4px; border-radius:4px; background:color-mix(in srgb,#d96161 16%,var(--surface)); color:var(--ink); font-size:inherit; line-height:inherit; }
+.phone .v-act-meter-note { grid-column:1/-1; color:var(--ink); font-size:inherit; line-height:inherit; }
+.phone .v-act-missing-note { display:flex; align-items:flex-start; gap:4px; margin:0; color:var(--ink); font-size:calc(14px * var(--card-font-scale)); line-height:1.45; }
+.phone .v-act-missing-note > .icon { color:#d96161; }

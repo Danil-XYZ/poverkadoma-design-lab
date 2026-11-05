@@ -1,0 +1,257 @@
+{
+  "scope": "Internal-verifier prototype destinations are placeholders. Bottom navigation is visible only on the three primary roots by latest user requirement. Closed-modal paths measured below; native forms and other roles remain unverified.",
+  "primary": [
+    "Заявки",
+    "Акты",
+    "Профиль"
+  ],
+  "routes": [
+    {
+      "original_item": "Выгрузить все акты",
+      "pathFromRoot": [
+        "Акты",
+        "upload"
+      ],
+      "tapsFromRoot": 2,
+      "pathFromRequest": [
+        "Назад к заявкам",
+        "Акты",
+        "upload"
+      ],
+      "tapsFromRequest": 3,
+      "destinationScope": "prototype_placeholder"
+    },
+    {
+      "original_item": "История",
+      "pathFromRoot": [
+        "Акты",
+        "history"
+      ],
+      "tapsFromRoot": 2,
+      "pathFromRequest": [
+        "Назад к заявкам",
+        "Акты",
+        "history"
+      ],
+      "tapsFromRequest": 3,
+      "destinationScope": "prototype_placeholder"
+    },
+    {
+      "original_item": "Статистика",
+      "pathFromRoot": [
+        "Акты",
+        "statistics"
+      ],
+      "tapsFromRoot": 2,
+      "pathFromRequest": [
+        "Назад к заявкам",
+        "Акты",
+        "statistics"
+      ],
+      "tapsFromRequest": 3,
+      "destinationScope": "prototype_placeholder"
+    },
+    {
+      "original_item": "Реестр средств измерений",
+      "pathFromRoot": [
+        "Профиль",
+        "guide"
+      ],
+      "tapsFromRoot": 2,
+      "pathFromRequest": [
+        "Назад к заявкам",
+        "Профиль",
+        "guide"
+      ],
+      "tapsFromRequest": 3,
+      "destinationScope": "prototype_placeholder"
+    },
+    {
+      "original_item": "Подключение к НЕПТОН",
+      "pathFromRoot": [
+        "Профиль",
+        "nepton"
+      ],
+      "tapsFromRoot": 2,
+      "pathFromRequest": [
+        "Назад к заявкам",
+        "Профиль",
+        "nepton"
+      ],
+      "tapsFromRequest": 3,
+      "destinationScope": "prototype_placeholder"
+    },
+    {
+      "original_item": "Поиск в АРШИН",
+      "pathFromRoot": [
+        "Профиль",
+        "arshin"
+      ],
+      "tapsFromRoot": 2,
+      "pathFromRequest": [
+        "Назад к заявкам",
+        "Профиль",
+        "arshin"
+      ],
+      "tapsFromRequest": 3,
+      "destinationScope": "prototype_placeholder"
+    },
+    {
+      "original_item": "Документы",
+      "pathFromRoot": [
+        "Профиль",
+        "documents"
+      ],
+      "tapsFromRoot": 2,
+      "pathFromRequest": [
+        "Назад к заявкам",
+        "Профиль",
+        "documents"
+      ],
+      "tapsFromRequest": 3,
+      "destinationScope": "prototype_placeholder"
+    },
+    {
+      "original_item": "Идентификационные бирки",
+      "pathFromRoot": [
+        "Профиль",
+        "tags"
+      ],
+      "tapsFromRoot": 2,
+      "pathFromRequest": [
+        "Назад к заявкам",
+        "Профиль",
+        "tags"
+      ],
+      "tapsFromRequest": 3,
+      "destinationScope": "prototype_placeholder"
+    },
+    {
+      "original_item": "Условия хранения",
+      "pathFromRoot": [
+        "Профиль",
+        "storage"
+      ],
+      "tapsFromRoot": 2,
+      "pathFromRequest": [
+        "Назад к заявкам",
+        "Профиль",
+        "storage"
+      ],
+      "tapsFromRequest": 3,
+      "destinationScope": "prototype_placeholder"
+    },
+    {
+      "original_item": "Личный кабинет",
+      "pathFromRoot": [
+        "Профиль",
+        "account"
+      ],
+      "tapsFromRoot": 2,
+      "pathFromRequest": [
+        "Назад к заявкам",
+        "Профиль",
+        "account"
+      ],
+      "tapsFromRequest": 3,
+      "destinationScope": "prototype_placeholder"
+    },
+    {
+      "original_item": "Настройки",
+      "pathFromRoot": [
+        "Профиль",
+        "settings"
+      ],
+      "tapsFromRoot": 2,
+      "pathFromRequest": [
+        "Назад к заявкам",
+        "Профиль",
+        "settings"
+      ],
+      "tapsFromRequest": 3,
+      "destinationScope": "prototype_placeholder"
+    },
+    {
+      "original_item": "Сообщения",
+      "pathFromRoot": [
+        "Профиль",
+        "messages"
+      ],
+      "tapsFromRoot": 2,
+      "pathFromRequest": [
+        "Назад к заявкам",
+        "Профиль",
+        "messages"
+      ],
+      "tapsFromRequest": 3,
+      "destinationScope": "prototype_placeholder"
+    },
+    {
+      "original_item": "Приборы",
+      "pathFromRoot": [
+        "Профиль",
+        "equipment"
+      ],
+      "tapsFromRoot": 2,
+      "pathFromRequest": [
+        "Назад к заявкам",
+        "Профиль",
+        "equipment"
+      ],
+      "tapsFromRequest": 3,
+      "destinationScope": "prototype_placeholder"
+    },
+    {
+      "original_item": "Обратная связь",
+      "pathFromRoot": [
+        "Профиль",
+        "feedback"
+      ],
+      "tapsFromRoot": 2,
+      "pathFromRequest": [
+        "Назад к заявкам",
+        "Профиль",
+        "feedback"
+      ],
+      "tapsFromRequest": 3,
+      "destinationScope": "prototype_placeholder"
+    },
+    {
+      "original_item": "Справочник из актов",
+      "pathFromRoot": [
+        "Акты",
+        "guide"
+      ],
+      "tapsFromRoot": 2,
+      "pathFromRequest": [
+        "Назад к заявкам",
+        "Акты",
+        "guide"
+      ],
+      "tapsFromRequest": 3,
+      "destinationScope": "prototype_placeholder"
+    },
+    {
+      "original_item": "НЕПТОН из актов",
+      "pathFromRoot": [
+        "Акты",
+        "nepton"
+      ],
+      "tapsFromRoot": 2,
+      "pathFromRequest": [
+        "Назад к заявкам",
+        "Акты",
+        "nepton"
+      ],
+      "tapsFromRequest": 3,
+      "destinationScope": "prototype_placeholder"
+    }
+  ],
+  "mainScreen": {
+    "pathFromSecondary": [
+      "Назад"
+    ],
+    "taps": 1
+  },
+  "twoTapLimitFromSecondary": "Not met for cross-section routes after hiding the bottom bar. Do not claim universal two-tap compliance."
+}

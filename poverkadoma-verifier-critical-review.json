@@ -1,0 +1,574 @@
+{
+  "date": "2026-10-30",
+  "status": "not_visually_complete",
+  "criteria": [
+    "Это красиво?",
+    "Это удобно?",
+    "Это компактно?",
+    "Это соответствует сценарию пользователя?",
+    "Нет ли лишних отступов?",
+    "Нет ли нарушения композиции?",
+    "Нет ли странных цветовых решений?",
+    "Не полностью ли белый интерфейс?",
+    "Всё ли кликабильно?"
+  ],
+  "excluded": [
+    "requests",
+    "request"
+  ],
+  "reviews": [
+    {
+      "date": "2026-10-30",
+      "scope": "Acts module only; all ten routes reviewed structurally. Browser visual review must be completed by parent.",
+      "userCriteria": [
+        "Красиво",
+        "Удобно",
+        "Компактно",
+        "Соответствует сценарию",
+        "Нет лишних отступов",
+        "Нет нарушения композиции",
+        "Осмысленные цвета;не полностью белый",
+        "Все элементы кликабельны"
+      ],
+      "routeReview": [
+        {
+          "route": "acts",
+          "changes": [
+            "Removed search/filter and their stale state",
+            "Prioritized groups:error/draft/ready",
+            "Compact3shortcut strip",
+            "Explicit primary blue Open actions",
+            "Create act moved from primary footer tofab descriptor"
+          ]
+        },
+        {
+          "route": "new-act",
+          "changes": [
+            "One concise instruction",
+            "Primary QR scan action plus manual fallback",
+            "No duplicate enclosing New act card",
+            "Clear create-draft primary"
+          ]
+        },
+        {
+          "route": "act-editor",
+          "changes": [
+            "Short header title;number/status moved to contextual strip",
+            "Paired phone/email and service/result fields",
+            "Comment editor on demand",
+            "Optional receipt photo shown onlywhenneeded",
+            "Signature as compact actionable row",
+            "Destructive action behind contextual disclosure"
+          ]
+        },
+        {
+          "route": "meter-editor",
+          "changes": [
+            "Context strip and3tasktabs",
+            "Primary reference lookup;paired passportfields",
+            "Before-condition values compact2x2",
+            "After-condition and optionalphoto disclosures",
+            "Outcome before secondarymaterials;reason adjacent",
+            "Comment on demand and contextualdelete"
+          ]
+        },
+        {
+          "route": "measurements",
+          "changes": [
+            "Compact numbered runheaders",
+            "Remove-run in header with confirmation",
+            "Source attribution retained",
+            "Calculated error/flow gets distinct softsurface",
+            "No large repeated destructivebutton"
+          ]
+        },
+        {
+          "route": "act-review",
+          "changes": [
+            "Readiness summary",
+            "Issues grouped bydocument/act/meter",
+            "Removed repeatedmeterprefixes",
+            "Primary takes user tofirstactualissue"
+          ]
+        },
+        {
+          "route": "upload",
+          "changes": [
+            "Compact selectionbar",
+            "Saved selection surviveserror/refresh/restore",
+            "Checkbox combined with actnumber",
+            "Single explicit sendselected action;bulk preserved throughselectready",
+            "Draftreadiness checked before networkfailure"
+          ]
+        },
+        {
+          "route": "history",
+          "changes": [
+            "Search/range collapsed bydefault;activefilter opensautomatically",
+            "Compact same-stylehistorycards",
+            "Primary viewaction"
+          ]
+        },
+        {
+          "route": "history-act",
+          "changes": [
+            "Short header",
+            "Readable paireddefinitionfacts",
+            "Eachmeter expands itsdetails",
+            "Methodnumber and watertemperaturehistorypreserved",
+            "Materials metadata disclosedcompactly",
+            "Explicit primarycopyaction"
+          ]
+        },
+        {
+          "route": "statistics",
+          "changes": [
+            "True4metric2x2grid",
+            "Visible scope",
+            "Meaningfulemptyperiodstate",
+            "Primary tableexport"
+          ]
+        }
+      ],
+      "functionalChecks": {
+        "syntax": true,
+        "routesRendered": 10,
+        "checks": [
+          "Root has no input/select",
+          "Root fab exists;no primary",
+          "Open is primary",
+          "Linkedactcreation",
+          "All10routes returntitle/content/help",
+          "Uploadselectiondurable",
+          "Offlinereadyactfailure",
+          "Onlineconfirmation",
+          "Historyrestore"
+        ],
+        "method": "LinkeDOM,notpixel/layout/device"
+      },
+      "remainingRisks": [
+        "Parent must supply sharedCSS classes sent separately",
+        "Parent must verify customdate/select dispatchinputandchange",
+        "Physical camera/files/canvas,actualbrowsergeometry and contrast remain unverified",
+        "Dates/conditionalforms followdemo contract,notallproductionregulatoryvariants"
+      ]
+    },
+    {
+      "date": "2026-10-30",
+      "scope": "Internal verifier tools,11routes;code/composition review and DOM scenarios. Rendered beauty/spacing must be reviewed by root;not claimed from DOM tests.",
+      "criteria": [
+        "beauty",
+        "usability",
+        "compactness",
+        "user_workflow",
+        "spacing",
+        "composition",
+        "color_hierarchy",
+        "clickability"
+      ],
+      "shared_decisions": [
+        "Preserve original palette and rounded individual controls",
+        "Main action in primary footer or contextual blue button;secondary actions use root soft palette",
+        "No second shadow on controls nested inside cards",
+        "Status signals pair text with a colored marker",
+        "Remove repeated explanatory paragraphs from working canvas;contextual help keeps full meaning"
+      ],
+      "routes": [
+        {
+          "route": "equipment",
+          "before": "Long demonstration names,flat white row collection,deadline/status buried in concatenated metadata",
+          "changes": "Short equipment title,serial separately,explicit status and2columnverification/TOdates;empty-searchresetworks",
+          "remaining": "Rendered inspection of status spacing on320px andlargefont"
+        },
+        {
+          "route": "equipment-detail",
+          "before": "Four stacked full-width facts in eachcard,two duplicate TOactions,contextselectionatbottom oflongpage",
+          "changes": "Compact identity/status,pairedfacts,verification/TOgroups;primaryactionmatchesexpired/photo/readycondition;directselectionforreturntoact",
+          "remaining": "Actual maintenance-photo picker must be checked in browser"
+        },
+        {
+          "route": "tags",
+          "before": "Unscannable concatenated line ofname/serial/two deadlines",
+          "changes": "Grouped etalon/measurement instruments;oneentitycardwithshortname,two deadline facts,status andclickabledetails",
+          "remaining": "Rendered multi-line instrument names"
+        },
+        {
+          "route": "storage",
+          "before": "Redundant titlecard,verticaldateandpressure,statusparagraphatthebottom",
+          "changes": "Visible save/sendstate;2x2date/pressure/temperature/humidity;onefooterCTAandsecondarydraft;historypreservesrecords",
+          "remaining": "Customdatepickerlayoutprovidedbyroot"
+        },
+        {
+          "route": "nepton",
+          "before": "Entire unavailable formanddisabledstartbeforeconnection;fourconnectionfactsandlongdemoexplanation;duplicatecalculation/startactions",
+          "changes": "Stage-basedconnection→parameters→measurement→readings→savedresult;nextprimaryactionalwaysmeaningful;compactmeasurefacts;separateInternetwarning;staleresultinvalidatedoninput;repeatclearsphotos;recomputebeforeacttransfer",
+          "remaining": "Hardware is simulated;root should inspect all five visualstates"
+        },
+        {
+          "route": "guide",
+          "before": "Update/demoinfooccupiedlinebefore results",
+          "changes": "Searchthenresults;quietdateafterlist;updateactionpreserved",
+          "remaining": "Actual long registry names on small screens"
+        },
+        {
+          "route": "guide-detail",
+          "before": "Allfactsvertical;standaloneCreateactnavigatedtomissingactid",
+          "changes": "Mediumstatusand2columntypefacts;standalone new-act consumes selectedType and creates one meter without duplication;contextreturnunchanged",
+          "remaining": "Rendered review of contextual action and long type names"
+        },
+        {
+          "route": "arshin",
+          "before": "Long initial explanatory paragraph;foundresultwasfullverticalfactstack;duplicateRetrybutton",
+          "changes": "Number+twoimageactions,compactfound-resultfactsandstatus;retryusesfooter;historyandcomparisonremain",
+          "remaining": "OCR/ARSHIN are explicitly demo-only"
+        },
+        {
+          "route": "documents",
+          "before": "White rowswithlongsinglemetadata-linestatus",
+          "changes": "Documenttitle/revisionandseparatereadstatus;directclickwholeheadingrow;updatepreserved",
+          "remaining": "Rendered line wrapping"
+        },
+        {
+          "route": "document-detail",
+          "before": "Genericstackofh3/paragraphswithnoarticleclass;idempotentackbuttonkeptre-saving",
+          "changes": "Articletypographyclass,revision,readstatus;oneexplicitackcheckbox;afterackprimaryreturnstodocuments;confirmedreadcannotbesilentlyunchecked",
+          "remaining": "RootmustinspectarticleCSSandreadingcomfort"
+        },
+        {
+          "route": "feedback",
+          "before": "Managerherobeforewriting,verylargeinlinephotos,duplicateendstatus,sendcouldresendoldtext",
+          "changes": "Statusfirst,message/optionalphone,compactattachmentsopenedindialog,managercallsecondary,NewrequestafterconfirmedSend;offlinequeueanddraftpreserved",
+          "remaining": "Actualfilepickerandtelephonehandlerunverified"
+        }
+      ],
+      "verification": {
+        "script": "poverkadoma-tools-polish-qa.mjs",
+        "report": "poverkadoma-tools-polish-qa.json",
+        "passed": 9,
+        "real_device": false,
+        "rendered_visual": false
+      },
+      "styles_requested_from_root": [
+        "v-tool-entity",
+        "v-tool-status[data-tone]",
+        "v-tool-facts",
+        "v-tool-inline",
+        "v-tool-compact",
+        "v-tool-article",
+        "v-tool-reference"
+      ]
+    },
+    {
+      "date": "2026-10-30",
+      "scope": "Access/profile/settings/communications module only. Candidate UI changes are ready for root's actual render review; no pixel or device verification is claimed by this agent.",
+      "principles": [
+        "Direct full-screen profile navigation; no side drawer or old modal menu",
+        "Compact task hierarchy with one main action and quieter supporting actions",
+        "Original palette; blue/white identity accents, tinted direct-access tiles and unread states",
+        "One clickable message/notification surface instead of an Open button nested in another white card",
+        "No extra shadow for a control already on a card; shared CSS responsibility stays with root",
+        "Registration and onboarding retain validation and role boundaries without permanent explanatory walls of text"
+      ],
+      "criteria": {
+        "beauty": "Composition and color roles redesigned; needs rendered visual acceptance",
+        "convenience": "Primary actions, direct destinations and validation paths checked in DOM",
+        "compactness": "Removed redundant card wrappers, permanent backup button stack and repetitive notices",
+        "workflow": "Role-specific access, organization binding, readiness onboarding, messages and profile are preserved",
+        "spacing": "New classes request shared 12px rhythm and 8px compact grids; root owns CSS verification",
+        "composition": "Profile uses identity, root shortcuts and direct launch grid; forms use one introductory hierarchy",
+        "colors": "Specified approved blue accents, field-tint secondary surfaces, unread tint and critical left border",
+        "clickability": "Module IDs preserved; all visible action surfaces have callbacks; 9 scenario checks passed"
+      },
+      "screens": [
+        {
+          "route": "profile",
+          "problems": [
+            "Long stack of grouped white rows",
+            "Repeated overview CTA",
+            "Many nested card shadows"
+          ],
+          "changes": [
+            "Clickable identity summary opens account",
+            "Requests/Acts direct shortcuts",
+            "Two-column compact short-label launch grid with full accessible names;root CSS avoids orphan final rows",
+            "Logout is a quiet text action with confirmation"
+          ],
+          "critical_actions": [
+            "14 direct destination tiles",
+            "Account summary",
+            "Requests/Acts",
+            "Logout"
+          ]
+        },
+        {
+          "route": "login",
+          "problems": [
+            "Large generic explanatory card",
+            "Three equally heavy secondary buttons"
+          ],
+          "changes": [
+            "Compact role introduction",
+            "One identifier field",
+            "Secondary help/recovery as text actions",
+            "Blue primary remains Enter"
+          ],
+          "critical_actions": [
+            "Identifier validation",
+            "Offline state",
+            "Registration",
+            "Recovery"
+          ]
+        },
+        {
+          "route": "register",
+          "problems": [
+            "Duplicated instructions and permanent demo warning panel"
+          ],
+          "changes": [
+            "Step1of3 hierarchy",
+            "Email/consent form retained",
+            "Legal/login supporting text actions"
+          ],
+          "critical_actions": [
+            "Email validation",
+            "Consent validation",
+            "Code request"
+          ]
+        },
+        {
+          "route": "verify-code",
+          "problems": [
+            "Oversized card around recipient and example code"
+          ],
+          "changes": [
+            "Step2of3 hierarchy",
+            "Compact recipient line and code hint",
+            "Resend/change email text actions"
+          ],
+          "critical_actions": [
+            "Three-attempt guard",
+            "Code confirmation",
+            "Resend",
+            "Change email"
+          ]
+        },
+        {
+          "route": "identifier",
+          "problems": [
+            "Long institutional explanation before the field"
+          ],
+          "changes": [
+            "Step3of3 hierarchy",
+            "One instruction and identifier field",
+            "Pending-access text link"
+          ],
+          "critical_actions": [
+            "Identifier validation",
+            "Internal organization access",
+            "Pending access"
+          ]
+        },
+        {
+          "route": "access-pending",
+          "problems": [
+            "Repeated long warning card and weak next action"
+          ],
+          "changes": [
+            "Clear administrator next step",
+            "Concise organization responsibilities",
+            "Primary Identifier received"
+          ],
+          "critical_actions": [
+            "Return to entry",
+            "Enter received identifier"
+          ]
+        },
+        {
+          "route": "recovery",
+          "problems": [
+            "Unstructured paragraph and full-size Back button"
+          ],
+          "changes": [
+            "Compact recovery intro",
+            "One email field",
+            "Quiet Back action"
+          ],
+          "critical_actions": [
+            "Email validation",
+            "Offline handling",
+            "Instruction result"
+          ]
+        },
+        {
+          "route": "onboarding",
+          "problems": [
+            "One plain paragraph card per step",
+            "No clear progression",
+            "Too many equally weighted buttons"
+          ],
+          "changes": [
+            "Four-step progress strip",
+            "Role-specific actionable readiness sample",
+            "No false ready-state assertion",
+            "Primary Next/Start work with quiet Skip/Back"
+          ],
+          "critical_actions": [
+            "Four-step progression",
+            "Direct exploration links",
+            "Skip",
+            "Back"
+          ]
+        },
+        {
+          "route": "account",
+          "problems": [
+            "Repeated identity/role/organization text",
+            "Loose paragraphs for reference data"
+          ],
+          "changes": [
+            "Compact identity intro",
+            "Labeled read-only organization rows",
+            "Phone editor and one primary save action"
+          ],
+          "critical_actions": [
+            "Phone validation",
+            "Save phone",
+            "History/Documents links"
+          ]
+        },
+        {
+          "route": "settings",
+          "problems": [
+            "Three permanent backup buttons inflate the page",
+            "Cash receipt controls placed after logout",
+            "Invalid price only generated a toast"
+          ],
+          "changes": [
+            "Select fields marked as compact setting rows",
+            "Backup operations in one dialog",
+            "Receipt section before account tools",
+            "Price error remains next to the field",
+            "Quieter logout"
+          ],
+          "critical_actions": [
+            "Hints/theme/font/scanner/maps",
+            "Price validation",
+            "Create/import/restore backup including requests",
+            "Onboarding",
+            "Account",
+            "Logout"
+          ]
+        },
+        {
+          "route": "about",
+          "problems": [
+            "Large disclaimer plus multiple heavy actions"
+          ],
+          "changes": [
+            "Compact product identity and labeled demo boundaries",
+            "Legal row",
+            "One primary Support action"
+          ],
+          "critical_actions": [
+            "Legal dialog",
+            "Support"
+          ]
+        },
+        {
+          "route": "receipt-limit",
+          "problems": [
+            "Crowded text inside white balance card"
+          ],
+          "changes": [
+            "Blue balance surface with white text",
+            "Separate short demo explanation",
+            "One support action"
+          ],
+          "critical_actions": [
+            "Support"
+          ]
+        },
+        {
+          "route": "messages",
+          "problems": [
+            "Three filters laid out in a two-column row",
+            "Nested card and link shadows",
+            "Long management button stack"
+          ],
+          "changes": [
+            "Three equal inline segments",
+            "Single message hit targets with date/unread metadata",
+            "Unread tint",
+            "Quiet management actions",
+            "Filter changes do not inflate Back history"
+          ],
+          "critical_actions": [
+            "Category filter",
+            "Read message",
+            "Mark read",
+            "Support"
+          ]
+        },
+        {
+          "route": "message-detail",
+          "problems": [
+            "Supporting deletion competed with the task action"
+          ],
+          "changes": [
+            "Readable content card",
+            "Blue relevant action in footer",
+            "Quiet deletion text action with confirmation"
+          ],
+          "critical_actions": [
+            "Reply/open documents",
+            "Delete confirmation"
+          ]
+        },
+        {
+          "route": "notifications",
+          "problems": [
+            "Open button nested in every white card",
+            "Long implementation-policy copy",
+            "Static assignment text after underlying state changes"
+          ],
+          "changes": [
+            "Whole notification row clickable",
+            "Critical colored left border",
+            "Concise actionable copy",
+            "Agreement and failed-upload counts derive from shared state",
+            "Clear action appears only while ordinary notifications exist"
+          ],
+          "critical_actions": [
+            "Open related route",
+            "Clear ordinary",
+            "Critical items persist until cause resolved"
+          ]
+        }
+      ],
+      "verification": {
+        "syntax": "node --check passed",
+        "dom_scenarios": 9,
+        "report": "poverkadoma-access-polish-qa.json",
+        "rendered_review": "Pending root review of current full preview",
+        "native_phone": "Not used by this agent to avoid concurrent device control"
+      }
+    }
+  ],
+  "shared_css": {
+    "applied": true,
+    "spacing": "16px screen gutter;12px surface padding;8/12px task spacing;content-driven text heights",
+    "color": "Original palette;blue primary/white text,field-tint secondary,warning/error signals with labels",
+    "elevation": "Surface shadows;none on buttons inside a real card or modal",
+    "profile": "Two equal columns with direct destinations;no orphan tile rows"
+  },
+  "checks": {
+    "original": 72,
+    "integration": 21,
+    "rendered": false
+  },
+  "visual_gate": {
+    "status": "blocked_by_tool_url_policy",
+    "reason": "Browser Use rejected the local preview file URL; no localhost/headless/native-browser bypass was attempted."
+  },
+  "phone_source": "phone-agree-audit-report.json"
+}

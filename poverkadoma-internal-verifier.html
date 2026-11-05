@@ -1,0 +1,571 @@
+<div id="pd-verifier-design" lang="ru" aria-label="Дизайн для внутреннего поверителя">
+  <style>#pd-verifier-design .pd-preview-caption{margin:0 100px 12px 0;font-size:14px;color:var(--muted-foreground)}
+#pd-verifier-design .pd-preview-stage{padding:20px 12px;display:flex;justify-content:center}
+#pd-verifier-design .pd-app{--pd-bg:light-dark(#F2F4F9,#000000);--pd-surface:light-dark(#FFFFFF,#242427);--pd-field:light-dark(#E9ECF2,#242427);--pd-text:light-dark(#181818,#FFFFFF);--pd-muted:light-dark(#616264,#A0A0A0);--pd-line:light-dark(#CCCCCC,#4B4C50);--pd-outline:light-dark(#666666,#919193);--pd-link:light-dark(#035679,#2DB0ED);--pd-select:light-dark(#0084C1,#2DB0ED);--pd-err-bg:light-dark(#FFE6E6,#542222);--pd-err-text:light-dark(#973232,#FF8A8A);--pd-warn:light-dark(#FFF4BD,#9C8F58);--pd-success:light-dark(#A1DEC1,#347155);--pd-success-text:light-dark(#181818,#FFFFFF);--pd-scale:1;--pd-radius:20px;width:100%;max-width:432px;min-width:0;background:var(--pd-bg);color:var(--pd-text);border:1px solid var(--pd-line);border-radius:28px;overflow:hidden;font-family:Roboto,"Segoe UI",Arial,sans-serif;font-size:calc(16px * var(--pd-scale));line-height:1.45;color-scheme:light dark}
+#pd-verifier-design .pd-app[data-theme=light]{color-scheme:light}
+#pd-verifier-design .pd-app[data-theme=dark]{color-scheme:dark}
+#pd-verifier-design .pd-content{display:flex;flex-direction:column;min-height:730px}
+#pd-verifier-design .pd-app *{box-sizing:border-box}
+#pd-verifier-design .pd-app h1,#pd-verifier-design .pd-app h2,#pd-verifier-design .pd-app h3,#pd-verifier-design .pd-app p{margin:0}
+#pd-verifier-design .pd-app h1{font-size:calc(27px * var(--pd-scale));font-weight:700;line-height:1.2;overflow-wrap:anywhere}
+#pd-verifier-design .pd-app h2{font-size:calc(19px * var(--pd-scale));font-weight:650;line-height:1.3}
+#pd-verifier-design .pd-app h3{font-size:1em;font-weight:650;line-height:1.4}
+#pd-verifier-design .pd-app button,#pd-verifier-design .pd-app input,#pd-verifier-design .pd-app select,#pd-verifier-design .pd-app textarea{font:inherit;color:inherit;max-width:100%}
+#pd-verifier-design .pd-app button{border:0;background:none;text-align:left;line-height:1.3}
+#pd-verifier-design .pd-app button:disabled{color:var(--pd-muted);background:var(--pd-field);border:1px solid var(--pd-outline);cursor:default}
+#pd-verifier-design .pd-app button:active:not(:disabled){transform:translateY(1px)}
+#pd-verifier-design .pd-app svg{width:21px;height:21px;stroke-width:1.8;flex:0 0 auto}
+#pd-verifier-design .pd-header{padding:22px 20px 18px;background:linear-gradient(115deg,#0084C1,#2DB0ED);color:#000000}
+#pd-verifier-design .pd-app[data-theme=dark] .pd-header{background:#000000;color:#FFFFFF;border-bottom:2px solid #0084C1}
+@media(prefers-color-scheme:dark){#pd-verifier-design .pd-app[data-theme=system] .pd-header{background:#000000;color:#FFFFFF;border-bottom:2px solid #0084C1}}
+#pd-verifier-design .pd-brand{font-size:calc(12px * var(--pd-scale));letter-spacing:.08em;font-weight:650;margin-bottom:9px}
+#pd-verifier-design .pd-heading-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+#pd-verifier-design .pd-icon-btn{display:flex;align-items:center;justify-content:center;min-width:48px;min-height:48px;padding:10px;border-radius:14px}
+#pd-verifier-design .pd-detail-header{padding:16px 16px 12px;background:var(--pd-surface);border-bottom:1px solid var(--pd-line)}
+#pd-verifier-design .pd-back-row{display:flex;align-items:center;gap:7px;margin-bottom:10px;min-width:0}
+#pd-verifier-design .pd-back{display:flex;align-items:center;gap:6px;min-height:44px;padding:4px;color:var(--pd-link)!important}
+#pd-verifier-design .pd-context{color:var(--pd-muted);font-size:calc(13px * var(--pd-scale));overflow-wrap:anywhere}
+#pd-verifier-design .pd-detail-header h1{font-size:calc(23px * var(--pd-scale))}
+#pd-verifier-design .pd-main{padding:18px 16px 22px;display:grid;gap:16px;align-content:start;flex:1;min-width:0}
+#pd-verifier-design .pd-main>*{min-width:0}
+#pd-verifier-design .pd-search{display:flex;align-items:center;gap:9px;border:1px solid var(--pd-outline);border-radius:15px;padding:0 12px;background:var(--pd-surface);min-height:50px}
+#pd-verifier-design .pd-search svg{color:var(--pd-muted)}
+#pd-verifier-design .pd-search input{border:0;background:transparent;min-width:0;width:100%;padding:12px 0;outline-offset:3px}
+#pd-verifier-design .pd-search input::placeholder{color:var(--pd-muted);opacity:1}
+#pd-verifier-design .pd-search-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px}
+#pd-verifier-design .pd-search-row>.pd-icon-btn{border:1px solid var(--pd-outline);background:var(--pd-surface)}
+#pd-verifier-design .pd-segments{display:flex;gap:5px;padding:4px;background:var(--pd-field);border:1px solid var(--pd-line);border-radius:15px;flex-wrap:wrap}
+#pd-verifier-design .pd-segments button{flex:1;min-height:44px;padding:9px 8px;text-align:center;border-radius:11px;font-weight:550}
+#pd-verifier-design .pd-segments button[aria-pressed=true]{background:var(--pd-surface);box-shadow:0 0 0 1px var(--pd-outline);color:var(--pd-link)}
+#pd-verifier-design .pd-small{font-size:calc(13px * var(--pd-scale));color:var(--pd-muted)}
+#pd-verifier-design .pd-secondary{color:var(--pd-muted)}
+#pd-verifier-design .pd-strong{font-weight:650}
+#pd-verifier-design .pd-section-line{display:flex;justify-content:space-between;align-items:center;gap:8px}
+#pd-verifier-design .pd-date-btn{display:flex;align-items:center;gap:7px;min-height:44px;padding:0 4px;color:var(--pd-link)!important;font-weight:600!important}
+#pd-verifier-design .pd-bid{display:block;width:100%;padding:18px!important;background:var(--pd-surface)!important;border:1px solid var(--pd-line)!important;border-radius:var(--pd-radius);position:relative}
+#pd-verifier-design .pd-bid-time{font-size:calc(16px * var(--pd-scale));font-weight:650;color:var(--pd-link);margin-bottom:9px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+#pd-verifier-design .pd-address{font-size:calc(21px * var(--pd-scale));font-weight:650;line-height:1.3;margin-bottom:7px;overflow-wrap:anywhere}
+#pd-verifier-design .pd-card-tail{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-top:15px;flex-wrap:wrap}
+#pd-verifier-design .pd-status{display:inline-flex;align-items:center;gap:6px;border-radius:9px;padding:5px 9px;font-size:calc(13px * var(--pd-scale));font-weight:600;line-height:1.3;color:#181818;background:#1B9DD9}
+#pd-verifier-design .pd-status.new{background:#D96161}#pd-verifier-design .pd-status.appointed{background:#FFB21C}#pd-verifier-design .pd-status.done{background:#43BE83}#pd-verifier-design .pd-status.cancelled{background:#181818;color:#FFFFFF;border:1px solid #919193}
+#pd-verifier-design .pd-status.local{background:var(--pd-field);color:var(--pd-text);border:1px solid var(--pd-outline)}
+#pd-verifier-design .pd-status.problem{background:var(--pd-err-bg);color:var(--pd-err-text)}
+#pd-verifier-design .pd-nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;padding:9px 6px 11px;background:var(--pd-surface);border-top:1px solid var(--pd-line);margin-top:auto}
+#pd-verifier-design .pd-nav button{min-width:0;min-height:66px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;padding:4px 2px;border-radius:15px;font-size:calc(13px * var(--pd-scale));color:var(--pd-muted);font-weight:550;overflow-wrap:anywhere}
+#pd-verifier-design .pd-nav .pd-nav-icon{display:flex;align-items:center;justify-content:center;min-width:48px;padding:5px;border-radius:14px}
+#pd-verifier-design .pd-nav button[aria-current=page]{color:var(--pd-link);font-weight:650}
+#pd-verifier-design .pd-nav button[aria-current=page] .pd-nav-icon{background:var(--pd-field);box-shadow:inset 0 0 0 1px var(--pd-select)}
+#pd-verifier-design .pd-button{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;min-height:50px;padding:13px 16px!important;border-radius:15px;font-weight:650!important;text-align:center!important;overflow-wrap:anywhere}
+#pd-verifier-design .pd-primary{background:linear-gradient(100deg,#0084C1,#2DB0ED)!important;color:#000000!important}
+#pd-verifier-design .pd-create{background:linear-gradient(100deg,#00C27C,#10DC9F)!important;color:#181818!important}
+#pd-verifier-design .pd-outlined{border:1px solid var(--pd-outline)!important;background:var(--pd-surface)!important;color:var(--pd-link)!important}
+#pd-verifier-design .pd-danger{color:var(--pd-err-text)!important;border:1px solid var(--pd-err-text)!important;background:var(--pd-err-bg)!important}
+#pd-verifier-design .pd-footer{padding:14px 16px 20px;display:grid;gap:10px;border-top:1px solid var(--pd-line);background:var(--pd-surface);margin-top:auto}
+#pd-verifier-design .pd-footer .pd-small{text-align:center}
+#pd-verifier-design .pd-group{background:var(--pd-surface);border:1px solid var(--pd-line);border-radius:var(--pd-radius);overflow:hidden}
+#pd-verifier-design .pd-group>.pd-row:not(:last-child){border-bottom:1px solid var(--pd-line)}
+#pd-verifier-design .pd-row{width:100%;display:flex;align-items:center;gap:12px;min-height:74px;padding:15px 16px!important}
+#pd-verifier-design .pd-row-main{flex:1;min-width:0;display:grid;gap:4px;overflow-wrap:anywhere}
+#pd-verifier-design .pd-row-icon{color:var(--pd-link);display:flex;align-items:center;justify-content:center;width:28px;flex:0 0 28px}
+#pd-verifier-design .pd-row-end{color:var(--pd-muted);flex:0 0 auto}
+#pd-verifier-design .pd-row-end svg{width:18px;height:18px}
+#pd-verifier-design .pd-box{padding:18px;background:var(--pd-surface);border:1px solid var(--pd-line);border-radius:var(--pd-radius);display:grid;gap:12px}
+#pd-verifier-design .pd-inline-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#pd-verifier-design .pd-alert{display:flex;align-items:flex-start;gap:10px;padding:14px;border-radius:15px;background:var(--pd-warn);color:#181818}
+#pd-verifier-design .pd-alert p{font-size:calc(14px * var(--pd-scale))}
+#pd-verifier-design .pd-alert.error{background:var(--pd-err-bg);color:var(--pd-err-text)}
+#pd-verifier-design .pd-alert.success{background:var(--pd-success);color:var(--pd-success-text)}
+#pd-verifier-design .pd-alert button{min-height:44px;padding:7px 0;text-decoration:underline;font-weight:650}
+#pd-verifier-design .pd-alert svg{margin-top:2px}
+#pd-verifier-design .pd-facts{display:grid;gap:12px}
+#pd-verifier-design .pd-facts div{display:grid;gap:3px}
+#pd-verifier-design .pd-link-btn{color:var(--pd-link)!important;min-height:44px;padding:8px 2px!important;font-weight:600!important;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-align:center!important}
+#pd-verifier-design .pd-form{display:grid;gap:18px}
+#pd-verifier-design .pd-field{display:grid;gap:7px;min-width:0;font-weight:550}
+#pd-verifier-design .pd-field input,#pd-verifier-design .pd-field select,#pd-verifier-design .pd-field textarea{width:100%;min-width:0;min-height:50px;background:var(--pd-field);border:1px solid var(--pd-outline);border-radius:13px;padding:11px 12px;font-weight:400}
+#pd-verifier-design .pd-field textarea{resize:vertical;min-height:96px}
+#pd-verifier-design .pd-field input::placeholder,#pd-verifier-design .pd-field textarea::placeholder{color:var(--pd-muted);opacity:1}
+#pd-verifier-design .pd-field .pd-small{font-weight:400}
+#pd-verifier-design .pd-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#pd-verifier-design .pd-check{display:flex;align-items:flex-start;gap:12px;min-height:48px;padding:10px 0}
+#pd-verifier-design .pd-check input{width:22px;height:22px;margin-top:1px;accent-color:var(--pd-select);flex:0 0 22px}
+#pd-verifier-design .pd-check span{min-width:0}
+#pd-verifier-design .pd-disclosure{background:var(--pd-surface);border:1px solid var(--pd-line);border-radius:var(--pd-radius);padding:0 16px}
+#pd-verifier-design .pd-disclosure summary{min-height:56px;display:list-item;padding:15px 0;font-weight:600;cursor:inherit}
+#pd-verifier-design .pd-disclosure>div{padding:0 0 16px;display:grid;gap:12px}
+#pd-verifier-design .pd-meter-tag{display:flex;align-items:center;gap:7px;color:var(--pd-muted);font-size:calc(13px * var(--pd-scale))}
+#pd-verifier-design .pd-water{display:inline-block;width:10px;height:10px;border-radius:50%;background:#6CA8C3}
+#pd-verifier-design .pd-water.hot{background:#D96161}
+#pd-verifier-design .pd-tabs{display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid var(--pd-line)}
+#pd-verifier-design .pd-tabs button{min-height:50px;text-align:center;padding:10px;color:var(--pd-muted);border-bottom:3px solid transparent}
+#pd-verifier-design .pd-tabs button[aria-pressed=true]{border-color:var(--pd-select);color:var(--pd-link);font-weight:650}
+#pd-verifier-design .pd-photo{display:flex;gap:12px;align-items:center;padding:14px;border:1px dashed var(--pd-outline);border-radius:14px;background:var(--pd-field);width:100%;min-height:74px}
+#pd-verifier-design .pd-photo.ready{border-style:solid;background:var(--pd-success);color:var(--pd-success-text)}
+#pd-verifier-design .pd-photo .pd-small{color:inherit}
+#pd-verifier-design .pd-scan{min-height:180px;border:2px dashed var(--pd-outline);border-radius:20px;display:grid;place-content:center;justify-items:center;gap:12px;background:var(--pd-field);text-align:center;padding:20px}
+#pd-verifier-design .pd-scan svg{width:64px;height:64px;color:var(--pd-link)}
+#pd-verifier-design .pd-empty{padding:28px 8px;display:grid;gap:12px;text-align:center;justify-items:center}
+#pd-verifier-design .pd-empty>svg{width:34px;height:34px;color:var(--pd-muted)}
+#pd-verifier-design .pd-number{font-size:calc(27px * var(--pd-scale));font-weight:650;line-height:1.2}
+#pd-verifier-design .pd-divider{height:1px;background:var(--pd-line)}
+#pd-verifier-design .pd-saved{display:flex;align-items:center;gap:6px;color:var(--pd-muted);font-size:calc(13px * var(--pd-scale))}
+#pd-verifier-design .pd-saved svg{width:16px;height:16px}
+#pd-verifier-design .pd-message:not(:empty){padding:12px 16px;color:var(--pd-text);background:var(--pd-surface);border-top:1px solid var(--pd-outline);font-size:calc(14px * var(--pd-scale))}
+#pd-verifier-design .pd-form-error{color:var(--pd-err-text);padding:10px;background:var(--pd-err-bg);border-radius:10px}
+#pd-verifier-design .pd-news-dot{width:8px;height:8px;background:#181818;border-radius:50%;display:block;position:absolute;margin-left:24px;margin-top:-22px}
+@media(max-width:430px){#pd-verifier-design .pd-preview-stage{padding:10px 0}#pd-verifier-design .pd-app{border-radius:21px}#pd-verifier-design .pd-main{padding:16px 12px 20px;gap:14px}#pd-verifier-design .pd-header{padding:18px 16px}#pd-verifier-design .pd-row{padding:14px 12px!important;gap:9px}#pd-verifier-design .pd-two{grid-template-columns:1fr}#pd-verifier-design .pd-footer{padding:13px 12px 18px}#pd-verifier-design .pd-box{padding:16px}#pd-verifier-design .pd-app[data-large=true] .pd-inline-actions{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){#pd-verifier-design .pd-app button:active{transform:none}}
+</style>
+  <div class="pd-preview-caption">Внутренний поверитель · интерактивный макет</div>
+  <div class="pd-preview-stage viz-dotted-background">
+    <div class="pd-app" aria-label="Поверка дома — внутренний поверитель">
+      <div class="pd-content"></div>
+      <div class="pd-message" aria-live="polite"></div>
+    </div>
+  </div>
+  <script>(() => {
+  const root = document.getElementById('pd-verifier-design');
+  const app = root.querySelector('.pd-app');
+  const content = root.querySelector('.pd-content');
+  const message = root.querySelector('.pd-message');
+  const preferences = { theme:'system', large:false, offline:false, receipts:true, payer:false, unread:false, photoRecord:true, advanced:false, support:true, toolBlocked:false };
+  const clone = value => JSON.parse(JSON.stringify(value));
+  const initial = {
+    version:1, tab:'bids', view:{name:'bids'}, stack:[], bidScope:'today', bidStatus:'Все', actScope:'local',
+    bids:[
+      {id:'41258',address:'Лесная, 14',flat:'27',owner:'Елена Морозова',phone:'+7 900 000-00-01',time:'09:00–11:00',date:'2026-10-26',status:'В работе',meters:2,act:'18427',comment:'Домофон 27. Вход со двора.',service:'Поверка счётчиков воды'},
+      {id:'41261',address:'Мира, 8',flat:'15',owner:'Иван Соколов',phone:'+7 900 000-00-02',time:'11:00–13:00',date:'2026-10-26',status:'Назначена',meters:1,act:null,comment:'Перед визитом позвонить.',service:'Поверка счётчика воды'},
+      {id:'41264',address:'Парковая, 3',flat:'42',owner:'Анна Орлова',phone:'+7 900 000-00-03',time:'14:00–16:00',date:'2026-10-26',status:'Согласована',meters:2,act:null,comment:'',service:'Поверка счётчиков воды'},
+      {id:'41270',address:'Садовая, 21',flat:'9',owner:'Олег Крылов',phone:'+7 900 000-00-04',time:'Не согласовано',date:'2026-10-27',status:'Новая',meters:1,act:null,comment:'',service:'Поверка счётчика воды'},
+      {id:'41220',address:'Центральная, 6',flat:'11',owner:'Мария Белова',phone:'+7 900 000-00-05',time:'10:00–12:00',date:'2026-10-25',status:'Выполнена',meters:1,act:'18390',comment:'',service:'Поверка счётчика воды'},
+      {id:'41210',address:'Полевая, 4',flat:'2',owner:'Павел Волков',phone:'+7 900 000-00-06',time:'12:00–14:00',date:'2026-10-25',status:'Отменена',meters:0,act:null,comment:'Клиент перенёс работу.',service:'Замена счётчика'}
+    ],
+    acts:[
+      {id:'18427',bid:'41258',owner:'Елена Морозова',address:'Лесная, 14',flat:'27',phone:'+7 900 000-00-01',date:'2026-10-26',type:'Годен',stage:'draft',receipt:false,receiptPhoto:false,actPhoto:true,cost:'1800',customerEmail:'',meters:[{id:'m1',model:'СГВ-15',registry:'16078-13',serial:'24018632',water:'Горячая',place:'Кухня',diameter:'15',method:'МИ 1592-2015',manufactured:'2024',calibration:'2024-03-12',passport:true,photo:false,measurement:true,value:'0,42',flow:'0,03',volume:'10',pressure:'0,3',temperature:'21',reading:'128,456',tools:['НЕПТОН-10'],extraPhoto:false},{id:'m2',model:'СХВ-15',registry:'16078-13',serial:'24018645',water:'Холодная',place:'Кухня',diameter:'15',method:'МИ 1592-2015',manufactured:'2024',calibration:'2024-03-12',passport:true,photo:true,measurement:true,value:'0,31',flow:'0,03',volume:'10',pressure:'0,3',temperature:'21',reading:'96,210',tools:['НЕПТОН-10'],extraPhoto:false}]},
+      {id:'18418',bid:null,owner:'Николай Петров',address:'Солнечная, 7',flat:'18',phone:'+7 900 000-00-07',date:'2026-10-26',type:'Годен',stage:'ready',receipt:true,receiptPhoto:false,actPhoto:true,cost:'900',meters:[{id:'m3',model:'СХВ-15',registry:'16078-13',serial:'23001544',water:'Холодная',place:'Ванная',diameter:'15',method:'МИ 1592-2015',passport:true,photo:true,measurement:true,value:'0,36',reading:'78,123',tools:['НЕПТОН-10']}]},
+      {id:'18409',bid:null,owner:'Виктор Кузнецов',address:'Молодёжная, 12',flat:'31',phone:'+7 900 000-00-08',date:'2026-10-26',type:'Годен',stage:'error',receipt:true,actPhoto:true,cost:'900',meters:[{id:'m4',model:'СГВ-15',registry:'16078-13',serial:'23001560',water:'Горячая',place:'Ванная',diameter:'15',method:'МИ 1592-2015',passport:true,photo:true,measurement:true,value:'0,28',reading:'65,117',tools:['НЕПТОН-10']}]},
+      {id:'18390',bid:'41220',owner:'Мария Белова',address:'Центральная, 6',flat:'11',phone:'+7 900 000-00-05',date:'2026-10-25',type:'Годен',stage:'sent',receipt:true,actPhoto:true,cost:'900',meters:[{id:'m5',model:'СХВ-15',registry:'16078-13',serial:'22003398',water:'Холодная',place:'Кухня',diameter:'15',method:'МИ 1592-2015',passport:true,photo:true,measurement:true,value:'0,41',reading:'260,112',tools:['НЕПТОН-10']}]}
+    ], storageSent:false, storage:{temperature:'21',humidity:'45'}, equipmentService:false, arshinQuery:'', arshinResults:false, supportDraft:'', documentRead:false, newActNumber:'', newActBid:null
+  };
+  initial.acts.forEach(a=>a.meters.forEach(m=>{m.meterPhoto=true;m.preliminary='Соответствует';}));
+  initial.bids.find(b=>b.id==='41210').canRestore=true;
+  let state = clone(initial);
+  let notice = '';
+  const hostInstance = 'pd-'+Math.random().toString(36).slice(2);
+  let localRevision = 0;
+  const escape = value => String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const icon = name => `<i data-lucide="${name}" aria-hidden="true"></i>`;
+  const btn = (text,action,style='outlined',attrs='') => `<button type="button" class="pd-button pd-${style} cursor-interaction" data-do="${action}" ${attrs}>${text}</button>`;
+  const link = (text,action,attrs='') => `<button type="button" class="pd-link-btn cursor-interaction" data-do="${action}" ${attrs}>${text}</button>`;
+  const row = (title,sub,action,ic='chevron-right',attrs='') => `<button type="button" class="pd-row cursor-interaction" data-do="${action}" ${attrs}><span class="pd-row-icon">${icon(ic)}</span><span class="pd-row-main"><span class="pd-strong">${title}</span>${sub?`<span class="pd-small">${sub}</span>`:''}</span><span class="pd-row-end">${icon('chevron-right')}</span></button>`;
+  const field = (label,name,value='',type='text',hint='',required=false) => `<label class="pd-field">${label}${required?' *':''}<input name="${name}" type="${type}" value="${escape(value)}" ${required?'required':''} ${type==='number'?'step="any"':''}>${hint?`<span class="pd-small">${hint}</span>`:''}</label>`;
+  const select = (label,name,values,value) => `<label class="pd-field">${label}<select name="${name}">${values.map(v=>`<option ${v===value?'selected':''}>${escape(v)}</option>`).join('')}</select></label>`;
+  const check = (name,label,checked=false,sub='') => `<label class="pd-check"><input type="checkbox" name="${name}" ${checked?'checked':''}><span>${label}${sub?`<span class="pd-small" style="display:block">${sub}</span>`:''}</span></label>`;
+  const alertBox = (title,body,kind='warning',action='',actionName='') => `<div class="pd-alert ${kind}" ${kind==='error'?'role="alert"':''}>${icon(kind==='success'?'circle-check':kind==='error'?'circle-alert':'triangle-alert')}<div><strong>${title}</strong>${body?`<p>${body}</p>`:''}${action?`<button type="button" class="cursor-interaction" data-do="${action}">${actionName}</button>`:''}</div></div>`;
+  const footer = (buttons,note='') => `<div class="pd-footer">${buttons}${note?`<p class="pd-small">${note}</p>`:''}</div>`;
+  const header = title => `<header class="pd-header"><div class="pd-brand">ПОВЕРКА ДОМА</div><div class="pd-heading-row"><h1>${title}</h1><button class="pd-icon-btn cursor-interaction" type="button" aria-label="Уведомления" data-do="notifications">${icon('bell')}</button></div></header>`;
+  const detail = (title,context='',action='') => `<header class="pd-detail-header"><div class="pd-back-row"><button type="button" class="pd-back cursor-interaction" data-do="back">${icon('arrow-left')}Назад</button><span style="flex:1"></span>${action}</div><h1>${title}</h1>${context?`<p class="pd-context" style="margin-top:6px">${context}</p>`:''}</header>`;
+  const main = html => `<main class="pd-main">${html}</main>`;
+  const nav = () => `<nav class="pd-nav" aria-label="Основные разделы">${[['bids','Заявки','calendar-days'],['acts','Акты','files'],['equipment','Приборы','gauge'],['profile','Профиль','user-round']].map(([id,label,ic])=>`<button type="button" class="cursor-interaction" data-do="tab" data-tab="${id}" ${state.tab===id?'aria-current="page"':''}><span class="pd-nav-icon">${icon(ic)}</span><span>${label}</span></button>`).join('')}</nav>`;
+  const statusClass = status => ({'Новая':'new','Назначена':'appointed','Выполнена':'done','Завершена':'done','Отменена':'cancelled'}[status]||'');
+  const badge = status => `<span class="pd-status ${statusClass(status)}">${status}</span>`;
+  const actStatus = act => ({draft:'Черновик',ready:'Готов к отправке',error:'Не отправлен',sent:'Принят сервером'}[act.stage]||'Черновик');
+  const actBadge = act => `<span class="pd-status ${act.stage==='error'?'problem':act.stage==='sent'?'done':'local'}">${actStatus(act)}</span>`;
+  const currentAct = () => state.acts.find(a=>a.id===state.view.act)||state.acts[0];
+  const currentMeter = () => currentAct().meters.find(m=>m.id===state.view.meter)||currentAct().meters[0];
+  const currentBid = () => state.bids.find(b=>b.id===state.view.bid)||state.bids[0];
+  const address = item => `${escape(item.address)}${item.flat?`, кв. ${escape(item.flat)}`:''}`;
+  const actContext = act => `Акт № ${act.id} · ${address(act)}`;
+  const group = html => `<div class="pd-group">${html}</div>`;
+  const count = (n,forms) => `${n} ${forms[(n%100>=11&&n%100<=14)?2:n%10===1?0:(n%10>=2&&n%10<=4)?1:2]}`;
+  const saved = () => `<div class="pd-saved">${icon('hard-drive')}Сохранено на телефоне</div>`;
+  function saveState(){
+    const snapshot=clone({state,preferences,owner:hostInstance,revision:++localRevision});
+    if(window.openai?.setWidgetState) window.openai.setWidgetState({modelContent:{concept:'Внутренний поверитель — рабочий путь',section:state.tab,screen:state.view.name,theme:preferences.theme,largeText:preferences.large,offline:preferences.offline},privateContent:snapshot}).catch(()=>{});
+  }
+  function restore(data){
+    const record=data?.privateContent;
+    if(record?.state?.version===1 && Array.isArray(record.state.acts) && Array.isArray(record.state.bids)){
+      state=Object.assign(clone(initial),record.state);Object.assign(preferences,record.preferences||{});return true;
+    }
+    return false;
+  }
+  function navigate(name,params={}){captureForm();state.stack.push(clone(state.view));state.view={...state.view,name,...params};notice='';render();saveState();}
+  function back(){state.view=state.stack.pop()||{name:state.tab};notice='';render();saveState();}
+  function tab(id){state.tab=id;state.view={name:id};state.stack=[];notice='';render();saveState();}
+  function notify(text){notice=text;message.textContent=text;saveState();}
+  function issues(act){
+    if(act.type==='Испорчен') return preferences.advanced||act.actPhoto?[]:[{text:'Добавьте фото испорченного бланка',screen:'materials'}];
+    const list=[];
+    if(!act.owner || (preferences.advanced&&!act.address)) list.push({text:'Заполните заказчика и адрес',screen:'customer'});
+    for(const water of ['Холодная','Горячая'])if(act.meters.filter(m=>m.water===water).length>3)list.push({text:'Не более трёх счётчиков каждого вида воды',screen:'meters'});
+    if(!act.meters.length) list.push({text:'Добавьте хотя бы один счётчик',screen:'add-meter'});
+    act.meters.forEach(m=>{
+      if(!m.serial)list.push({text:`Счётчик ${m.model}: заводской номер`,screen:'meter-identity',meter:m.id});
+      if(!m.meterPhoto)list.push({text:`Счётчик № ${m.serial||'без номера'}: фото счётчика`,screen:'meter-photos',meter:m.id});
+      if(preferences.photoRecord&&!m.photo)list.push({text:`Счётчик № ${m.serial||'без номера'}: фото номера`,screen:'meter-photos',meter:m.id});
+      if(!m.measurement||!m.reading||!m.value||(m.runs||[]).some(r=>!r.value))list.push({text:`Счётчик № ${m.serial||'без номера'}: измерения`,screen:'meter-measurements',meter:m.id});
+    });
+    if(!act.actPhoto)list.push({text:'Добавьте фото акта',screen:'materials'});
+    if(preferences.photoRecord&&!act.receipt && !act.receiptPhoto)list.push({text:'Добавьте чек или его фотографию',screen:'payment'});
+    return list;
+  }
+  function localActRows(){
+    const list=state.acts.filter(a=>(state.actScope==='sent'?a.stage==='sent':a.stage!=='sent')&&(!state.actQuery||`${a.id} ${a.address} ${a.owner}`.toLowerCase().includes(state.actQuery.toLowerCase()))&&(!state.actFrom||a.date>=state.actFrom)&&(!state.actTo||a.date<=state.actTo));
+    return list.length?list.map(a=>`<button class="pd-bid cursor-interaction" type="button" data-do="act" data-act="${a.id}"><div class="pd-bid-time"><span>Акт № ${a.id}</span><span class="pd-small">${a.date.slice(8)}.${a.date.slice(5,7)}</span></div><div class="pd-address">${address(a)}</div><p class="pd-secondary">${escape(a.owner)}</p><div class="pd-card-tail">${actBadge(a)}<span class="pd-small">${count(a.meters.length,['счётчик','счётчика','счётчиков'])}</span></div></button>`).join(''):`<div class="pd-empty">${icon('files')}<h2>Здесь пока нет актов</h2><p class="pd-secondary">Создайте акт или продолжите работу во вкладке «На телефоне».</p></div>`;
+  }
+  function bidRows(query=''){
+    const q=query.toLowerCase();
+    const list=state.bids.filter(b=>(state.bidScope!=='today'||b.date==='2026-10-26')&&(state.bidStatus==='Все'||b.status===state.bidStatus)&&(!state.bidFrom||b.date>=state.bidFrom)&&(!state.bidTo||b.date<=state.bidTo)&&`${b.address} ${b.owner} ${b.id}`.toLowerCase().includes(q));
+    return list.length?list.map(b=>`<button type="button" class="pd-bid cursor-interaction" data-do="bid" data-bid="${b.id}"><div class="pd-bid-time"><span>${b.time}</span>${icon('chevron-right')}</div><div class="pd-address">${address(b)}</div><p class="pd-secondary">${escape(b.owner)}</p><div class="pd-card-tail">${badge(b.status)}<span class="pd-small">№ ${b.id}${state.bidScope==='all'?` · ${b.date.slice(8)}.${b.date.slice(5,7)}`:''}</span></div></button>`).join(''):`<div class="pd-empty">${icon('search')}<h2>Заявки не найдены</h2><p class="pd-secondary">Попробуйте другой адрес, имя или номер.</p>${link('Показать все заявки','all-bids')}</div>`;
+  }
+  function viewBids(){
+    return header('Заявки')+main(`<div class="pd-search-row"><label class="pd-search">${icon('search')}<input type="search" aria-label="Поиск заявки" placeholder="Адрес, имя или номер" data-search="bids"></label><button class="pd-icon-btn cursor-interaction" type="button" data-do="bid-filters" aria-label="Фильтры заявок">${icon('sliders-horizontal')}</button></div><div class="pd-segments" aria-label="Период заявок"><button type="button" class="cursor-interaction" data-do="bid-scope" data-value="today" aria-pressed="${state.bidScope==='today'}">На сегодня</button><button type="button" class="cursor-interaction" data-do="bid-scope" data-value="all" aria-pressed="${state.bidScope==='all'}">Все заявки</button></div><div class="pd-section-line"><h2>${state.bidScope==='today'?'Понедельник, 26 октября':'Все даты'}</h2>${state.bidStatus!=='Все'?link(state.bidStatus,'bid-filters'):''}</div>${preferences.offline?alertBox('Нет интернета','Показаны сохранённые заявки. Изменения статуса требуют связи.'):''}<div data-list="bids" style="display:grid;gap:14px">${bidRows()}</div>`)+nav();
+  }
+  function viewBid(){
+    const b=currentBid();
+    const editable=['Новая','Назначена','Согласована'].includes(b.status);
+    let action=b.act?btn('Продолжить акт','act','primary',`data-act="${b.act}"`):b.status==='Новая'?btn('Принять заявку','accept-bid','primary'):b.status==='Назначена'?btn('Согласовать визит','appointment','primary'):b.status==='Согласована'?btn(b.service==='Замена счётчика'?'Подтвердить выполнение услуги':'Создать акт','start-from-bid','create'):b.status==='Отменена'?btn('Вернуть в работу','return-bid','outlined'):'';
+    if(b.status==='Выполнена' || b.status==='Завершена')action=b.act?btn('Открыть отправленный акт','act','outlined',`data-act="${b.act}"`):'';
+    if(b.status==='Отменена'&&!b.canRestore)action='';
+    return detail(`Заявка № ${b.id}`,b.service)+main(`<div class="pd-box">${badge(b.status)}<div class="pd-address">${address(b)}</div><div class="pd-facts"><div><span class="pd-small">Визит</span><strong>${b.date.slice(8)}.${b.date.slice(5,7)}.2026 · ${b.time}</strong></div><div><span class="pd-small">Заказчик</span><strong>${escape(b.owner)}</strong><span class="pd-secondary">${escape(b.phone)}</span></div></div><div class="pd-inline-actions">${btn(icon('phone')+'Позвонить','call')}${btn(icon('map-pin')+'Маршрут','map')}</div></div>${b.comment?`<div class="pd-box"><h2>К визиту</h2><p>${escape(b.comment)}</p></div>`:''}${editable?group(row('Дата и время','Согласовать или перенести визит','appointment','calendar-days')+row('Данные и комментарий','Заказчик, телефон, адрес','edit-bid','pencil')):''}<details class="pd-disclosure"><summary>Другие действия с заявкой</summary><div>${b.act&&b.status==='В работе'?link('Изменить связь с актом','link-bid'):''}${!b.act&&['Назначена','Согласована'].includes(b.status)?link('Отменить заявку','cancel-bid'):''}${b.status==='Отменена'?'<p class="pd-small">Возврат доступен только до окончания разрешённого периода.</p>':''}${link('История заявки','bid-history')}</div></details>`)+footer(action);
+  }
+  function viewActs(){
+    return header('Акты')+`<div class="pd-tabs" aria-label="Место хранения актов"><button type="button" class="cursor-interaction" data-do="act-scope" data-value="local" aria-pressed="${state.actScope==='local'}">На телефоне</button><button type="button" class="cursor-interaction" data-do="act-scope" data-value="sent" aria-pressed="${state.actScope==='sent'}">Отправленные</button></div>`+main(`${state.actScope==='local'?btn(icon('plus')+'Новый акт','start-new','create'):btn(icon('search')+'Найти поверку в Аршине','arshin','outlined')}${preferences.unread && !state.documentRead?alertBox('Новый документ СМК','Черновики доступны. Перед новой работой ознакомьтесь с документом.','warning','documents','Открыть документ'):''}<div class="pd-section-line"><h2>${state.actScope==='local'?'Моя работа':'Принято сервером'}</h2>${link(state.actScope==='local'?'Отправить несколько':'Фильтр','acts-tools')}</div>${localActRows()}${state.actScope==='sent'?group(row('Статистика','Итоги работы за период','statistics','chart-no-axes-column')):''}`)+nav();
+  }
+  function viewAct(){
+    const a=currentAct(), missing=issues(a);
+    if(a.stage==='sent') return detail(`Акт № ${a.id}`,address(a))+main(`${alertBox('Принят сервером','Акт передан 25 октября. Это подтверждение получения, а не публикации в Аршине.','success')}<div class="pd-box"><h2>${escape(a.owner)}</h2><p>${count(a.meters.length,['счётчик','счётчика','счётчиков'])} · ${escape(a.type)}</p><p class="pd-small">Стоимость: ${a.cost} ₽</p></div>${group(row('Состав отправленного акта','Счётчики, сведения и материалы','sent-content','files')+row('Найти поверку в Аршине','Отдельная проверка публикации','arshin','search'))}`)+footer(btn('К отправленным актам','sent-list','outlined'));
+    return detail(`Акт № ${a.id}`,address(a),`<button type="button" class="pd-icon-btn cursor-interaction" data-do="act-actions" aria-label="Действия с актом">${icon('ellipsis')}</button>`)+main(`${saved()}${a.stage==='error'?alertBox('Не отправлен','Сервер не ответил. Акт и фотографии сохранены на телефоне.','error'):''}${group(row('Заказчик и адрес',escape(a.owner)||'Заказчик не указан','customer','user-round')+row('Счётчики',`${a.meters.length} из 6 · ${!a.meters.length?'счётчики не добавлены':missing.filter(i=>i.meter).length?'есть незаполненные данные':'данные заполнены'}`,'meters','gauge')+row('Материалы и расчёт',`${a.actPhoto?'Фото акта добавлено':'Нужно фото акта'} · ${a.receipt||a.receiptPhoto?'чек добавлен':'нет чека'}`,'materials','images'))}${a.bid?link(`Заявка № ${a.bid}`,'bid',`data-bid="${a.bid}"`):'<p class="pd-small">Акт без заявки</p>'}<label class="pd-field">Общий итог акта<select data-direct="actType"><option ${a.type==='Годен'?'selected':''}>Годен</option><option ${a.type==='Непригоден'?'selected':''}>Непригоден</option><option ${a.type==='Испорчен'?'selected':''}>Испорчен</option></select><span class="pd-small">Заключение для всех счётчиков в этом акте.</span></label>`)+footer(btn('Проверить акт','review','primary')+link('Сохранить черновик и выйти','save-draft'),missing.length?`Нужно дополнить: ${missing.length}`:'Данные заполнены');
+  }
+  function viewMeters(){
+    const a=currentAct();
+    return detail('Счётчики',actContext(a))+main(`${a.type==='Испорчен'?alertBox('Испорченный бланк','Данные счётчиков не требуются. Можно вернуться к материалам акта.'):''}${a.meters.map(m=>`<button class="pd-bid cursor-interaction" type="button" data-do="meter" data-meter="${m.id}"><div class="pd-meter-tag"><span class="pd-water ${m.water==='Горячая'?'hot':''}"></span>${m.water} вода · ${escape(m.place)}</div><h2 style="margin-top:8px">${escape(m.model)||'Модель не указана'}</h2><p>№ ${escape(m.serial)||'не указан'}</p><div class="pd-card-tail"><span class="pd-small">${m.photo&&m.measurement&&m.serial?'Данные заполнены':'Нужно дополнить данные'}</span>${icon(m.photo&&m.measurement&&m.serial?'circle-check':'circle-alert')}</div></button>`).join('')}${a.meters.length<6?btn(icon('plus')+'Добавить счётчик','add-meter','create'):alertBox('В акте 6 счётчиков','Достигнуто допустимое количество.')}`)+footer(btn('К обзору акта','act','outlined',`data-act="${a.id}"`));
+  }
+  function viewMeter(){
+    const a=currentAct(),m=currentMeter();
+    return detail(m.model||'Новый счётчик',`${actContext(a)} · № ${m.serial||'не указан'}`)+main(`<div class="pd-meter-tag"><span class="pd-water ${m.water==='Горячая'?'hot':''}"></span>${m.water} вода · ${escape(m.place)}</div>${group(row('Паспорт и номер',m.serial?`№ ${m.serial} · тип ${m.registry}`:'Нужно заполнить номер','meter-identity','scan-line')+row('Фотографии',m.photo?'Фото номера добавлено':'Нужно фото заводского номера','meter-photos','camera')+row('Измерения',m.measurement?'Результаты сохранены':'Нужно заполнить результаты','meter-measurements','ruler')+row('Средства поверки',m.tools?.join(', ')||'Выберите применённые приборы','meter-tools','gauge'))}${saved()}<details class="pd-disclosure"><summary>Другие действия</summary><div>${link('Удалить счётчик из акта','delete-meter')}</div></details>`)+footer(btn('К счётчикам акта','meters','outlined'));
+  }
+  function viewEquipment(){
+    return header('Приборы')+main(`${group(row('Условия хранения',state.storageSent?'Сегодня · переданы':'Сегодня · ещё не переданы','storage','thermometer'))}<div class="pd-section-line"><h2>Мои приборы</h2>${link('Обновить','refresh-tools')}</div><div class="pd-box"><div class="pd-section-line"><h2>НЕПТОН-10</h2>${icon('gauge')}</div><p class="pd-secondary">Зав. № НП-0248</p><div class="pd-facts"><div><span class="pd-small">Поверка действительна до</span><strong>${preferences.toolBlocked?'Истекла 25 октября 2026':'18 марта 2027'}</strong></div><div><span class="pd-small">Техническое обслуживание</span><strong>${state.equipmentService?'Сведения обновлены':'До 2 ноября · через 7 дней'}</strong></div></div>${btn('Сведения и обслуживание','equipment-detail','outlined')}</div>${group(row('Работа с НЕПТОН','Подключение и измерения','nepton','radio')+row('Дополнительные средства поверки','Термометр, манометр и другие приборы','extra-equipment','package'))}`)+nav();
+  }
+  function viewProfile(){
+    return header('Профиль')+main(`<div class="pd-box"><h2>${escape(state.personal?.name||'Алексей Петров')}</h2><p>Внутренний поверитель</p><p class="pd-small">Учебная организация</p>${link('Мои данные','personal')}</div>${group(row('Документы организации',preferences.unread&&!state.documentRead?'Есть новый документ СМК':'СМК · ознакомление актуально','documents','book-open')+row('Квота',preferences.payer?'38 выгрузок СИ · пополнение':'38 выгрузок СИ · менеджер','quota','wallet')+row('Настройки','Тема, сканер, карты и параметры работы','settings','settings'))}${group(row('Справочники и Аршин','Типы СИ и поиск выполненных поверок','references','search')+row('Копии и восстановление','Акты и фотографии на телефоне','backup','hard-drive-download')+row('Помощь и сообщения','Поддержка, новости и уведомления','help','circle-help'))}${link('Личный кабинет','private-office')}`)+nav();
+  }
+  const screens = {bids:viewBids,bid:viewBid,acts:viewActs,act:viewAct,meters:viewMeters,meter:viewMeter,equipment:viewEquipment,profile:viewProfile};
+  function formScreen(title,context,formName,fields,button='Сохранить',note='Изменения сохраняются на телефоне.'){
+    return detail(title,context)+main(`<form class="pd-form" data-form="${formName}">${fields}<div class="pd-form-error" role="alert" hidden></div><button class="pd-button pd-primary cursor-interaction" type="button" data-do="submit-form">${button}</button>${note?`<p class="pd-small">${note}</p>`:''}</form>`);
+  }
+  function identityForm(){
+    const a=currentAct(),m=currentMeter();
+    return formScreen('Паспорт и номер',actContext(a),'identity',`${btn(icon('scan-line')+'Распознать паспорт','recognize','outlined')}${field('Заводской номер','serial',m.serial,'text','Сверьте с номером на корпусе.',true)}${group(row('Тип средства измерений',`${escape(m.model)} · ${m.registry}`,'registry','search'))}<div class="pd-two">${select('Вода','water',['Холодная','Горячая'],m.water)}${field('Место установки','place',m.place)}</div><details class="pd-disclosure"><summary>Паспортные характеристики</summary><div>${field('Год выпуска','manufactured',m.manufactured||'','number')}${field('Дата предыдущей поверки','calibration',m.calibration||'','date')}${select('Диаметр, мм','diameter',['15','20','25','32'],m.diameter||'15')}${field('Номер типа в реестре','registry',m.registry)}</div></details>${check('passport','Паспортные данные проверены',m.passport)}`);
+  }
+  function photoRow(label,key,checked){
+    return `<button type="button" class="pd-photo ${checked?'ready':''} cursor-interaction" data-do="photo" data-key="${key}">${icon(checked?'circle-check':'camera')}<span class="pd-row-main"><strong>${label}</strong><span class="pd-small">${checked?'Добавлено · нажмите для просмотра':'Добавить фотографию'}</span></span>${icon('chevron-right')}</button>`;
+  }
+  function photosView(){
+    const a=currentAct(),m=currentMeter();
+    return detail('Фотографии счётчика',`${actContext(a)} · № ${m.serial}`)+main(`${photoRow('Заводской номер','photo',m.photo)}${photoRow('Счётчик целиком','meterPhoto',m.meterPhoto)}${photoRow('Паспорт счётчика','passportPhoto',m.passportPhoto)}<details class="pd-disclosure"><summary>Фотографии измерений</summary><div>${photoRow('Показание счётчика','readingPhoto',m.readingPhoto)}${photoRow('Эталон и пролив','runPhoto',m.runPhoto)}${photoRow('Дополнительное средство поверки','extraPhoto',m.extraPhoto)}</div></details>`)+footer(btn('К счётчику','meter','outlined',`data-meter="${m.id}"`), 'Обязательные материалы определяются применимой методикой.');
+  }
+  function measurementForm(){
+    const a=currentAct(),m=currentMeter();
+    return formScreen('Измерения',`${actContext(a)} · № ${m.serial}`,'measurements',`<div class="pd-box"><h2>Методика поверки</h2><p>${escape(m.method||'Выбирается по типу СИ')}</p><p class="pd-small">${preferences.photoRecord?'С фотофиксацией по правилам организации':'Без обязательной фотофиксации проливов'}</p></div><details class="pd-disclosure"><summary>Предварительные проверки</summary><div>${select('Внешний осмотр','inspection',['Не проверено','Соответствует','Не соответствует'],m.inspection||(m.preliminary?'Соответствует':'Не проверено'))}${select('Опробование','testing',['Не проверено','Соответствует','Не соответствует'],m.testing||(m.preliminary?'Соответствует':'Не проверено'))}${select('Подтверждение ПО','software',['Не проверено','Соответствует','Не соответствует','Не применяется'],m.software||(m.preliminary?'Соответствует':'Не проверено'))}</div></details>${btn(icon('radio')+'Открыть НЕПТОН','nepton','outlined')}<p class="pd-small">Результат прибора просматривается отдельно. Данные в форму вносятся поверителем.</p>${field('Показание счётчика, м³','reading',m.reading||'','text','Например: 128,456',true)}<div class="pd-box"><h2>Измерение 1</h2>${field('Погрешность, %','value',m.value||'','text','',true)}<details class="pd-disclosure"><summary>Данные пролива</summary><div>${field('Объём эталона, л','volume',m.volume||'')}${field('Объём по счётчику, л','meterVolume',m.meterVolume||'')}${field('Расход, м³/ч','flow',m.flow||'')}${field('Давление, МПа','pressure',m.pressure||'')}${field('Температура воды, °C','temperature',m.temperature||'')}</div></details></div>${(m.runs||[]).map((r,i)=>`<div class="pd-box"><h2>Измерение ${i+2}</h2>${field('Погрешность, %','run'+i,r.value)}${field('Объём эталона, л','runVolume'+i,r.volume||'')}${link('Удалить измерение','remove-run',`data-index="${i}"`)}</div>`).join('')}${btn(icon('plus')+'Добавить измерение','add-run','outlined')}${photoRow('Фото пролива','runPhoto',m.runPhoto)}<p class="pd-small">Набор измерений и материалов определяется методикой и результатом предварительных проверок.</p>`,'Сохранить измерения');
+  }
+  function reviewView(){
+    const a=currentAct(),missing=issues(a),blocked=preferences.unread&&!state.documentRead;
+    return detail('Проверка акта',actContext(a))+main(`${missing.length?alertBox(`Нужно дополнить: ${missing.length}`,'Нажмите на пункт — откроется нужная часть акта.','warning') : alertBox('Акт заполнен','Можно отправить или оставить на телефоне.','success')}${missing.length?group(missing.map(i=>row(escape(i.text),'Открыть и исправить','fix-issue','circle-alert',`data-target="${i.screen}" ${i.meter?`data-meter="${i.meter}"`:''}`)).join('')):''}${blocked?alertBox('Требуется ознакомление с СМК','Черновик сохранён. Перед отправкой прочитайте новый документ.','warning','documents','Открыть документ'):''}<div class="pd-box"><h2>Состав акта</h2><p>${escape(a.owner)}</p><p>${count(a.meters.length,['счётчик','счётчика','счётчиков'])} · общий итог: ${escape(a.type)}</p><p class="pd-small">Расход квоты: ${count(a.type==='Испорчен'?0:a.meters.length,['выгрузка','выгрузки','выгрузок'])} СИ. Остаток: 38.</p></div>${preferences.offline?alertBox('Нет интернета','Отправить сейчас не получится. Все введённые данные остаются на телефоне.','warning'):''}`)+footer(btn(missing.length?'Вернуться к акту':'Отправить акт',missing.length?'act':'send-one',missing.length?'outlined':'primary',`data-act="${a.id}"`)+link('Сохранить черновик и выйти','save-draft'));
+  }
+  function renderExtra(){
+    const name=state.view.name, a=currentAct(),m=currentMeter(),b=currentBid();
+    if(name==='appointment') return formScreen('Дата и время визита',`Заявка № ${b.id} · ${address(b)}`,'appointment',`${field('Дата визита','date',b.date,'date','',true)}${select('Интервал','time',['09:00–11:00','11:00–13:00','14:00–16:00','16:00–18:00'],b.time)}${field('Комментарий к визиту','comment',b.comment)}${check('agreed','Время согласовано с заказчиком',b.status==='Согласована')}`,'Сохранить визит','Изменение статуса подтверждается сервером.');
+    if(name==='edit-bid') return formScreen('Данные заявки',`Заявка № ${b.id}`,'edit-bid',`${field('Заказчик','owner',b.owner,'text','',true)}${field('Телефон','phone',b.phone,'tel')}${field('Адрес','address',b.address,'text','',true)}${field('Квартира','flat',b.flat)}${field('Комментарий','comment',b.comment)}`);
+    if(name==='customer') return formScreen('Заказчик и адрес',actContext(a),'customer',`${field('Дата акта','date',a.date,'date','',true)}${field('Заказчик','owner',a.owner,'text','',true)}${field('Адрес','address',a.address,'text','',true)}${field('Квартира','flat',a.flat)}${field('Телефон','phone',a.phone,'tel')}${group(row('Связь с заявкой',a.bid?`Заявка № ${a.bid}`:'Акт без заявки','link-bid','link'))}`);
+    if(name==='meter-identity')return identityForm();
+    if(name==='meter-photos')return photosView();
+    if(name==='meter-measurements')return measurementForm();
+    if(name==='meter-tools')return formScreen('Средства поверки',`${actContext(a)} · № ${m.serial}`,'meter-tools',`${check('nepton','НЕПТОН-10 · НП-0248',m.tools?.includes('НЕПТОН-10'),'Поверка до 18.03.2027')}${check('thermometer','Термометр ТЛ-4',m.tools?.includes('Термометр ТЛ-4'))}${check('pressure','Манометр МП3',m.tools?.includes('Манометр МП3'))}${photoRow('Дополнительный прибор','extraPhoto',m.extraPhoto)}`);
+    if(name==='materials')return detail('Материалы и расчёт',actContext(a))+main(`${group(row('Чек и стоимость',a.receipt||a.receiptPhoto?'Чек добавлен':`${a.cost||'0'} ₽ · нужно добавить чек`,'payment','receipt'))}${photoRow(a.type==='Испорчен'?'Испорченный бланк':'Подписанный акт','actPhoto',a.actPhoto)}${photoRow('Дополнительные материалы','otherPhoto',a.otherPhoto)}${a.type==='Непригоден'?photoRow('Материалы о непригодности','unsuitablePhoto',a.unsuitablePhoto):''}`)+footer(btn('К обзору акта','act','outlined',`data-act="${a.id}"`));
+    if(name==='payment')return formScreen('Чек и стоимость',actContext(a),'payment',`${field('Стоимость, ₽','cost',a.cost,'number','',true)}${field('E-mail заказчика','customerEmail',a.customerEmail||'','email')}${preferences.receipts?group(row('Сформировать чек',a.receipt?'Чек сформирован':'Доступно для этой организации','create-receipt','receipt')):alertBox('Формирование чека недоступно','Добавьте фотографию выданного чека.')}${photoRow('Фотография чека','receiptPhoto',a.receiptPhoto)}${a.receipt?alertBox('Чек добавлен','Можно открыть сведения и QR.','success','receipt-view','Посмотреть чек'):''}`);
+    if(name==='review')return reviewView();
+    if(name==='start-new')return detail('Новый акт',state.newActBid?`По заявке № ${state.newActBid}`:'Без заявки')+main(`${preferences.unread&&!state.documentRead?alertBox('Есть новый документ СМК','Перед созданием акта нужно подтвердить ознакомление.','warning','documents','Открыть документ'):''}<div class="pd-scan">${icon('qr-code')}<h2>Номер бланка</h2><p class="pd-secondary">Отсканируйте QR на акте или введите номер.</p></div>${btn(icon('scan-line')+'Сканировать QR бланка','scan-act','create')}<form class="pd-form" data-form="new-act">${field('Номер акта','number',state.newActNumber,'text','Можно ввести вручную.',true)}<button class="pd-button pd-outlined cursor-interaction" type="button" data-do="submit-form">Открыть акт</button><div class="pd-form-error" role="alert" hidden></div></form>`);
+    if(name==='add-meter')return detail('Добавить счётчик',actContext(a))+main(`${btn(icon('scan-line')+'Распознать паспорт','recognize-new','create')}${group(row('Выбрать тип из реестра','Поиск по модели или номеру типа','registry','search'))}<form class="pd-form" data-form="add-meter">${field('Модель','model',state.view.model||'','text','',true)}${field('Номер типа в реестре','registry',state.view.registry||'')}${field('Заводской номер','serial','','text','',true)}${select('Вода','water',['Холодная','Горячая'],'Холодная')}${field('Место установки','place',state.addMeterDraft?.place||'')}<button class="pd-button pd-primary cursor-interaction" type="button" data-do="submit-form">Добавить в акт</button><div class="pd-form-error" role="alert" hidden></div></form>`);
+    if(name==='registry')return detail('Реестр типов СИ',state.view.act?actContext(a):'Модели и разрешённые методики')+main(`<label class="pd-search">${icon('search')}<input type="search" data-search="registry" aria-label="Поиск типа СИ" placeholder="Модель или номер типа"></label><p class="pd-small">Справочник обновлён 26.10.2026</p><div data-list="registry" style="display:grid;gap:14px">${registryRows()}</div>${link('Обновить справочник','registry-update')}`);
+    if(name==='registry-detail')return detail(escape(state.view.typeModel||'СХВ-15 / СГВ-15'),`Тип СИ · ${escape(state.view.typeId||'16078-13')}`)+main(`${alertBox('Поверяется на месте эксплуатации','Пример записи для счётчиков воды.','success')}<div class="pd-box"><h2>Основные сведения</h2><p>Диаметр: по описанию типа</p><p>Методика и межповерочный интервал: из записи реестра</p></div><details class="pd-disclosure"><summary>Изготовители и периоды выпуска</summary><div><p>В макете показан сокращённый пример записи. Полные сведения остаются в карточке типа.</p></div></details>${state.view.act?btn('Выбрать этот тип','select-registry','primary'):''}`);
+    if(name==='storage')return formScreen('Условия хранения','Ежедневная запись · 26 октября','storage',`${state.storageSent?alertBox('Сегодняшняя запись передана','Температура и влажность приняты сервером.','success'):''}${field('Температура, °C','temperature',state.storage.temperature,'number','',true)}${field('Влажность, %','humidity',state.storage.humidity,'number','',true)}`,'Передать условия','При отсутствии сети запись остаётся на телефоне.');
+    if(name==='equipment-detail')return detail('НЕПТОН-10','Мои приборы · зав. № НП-0248')+main(`<div class="pd-box"><h2>Поверка</h2><p>${preferences.toolBlocked?'Срок истёк 25 октября 2026':'Действительна до 18 марта 2027'}</p><p class="pd-small">${preferences.toolBlocked?'Новая работа ограничена. Уточните актуальные сведения о поверке.':'Прибор допускает работу.'}</p></div>${group(row('Техническое обслуживание',state.equipmentService?'Сведения обновлены':'Следующее ТО: 2 ноября 2026','maintenance','wrench')+row('Документы и фотографии','Свидетельство и материалы обслуживания','equipment-photos','images')+row('Подключить НЕПТОН','Самостоятельное измерение','nepton','radio'))}`);
+    if(name==='maintenance')return formScreen('Обслуживание','НЕПТОН-10 · НП-0248','maintenance',`${field('Дата обслуживания','date','2026-10-26','date','',true)}${field('Комментарий','comment','Плановое техническое обслуживание')}${photoRow('Фото обслуживания','maintenancePhoto',state.maintenancePhoto)}${check('done','Техническое обслуживание выполнено',true)}`,'Передать сведения','Дата следующего обслуживания определяется данными организации.');
+    if(name==='nepton')return neptonView();
+    if(name==='documents')return detail('Документы организации','Система менеджмента качества')+main(`${preferences.unread&&!state.documentRead?alertBox('Нужно ознакомиться','Черновики актов остаются доступными.'):alertBox('Ознакомление актуально','Обязательных непрочитанных документов нет.','success')}${group(row('Порядок выполнения поверки',state.documentRead?'Ознакомление подтверждено':'Редакция от 23.10.2026','document','file-text')+row('Руководство по качеству','Действующая редакция','document','book-open','data-doc="quality"'))}`);
+    if(name==='document')return detail(state.view.doc==='quality'?'Руководство по качеству':'Порядок выполнения поверки','Документы организации · пример')+main(`${preferences.offline?alertBox('Не удалось загрузить документ','Проверьте интернет и повторите.','error','retry-document','Повторить'): `<div class="pd-box"><h2>Документ СМК</h2><p>Здесь открывается полный документ организации с его страницами, редакцией и датой.</p><p class="pd-small">В интерактивном макете используется образец, не рабочий документ.</p></div><form class="pd-form" data-form="document">${check('read','Документ прочитан, с требованиями ознакомлен',state.view.doc==='quality'?state.qualityRead:state.documentRead)}<button class="pd-button pd-primary cursor-interaction" type="button" data-do="submit-form">Подтвердить ознакомление</button><div class="pd-form-error" role="alert" hidden></div></form>`}`);
+    if(name==='references')return detail('Справочники и Аршин')+main(group(row('Реестр типов СИ','Модели, номера типов и методики','registry','search')+row('Найти поверку в Аршине','По заводскому номеру счётчика','arshin','external-link')));
+    if(name==='arshin')return detail('Поиск в Аршине',state.view.act?`По данным акта № ${a.id}`:'Проверка публикации результата')+main(`<form class="pd-form" data-form="arshin">${btn(icon('scan-line')+'Распознать номер с фото','arshin-recognize','outlined')}${field('Заводской номер счётчика','serial',state.arshinQuery||(state.view.act?a.meters[0]?.serial:''),'text','Номер сохраняется при ошибке поиска.',true)}<button class="pd-button pd-primary cursor-interaction" type="button" data-do="submit-form">Найти поверку</button><div class="pd-form-error" role="alert" hidden></div></form>${state.arshinError?alertBox('Поиск не выполнен','Нет связи. Номер оставлен в поле; попробуйте ещё раз.','error'):''}${state.arshinResults?`<div class="pd-box"><h2>Пример найденной записи</h2><p>Счётчик № ${escape(state.arshinQuery)}</p><p>Результат: пригоден</p><p class="pd-small">Дата поверки: 25.10.2026</p>${btn('Сведения о поверке','arshin-record','outlined')}</div>`:''}${state.arshinQuery?link('Очистить историю поиска','clear-arshin'):''}`);
+    if(name==='quota')return detail('Квота выгрузок')+main(`<div class="pd-box"><p class="pd-small">Оплачено и доступно</p><p class="pd-number">38 выгрузок СИ</p><p>Один счётчик = одна выгрузка.</p><p class="pd-small">Акт с двумя счётчиками использует две выгрузки. Лимит онлайн-кассы учитывается отдельно.</p>${link('Обновить остаток','refresh-quota')}</div>${preferences.payer?btn('Пополнить квоту','quota-packages','primary'):btn('Связаться с менеджером','manager','outlined')}`);
+    if(name==='settings')return formScreen('Настройки','Параметры приложения','settings',`${select('Оформление','theme',['Как в системе','Светлая','Тёмная'],{'system':'Как в системе','light':'Светлая','dark':'Тёмная'}[preferences.theme])}${check('large','Крупный текст',preferences.large)}<details class="pd-disclosure"><summary>Сканирование и карты</summary><div>${select('Сканирование кодов','scanner',['Автоматическое','Встроенный сканер'],state.settings?.scanner||'Автоматическое')}${select('Карты','maps',['Выбирать при открытии','Яндекс Карты','2ГИС'],state.settings?.maps||'Выбирать при открытии')}</div></details><details class="pd-disclosure"><summary>Параметры работы</summary><div>${field('Стоимость одной поверки, ₽','price',state.settings?.price||'900','number')}${preferences.receipts?group(row('Лимит онлайн-кассы','25 000 ₽ · сведения и пополнение','cash-limit','wallet')):''}${check('notifications','Уведомления о заявках',state.settings?!!state.settings.notifications:true)}${check('emptyActs','Показывать пустые акты',state.settings?!!state.settings.emptyActs:true)}</div></details>${group(row('Версия приложения','Проверка обновления и история версий','app-version','info'))}`,'Сохранить настройки','');
+    if(name==='personal')return formScreen('Мои данные','Учётная запись','personal',`${field('ФИО','name',state.personal?.name||'Алексей Петров','text','',true)}${field('Телефон','phone',state.personal?.phone||'+7 900 000-00-00','tel')}${field('E-mail','email',state.personal?.email||'verifier@example.org','email')}<div class="pd-box"><p class="pd-small">Организация</p><strong>Учебная организация</strong><p class="pd-small">Роль: внутренний поверитель</p></div><details class="pd-disclosure"><summary>Ключ доступа и учётная запись</summary><div><p class="pd-small">Ключ скрыт. В макете используются только учебные данные.</p>${link('Выйти из учётной записи','logout')}</div></details>`);
+    if(name==='backup')return detail('Копии и восстановление','Акты и фотографии на телефоне')+main(`<div class="pd-box"><h2>Резервная копия</h2><p>Локальные акты и их фотографии.</p>${btn('Создать копию','make-backup','primary')}</div>${group(row('Восстановить из копии','Перед началом можно проверить состав','restore-preview','hard-drive-upload'))}`);
+    if(name==='restore-preview')return detail('Восстановление','Предварительная проверка копии')+main(`<div class="pd-box"><h2>Состав примера копии</h2><p>Акты: 3</p><p>Фотографии: 14</p><p>Повторяющиеся акты: 1</p></div>${alertBox('Копия сначала проверяется','Существующие данные не удаляются при закрытии этого экрана.')}`)+footer(btn('Восстановить данные','restore-run','primary'));
+    if(name==='restore-result')return detail('Результат восстановления')+main(`${alertBox('Восстановлено частично','Проверьте фотографии в указанном акте.','warning')}<div class="pd-box"><p>Восстановлено: 2 акта, 13 фото</p><p>Пропущен повтор: 1 акт</p><p>Не восстановлено: 1 фото</p></div>${group(row('Акт № 18427','Не удалось восстановить фото номера','act','circle-alert',`data-act="18427"`))}`);
+    if(name==='help')return detail('Помощь и сообщения')+main(group((preferences.support?row('Написать в поддержку','Описание проблемы и вложения','support','message-circle'):'')+row('Сообщения и новости','Объявления организации','notifications','bell')+row('Руководство пользователя','Поверка, отправка, справочники','user-guide','book-open')));
+    if(name==='support')return formScreen('Поддержка','Сообщение сохраняется как черновик','support',`<label class="pd-field">Что произошло?<textarea name="text" required placeholder="Опишите проблему">${escape(state.supportDraft)}</textarea></label>${[1,2,3].map(i=>photoRow('Вложение '+i,'supportPhoto'+i,state['supportPhoto'+i])).join('')}${preferences.offline?alertBox('Нет интернета','Черновик можно сохранить и отправить позже.'):''}`,'Отправить сообщение','');
+    if(name==='statistics')return formScreen('Статистика','Итоги работы за период','statistics',`${select('Что показать','type',['Поверки','Акты','Заявки'],state.statisticsPeriod?.type||'Поверки')}<div class="pd-two">${field('С даты','from',state.statisticsPeriod?.from||'2026-10-01','date')}${field('По дату','to',state.statisticsPeriod?.to||'2026-10-26','date')}</div>${state.statisticsShown?`<div class="pd-box"><h2>${escape(state.statisticsPeriod?.type||'Поверки')} за период</h2><p>Количество: ${state.statisticsPeriod?.type==='Акты'?24:state.statisticsPeriod?.type==='Заявки'?29:42}</p><p class="pd-small">Пример статистики по данным сервера.</p></div>`:''}`,'Показать итоги','');
+    if(name==='batch')return batchView();
+    if(name==='batch-result')return detail('Результат отправки')+main(`${alertBox((state.batchResults||[]).some(r=>!r.sent)?'Отправлено частично':'Выбранные акты приняты','Результат показан по каждому акту. Неотправленные остаются на телефоне.',(state.batchResults||[]).some(r=>!r.sent)?'warning':'success')}${(state.batchResults||[]).map(r=>`<div class="pd-box"><h2>Акт № ${r.id}</h2><p>${r.sent?'Принят сервером':'Не отправлен · нет ответа сервера'}</p>${!r.sent?btn('Повторить отправку','retry-one','outlined',`data-act="${r.id}"`):''}</div>`).join('')}`)+footer(btn('К актам на телефоне','local-list','outlined'));
+    if(name==='sent-content')return detail('Состав отправленного акта',actContext(a))+main(`<div class="pd-box"><h2>Заказчик и адрес</h2><p>${escape(a.owner)}</p><p>${address(a)}</p><p>Общий итог: ${a.type}</p></div>${a.meters.map(mm=>`<div class="pd-box"><h2>${escape(mm.model)}</h2><p>№ ${escape(mm.serial)}</p><p>${mm.water} вода</p><p>Погрешность: ${mm.value} %</p></div>`).join('')}<div class="pd-box"><p>Фото акта и чек переданы.</p></div>`);
+    if(name==='bid-filters')return formScreen('Фильтры заявок','','bid-filters',`${select('Статус','status',['Все','Новая','Назначена','Согласована','В работе','Выполнена','Завершена','Отменена'],state.bidStatus)}${select('Период','scope',['На сегодня','Все даты'],state.bidScope==='today'?'На сегодня':'Все даты')}${field('С даты','from','2026-10-01','date')}${field('По дату','to','2026-10-31','date')}`,'Показать заявки','');
+    if(name==='notifications')return detail('Уведомления')+main(`${group(row('Назначена заявка № 41261','Сегодня, 08:15 · Мира, 8','bid','calendar-days',`data-bid="41261"`)+row('Обслуживание НЕПТОН-10','Срок ТО наступит 2 ноября','equipment-detail','wrench')+row('Новый документ организации','Порядок выполнения поверки','document','file-text'))}`);
+    if(name==='cancel-bid')return formScreen('Отмена заявки',`Заявка № ${b.id} · ${address(b)}`,'cancel-bid',`${select('Причина','reason',['Клиент отказался','Клиента нет на месте','Перенос по просьбе клиента','Другая причина'],'Клиент отказался')}${field('Комментарий','comment','')}${alertBox('Заявка будет отменена','Возврат возможен только в разрешённый период. Закрытие экрана ничего не отменяет.')}`,'Подтвердить отмену','');
+    if(name==='link-bid')return detail('Связь с заявкой',state.view.act?actContext(a):`Заявка № ${b.id}`)+main(`${state.bids.filter(bb=>['Согласована','В работе'].includes(bb.status)).map(bb=>btn(`№ ${bb.id} · ${address(bb)}`,'bind-bid','outlined',`data-bid="${bb.id}"`)).join('')}${btn('Оставить акт без заявки','unbind-bid','outlined')}`);
+    if(name==='login')return detail('Вход','Поверка дома')+main(`<form class="pd-form" data-form="login">${field('E-mail','email','verifier@example.org','email','',true)}<button class="pd-button pd-primary cursor-interaction" type="button" data-do="submit-form">Получить код</button><div class="pd-form-error" role="alert" hidden></div></form>`);
+    if(name==='login-code')return formScreen('Код из письма','Пример входа','login-code',`${field('Код подтверждения','code','123456','text','В макете используется учебный код.',true)}${link('Отправить код ещё раз','resend-code')}`,'Войти','');
+    if(name==='photo-preview')return photoPreview();
+    return utilityView(name);
+  }
+  function registryRows(query=''){
+    const records=[['СХВ-15 / СГВ-15','16078-13'],['СВК-15','24517-09']].filter(r=>r.join(' ').toLowerCase().includes(query.toLowerCase()));
+    return records.length?records.map(r=>`<div class="pd-box"><h2>${r[0]}</h2><p class="pd-secondary">Тип ${r[1]}</p><p class="pd-small">Поверка на месте эксплуатации</p>${btn('Сведения о типе','registry-detail','outlined',`data-type="${r[1]}" data-model="${r[0]}"`)}</div>`).join(''):`<div class="pd-empty"><h2>Тип не найден</h2><p>Проверьте модель или номер реестра.</p></div>`;
+  }
+  function neptonView(){
+    const a=currentAct(),phase=state.neptonPhase||'ready';
+    return detail('НЕПТОН',state.view.act?`${actContext(a)} · отдельный инструмент`:'Подключение и измерения')+main(`<div class="pd-box"><h2>Связь с прибором</h2><p>${state.neptonConnected?'НЕПТОН-10 · отвечает':'Прибор ещё не подключён'}</p>${btn(state.neptonConnected?'Проверить ответ прибора':'Подключиться к прибору','nepton-connect','outlined')}<p class="pd-small">Интернет и ответ прибора проверяются отдельно.</p></div>${state.neptonConnected?`<form class="pd-form" data-form="nepton"><div class="pd-box"><h2>${phase==='running'?'Измерение идёт':'Новое измерение'}</h2>${field('Начальное показание счётчика, л','start',state.neptonStart||'','text','',true)}${phase==='running'?field('Конечное показание счётчика, л','end',state.neptonEnd||'','text','',true):''}<button type="button" data-do="submit-form" class="pd-button pd-primary cursor-interaction">${phase==='running'?'Завершить измерение':'Начать измерение'}</button><div class="pd-form-error" role="alert" hidden></div></div></form>${phase==='done'?`<div class="pd-box"><h2>Результат примера измерения</h2><p>Объём эталона: 10 л</p><p>Погрешность: +0,42 %</p>${btn('Сохранить снимок результата','nepton-snapshot','outlined')}<p class="pd-small">В счётчик акта данные автоматически не записываются.</p></div>`:''}`:''}${state.view.meter?btn('Вернуться к измерениям счётчика','meter-measurements','outlined'):''}`);
+  }
+  function batchView(){
+    const local=state.acts.filter(a=>a.stage!=='sent'),ready=local.filter(a=>!issues(a).length);
+    return detail('Отправить несколько актов','Проверка перед отправкой')+main(`<p>Готовы: <strong>${ready.length}</strong>. Нужно дополнить: <strong>${local.length-ready.length}</strong>.</p><form class="pd-form" data-form="batch">${local.map(a=>issues(a).length?`<div class="pd-box"><h2>Акт № ${a.id}</h2><p class="pd-small">Не включён: ${escape(issues(a)[0].text)}</p>${link('Исправить','review',`data-act="${a.id}"`)}</div>`:`<label class="pd-check"><input type="checkbox" name="act" value="${a.id}" checked><span><strong>Акт № ${a.id}</strong><span class="pd-small" style="display:block">${address(a)} · ${a.meters.length} СИ</span></span></label>`).join('')}<button class="pd-button pd-primary cursor-interaction" type="button" data-do="submit-form">Отправить выбранные</button><div class="pd-form-error" role="alert" hidden></div></form>${preferences.offline?alertBox('Нет интернета','Отправка недоступна. Акты сохраняются на телефоне.'):''}`);
+  }
+  function photoValue(){
+    const key=state.view.key;
+    if(key?.startsWith('supportPhoto')||key==='maintenancePhoto')return !!state[key];
+    return !!(['actPhoto','receiptPhoto','otherPhoto','unsuitablePhoto'].includes(key)?currentAct()[key]:currentMeter()?.[key]);
+  }
+  function setPhoto(value){
+    const key=state.view.key;
+    if(key?.startsWith('supportPhoto')||key==='maintenancePhoto')state[key]=value;
+    else if(['actPhoto','receiptPhoto','otherPhoto','unsuitablePhoto'].includes(key))currentAct()[key]=value;
+    else currentMeter()[key]=value;
+  }
+  function photoPreview(){
+    return detail('Фотография',state.view.act?actContext(currentAct()):'Материалы')+main(`<div class="pd-scan">${icon(photoValue()?'image':'camera')}<h2>${photoValue()?'Пример снимка добавлен':'Добавьте снимок'}</h2><p class="pd-secondary">В макете камера заменена примером фотографии.</p></div>${btn(photoValue()?'Заменить пример снимка':'Добавить пример снимка','capture-photo','primary')}${photoValue()?btn('Удалить фотографию','remove-photo','outlined'):''}`)+footer(btn('Готово','back','outlined'));
+  }
+  function utilityView(name){
+    const a=currentAct(),b=currentBid();
+    const info=(title,body,buttons='',context='')=>detail(title,context)+main(`<div class="pd-box">${body}</div>${buttons}`);
+    if(name==='call')return info('Звонок заказчику',`<h2>${escape(b.owner)}</h2><p class="pd-number">${escape(b.phone)}</p>`,btn('Показать звонок','demo-call','primary'),`Заявка № ${b.id}`);
+    if(name==='map')return info('Маршрут',`<h2>${address(b)}</h2><p>Откроется выбранное приложение карт.</p>`,btn('Показать открытие карт','demo-map','primary'));
+    if(name==='act-actions')return detail('Действия с актом',actContext(a))+main(group(row('Изменить номер бланка','Повторное сканирование QR или ручной ввод','change-act-number','qr-code')+row('Изменить связь с заявкой',a.bid?`Заявка № ${a.bid}`:'Акт без заявки','link-bid','link')+row('Удалить локальный акт','С отдельным подтверждением','delete-act','trash-2')));
+    if(name==='change-act-number')return formScreen('Номер бланка',actContext(a),'change-number',`${btn(icon('scan-line')+'Сканировать другой QR','rescan-act','outlined')}${field('Номер акта','number',a.id,'text','',true)}`);
+    if(name==='delete-act')return detail('Удалить акт?',actContext(a))+main(`<form class="pd-form" data-form="delete-act">${alertBox('Будут удалены локальные данные','Акт и его фотографии удалятся с телефона.','warning')}${a.bid?select(`Статус связанной заявки № ${a.bid}`,'bidStatus',['Согласована','Отменена'],'Согласована'):''}<button type="button" data-do="submit-form" class="pd-button pd-danger cursor-interaction">Подтвердить удаление акта</button><div class="pd-form-error" role="alert" hidden></div>${btn('Оставить акт','back','outlined')}</form>`);
+    if(name==='delete-meter')return info('Удалить счётчик?',`<h2>${escape(currentMeter()?.model)}</h2><p>Счётчик и его локальные материалы будут удалены из акта.</p>`,btn('Удалить из акта','confirm-delete-meter','danger')+btn('Оставить счётчик','back','outlined'));
+    if(name==='clear-arshin')return info('Очистить поиск?',`<p>Будут удалены номер и результаты поиска. При возврате назад они сохранятся.</p>`,btn('Очистить поиск','confirm-clear-arshin','danger')+btn('Оставить','back','outlined'));
+    if(name==='send-result')return detail('Акт отправлен',actContext(a))+main(`${alertBox('Принят сервером','Получение акта подтверждено. Проверка публикации в Аршине доступна отдельно.','success')}${group(row('Отправленный акт','Состав и переданные сведения','act','file-check-2',`data-act="${a.id}"`)+row('Найти поверку в Аршине','По заводскому номеру','arshin','search'))}`)+footer(btn('К заявкам','bids-list','primary'));
+    if(name==='acts-tools')return detail(state.actScope==='sent'?'История и итоги':'Работа с актами')+main(group((state.actScope==='local'?row('Отправить несколько','Проверить состав пакета перед отправкой','batch','upload'):'')+row('Статистика','Количество поверок за период','statistics','chart-no-axes-column')+row('Фильтр истории','Период и поиск акта','history-filter','sliders-horizontal')));
+    if(name==='history-filter')return formScreen('Фильтр актов','','history-filter',`${field('Адрес, заказчик или номер','query','')}${field('С даты','from','2026-10-01','date')}${field('По дату','to','2026-10-26','date')}`,'Показать акты','');
+    if(name==='extra-equipment')return info('Дополнительные средства поверки','<h2>Термометр ТЛ-4</h2><p>Сведения о поверке актуальны.</p><div class="pd-divider"></div><h2>Манометр МП3</h2><p>Сведения о поверке актуальны.</p>',btn('Обновить сведения','refresh-tools','outlined'));
+    if(name==='equipment-photos')return detail('Материалы оборудования','НЕПТОН-10 · НП-0248')+main(`${photoRow('Свидетельство и обслуживание','maintenancePhoto',state.maintenancePhoto)}`);
+    if(name==='receipt-view')return info('Сведения о чеке',`<p>Чек к акту № ${a.id}</p><p>Сумма: ${a.cost} ₽</p><div class="pd-scan">${icon('qr-code')}<p class="pd-small">Здесь отображается QR сформированного чека.</p></div>`);
+    if(name==='create-receipt')return info('Формирование чека',`<p>Акт № ${a.id}</p><p>Сумма: ${a.cost} ₽</p><p>Контакт: ${escape(a.customerEmail||a.phone)}</p><p class="pd-small">Действие доступно по правам организации. Используется отдельный лимит онлайн-кассы.</p>`,btn('Сформировать чек','confirm-receipt','primary'));
+    if(name==='private-office')return info('Личный кабинет','<p>Откроется кабинет организации во внешнем браузере.</p>',btn('Показать переход','demo-office','primary'));
+    if(name==='manager')return info('Менеджер организации','<p>Контакты менеджера загружаются из данных организации.</p><p>Поверитель без права оплаты обращается к менеджеру.</p>',btn('Показать звонок менеджеру','demo-manager','primary'));
+    if(name==='quota-packages')return info('Пополнение квоты','<p>Доступные пакеты и их цены загружаются для плательщика организации.</p><p>В макете оплата не выполняется.</p>',btn('Вернуться к квоте','quota','outlined'));
+    if(name==='arshin-record')return info('Сведения о поверке',`<h2>Счётчик № ${escape(state.arshinQuery)}</h2><p>Результат: пригоден</p><p>Запись найдена в примере ответа Аршина.</p>`,btn('Показать внешний переход','demo-arshin','outlined'));
+    if(name==='app-version')return info('Версия приложения','<h2>Поверка дома</h2><p>Проверка обновления и история изменений.</p>',btn('Проверить обновление','demo-update','primary'));
+    if(name==='cash-limit')return info('Лимит онлайн-кассы','<p class="pd-number">25 000 ₽</p><p>С каждым сформированным чеком лимит уменьшается на сумму чека.</p><p>Для пополнения обратитесь к менеджеру организации.</p>',btn('Связаться с менеджером','manager','outlined'));
+    if(name==='arshin-recognize')return info('Номер с фотографии','<p>Пример распознанного заводского номера:</p><h2>22003398</h2><p>Перед поиском сверьте номер с фотографией счётчика.</p>',btn('Использовать номер','use-arshin-number','primary'));
+    if(name==='user-guide')return info('Руководство','<h2>Работа поверителя</h2><p>Заявка → акт → счётчики → проверка → отправка.</p><p>Неполный акт сохраняется черновиком. Принятие сервером и публикация в Аршине проверяются отдельно.</p>');
+    if(name==='bid-history')return info('История заявки',`<p>Назначена: 26 октября, 08:15</p><p>Время согласовано с заказчиком.</p><p>Текущий статус: ${b.status}</p>`, '',`Заявка № ${b.id}`);
+    if(name==='service-done')return info('Подтвердить выполнение?',`<h2>${b.service}</h2><p>${address(b)}</p><p>Для предусмотренной услуги акт поверки не создаётся.</p>`,btn('Подтвердить выполнение услуги','confirm-service','primary'));
+    if(name==='logout')return info('Выйти из приложения?','<p>Перед выходом проверьте копию локальных актов и условия хранения.</p><p>Никакие данные не удаляются при закрытии этого экрана.</p>',btn('Продолжить выход','confirm-logout','outlined')+btn('Остаться в приложении','back','primary'));
+    if(name==='admission')return info('Перед началом работы',`<p>${preferences.toolBlocked?'НЕПТОН-10 · НП-0248: истёк срок поверки. Проверьте сведения о приборе.':'Нужно ознакомиться с новым документом организации.'}</p><p>Сохранённые черновики остаются доступны.</p>`,(preferences.toolBlocked?btn('Открыть сведения о приборе','equipment-detail','primary'):btn('Открыть документ СМК','documents','primary'))+btn('К локальным актам','local-list','outlined'));
+    if(name==='photo-delete')return info('Удалить фотографию?','<p>Фотография будет удалена из локальных материалов. При возврате назад она останется.</p>',btn('Удалить фотографию','confirm-remove-photo','danger')+btn('Оставить','back','outlined'));
+    if(name==='recognition')return info('Проверьте распознавание','<h2>СГВ-15</h2><p>Номер типа: 16078-13</p><p>Заводской номер: 24018632</p><p>Сверьте данные с паспортом и корпусом счётчика.</p>',btn('Использовать эти данные','apply-recognition','primary')+btn('Ввести самостоятельно','back','outlined'));
+    if(name==='backup-made')return info('Копия подготовлена','<p>Пример: локальные акты и фотографии включены в копию.</p><p>В приложении далее открывается выбор места сохранения файла.</p>',btn('Готово','back','primary'));
+    if(name==='choose-act-for-bid')return detail('Связать акт',`Заявка № ${b.id}`)+main(state.acts.filter(aa=>aa.stage!=='sent').map(aa=>btn(`Акт № ${aa.id} · ${address(aa)}`,'bind-act-to-bid','outlined',`data-act="${aa.id}"`)).join(''));
+    return info('Раздел приложения','<p>Вернитесь к предыдущему экрану.</p>',btn('Назад','back','outlined'));
+  }
+  function captureForm(){
+    const form=content.querySelector('form[data-form]');if(!form)return;
+    const data=Object.fromEntries(new FormData(form));const a=currentAct(),m=currentMeter(),name=form.dataset.form;
+    if(['appointment','edit-bid','maintenance','meter-tools'].includes(name)){state.formDrafts=state.formDrafts||{};state.formDrafts[formKey(name)]=data;}
+    if(name==='customer')Object.assign(a,data);
+    if(name==='payment')Object.assign(a,{cost:data.cost,customerEmail:data.customerEmail});
+    if(name==='identity'&&m)Object.assign(m,data,{passport:!!data.passport});
+    if(name==='measurements'&&m){Object.assign(m,data);if(m.runs)m.runs.forEach((r,i)=>{r.value=data['run'+i]??r.value;r.volume=data['runVolume'+i]??r.volume;});}
+    if(name==='support')state.supportDraft=data.text||'';
+    if(name==='new-act')state.newActNumber=data.number||'';
+    if(name==='arshin')state.arshinQuery=data.serial||'';
+    if(name==='storage')Object.assign(state.storage,data);
+    if(name==='add-meter')state.addMeterDraft=data;
+  }
+  function render(){
+    app.dataset.theme=preferences.theme;app.dataset.large=String(preferences.large);app.style.setProperty('--pd-scale',preferences.large?'1.2':'1');
+    content.innerHTML=(screens[state.view.name]||renderExtra)();
+    message.textContent=notice;
+    if(globalThis.lucide)lucide.createIcons({attrs:{width:21,height:21}});
+    if(state.view.name==='add-meter'&&state.addMeterDraft){const f=content.querySelector('form');Object.entries(state.addMeterDraft).forEach(([k,v])=>{if(f.elements[k]&&!['model','registry'].includes(k))f.elements[k].value=v;});}
+    const f=content.querySelector('form[data-form]');const draft=f&&state.formDrafts?.[formKey(f.dataset.form)];
+    if(f&&draft)Array.from(f.elements).forEach(input=>{if(!input.name)return;if(input.type==='checkbox')input.checked=!!draft[input.name];else if(draft[input.name]!==undefined)input.value=draft[input.name];});
+  }
+  function formKey(name){return [name,state.view.act||'',state.view.meter||'',state.view.bid||''].join(':');}
+  function canServer(){
+    if(preferences.offline){notify('Нет интернета. Действие не выполнено. Повторите после подключения.');return false;}return true;
+  }
+  function createAct(number){
+    if((preferences.unread&&!state.documentRead)||preferences.toolBlocked){navigate('admission');return false;}
+    if(state.acts.some(a=>a.id===number)){notify('Такой номер уже есть на телефоне. Откройте существующий акт или проверьте номер.');return false;}
+    const bid=state.bids.find(b=>b.id===state.newActBid);
+    const act={id:number,bid:bid?.id||null,owner:bid?.owner||'',address:bid?.address||'',flat:bid?.flat||'',phone:bid?.phone||'',date:'2026-10-26',type:'Годен',stage:'draft',receipt:false,actPhoto:false,cost:'900',meters:[]};
+    state.acts.unshift(act);if(bid){bid.act=number;bid.status='В работе';}
+    state.newActNumber='';state.tab='acts';navigate('act',{act:number});notify('Акт создан на телефоне. Данные заявки перенесены.');return true;
+  }
+  function perform(action,el){
+    const a=currentAct(),m=currentMeter(),b=currentBid(),data=el.dataset;
+    notice='';message.textContent='';
+    if(action==='submit-form'){const form=el.closest('form');if(form&&form.reportValidity())submit(form);return;}
+    if(action==='back'){captureForm();back();return;}
+    if(action==='tab'){captureForm();tab(data.tab);return;}
+    if(action==='bid'){navigate('bid',{bid:data.bid||state.view.bid});return;}
+    if(action==='act'){navigate('act',{act:data.act||state.view.act});return;}
+    if(action==='document'){navigate('document',{doc:data.doc||'procedure'});return;}
+    if(action==='registry-detail'){navigate('registry-detail',{typeId:data.type||'16078-13',typeModel:data.model||'СХВ-15 / СГВ-15'});return;}
+    if(action==='link-bid'&&state.view.name==='bid'){navigate('choose-act-for-bid');return;}
+    if(action==='meter'){navigate('meter',{meter:data.meter||state.view.meter});return;}
+    if(action==='bid-scope'){state.bidScope=data.value;render();saveState();return;}
+    if(action==='all-bids'){state.bidScope='all';state.bidStatus='Все';render();saveState();return;}
+    if(action==='act-scope'){state.actScope=data.value;render();saveState();return;}
+    if(action==='bids-list'){tab('bids');return;}
+    if(action==='local-list'){state.actScope='local';tab('acts');return;}
+    if(action==='sent-list'){state.actScope='sent';tab('acts');return;}
+    if(action==='start-new'){state.newActBid=null;state.newActNumber='';navigate('start-new',{act:null,bid:null,meter:null});return;}
+    if(action==='start-from-bid'){if(b.service==='Замена счётчика'){navigate('service-done');return;}state.newActBid=b.id;state.newActNumber='';navigate('start-new',{act:null,meter:null});return;}
+    if(action==='scan-act'){state.newActNumber='18432';render();notify('Подставлен пример номера из QR: 18432.');return;}
+    if(action==='rescan-act'){const input=content.querySelector('input[name=number]');input.value='18433';notify('Подставлен пример другого бланка: 18433.');return;}
+    if(action==='use-arshin-number'){state.arshinQuery='22003398';back();notify('Распознанный номер подставлен для проверки.');return;}
+    if(action==='accept-bid'){if(!canServer())return;b.status='Назначена';render();notify('Заявка принята. Следующий шаг — согласовать визит.');return;}
+    if(action==='return-bid'){if(!b.canRestore){notify('Период возврата завершён. Обратитесь к диспетчеру.');return;}if(!canServer())return;b.status='Назначена';render();notify('Пример: сервер разрешил возврат заявки в работу.');return;}
+    if(action==='confirm-service'){if(!canServer())return;b.status='Выполнена';back();notify('Пример: выполнение услуги подтверждено сервером.');return;}
+    if(action==='save-draft'){captureForm();a.stage=issues(a).length?'draft':'ready';state.actScope='local';tab('acts');notify(`Акт № ${a.id} сохранён на телефоне. На сервер не отправлялся.`);return;}
+    if(action==='send-one'||action==='retry-one'){
+      const target=data.act?state.acts.find(item=>item.id===data.act):a;
+      if(!target)return;if(!canServer())return;
+      if((preferences.unread&&!state.documentRead)||preferences.toolBlocked){navigate('admission');return;}
+      if(issues(target).length){navigate('review',{act:target.id});return;}
+      target.stage='sent';const linked=state.bids.find(bb=>bb.id===target.bid);if(linked)linked.status='Выполнена';navigate('send-result',{act:target.id});return;
+    }
+    if(action==='fix-issue'){navigate(data.target,{meter:data.meter||state.view.meter});return;}
+    if(action==='photo'){navigate('photo-preview',{key:data.key});return;}
+    if(action==='capture-photo'){setPhoto(true);render();notify('Пример фотографии добавлен на телефон.');return;}
+    if(action==='remove-photo'){navigate('photo-delete',{key:state.view.key});return;}
+    if(action==='confirm-remove-photo'){setPhoto(false);back();notify('Фотография удалена из примера.');return;}
+    if(action==='recognize'){navigate('recognition');return;}
+    if(action==='recognize-new'){state.addMeterDraft={model:'СХВ-15',registry:'16078-13',serial:'25001234',water:'Холодная',place:'Кухня'};navigate('add-meter',{model:'СХВ-15',registry:'16078-13'});notify('Пример распознавания. Сверьте номер и модель с паспортом.');return;}
+    if(action==='apply-recognition'){m.serial='24018632';m.model='СГВ-15';back();notify('Результат распознавания подставлен. Проверьте его перед сохранением.');return;}
+    if(action==='select-registry'){
+      const parent=[...state.stack].reverse().find(v=>v.name==='meter-identity'||v.name==='add-meter');
+      const selectedId=state.view.typeId||'16078-13',selectedModel=(state.view.typeModel||'СХВ-15').split(' / ')[0];
+      if(parent?.name==='meter-identity'){m.model=selectedModel;m.registry=selectedId;}
+      if(parent){while(state.stack.length&&state.stack[state.stack.length-1]!==parent)state.stack.pop();state.view={...state.stack.pop(),model:selectedModel,registry:selectedId};}else state.view={name:'references'};
+      render();notify(`Выбран тип СИ ${selectedId}.`);return;
+    }
+    if(action==='remove-run'){captureForm();m.runs.splice(+data.index,1);render();saveState();return;}
+    if(action==='add-run'){captureForm();m.runs=m.runs||[];if(m.runs.length>=2){notify('Показаны три измерения. Их состав определяется методикой.');return;}m.runs.push({value:'',volume:''});render();saveState();return;}
+    if(action==='confirm-delete-meter'){a.meters=a.meters.filter(mm=>mm.id!==m.id);state.stack=state.stack.filter(v=>!v.meter);state.view={name:'meters',act:a.id};render();notify('Счётчик удалён из акта.');return;}
+        if(action==='bind-bid'){const selected=state.bids.find(bb=>bb.id===data.bid);if(!selected)return;if(selected.act&&selected.act!==a.id){notify('У этой заявки уже есть другой акт. Сначала проверьте существующую связь.');return;}state.bids.forEach(bb=>{if(bb.act===a.id)bb.act=null;});a.bid=selected.id;selected.act=a.id;back();notify('Связь акта с заявкой изменена.');return;}
+    if(action==='unbind-bid'){state.bids.forEach(bb=>{if(bb.act===a.id)bb.act=null;});a.bid=null;back();notify('Акт сохранён без заявки.');return;}
+    if(action==='bind-act-to-bid'){const selected=state.acts.find(aa=>aa.id===data.act);if(!selected)return;if(selected.bid&&selected.bid!==b.id){notify('Этот акт связан с другой заявкой. Сначала проверьте его текущую связь.');return;}if(b.act&&b.act!==selected.id){notify('У заявки уже есть другой акт. Сначала проверьте его и снимите связь.');return;}b.act=selected.id;selected.bid=b.id;back();notify('Акт связан с заявкой.');return;}
+    if(action==='nepton-connect'){state.neptonConnected=true;render();notify('Пример: прибор подключён и ответил.');return;}
+    if(action==='nepton-snapshot'){notify('Пример: снимок результата сохранён отдельно.');return;}
+    if(action==='nepton-measure'){notify('Пример измерения обновлён. Автоматическая запись в счётчик не выполнялась.');return;}
+    if(action==='retry-document'){if(!canServer())return;render();return;}
+    if(action==='confirm-clear-arshin'){state.arshinQuery='';state.arshinResults=false;state.arshinError=false;back();notify('История поиска очищена.');return;}
+    if(action==='make-backup'){if(state.acts.every(aa=>aa.stage==='sent')){notify('На телефоне нет локальных актов для копии.');return;}navigate('backup-made');return;}
+    if(action==='restore-run'){navigate('restore-result');return;}
+    if(action==='confirm-receipt'){if(!canServer())return;a.receipt=true;back();notify('Пример: чек сформирован и добавлен к акту.');return;}
+    if(action==='confirm-logout'){state.stack=[];state.view={name:'login'};render();saveState();return;}
+    if(action==='resend-code'){if(canServer())notify('Пример: код отправлен повторно.');return;}
+    if(['demo-call','demo-map','demo-office','demo-manager','demo-arshin','demo-update'].includes(action)){notify({'demo-call':'Пример перехода в приложение телефона.','demo-map':'Пример открытия адреса в картах.','demo-office':'Пример открытия личного кабинета.','demo-manager':'Пример звонка менеджеру.','demo-arshin':'Пример открытия записи Аршина.','demo-update':'Пример: установлена актуальная версия.'}[action]);return;}
+    if(['refresh-tools','registry-update','refresh-quota'].includes(action)){if(canServer())notify('Пример: сведения обновлены.');return;}
+    if(action==='batch'&&data.act)navigate('batch',{act:data.act});
+    else navigate(action,{...(data.act?{act:data.act}:{}),...(data.meter?{meter:data.meter}:{})});
+  }
+  function submit(form){
+    const data=Object.fromEntries(new FormData(form)), name=form.dataset.form, a=currentAct(),m=currentMeter(),b=currentBid();
+    const fail=text=>{const error=form.querySelector('.pd-form-error');error.textContent=text;error.hidden=false;};
+    captureForm();
+    if(name==='appointment'){if(!['Новая','Назначена','Согласована'].includes(b.status)){fail('В этом статусе визит доступен только для просмотра.');return;}if(!canServer())return;Object.assign(b,{date:data.date,time:data.time,comment:data.comment});if(data.agreed)b.status='Согласована';back();notify('Пример: дата и время сохранены сервером.');}
+    else if(name==='edit-bid'){if(!['Новая','Назначена','Согласована'].includes(b.status)){fail('Изменение заявки в этом статусе недоступно.');return;}if(!canServer())return;Object.assign(b,data);back();notify('Данные заявки обновлены.');}
+    else if(name==='customer'){Object.assign(a,data);back();notify('Заказчик и адрес сохранены на телефоне.');}
+    else if(name==='identity'){if(a.meters.filter(mm=>mm.id!==m.id&&mm.water===data.water).length>=3){fail('В одном акте допускается не более трёх счётчиков одного вида воды.');return;}Object.assign(m,data,{passport:!!data.passport});back();notify('Данные счётчика сохранены.');}
+    else if(name==='measurements'){if([data.inspection,data.testing,data.software].includes('Не проверено')){fail('Завершите предварительные проверки. Они находятся в раскрываемой группе выше.');return;}if([data.inspection,data.testing,data.software].includes('Не соответствует')&&a.type==='Годен'){fail('Обнаружено несоответствие. Проверьте общее заключение в обзоре акта перед завершением.');return;}if(!data.value||!data.reading||(m.runs||[]).some(r=>!r.value)){fail('Заполните показание и погрешность каждого добавленного измерения.');return;}Object.assign(m,data,{measurement:true});back();notify('Измерения сохранены на телефоне.');}
+    else if(name==='meter-tools'){m.tools=[data.nepton?'НЕПТОН-10':null,data.thermometer?'Термометр ТЛ-4':null,data.pressure?'Манометр МП3':null].filter(Boolean);back();notify('Средства поверки сохранены.');}
+    else if(name==='payment'){Object.assign(a,{cost:data.cost,customerEmail:data.customerEmail});back();notify('Расчёт сохранён на телефоне.');}
+    else if(name==='delete-act'){
+      if(a.bid&&!canServer()){fail('Не удалось подтвердить статус связанной заявки. Акт не удалён.');return;}
+      const linked=state.bids.find(bb=>bb.act===a.id);if(linked){linked.act=null;linked.status=data.bidStatus;}
+      state.acts=state.acts.filter(aa=>aa.id!==a.id);tab('acts');notify('Пример: локальный акт удалён; выбранный статус заявки подтверждён.');
+    }
+    else if(name==='new-act'){createAct(data.number.trim());}
+    else if(name==='add-meter'){
+      if(a.meters.length>=6){fail('В акт уже добавлено 6 счётчиков.');return;}
+      if(a.meters.filter(mm=>mm.water===data.water).length>=3){fail('В акте уже три счётчика этого вида воды.');return;}
+      const id='m'+Date.now();a.meters.push({...data,id,diameter:'15',method:'МИ 1592-2015',passport:false,photo:false,measurement:false,tools:['НЕПТОН-10']});state.addMeterDraft=null;
+      navigate('meter',{meter:id});notify('Счётчик добавлен. Можно заполнить фото и измерения.');
+    }
+    else if(name==='document'){if(!data.read){fail('Подтвердите, что прочитали документ.');return;}if(!canServer())return;if(state.view.doc==='quality')state.qualityRead=true;else state.documentRead=true;back();notify('Пример: ознакомление подтверждено сервером.');}
+    else if(name==='storage'){
+      if(+data.humidity<0||+data.humidity>100){fail('Влажность должна быть от 0 до 100 %.');return;}
+      Object.assign(state.storage,data);if(!canServer()){fail('Запись сохранена на телефоне. Передача не подтверждена — повторите после подключения.');return;}state.storageSent=true;render();notify('Пример: условия хранения приняты сервером.');
+    }
+    else if(name==='maintenance'){if(!data.done){fail('Подтвердите выполнение обслуживания.');return;}if(!canServer())return;state.equipmentService=true;back();notify('Пример: сведения об обслуживании переданы.');}
+    else if(name==='arshin'){state.arshinQuery=data.serial;state.arshinError=preferences.offline;state.arshinResults=!preferences.offline;render();saveState();}
+    else if(name==='settings'){preferences.theme={'Как в системе':'system','Светлая':'light','Тёмная':'dark'}[data.theme];preferences.large=!!data.large;state.settings=data;back();notify('Настройки сохранены.');}
+    else if(name==='personal'){state.personal=data;back();notify('Пример: данные профиля сохранены.');}
+    else if(name==='support'){state.supportDraft=data.text;if(!canServer()){fail('Нет интернета. Текст сообщения сохранён как черновик.');return;}state.supportDraft='';back();notify('Пример: сообщение отправлено в поддержку.');}
+    else if(name==='statistics'){if(!canServer())return;state.statisticsShown=true;state.statisticsPeriod=data;render();saveState();}
+    else if(name==='nepton'){state.neptonStart=data.start;state.neptonEnd=data.end;state.neptonPhase=state.neptonPhase==='running'?'done':'running';render();saveState();}
+    else if(name==='bid-filters'){state.bidScope=data.scope==='На сегодня'?'today':'all';state.bidStatus=data.status;state.bidFrom=data.from;state.bidTo=data.to;state.view={name:'bids'};state.stack=[];render();saveState();}
+    else if(name==='history-filter'){state.actQuery=data.query;state.actFrom=data.from;state.actTo=data.to;state.view={name:'acts'};state.stack=[];render();saveState();}
+    else if(name==='cancel-bid'){if(!canServer())return;b.status='Отменена';b.comment=`${data.reason}${data.comment?': '+data.comment:''}`;back();notify('Пример: отмена подтверждена. Доступность возврата проверяется сервером.');}
+    else if(name==='change-number'){
+      const number=data.number.trim();if(state.acts.some(aa=>aa!==a&&aa.id===number)){fail('Акт с таким номером уже существует.');return;}
+      const old=a.id;a.id=number;state.bids.forEach(bb=>{if(bb.act===old)bb.act=number;});state.stack.forEach(v=>{if(v.act===old)v.act=number;});state.view.act=number;back();notify('Номер бланка изменён.');
+    }
+    else if(name==='batch'){
+      const ids=new FormData(form).getAll('act');if(!ids.length){fail('Выберите хотя бы один готовый акт.');return;}
+      if(!canServer()){fail('Отправка не выполнена. Все выбранные акты остаются на телефоне.');return;}
+      if((preferences.unread&&!state.documentRead)||preferences.toolBlocked){navigate('admission');return;}
+      state.batchResults=ids.map(id=>{const aa=state.acts.find(item=>item.id===id),sent=aa.stage!=='error';if(sent){aa.stage='sent';const linked=state.bids.find(bb=>bb.id===aa.bid);if(linked)linked.status='Выполнена';}return{id,sent};});
+      navigate('batch-result');
+    }
+    else if(name==='login'){if(!canServer())return;state.loginEmail=data.email;navigate('login-code');}
+    else if(name==='login-code'){if(data.code!=='123456'){fail('В примере используйте код 123456. Введённый код оставлен в поле.');return;}tab('bids');notify('Выполнен вход в учебный профиль.');}
+  }
+  content.addEventListener('click',event=>{
+    const control=event.target.closest('button[data-do]');if(!control||control.disabled)return;event.preventDefault();perform(control.dataset.do,control);
+  });
+  content.addEventListener('keydown',event=>{if(event.key==='Enter'&&event.target.matches('input')){const form=event.target.closest('form[data-form]');if(form){event.preventDefault();if(form.reportValidity())submit(form);}}});
+  content.addEventListener('submit',event=>{const form=event.target.closest('form[data-form]');if(!form)return;event.preventDefault();submit(form);});
+  content.addEventListener('input',event=>{
+    if(event.target.dataset.search==='bids'){content.querySelector('[data-list=bids]').innerHTML=bidRows(event.target.value);if(globalThis.lucide)lucide.createIcons({attrs:{width:21,height:21}});return;}
+    if(event.target.dataset.search==='registry'){content.querySelector('[data-list=registry]').innerHTML=registryRows(event.target.value);if(globalThis.lucide)lucide.createIcons({attrs:{width:21,height:21}});return;}
+    if(event.target.closest('form')){captureForm();saveState();}
+  });
+  content.addEventListener('change',event=>{
+    if(event.target.dataset.direct==='actType'){currentAct().type=event.target.value;render();saveState();}
+  });
+  restore(window.openai?.widgetState);
+  render();
+  window.addEventListener('openai:set_globals',event=>{const data=event.detail?.globals?.widgetState;if(data?.privateContent?.owner!==hostInstance&&restore(data))render();});
+  if(globalThis.Tweak){
+    const tweak=new Tweak({container:app,onChange:()=>{captureForm();render();saveState();}});
+    tweak.addSelect(preferences,'theme',{label:'Оформление',options:[{label:'Как в системе',value:'system'},{label:'Светлая',value:'light'},{label:'Тёмная',value:'dark'}]});
+    tweak.addToggle(preferences,'large',{label:'Крупный текст'});
+    tweak.addToggle(preferences,'offline',{label:'Нет интернета'});
+    tweak.addToggle(preferences,'unread',{label:'Новый документ СМК'});
+    tweak.addToggle(preferences,'receipts',{label:'Право формировать чеки'});
+    tweak.addToggle(preferences,'payer',{label:'Право пополнять квоту'});
+    tweak.addToggle(preferences,'photoRecord',{label:'Фотофиксация по правилам организации'});
+    tweak.addToggle(preferences,'toolBlocked',{label:'Ограничение по оборудованию'});
+    tweak.addToggle(preferences,'support',{label:'Контакты поддержки организации'});
+  }
+})();
+</script>
+</div>
