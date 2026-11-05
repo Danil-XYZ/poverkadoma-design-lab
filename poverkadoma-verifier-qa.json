@@ -1,6 +1,8 @@
 {
-  "passed": 45,
+  "passed": 47,
   "checks": [
+    "Tools ink alignment safely resets when layout or font measurement is unavailable",
+    "Tools ink alignment applies and clears coordinates across network, hints and narrow-layout changes (simulated geometry)",
     "Full application boots with the approved request feed and no save on load",
     "Every implemented route renders without a placeholder and has contextual help",
     "Original destinations remain within two actual navigation taps from the three main roots without a Profile menu",
@@ -63,7 +65,7 @@
     "verification": "Actual visible DOM control activation"
   },
   "seedSnapshotBytes": 16278,
-  "fragmentBytes": 987989,
+  "fragmentBytes": 992488,
   "limitations": [
     "DOM-only: layout, real-browser rendering and touch/device behavior remain unverified; custom calendar and option interactions are exercised in DOM",
     "Camera, real file selection, downloads and external handlers remain unverified",

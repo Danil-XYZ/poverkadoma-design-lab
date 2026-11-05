@@ -5,13 +5,13 @@
     "index.html": "82f0e29ce59f86beb1a092d95b5e60fc3dbf5e6f93ea4133b5ecc76830c37303",
     "site.css": "0cb0fd9671309df0e5ae91f0ec465cafdfe80d0b5d2c4605dfe57edf98d54ce5",
     "site.js": "36730203317fe0b80bf386f5473bc4eb5cad73693975142565f98745ff02d72c",
-    "data.js": "c6b076a5781bf02df578ff4e22ebddacaa71a137c572b7984d624115e00bb904",
+    "data.js": "cb79763e307efe1d287bb30062bfb4a29b8644c50c91cb185bf211e0899b8140",
     "README.txt": "0ec045d3dca90ba286931d9de9970b333c6a33d39911b7d49d4c75a11663ccf5"
   },
   "reports": [
     {
       "file": "poverkadoma-verifier-qa.json",
-      "checks": 45
+      "checks": 47
     },
     {
       "file": "poverkadoma-design-site-qa.json",

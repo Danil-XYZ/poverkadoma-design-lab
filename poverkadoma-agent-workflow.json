@@ -41,11 +41,19 @@
   ],
   "first_queued_task": {
     "id": "D001",
-    "status": "queued",
+    "status": "publishing",
     "screen": "Tools root topbar",
     "request": "Fix visibly unequal spacing between title and actual icon artwork in online and offline states.",
     "reference": "C:/Users/Admin/AppData/Local/Temp/codex-clipboard-3540f6c9-6ae4-47b4-9f7c-ccd5a685a5ce.png",
-    "note": "Previous container-based attempts were rejected. Windows browser inspection was blocked because the helper could not determine the browser URL. No new fix has been implemented since that stop."
+    "note": "Previous container-based attempts were rejected. Windows browser inspection was blocked because the helper could not determine the browser URL. No new fix has been implemented since that stop.",
+    "source_commit": "c48dc8101d2cfda950aea769b0e0fbc83a0bd17b",
+    "verification": {
+      "appQa": 47,
+      "siteQa": 9,
+      "geometryCases": 9,
+      "browserVisual": "Not performed; existing Computer Use block respected.",
+      "fallback": "On narrow viewports or large fonts actions can wrap instead of overlapping."
+    }
   },
   "paths": {
     "integration": "C:/Users/Admin/StudioProjects/poverkadoma-design-lab",
