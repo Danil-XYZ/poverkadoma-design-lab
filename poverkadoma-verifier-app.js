@@ -6,6 +6,7 @@ function createVerifierApp(options) {
   const defaults={hints:true,theme:'light',fontScale:1,mapProvider:'',scanner:'google',defaultPrice:'',city:'Тольятти',phone:'+7 (901) 123-45-67',identifier:'DEMO-INTERNAL'};
   let labelAppearance='soft';
   let settings={...defaults},route='requests',params={},history=[],view=null,restoring=false,modalStack=[],modalNode=null,modalReturnFocus=null,toastTimer,pickers=null,lastSignature='',lastSentState=null,saveRevision=0;
+  const previewDefaults={base:safe(b.getBaseState()),timer:safe(app.verifierTimerDemo?.getState()),route,labelAppearance,sample:root.querySelector('#request-sample').value};
   const sessionId=Math.random().toString(36).slice(2);
   const titles={requests:'Заявки',acts:'Акты',tools:'Инструменты',sections:'Разделы',request:'Заявка',account:'Личные данные',settings:'Настройки',messages:'Сообщения',notifications:'Уведомления',feedback:'Обратная связь',equipment:'Приборы',tags:'Идентификационные бирки',storage:'Условия хранения',nepton:'Подключение к НЕПТОН',guide:'Справочник',arshin:'Поиск в АРШИН',documents:'Документы',history:'История',statistics:'Статистика',upload:'Выгрузить все акты',login:'Вход',register:'Регистрация',onboarding:'Знакомство с приложением','new-act':'Новый акт'};
   const actRoutes=['acts','new-act','act-editor','meter-editor','measurements','act-review','upload','history','history-act','statistics'];
@@ -47,6 +48,18 @@ function createVerifierApp(options) {
   function known(key){key=canonicalRoute(key);return ['requests','request','tools','sections'].includes(key)||actRoutes.includes(key)||toolRoutes.includes(key)||accessRoutes.includes(key);}
   function navigate(next,nextParams={}){next=canonicalRoute(next);if(!known(next)){notice('Раздел не найден','error');return;}if(route!=='sections'&&(next!==route||JSON.stringify(nextParams)!==JSON.stringify(params)))history.push({route,params:safe(params)||{}});history=history.slice(-24);route=next;params=safe(nextParams)||{};closeAllModals();render();persist();}
   function back(){const previous=history.pop();route=canonicalRoute(previous?.route)||'requests';params=previous?.params||{};closeAllModals();render();persist();}
+  function getPreviewView(){const timer=app.verifierTimerDemo;return {...b.getBaseState().modelContent,route,theme:settings.theme,labelAppearance,timerStyle:timer?.getState().style,timerPlaying:timer?.getState().playing,minutes:timer?.getDisplayMinutes()};}
+  function resetPreview(){
+    const current=b.getBaseState(),wasRestoring=restoring;restoring=true;
+    try{
+      // Reset presentation and list filters, preserving all actual work and account preferences.
+      b.restoreBaseState({modelContent:previewDefaults.base.modelContent,privateContent:{...previewDefaults.base.privateContent,requestDrafts:current.privateContent.requestDrafts,requestPreferences:current.privateContent.requestPreferences}});
+      settings.theme=defaults.theme;settings.fontScale=defaults.fontScale;labelAppearance=previewDefaults.labelAppearance;labelSelect.value=labelAppearance;
+      root.querySelector('#request-sample').value=previewDefaults.sample;app.verifierTimerDemo?.restore?.(previewDefaults.timer);
+      route=previewDefaults.route;params={};history=[];closeAllModals();render();
+    }finally{restoring=wasRestoring;}
+    persist();return getPreviewView();
+  }
   function showHelp(){if(settings.hints===false)return;const copy=route==='request'?'Позвоните клиенту и уточните дату и время. Редактируемые поля отмечены карандашом или стрелкой. Изменение количества требует уточнения стоимости. Согласование и отправка результатов — разные действия.':route==='requests'?'«Мои» — назначенные вам заявки. «Свободные» — заявки, которые можно принять. Поиск и фильтр работают вместе. Нажмите карточку, чтобы открыть заявку. Цвет срока показывает срочность.':view?.help||'Нажмите нужный пункт. Данные форм сохраняются как локальный черновик; отправка требует отдельного подтверждения.';modal({title:'Как пользоваться',body:copy,help:false,actions:[{label:'Понятно',kind:'primary',onClick:closeModal},{label:'Настройки подсказок',onClick:()=>{closeAllModals();navigate('settings');}}]});}
   function quickAction(item){
     if(item.kind==='appointed'){
@@ -92,5 +105,5 @@ function createVerifierApp(options) {
   controls.addEventListener('change',event=>{if(event.target.id==='request-sample'){event.stopImmediatePropagation();navigate('request',{id:event.target.value});}else if(event.target.id==='card-text'){settings.fontScale=event.target.value==='large'?2:1;applySettings();persist();}},true);
   controls.addEventListener('click',()=>{applySettings();persist();});
   restore(window.openai?.widgetState);
-  return {navigate,back,render,restore,persist,snapshot,api,modules,navigation,getRoute:()=>({route,params}),help:showHelp,routes:[...new Set(['requests','request','tools','sections',...actRoutes,...toolRoutes,...accessRoutes])]};
+  return {navigate,back,render,restore,persist,snapshot,getPreviewView,resetPreview,api,modules,navigation,getRoute:()=>({route,params}),help:showHelp,routes:[...new Set(['requests','request','tools','sections',...actRoutes,...toolRoutes,...accessRoutes])]};
 }

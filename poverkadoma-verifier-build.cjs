@@ -7,6 +7,8 @@ let fragment=fs.readFileSync(path.join(base,'poverkadoma-home-preview.html'),'ut
 let runtime=fragment.match(/<script>\s*([\s\S]*?)\s*<\/script>/)[1];
 runtime=runtime.replace('const persist = () => window.openai','const persist = () => app.verifierApp ? app.verifierApp.persist() : window.openai');
 runtime=runtime.replace('const restore = state => {','const restore = state => {\n    if(app.verifierApp){app.verifierApp.restore(state);return;}');
+// The full application restores once, after all modules exist. Keep pristine view defaults available.
+runtime=runtime.replace('  restore(window.openai?.widgetState);','');
 const bridge=`
   app.verifierBridge={icon,showSection,showRequests,openRequest,requestDetail,
     getRequests:()=>{const all=new Map(requests.map(item=>[item.id,{...item,...(requestDetail.getDrafts()[item.id]||{})}]));for(const [key,item]of renderedRequestModels)all.set(key,item);return [...all.values()];},
