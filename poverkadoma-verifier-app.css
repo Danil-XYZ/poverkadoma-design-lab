@@ -48,8 +48,9 @@
 .v-tools-tasks { gap: 16px; }
 .v-tools-tasks .v-tools-grid { grid-template-columns: minmax(0,1fr); }
 .v-tools-tasks .v-tools-heading { font-size: calc(14px * var(--v-scale)); line-height: calc(20px * var(--v-scale)); }
-.v-tools-tasks .v-tools-tile { width: 100%; min-height: 56px; }
-.v-tools-tasks .v-tools-name { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.v-tools-tasks .v-tools-tile { width: 100%; min-height: 58px; }
+.v-tools-tasks .v-tools-tile > .v-nav-glyph:first-child { flex: 0 0 32px; width: 32px !important; height: 32px !important; border-radius: 10px; background: var(--blue); color: #fff; }
+.v-tools-tasks .v-tools-name { flex: 1; min-width: 0; overflow-wrap: anywhere; font-weight: 600; }
 .v-tools-tasks .v-tools-chevron { flex: 0 0 16px; width: 16px !important; height: 16px !important; color: var(--secondary); }
 .v-tools-tasks .v-tools-chevron svg { width: 16px; height: 16px; }
 .v-viewport { flex: 1; min-height: 0; padding: 16px; overflow-y: auto; overflow-x: hidden; scrollbar-width: none; overscroll-behavior: contain; }
