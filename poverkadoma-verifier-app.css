@@ -21,6 +21,7 @@
 .phone:is([data-v-route="tools"],[data-v-route="notifications"]) .v-topbar [data-ink-layout="true"] .toolbar-actions > .icon-button,
 .phone:is([data-v-route="tools"],[data-v-route="notifications"]) .v-topbar [data-ink-layout="true"] .network-slot { position: absolute; left: var(--tools-button-left); top: 50%; transform: translateY(-50%); }
 .phone:is([data-v-route="tools"],[data-v-route="notifications"]) .v-topbar [data-ink-layout="true"] .toolbar-actions .icon { transform: translateX(var(--tools-icon-shift,0px)); }
+.phone[data-v-route="notifications"] .v-topbar [data-ink-layout="true"] .toolbar-actions { display: flex; width: var(--ink-actions-width); }
 .v-nav-glyph { display: inline-flex; align-items: center; justify-content: center; }
 .v-nav-glyph svg { width: 20px; height: 20px; stroke-width: 1.7; }
 .v-tools-group { display: flex; flex-direction: column; gap: 8px; }
