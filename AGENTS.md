@@ -13,3 +13,5 @@ Scope: this standalone static design repository. Do not modify the Android repos
 - Never add raw Confluence exports, credentials, auth tools, sessions or unrelated files. No credentials in URLs or logs.
 
 Shared generated tracked files are integration-owned: index.html, site.css, site.js, data.js, README.txt, deployment-state.json, poverkadoma-design-site-manifest.json, poverkadoma-verifier-qa.json, poverkadoma-design-site-qa.json. Local current preview/data intermediates and ZIP are ignored. Historical experimental HTML snapshots are source inputs; do not confuse them with generated current previews.
+
+Live task status and verified publication provenance are integration-local in ignored poverkadoma-agent-local-state.json. Record code SHA and artifact hash after successful publication; do not create a new deployment just to record its own completion. The workflow JSON is the tracked protocol/initial queue snapshot.
