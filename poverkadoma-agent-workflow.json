@@ -41,7 +41,7 @@
   ],
   "first_queued_task": {
     "id": "D001",
-    "status": "publishing",
+    "status": "published",
     "screen": "Tools root topbar",
     "request": "Fix visibly unequal spacing between title and actual icon artwork in online and offline states.",
     "reference": "C:/Users/Admin/AppData/Local/Temp/codex-clipboard-3540f6c9-6ae4-47b4-9f7c-ccd5a685a5ce.png",
@@ -53,6 +53,13 @@
       "geometryCases": 9,
       "browserVisual": "Not performed; existing Computer Use block respected.",
       "fallback": "On narrow viewports or large fonts actions can wrap instead of overlapping."
+    },
+    "publication": {
+      "commit": "495d6a8f9549bc5015fe0bd1b753f876775f4145",
+      "pagesWorkflow": 42054829326,
+      "pagesConclusion": "success",
+      "dataSha256": "cb79763e307efe1d287bb30062bfb4a29b8644c50c91cb185bf211e0899b8140",
+      "allFiveDeployedArtifactsVerified": true
     }
   },
   "paths": {
