@@ -67,8 +67,15 @@ tap(actions.querySelector('.v-route-help'));assert.equal(document.querySelector(
 tap(actions.querySelector('.v-settings-button'));assert.equal(core.getRoute().route,'settings');draw();assert.equal(toolbar.hasAttribute('data-ink-layout'),false);
 assert.equal(toolbar.style.getPropertyValue('--ink-actions-width')||'','','Unrelated routes must release the width reservation');
 core.navigate('tools');core.navigate('notifications');tap(back);assert.equal(core.getRoute().route,'tools');checked++;
-const css=fs.readFileSync(new URL('./poverkadoma-verifier-app.css',import.meta.url),'utf8');
-assert.match(css,/\.phone:is\(\[data-v-route="tools"\],\[data-v-route="notifications"\]\)\[data-offline="false"\][^{]*\.network-slot\s*\{\s*display: none/);
-assert.match(css,/\.phone:is\(\[data-v-route="tools"\],\[data-v-route="notifications"\]\)[^{]*\.app-screen-title\s*\{[^}]*flex: 0 0 auto/);checked++;
-assert.match(css,/\.phone\[data-v-route="notifications"\] \.v-topbar \[data-ink-layout="true"\] \.toolbar-actions\s*\{\s*display: flex;\s*width: var\(--ink-actions-width\);/);checked++;
+// Check the compiled preview, not just source: scope() must not inject IDs inside :is().
+const css=[...fragment.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)].map(m=>m[1]).join('\n');
+assert.match(css,/#pd-verifier-app-preview \.phone\[data-v-route="notifications"\]\[data-offline="false"\][^{]*\.network-slot\s*\{\s*display: none/);
+assert.match(css,/#pd-verifier-app-preview \.phone\[data-v-route="notifications"\][^{]*\.app-screen-title\s*\{[^}]*flex: 0 0 auto/);checked++;
+const inkSelector='#pd-verifier-app-preview .phone[data-v-route="notifications"] .v-topbar [data-ink-layout="true"] .toolbar-actions';
+const rules=[...css.matchAll(/([^{}]+)\{([^{}]*)\}/g)].flatMap(m=>m[1].split(',').map(selector=>({selector:selector.trim(),body:m[2]})));
+const inkRules=rules.filter(rule=>rule.selector===inkSelector);
+assert.equal(inkRules.length,2,'Compiled shared rule and Notifications override must have the exact same selector/specificity');
+assert.match(inkRules[0].body,/display:\s*contents/);
+assert.match(inkRules[1].body,/display:\s*flex;\s*width:\s*var\(--ink-actions-width\)/);
+assert.ok(!rules.some(rule=>rule.selector.includes('.phone:is(')&&rule.selector.includes('data-v-route="notifications"')),'Header selectors must remain safe for the existing comma scoper');checked++;
 console.log(`D002: ${checked} simulated geometry, fallback, CSS and navigation cases passed. Browser visual verification remains unavailable.`);
