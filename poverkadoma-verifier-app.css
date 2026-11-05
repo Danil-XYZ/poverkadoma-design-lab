@@ -10,15 +10,16 @@
 .detail-toolbar .app-back-button { margin-left: -12px; }
 .detail-toolbar .toolbar-actions { flex: 0 0 auto; width: auto; }
 .phone[data-v-route="tools"] .v-topbar .detail-toolbar,
-.phone[data-v-route="notifications"] .v-topbar .detail-toolbar { --tools-action-width: 48px; position: relative; height: auto; min-height: 48px; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
+.phone[data-v-route="notifications"] .v-topbar .detail-toolbar { --tools-action-width: 48px; position: relative; height: auto; min-height: 48px; flex-wrap: wrap; justify-content: flex-start; gap: 8px; }
 .phone[data-v-route="tools"] .v-topbar .app-screen-title,
 .phone[data-v-route="notifications"] .v-topbar .app-screen-title { flex: 0 0 auto; min-width: 0; max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
 .phone[data-v-route="tools"] .v-topbar .toolbar-actions,
-.phone[data-v-route="notifications"] .v-topbar .toolbar-actions { display: flex; gap: 8px; }
+.phone[data-v-route="notifications"] .v-topbar .toolbar-actions { display: flex; gap: 8px; margin-left: auto; }
 .phone[data-v-route="tools"] .v-topbar .icon-button,
 .phone[data-v-route="notifications"] .v-topbar .icon-button,
 .phone[data-v-route="tools"] .v-topbar .network-slot,
 .phone[data-v-route="notifications"] .v-topbar .network-slot { width: var(--tools-action-width); flex: 0 0 var(--tools-action-width); }
+.phone[data-v-route="notifications"] .v-topbar .app-back-button { width: 48px; flex: 0 0 48px; }
 .phone[data-v-route="tools"][data-offline="false"] .v-topbar .network-slot,
 .phone[data-v-route="notifications"][data-offline="false"] .v-topbar .network-slot { display: none; }
 .phone[data-v-route="tools"][data-offline="true"] .v-topbar .detail-toolbar,

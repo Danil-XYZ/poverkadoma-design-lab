@@ -18,13 +18,12 @@ let viewport=390,scale=1,wrap=false;
 const visible=()=>[...actions.children].filter(n=>!n.hidden&&!(n.classList.contains('network-slot')&&app.dataset.offline!=='true'));
 const size=()=>app.dataset.offline==='true'?44:48;
 const naturalActionWidth=()=>visible().length*size()+(visible().length-1)*(app.dataset.offline==='true'?0:8);
-// Model the real flex-flow transition, including the post-layout actions footprint.
-// Without the retained width, space-between pushes the heading right under the absolute controls.
-const geometry=()=>{const content=viewport-32,titleWidth=164*scale,backWidth=size()-12,actionWidth=toolbar.dataset.inkLayout==='true'?(parseFloat(toolbar.style.getPropertyValue('--ink-actions-width'))||0):naturalActionWidth(),free=Math.max(0,content-backWidth-titleWidth-actionWidth-16);return {titleLeft:16+backWidth+8+free/2,titleWidth,actionWidth,content};};
+// Back retains its 48px target. All free space belongs to the right group's auto margin.
+const geometry=()=>{const content=viewport-32,titleWidth=164*scale,backWidth=48-12,actionWidth=toolbar.dataset.inkLayout==='true'?(parseFloat(toolbar.style.getPropertyValue('--ink-actions-width'))||0):naturalActionWidth();return {titleLeft:16+backWidth+8,titleWidth,backWidth,actionWidth,content};};
 actions.getBoundingClientRect=()=>rect(viewport-16-naturalActionWidth(),naturalActionWidth());
 toolbar.getBoundingClientRect=()=>rect(16,geometry().content);
 title.getBoundingClientRect=()=>rect(geometry().titleLeft,geometry().titleWidth,8,32*scale);
-back.getBoundingClientRect=()=>rect(4,size());
+back.getBoundingClientRect=()=>rect(4,48);
 window.getComputedStyle=()=>({font:'600 24px Segoe UI',strokeWidth:'1.7'});
 const create=document.createElement.bind(document);
 document.createElement=tag=>{const n=create(tag);if(tag==='canvas')n.getContext=()=>({measureText:()=>({actualBoundingBoxRight:geometry().titleWidth})});return n;};
@@ -40,8 +39,9 @@ const tap=n=>{assert.ok(n&&!n.closest('[hidden]'));n.dispatchEvent(new Event('cl
 let checked=0;
 for(viewport of [390,430])for(const offline of [false,true])for(const hints of [false,true]){
   app.dataset.offline=String(offline);core.api.setSettings({hints});core.navigate('notifications');draw();
-  assert.ok(size()-12+geometry().titleWidth+geometry().actionWidth+16<=geometry().content,'Normal heading and all controls must fit on one flex line');
+  assert.ok(geometry().backWidth+geometry().titleWidth+geometry().actionWidth+16<=geometry().content,'Normal heading and all controls must fit on one flex line');
   assert.equal(toolbar.dataset.inkLayout,'true');assert.equal(title.textContent,'Уведомления');assert.equal(back.hidden,false);
+  assert.equal(title.getBoundingClientRect().left,60,'Heading must stay at the same left anchor across viewport, network and hints changes');
   assert.equal(parseFloat(toolbar.style.getPropertyValue('--ink-actions-width')),naturalActionWidth(),'Actions must retain their measured flex footprint');
   assert.equal(actions.querySelector('.v-notifications-button').hidden,true,'Nested page must not duplicate Notifications');
   const nodes=visible(),positions=nodes.map(n=>parseFloat(n.style.getPropertyValue('--tools-button-left'))+16);
@@ -54,6 +54,7 @@ for(viewport of [390,430])for(const offline of [false,true])for(const hints of [
     gaps.push(left-edge);edge=left+width;
   });
   assert.ok(gaps.every(g=>Math.abs(g-gaps[0])<.01),'Visible title/action gaps differ');checked++;
+  core.navigation.apply('notifications');draw();assert.equal(title.getBoundingClientRect().left,60,'Repeated alignment must never recenter the heading');
 }
 // The heading is never truncated or shrunk; insufficient room uses the wrapping flex fallback.
 for(const state of [{viewport:320,scale:1,wrap:true},{viewport:390,scale:2,wrap:true}]){
@@ -77,5 +78,9 @@ const inkRules=rules.filter(rule=>rule.selector===inkSelector);
 assert.equal(inkRules.length,2,'Compiled shared rule and Notifications override must have the exact same selector/specificity');
 assert.match(inkRules[0].body,/display:\s*contents/);
 assert.match(inkRules[1].body,/display:\s*flex;\s*width:\s*var\(--ink-actions-width\)/);
+const notificationBase='#pd-verifier-app-preview .phone[data-v-route="notifications"] .v-topbar ';
+assert.match(rules.find(r=>r.selector===notificationBase+'.detail-toolbar').body,/justify-content:\s*flex-start/);
+assert.match(rules.find(r=>r.selector===notificationBase+'.toolbar-actions').body,/margin-left:\s*auto/);
+assert.match(rules.find(r=>r.selector===notificationBase+'.app-back-button').body,/width:\s*48px;\s*flex:\s*0 0 48px/);checked++;
 assert.ok(!rules.some(rule=>rule.selector.includes('.phone:is(')&&rule.selector.includes('data-v-route="notifications"')),'Header selectors must remain safe for the existing comma scoper');checked++;
 console.log(`D002: ${checked} simulated geometry, fallback, CSS and navigation cases passed. Browser visual verification remains unavailable.`);
