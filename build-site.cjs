@@ -20,11 +20,12 @@ const entries = {
   'README.txt': 'poverkadoma-design-site-README.txt'
 };
 const hashes = {};
+const dataVersion = crypto.createHash('sha256').update(fs.readFileSync(path.join(base, entries['data.js']))).digest('hex').slice(0,16);
 for (const [target, source] of Object.entries(entries)) {
   let content = fs.readFileSync(path.join(base, source));
   if (target === 'index.html') content = Buffer.from(content.toString('utf8')
     .replaceAll('poverkadoma-design-site.css', 'site.css')
-    .replaceAll('poverkadoma-design-site-data.js', 'data.js')
+    .replaceAll('poverkadoma-design-site-data.js', 'data.js?v=' + dataVersion)
     .replaceAll('poverkadoma-design-site.js', 'site.js'));
   fs.writeFileSync(path.join(base, target), content);
   hashes[target] = crypto.createHash('sha256').update(content).digest('hex');
