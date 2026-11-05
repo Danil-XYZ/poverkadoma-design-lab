@@ -3,7 +3,8 @@
   const data=window.PD_SITE_DATA,$=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
   if(!data){document.body.textContent='Не удалось загрузить материалы. Убедитесь,что все файлы сайта находятся рядом.';return;}
   const store={get(key,fallback){try{return JSON.parse(localStorage.getItem('pd.design.site.'+key))??fallback;}catch{return fallback;}},set(key,value){try{localStorage.setItem('pd.design.site.'+key,JSON.stringify(value));}catch{}}};
-  const state={page:'prototype',category:'all',search:'',order:'new',document:'role-context',role:'internal-v',width:'390',...store.get('view',{})};
+  const viewDefaults={page:'prototype',category:'all',search:'',order:'new',document:'role-context',role:'internal-v',width:'390'};
+  const state={...viewDefaults,...store.get('view',{})};
   const frames=new Map(),loaded=new Set();let syncing=false,toastTimer,fullscreenRestore=null;
   const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;};
   function toast(text){const n=$('#site-toast');n.textContent=text;n.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>n.hidden=true,4500);}
@@ -11,7 +12,7 @@
   function frameBootstrap(){
     const config=window.__PD_FRAME_CONFIG;let cached={};try{cached=JSON.parse(localStorage.getItem('pd.design.frame.'+config.id))||{};}catch{}
     const send=(type,payload={})=>parent.postMessage({pdSite:true,type,id:config.id,...payload},'*');
-    function status(){const app=document.querySelector('.phone'),core=app?.verifierApp,timer=app?.verifierTimerDemo;if(core){const base=app.verifierBridge?.getBaseState?.()?.modelContent||{};send('state',{view:{...base,route:core.getRoute().route,theme:core.api.getSettings().theme,labelAppearance:app.dataset.labelAppearance,timerStyle:timer?.getState().style,timerPlaying:timer?.getState().playing,minutes:timer?.getDisplayMinutes()}});}const role=document.querySelector('[data-epc-role]'),process=document.querySelector('[data-epc-process]');if(role&&process)send('scenario',{role:role.value,process:process.value,processes:[...process.options].map(o=>({value:o.value,label:o.textContent}))});}
+    function status(){const app=document.querySelector('.phone'),core=app?.verifierApp,timer=app?.verifierTimerDemo;if(core){const base=app.verifierBridge?.getBaseState?.()?.modelContent||{};send('state',{view:core.getPreviewView?.()||{...base,route:core.getRoute().route,theme:core.api.getSettings().theme,labelAppearance:app.dataset.labelAppearance,timerStyle:timer?.getState().style,timerPlaying:timer?.getState().playing,minutes:timer?.getDisplayMinutes()}});}const role=document.querySelector('[data-epc-role]'),process=document.querySelector('[data-epc-process]');if(role&&process)send('scenario',{role:role.value,process:process.value,processes:[...process.options].map(o=>({value:o.value,label:o.textContent}))});}
     window.openai={widgetState:cached,setWidgetState:async snapshot=>{cached=snapshot;window.openai.widgetState=snapshot;try{localStorage.setItem('pd.design.frame.'+config.id,JSON.stringify(snapshot));}catch{}status();},sendFollowUpMessage:async value=>send('notice',{text:value?.prompt||'Это сохранённый исследовательский макет.'})};
     class Tweak{
       constructor(options={}){this.options=options;this.supported=true;this.box=document.createElement('details');this.box.className='site-tweak';const summary=document.createElement('summary');summary.textContent=options.container?.getAttribute('aria-label')||'Настройки примера';this.box.append(summary);options.container?.parentNode?.insertBefore(this.box,options.container);}
@@ -42,15 +43,16 @@
   function sourceClick(selector){const n=frameDoc()?.querySelector(selector);if(!n){toast('Дождитесь загрузки макета.');return;}n.click();}
   function setTheme(theme){const app=frameDoc()?.querySelector('.phone');if(!app?.verifierApp)return;app.verifierApp.api.setSettings({theme});app.verifierApp.render();app.verifierApp.persist();syncTheme(theme);}
   function syncTheme(theme){$$('[data-theme]').forEach(n=>n.setAttribute('aria-pressed',String(n.dataset.theme===theme)));}
-  function setPhoneWidth(value){if(!['320','360','390','430'].includes(String(value)))value='390';state.width=String(value);$('#phone-width').value=state.width;$('#prototype-frame').style.width=state.width+'px';$('#device-size').textContent=state.width+' × адаптивная высота';saveView();}
+  function setPhoneWidth(value){if(!['320','360','390','430'].includes(String(value)))value=viewDefaults.width;state.width=String(value);$('#phone-width').value=state.width;$('#prototype-frame').style.width=state.width+'px';$('#device-size').textContent=state.width+' × адаптивная высота';saveView();}
   function updateMain(view){
     syncing=true;try{const doc=frameDoc();if(!doc)return;syncTheme(view.theme);$('#device-route').textContent=({requests:'Заявки',request:'Заявка',acts:'Акты',tools:'Инструменты',settings:'Настройки',register:'Регистрация',onboarding:'Онбординг',notifications:'Уведомления',messages:'Сообщения'})[view.route]||'Поверка дома';
-      if([...$('#screen-picker').options].some(n=>n.value===view.route))$('#screen-picker').value=view.route;
+      const picker=$('#screen-picker'),temporary=picker.querySelector('[data-current-screen]');if(temporary&&temporary.value!==view.route)temporary.remove();if(![...picker.options].some(n=>n.value===view.route)){const current=el('option','',[...doc.querySelectorAll('.phone header')].find(n=>!n.closest('[hidden]'))?.querySelector('.app-screen-title')?.textContent||$('#device-route').textContent);current.value=view.route;current.disabled=true;current.dataset.currentScreen='';picker.append(current);}picker.value=view.route;
       for(const n of $$('[data-proxy-select]')){const source=doc.getElementById(n.dataset.proxySelect);if(source)n.value=source.value;}
       for(const n of $$('[data-proxy-check]')){const source=doc.getElementById(n.dataset.proxyCheck);if(source)n.checked=source.checked;}
       for(const n of $$('[data-proxy-click]')){const source=doc.querySelector(n.dataset.proxyClick);if(source?.hasAttribute('aria-pressed'))n.setAttribute('aria-pressed',source.getAttribute('aria-pressed'));}
       $('#top-corners').value=view.roundedTopbar?'rounded':'square';$('#bottom-corners').value=view.roundedBottomBar?'rounded':'square';$('#city-scenario').value=view.cityScenario||'single';
-      const depth=doc.getElementById('shadow-depth');if(depth){$('#site-shadow-depth').value=depth.value;$('#site-shadow-value').textContent=depth.value+'%';}
+      const depth=doc.getElementById('shadow-depth');if(depth){$('#site-shadow-depth').value=depth.value;$('#site-shadow-depth').disabled=depth.disabled;$('#site-shadow-value').textContent=depth.value+'%';}
+      const sample=doc.getElementById('request-sample');if(sample)$('#request-example').value=sample.value;
       if(Number.isFinite(view.minutes)){if(document.activeElement!==$('#site-time'))$('#site-time').value=view.minutes;$('#site-time-value').textContent=view.minutes<0?'Просрочено '+Math.abs(view.minutes)+' мин':view.minutes===0?'Срок истёк':view.minutes+' мин';}
       $('#site-timer-play').textContent=view.timerPlaying?'Пауза':'Запустить';$('#site-timer-play').setAttribute('aria-pressed',String(Boolean(view.timerPlaying)));
     }finally{syncing=false;}
@@ -64,6 +66,7 @@
   $('#bottom-corners').addEventListener('change',e=>sourceClick('[data-bottom-corners="'+e.target.value+'"]'));
   $('#city-scenario').addEventListener('change',e=>sourceClick('[data-city-scenario="'+e.target.value+'"]'));
   $('#site-timer-play').addEventListener('click',()=>sourceClick('#request-timer-play'));
+  $('#reset-preview').addEventListener('click',()=>{const core=frameDoc()?.querySelector('.phone')?.verifierApp;if(!core?.resetPreview){toast('Дождитесь загрузки макета.');return;}const view=core.resetPreview();setPhoneWidth(viewDefaults.width);updateMain(view);toast('Настройки макета сброшены. Заявки и акты сохранены.');});
   $('#open-request-example').addEventListener('click',()=>{sourceChange('#request-sample',$('#request-example').value);sourceClick('#request-sample-open');});
   function experiments(){
     const query=state.search.trim().toLocaleLowerCase('ru');let entries=data.experiments.filter(x=>(state.category==='all'||x.category===state.category)&&(!query||[x.title,x.description,x.category,x.decision].join(' ').toLocaleLowerCase('ru').includes(query)));entries.sort((a,b)=>state.order==='old'?a.order-b.order:b.order-a.order);
