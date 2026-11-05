@@ -191,7 +191,7 @@ button.v-text, .v-text-action { min-height: 44px; padding: 8px 12px; border: 0; 
 .v-history-pager .v-button { padding:8px; }
 .v-history-range { text-align:center; color:var(--secondary); font-size:calc(14px * var(--v-scale)); }
 .v-act-group { display:flex; flex-direction:column; gap:var(--space-2); min-width:0; }
-.v-act-group > .v-section-label { margin:0; }
+.v-act-group > .v-section-label, .v-stat-section > .v-section-label { margin:0; }
 .v-act-shortcuts .v-primary { border-radius:14px; }
 .v-act-card-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
 .v-act-card-head > button { width: auto; }
@@ -216,6 +216,29 @@ button.v-text, .v-text-action { min-height: 44px; padding: 8px 12px; border: 0; 
 .v-stat-tile { display: flex; flex-direction: column; gap: 4px; padding: 12px; border: 1px solid var(--decorative-line); border-radius: 16px; background: var(--surface); box-shadow: var(--shadow-card); }
 .v-stat-tile strong { font-size: calc(24px * var(--v-scale)); color: var(--blue); font-weight: 600; }
 .v-stat-tile span { font-size: calc(14px * var(--v-scale)); }
+.v-statistics { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
+.v-stat-section { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.v-stat-card { gap: 8px; padding: 12px; overflow: hidden; }
+.v-stat-year-control { display: flex; align-items: center; justify-content: center; gap: 16px; }
+.v-stat-year { min-width: 4ch; color: var(--ink); font-size: calc(20px * var(--v-scale)); line-height: 1.4; text-align: center; font-variant-numeric: tabular-nums; }
+.v-stat-arrow { display: inline-flex; align-items: center; justify-content: center; width: 44px; min-height: 44px; flex: 0 0 44px; padding: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--blue); font-size: 30px; line-height: 1; box-shadow: none; }
+.v-stat-arrow:disabled { color: var(--secondary); opacity: .35; cursor: default; }
+.v-stat-scroll { min-width: 0; width: 100%; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.v-stat-chart { display: grid; grid-template-columns: repeat(12,minmax(calc(44px * var(--v-scale)),1fr)); min-width: 100%; width: max-content; padding: calc(28px * var(--v-scale)) 0 4px; }
+.v-stat-column { display: flex; flex-direction: column; align-items: center; min-width: 0; }
+.v-stat-plot { display: flex; align-items: flex-end; justify-content: center; width: 100%; height: 154px; border-bottom: 1px solid var(--line); background: repeating-linear-gradient(to top,transparent 0,transparent 50px,var(--field) 50px,var(--field) 51px); }
+.v-stat-bar { position: relative; width: 24px; min-height: 2px; border-radius: 5px 5px 0 0; background: var(--blue); }
+.phone[data-blue-fill="gradient"] .v-stat-bar { background: linear-gradient(180deg,#2db0ed,#0084c1); }
+.v-stat-bar[data-empty="true"] { background: var(--line); }
+.v-stat-value { position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); color: var(--ink); font-size: calc(14px * var(--v-scale)); line-height: 1.3; font-variant-numeric: tabular-nums; }
+.v-stat-month { padding-top: 8px; color: var(--secondary); font-size: calc(13px * var(--v-scale)); line-height: 1.4; white-space: nowrap; }
+.v-stat-scroll-controls { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.v-stat-months-hint { color: var(--secondary); font-size: calc(13px * var(--v-scale)); line-height: 1.4; text-align: center; }
+.phone[data-v-theme="dark"] .v-stat-month, .phone[data-v-theme="dark"] .v-stat-months-hint { color: var(--ink); opacity: .7; }
+.v-stat-scroll:focus-visible, .v-stat-arrow:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.phone[data-v-route="statistics"] .detail-toolbar { height: auto; flex-wrap: wrap; }
+.phone[data-v-route="statistics"] .app-screen-title { flex: 1 0 auto; max-width: 100%; overflow-wrap: normal; }
+.phone[data-v-route="statistics"][data-offline="false"] .network-slot { display: none; }
 .v-card.v-tool-entity { padding: 12px; border: 1px solid var(--decorative-line); border-radius: 16px; background: var(--surface); box-shadow: var(--shadow-card); }
 .v-card.v-tool-entity > .v-link { padding: 0; border: 0; background: transparent; box-shadow: none; }
 .v-tool-status { display: flex; align-items: center; gap: 8px; font-size: calc(14px * var(--v-scale)); color: var(--secondary); }

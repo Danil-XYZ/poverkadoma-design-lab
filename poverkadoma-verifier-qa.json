@@ -74,8 +74,8 @@
     "nestedPolicy": "Sections launcher visible only on Settings; other nested pages use Settings/Back and can take more than two taps by explicit user change",
     "verification": "Actual visible DOM control activation"
   },
-  "seedSnapshotBytes": 16570,
-  "fragmentBytes": 1022654,
+  "seedSnapshotBytes": 16591,
+  "fragmentBytes": 1028891,
   "limitations": [
     "DOM-only: layout, real-browser rendering and touch/device behavior remain unverified; custom calendar and option interactions are exercised in DOM",
     "Camera, real file selection, downloads and external handlers remain unverified",
