@@ -201,15 +201,20 @@
     <span class="visually-hidden" id="navigation-status" role="status"></span>
     <div class="filter-overlay" id="request-filters" role="dialog" aria-modal="true" aria-labelledby="filter-title" hidden>
       <form class="filter-panel" id="filter-form">
-        <div class="filter-heading"><h2 id="filter-title">Фильтр</h2><button class="icon-button" id="filter-close" type="button" aria-label="Закрыть фильтр"><span data-icon="close"></span></button></div>
+        <div class="filter-heading"><h2 id="filter-title">Фильтр заявок</h2><button class="icon-button" id="filter-close" type="button" aria-label="Закрыть фильтр"><span data-icon="close"></span></button></div>
+        <div class="filter-body">
         <label class="filter-field" for="filter-scope"><span>Заявки</span><select id="filter-scope"><option value="mine">Мои</option><option value="available">Свободные</option><option value="all">Все заявки</option></select></label>
-        <label class="filter-field" for="filter-period"><span>Дата визита</span><select id="filter-period"><option value="all">Все даты</option><option value="today">Сегодня</option><option value="tomorrow">Завтра</option><option value="range">Период</option></select></label>
+        <fieldset class="filter-group"><legend>Дата визита</legend><div class="filter-options" id="filter-period-options"></div><select id="filter-period" aria-label="Дата визита" hidden><option value="all">Все даты</option><option value="today">Сегодня</option><option value="tomorrow">Завтра</option><option value="undated">Без даты</option><option value="range">Период</option></select></fieldset>
         <div class="filter-range" id="filter-range" hidden>
           <label class="filter-field" for="filter-from"><span>С</span><input id="filter-from" type="date"></label>
           <label class="filter-field" for="filter-to"><span>По</span><input id="filter-to" type="date"></label>
         </div>
-        <p class="filter-error" id="filter-error" role="alert" hidden>Дата «С» должна быть не позже даты «По».</p>
-        <button class="request-action primary" type="submit">Применить</button>
+        <fieldset class="filter-group"><legend>Статус <span class="filter-hint">Можно несколько</span></legend><div class="filter-options" id="filter-status-options"></div></fieldset>
+        <label class="filter-field" for="filter-city"><span>Населённый пункт</span><select id="filter-city"><option value="">Все населённые пункты</option></select></label>
+        <label class="filter-field" for="filter-service"><span>Услуга</span><select id="filter-service"><option value="">Все услуги</option><option value="Поверка ИПУ">Поверка воды</option><option value="Поверка газового счётчика">Поверка газа</option><option value="Замена ИПУ">Замена ИПУ</option></select></label>
+        <label class="filter-field" for="filter-sync"><span>Отправка изменений</span><select id="filter-sync"><option value="">Любое состояние</option><option value="error">Ошибка отправки</option><option value="queued">Ожидают отправки</option></select></label>
+        </div>
+        <div class="filter-footer"><p class="filter-error" id="filter-error" role="alert" hidden></p><p class="filter-result" id="filter-result" role="status" aria-live="polite"></p><div class="filter-actions"><button class="filter-reset" id="filter-reset" type="button">Сбросить</button><button class="request-action primary" id="filter-apply" type="submit">Показать заявки</button></div></div>
       </form>
     </div>
     <footer class="bottom-bar">

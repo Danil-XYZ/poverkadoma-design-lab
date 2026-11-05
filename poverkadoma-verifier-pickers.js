@@ -23,9 +23,10 @@ function createVerifierPickers(api) {
   function enhance(host){
     if(!host)return;
     for(const input of host.querySelectorAll('select,input[type="date"]')){
+      if(input.id==='filter-period')continue;
       if(input.dataset.customPicker==='true'){synced.get(input)?.();continue;}
       input.dataset.customPicker='true';
-      const isDate=input.type==='date',label=input.getAttribute('aria-label')||input.closest('label')?.querySelector('.v-label,.detail-label')?.textContent||'Выберите значение';
+      const isDate=input.type==='date',label=input.getAttribute('aria-label')||input.closest('label')?.querySelector('.v-label,.detail-label,span')?.textContent||'Выберите значение';
       const trigger=button('',()=>{if(input.disabled||input.readOnly)return;isDate?calendar(input,label):options(input,label);});
       trigger.className='v-select-control';trigger.type='button';trigger.dataset.pickerFor=input.id;trigger.setAttribute('aria-haspopup','dialog');input.hidden=true;input.before(trigger);
       function sync(){

@@ -153,6 +153,44 @@
   let dateFilter = 'all';
   let dateFrom = '';
   let dateTo = '';
+  let requestFilters = {statuses:[], city:'', service:'', sync:''};
+  const statusLabels = {new:'Новая',appointed:'Назначена',agreed:'Согласована','in-work':'В работе',completed:'Выполнена',canceled:'Отменена'};
+  const filterCity = document.getElementById('filter-city');
+  const filterService = document.getElementById('filter-service');
+  const filterSync = document.getElementById('filter-sync');
+  const filterResult = document.getElementById('filter-result');
+  const filterApply = document.getElementById('filter-apply');
+  const statusOptions = document.getElementById('filter-status-options');
+  const periodOptions = document.getElementById('filter-period-options');
+  function cleanRequestFilters(value = {}) {
+    return {statuses:[...new Set(Array.isArray(value?.statuses) ? value.statuses.filter(key => Object.hasOwn(statusLabels,key)) : [])],city:typeof value?.city === 'string' ? value.city.slice(0,200) : '',service:['Поверка ИПУ','Поверка газового счётчика','Замена ИПУ'].includes(value?.service) ? value.service : '',sync:['error','queued'].includes(value?.sync) ? value.sync : ''};
+  }
+  function draftRequestFilters() {
+    return {statuses:[...statusOptions.querySelectorAll('[aria-pressed="true"]')].map(n=>n.dataset.status),city:filterCity.value,service:filterService.value,sync:filterSync.value};
+  }
+  function refreshFilterDraft() {
+    filterRange.hidden = filterPeriod.value !== 'range';
+    periodOptions.querySelectorAll('button').forEach(n=>n.setAttribute('aria-pressed',String(n.dataset.period===filterPeriod.value)));
+    const count = selectRequests(getRequestItems(),filterScope.value,filterPeriod.value,filterFrom.value,filterTo.value,draftRequestFilters()).length;
+    filterApply.textContent = 'Показать · ' + count;
+    filterResult.textContent = count ? 'Найдено заявок: ' + count + (input.value.trim() ? ' · с учётом поиска' : '') : 'Нет совпадений. Измените условия' + (input.value.trim() ? ' или поисковый запрос.' : '.');
+  }
+  for (const [value,label] of Object.entries(statusLabels)) {
+    const button=document.createElement('button');button.type='button';button.className='filter-option';button.textContent=label;button.dataset.status=value;button.setAttribute('aria-pressed','false');
+    button.addEventListener('click',()=>{button.setAttribute('aria-pressed',String(button.getAttribute('aria-pressed')!=='true'));refreshFilterDraft();});statusOptions.append(button);
+  }
+  for (const option of filterPeriod.querySelectorAll('option')) {
+    const button=document.createElement('button');button.type='button';button.className='filter-option';button.textContent=option.textContent;button.dataset.period=option.value;
+    button.addEventListener('click',()=>{filterPeriod.value=option.value;filterError.hidden=true;refreshFilterDraft();});periodOptions.append(button);
+  }
+  filterForm.addEventListener('change',refreshFilterDraft);
+  document.getElementById('filter-reset').addEventListener('click',()=>{
+    if(filterScope.value==='all')filterScope.value='mine';
+    filterPeriod.value='all';filterFrom.value='';filterTo.value='';filterCity.value='';filterService.value='';filterSync.value='';
+    statusOptions.querySelectorAll('button').forEach(n=>n.setAttribute('aria-pressed','false'));
+    for(const control of [filterScope,filterCity,filterService,filterSync,filterFrom,filterTo])control.dispatchEvent(new window.Event('change',{bubbles:true}));
+    filterError.hidden=true;refreshFilterDraft();
+  });
   let renderedRequestModels = new Map();
   const requestDetail = createRequestDetail({app, screen:requestScreen, icon, onClose:()=>showRequests(), onChange:()=>renderRequests()});
   const requestSample = document.getElementById('request-sample');
@@ -168,9 +206,10 @@
     const normalized = [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')].join('-');
     return normalized === value ? value : '';
   }
-  function setListFilters(scope = 'mine', period = 'all', from = '', to = '') {
+  function setListFilters(scope = 'mine', period = 'all', from = '', to = '', extra = requestFilters) {
+    requestFilters = cleanRequestFilters(extra);
     listScope = ['mine', 'available', 'all'].includes(scope) ? scope : 'mine';
-    dateFilter = ['all', 'today', 'tomorrow', 'range'].includes(period) ? period : 'all';
+    dateFilter = ['all', 'today', 'tomorrow', 'range', 'undated'].includes(period) ? period : 'all';
     dateFrom = normalizeDay(from);
     dateTo = normalizeDay(to);
     if (dateFilter === 'range' && (!dateFrom && !dateTo || dateFrom && dateTo && dateFrom > dateTo)) {
@@ -179,7 +218,7 @@
     app.dataset.listScope = listScope;
     app.dataset.dateFilter = dateFilter;
     app.querySelectorAll('[data-scope]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.scope === listScope)));
-    const active = listScope === 'all' || dateFilter !== 'all';
+    const active = listScope === 'all' || dateFilter !== 'all' || requestFilters.statuses.length > 0 || Boolean(requestFilters.city || requestFilters.service || requestFilters.sync);
     filterToggle.dataset.active = String(active);
     filterToggle.querySelector('.filter-dot').hidden = !active;
     filterToggle.setAttribute('aria-label', active ? 'Фильтр, есть применённые условия' : 'Фильтр');
@@ -194,10 +233,15 @@
     }
     if (listScope === 'all') chip('Все заявки', () => setListFilters('mine', dateFilter, dateFrom, dateTo));
     if (dateFilter !== 'all') {
-      const label = dateFilter === 'today' ? 'Сегодня' : dateFilter === 'tomorrow' ? 'Завтра'
+      const label = dateFilter === 'today' ? 'Сегодня' : dateFilter === 'tomorrow' ? 'Завтра' : dateFilter === 'undated' ? 'Без даты'
         : (dateFrom ? 'С ' + displayDate(dateFrom) : '') + (dateTo ? ' по ' + displayDate(dateTo) : '');
       chip(label.trim(), () => setListFilters(listScope));
     }
+    for (const status of requestFilters.statuses) chip(statusLabels[status],()=>setListFilters(listScope,dateFilter,dateFrom,dateTo,{...requestFilters,statuses:requestFilters.statuses.filter(v=>v!==status)}));
+    if(requestFilters.city) chip(requestFilters.city,()=>setListFilters(listScope,dateFilter,dateFrom,dateTo,{...requestFilters,city:''}));
+    if(requestFilters.service) chip({'Поверка ИПУ':'Поверка воды','Поверка газового счётчика':'Поверка газа','Замена ИПУ':'Замена ИПУ'}[requestFilters.service],()=>setListFilters(listScope,dateFilter,dateFrom,dateTo,{...requestFilters,service:''}));
+    if(requestFilters.sync) chip({error:'Ошибка отправки',queued:'Ожидают отправки'}[requestFilters.sync],()=>setListFilters(listScope,dateFilter,dateFrom,dateTo,{...requestFilters,sync:''}));
+    if(filterSummary.children.length) chip('Сбросить всё',()=>setListFilters(listScope==='all'?'mine':listScope,'all','','',{}));
     filterSummary.hidden = !filterSummary.children.length;
     renderRequests();
   }
@@ -207,7 +251,12 @@
     if (open) {
       filterScope.value = listScope; filterPeriod.value = dateFilter;
       filterFrom.value = dateFrom; filterTo.value = dateTo;
+      filterCity.replaceChildren();
+      for(const city of ['',...new Set([...getRequestItems().map(item=>item.city),requestFilters.city].filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ru'))) {const option=document.createElement('option');option.value=city;option.textContent=city||'Все населённые пункты';filterCity.append(option);}
+      filterCity.value=requestFilters.city;filterService.value=requestFilters.service;filterSync.value=requestFilters.sync;
+      statusOptions.querySelectorAll('button').forEach(n=>n.setAttribute('aria-pressed',String(requestFilters.statuses.includes(n.dataset.status))));
       filterRange.hidden = dateFilter !== 'range'; filterError.hidden = true;
+      refreshFilterDraft();
       if (focus) filterClose.focus?.({preventScroll:true});
     } else if (focus) filterToggle.focus?.({preventScroll:true});
   }
@@ -215,7 +264,7 @@
   filterClose.addEventListener('click', () => setFiltersOpen(false));
   filterOverlay.addEventListener('click', event => { if (event.target === filterOverlay) setFiltersOpen(false); });
   filterPeriod.addEventListener('change', () => { filterRange.hidden = filterPeriod.value !== 'range'; filterError.hidden = true; });
-  filterForm.addEventListener('submit', event => {
+  function applyRequestFilters(event) {
     event.preventDefault();
     if (filterPeriod.value === 'range' && !filterFrom.value && !filterTo.value) {
       filterError.textContent = 'Укажите хотя бы одну дату.';
@@ -225,10 +274,12 @@
       filterError.textContent = 'Дата «С» должна быть не позже даты «По».';
       filterError.hidden = false; filterFrom.focus?.(); return;
     }
-    setListFilters(filterScope.value, filterPeriod.value, filterFrom.value, filterTo.value);
+    setListFilters(filterScope.value, filterPeriod.value, filterFrom.value, filterTo.value, draftRequestFilters());
     homeList.scrollTop = 0;
     setFiltersOpen(false);
-  });
+  }
+  filterApply.addEventListener('click', applyRequestFilters);
+  filterForm.addEventListener('submit', applyRequestFilters);
   filterOverlay.addEventListener('keydown', event => {
     if (event.key === 'Escape') { event.preventDefault(); setFiltersOpen(false); }
     if (event.key === 'Tab') {
@@ -423,9 +474,7 @@
   }
   app.querySelectorAll('[data-icon]').forEach(slot => slot.replaceWith(icon(slot.dataset.icon)));
 
-  function renderRequests() {
-    renderedRequestModels = new Map();
-    const query = input.value.toLocaleLowerCase('ru').trim();
+  function getRequestItems() {
     // Explicit demo geography, not a guess based on the currently visible/search results.
     const geographyRequests = app.dataset.cityScenario === 'mixed'
       ? requests.map((item, index) => ({ ...item, city: ['Тольятти', 'Самара', 'Жигулёвск'][index % 3] })) : requests;
@@ -440,17 +489,7 @@
       if(saved.quantity)next.work=(item.work||'').replace(/\d+ счётчик[а-я]*/u,saved.quantity+' '+(saved.quantity==='1'?'счётчик':Number(saved.quantity)<5?'счётчика':'счётчиков'));
       return next;
     });
-    const visibleRequests = workingRequests.filter(item => {
-      if (item.linkedActExample && !linkedBidToggle.checked) return false;
-      if (listScope === 'mine' && item.assignedTo !== verifierId) return false;
-      if (listScope === 'available' && (item.assignedTo != null || item.kind !== 'new')) return false;
-      const date = item.visitDate || item.requestedDate || '';
-      if (dateFilter === 'today') return date === dayKey();
-      if (dateFilter === 'tomorrow') return date === dayKey(1);
-      if (dateFilter === 'range') return Boolean(date) && (!dateFrom || date >= dateFrom) && (!dateTo || date <= dateTo);
-      return true;
-    });
-    const data = app.dataset.cardData === 'long' ? visibleRequests.map((item, index) => ({
+    const data = app.dataset.cardData === 'long' ? workingRequests.map((item, index) => ({
       ...item,
       id: `2026-${item.id}-000128`,
       ...(item.number ? {number:item.number+'-000128'} : {}),
@@ -460,12 +499,38 @@
       address: 'проспект Большой Сампсониевский, дом 126, корпус 2, квартира 108',
       ...(item.phone ? { phone: '+7 (901) 123-45-67, доб. 128', phoneDial: '+79011234567;ext=128' } : {}),
       ...(index === 1 ? { syncDescription: 'Изменения заявки сохранены на устройстве. Сервер не подтвердил получение. Проверьте подключение и уточните состояние заявки перед повторной отправкой.' } : {})
-    })) : visibleRequests;
+    })) : workingRequests;
+    return data;
+  }
+  function selectRequests(items, scope=listScope, period=dateFilter, from=dateFrom, to=dateTo, extra=requestFilters) {
+    const query = input.value.toLocaleLowerCase('ru').trim();
+    const data = items.filter(item => {
+      if (item.linkedActExample && !linkedBidToggle.checked) return false;
+      if (scope === 'mine' && item.assignedTo !== verifierId) return false;
+      if (scope === 'available' && (item.assignedTo != null || item.kind !== 'new')) return false;
+      if (extra.statuses.length && !extra.statuses.includes(item.kind)) return false;
+      if (extra.city && item.city !== extra.city) return false;
+      const service = item.service || (/газа/.test(item.work||'') ? 'Поверка газового счётчика' : 'Поверка ИПУ');
+      if (extra.service && service !== extra.service) return false;
+      if (extra.sync && item.syncState !== extra.sync) return false;
+      const rawDate = item.visitDate || item.requestedDate || '';
+      const date = /^\d{2}\.\d{2}\.\d{4}$/.test(rawDate) ? rawDate.split('.').reverse().join('-') : rawDate;
+      if (period === 'today') return date === dayKey();
+      if (period === 'tomorrow') return date === dayKey(1);
+      if (period === 'undated') return !date;
+      if (period === 'range') return Boolean(date) && (!from || date >= from) && (!to || date <= to);
+      return true;
+    });
     const normalized = value => value.toLocaleLowerCase('ru').replace(/[^\p{L}\p{N}]/gu, '');
     const normalizedQuery = normalized(query);
-    const matching = data.filter(item => `${item.address} ${item.city} ${item.clientName || ''} ${item.phone || ''} ${item.work || ''} ${compactWork(item.work)} ${item.number || ''} ${item.id}`.toLocaleLowerCase('ru').includes(query)
+    return data.filter(item => `${item.address} ${item.city} ${item.clientName || ''} ${item.phone || ''} ${item.work || ''} ${compactWork(item.work)} ${item.number || ''} ${item.id}`.toLocaleLowerCase('ru').includes(query)
       || (query.includes(' ') && query.split(/\s+/).every(part => (item.clientName || '').toLocaleLowerCase('ru').includes(part)))
       || (normalizedQuery.length > 0 && normalized(`${item.phone || ''} ${item.number || ''} ${item.id}`).includes(normalizedQuery)));
+  }
+  function renderRequests() {
+    renderedRequestModels = new Map();
+    const query = input.value.toLocaleLowerCase('ru').trim();
+    const matching = selectRequests(getRequestItems());
     const groups = new Map();
     matching.forEach(item => {
       const key = listScope === 'available' ? 'available'

@@ -1,5 +1,5 @@
 {
-  "passed": 53,
+  "passed": 57,
   "checks": [
     "History cycles 10/50/100, paginates without duplicates, and keeps preferences after reload",
     "History cards disclose original meter facts and receipt action does not expand them",
@@ -53,7 +53,11 @@
     "External label saturation changes all status families and survives routes,packed restores and host echoes",
     "Negative manual time restores,synchronized detail stays hidden for agreed requests,and legacy clocks migrate to the new cycle",
     "Locality is a separate visible row for single and mixed geography and remains above the street when editing a request",
-    "Tools header preserves title,actions and network behavior while compact spacing is scoped to Tools and Notifications"
+    "Tools header preserves title,actions and network behavior while compact spacing is scoped to Tools and Notifications",
+    "Request filters intersect date, status, service, city and sync; count matches rendered cards",
+    "Request status OR, draft cancellation, reset, empty state and removal preserve the correct list",
+    "Request period boundaries, undated requests and search compose with applied filters",
+    "Request filters follow current edited fields, mixed localities and available assignment scope"
   ],
   "routeCount": 39,
   "headerContract": {
@@ -70,8 +74,8 @@
     "nestedPolicy": "Sections launcher visible only on Settings; other nested pages use Settings/Back and can take more than two taps by explicit user change",
     "verification": "Actual visible DOM control activation"
   },
-  "seedSnapshotBytes": 16504,
-  "fragmentBytes": 1011473,
+  "seedSnapshotBytes": 16570,
+  "fragmentBytes": 1022428,
   "limitations": [
     "DOM-only: layout, real-browser rendering and touch/device behavior remain unverified; custom calendar and option interactions are exercised in DOM",
     "Camera, real file selection, downloads and external handlers remain unverified",

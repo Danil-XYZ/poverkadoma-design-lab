@@ -50,7 +50,7 @@ runtime = runtime.replace("'use strict';", "'use strict';\n  const assetData = "
 runtime = runtime.replace('  renderRequests();\n})();', `  renderRequests();
   const persist = () => window.openai?.setWidgetState?.({
     modelContent: { screen: selectedRequestId ? 'Заявка' : selectedDestination ? destinationLabels[selectedDestination] : sectionLabels[activeSection], section: activeSection, destination: selectedDestination, searchOpen: !field.hidden, offline: app.dataset.offline === 'true', roundedTopbar: app.dataset.topbarCorners !== 'square', roundedBottomBar: app.dataset.bottomBarCorners !== 'square', blueFill: app.dataset.blueFill, cardData: app.dataset.cardData, cardText: app.dataset.cardText, cityScenario: app.dataset.cityScenario, linkedBidExample: linkedBidToggle.checked, listScope, dateFilter, shadows: shadowsToggle.checked, borders: bordersToggle.checked, shadowDepth: Number(shadowDepth.value) },
-    privateContent: { query: input.value.slice(0, 200), dateFrom, dateTo, selectedRequestId, requestDrafts:requestDetail.getDrafts(), requestPreferences:requestDetail.getPreferences() }
+    privateContent: { query: input.value.slice(0, 200), dateFrom, dateTo, requestFilters, selectedRequestId, requestDrafts:requestDetail.getDrafts(), requestPreferences:requestDetail.getPreferences() }
   }).catch(() => {});
   const restore = state => {
     if (!state) return;
@@ -69,7 +69,7 @@ runtime = runtime.replace('  renderRequests();\n})();', `  renderRequests();
     const restoredQuery = String(saved.query || '').slice(0, 200);
     setSearch(Boolean(state.modelContent?.searchOpen) || Boolean(restoredQuery.trim()), false);
     input.value = restoredQuery;
-    setListFilters(state.modelContent?.listScope, state.modelContent?.dateFilter, saved.dateFrom, saved.dateTo);
+    setListFilters(state.modelContent?.listScope, state.modelContent?.dateFilter, saved.dateFrom, saved.dateTo, saved.requestFilters || {});
     setFiltersOpen(false, false);
     renderRequests();
     showSection(state.modelContent?.section);
@@ -82,6 +82,7 @@ runtime = runtime.replace('  renderRequests();\n})();', `  renderRequests();
   input.addEventListener('input', persist);
   app.querySelectorAll('[data-scope]').forEach(item => item.addEventListener('click', persist));
   filterForm.addEventListener('submit', persist);
+  filterApply.addEventListener('click', persist);
   filterSummary.addEventListener('click', persist);
   networkButtons.forEach(item => item.addEventListener('click', persist));
   cityScenarioButtons.forEach(item => item.addEventListener('click', persist));
