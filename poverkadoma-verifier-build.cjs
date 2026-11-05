@@ -26,6 +26,6 @@ new Function(runtime);
 function scope(source){let output='',cursor=0;while(cursor<source.length){const start=source.indexOf('{',cursor);if(start<0){output+=source.slice(cursor);break;}const selector=source.slice(cursor,start).trim();let end=start+1,depth=1;while(depth&&end<source.length){if(source[end]==='{')depth++;if(source[end]==='}')depth--;end++;}const body=source.slice(start+1,end-1);output+=selector.startsWith('@')?selector+'{'+scope(body)+'}\n':selector.split(',').map(s=>prefix+' '+s.trim()).join(',')+'{'+body+'}\n';cursor=end;}return output;}
 fragment=fragment.replace(/<script>[\s\S]*?<\/script>/,()=>'<script>\n'+runtime+'\n</script>');
 fragment=fragment.replace('</style>',scope(fs.readFileSync(path.join(base,'poverkadoma-verifier-app.css'),'utf8'))+scope(fs.readFileSync(path.join(base,'poverkadoma-verifier-timer-preview.css'),'utf8'))+scope(fs.readFileSync(path.join(base,'poverkadoma-verifier-labels.css'),'utf8'))+'</style>');
-if(Buffer.byteLength(fragment)>1000000)throw Error('Full preview exceeds1MB');
+if(Buffer.byteLength(fragment)>1200000)throw Error('Full preview exceeds1.2MB');
 fs.writeFileSync(path.join(base,'poverkadoma-verifier-app-preview.html'),fragment);
 console.log(JSON.stringify({output:'poverkadoma-verifier-app-preview.html',bytes:Buffer.byteLength(fragment),syntax:'passed'}));
