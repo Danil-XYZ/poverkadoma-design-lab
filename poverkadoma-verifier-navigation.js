@@ -33,7 +33,7 @@ function createVerifierNavigation({app,bridge,el,navigate,showHelp,back,getSetti
   function alignToolsInk(){
     const {toolbar,heading,actions}=screen;toolbar.removeAttribute('data-ink-layout');
     [...actions.children].forEach(n=>{n.style.removeProperty('--tools-button-left');n.style.removeProperty('--tools-icon-shift');});
-    if(app.dataset.vRoute!=='tools'||screen.header.closest('[hidden]')||!window.getComputedStyle)return;
+    if(!['tools','notifications'].includes(app.dataset.vRoute)||screen.header.closest('[hidden]')||!window.getComputedStyle)return;
     const controls=[...actions.children].filter(n=>!n.hidden&&!(n.classList.contains('network-slot')&&screen.offline.hidden));
     const area=toolbar.getBoundingClientRect(),title=heading.getBoundingClientRect();
     if(!area.width||!title.width||controls.some(n=>Math.abs(n.getBoundingClientRect().top-title.top)>16))return;
