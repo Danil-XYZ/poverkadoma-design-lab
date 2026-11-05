@@ -10,7 +10,7 @@
     "The actual EPC viewer generates SVG for every role and all47 processes with bundled Dagre",
     "Export preserves sprite lookup keys and every rendered icon has an embedded image;phone sizing overrides the old844px canvas last",
     "Beautiful outer controls operate the original prototype including labels,shadows,corners and timer",
-    "Reset restores every outer preview control and real iframe storage without clearing work or unrelated localStorage",
+    "Reset button restores unread demo data durably without changing appearance or unrelated storage",
     "All local source resources exist and the site needs neither a server API nor a build on the host"
   ],
   "manifest": {
@@ -26,7 +26,7 @@
       "poverkadoma-design-site.js",
       "poverkadoma-design-site-data.js"
     ],
-    "bytes": 13388041,
+    "bytes": 13388587,
     "verification": "Static package; no production services,credentials or raw Confluence exports included."
   },
   "verification": "DOM integration and source checks only; real browser geometry,frame script execution and mobile interaction remain unverified."

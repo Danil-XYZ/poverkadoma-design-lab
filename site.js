@@ -66,7 +66,7 @@
   $('#bottom-corners').addEventListener('change',e=>sourceClick('[data-bottom-corners="'+e.target.value+'"]'));
   $('#city-scenario').addEventListener('change',e=>sourceClick('[data-city-scenario="'+e.target.value+'"]'));
   $('#site-timer-play').addEventListener('click',()=>sourceClick('#request-timer-play'));
-  $('#reset-preview').addEventListener('click',()=>{const core=frameDoc()?.querySelector('.phone')?.verifierApp;if(!core?.resetPreview){toast('Дождитесь загрузки макета.');return;}const view=core.resetPreview();setPhoneWidth(viewDefaults.width);updateMain(view);toast('Настройки макета сброшены. Заявки и акты сохранены.');});
+  $('#reset-preview').addEventListener('click',()=>{const core=frameDoc()?.querySelector('.phone')?.verifierApp;if(!core?.resetDemoData){toast('Дождитесь загрузки макета.');return;}updateMain(core.resetDemoData());toast('Данные макета восстановлены. Сообщения снова непрочитанные.');});
   $('#open-request-example').addEventListener('click',()=>{sourceChange('#request-sample',$('#request-example').value);sourceClick('#request-sample-open');});
   function experiments(){
     const query=state.search.trim().toLocaleLowerCase('ru');let entries=data.experiments.filter(x=>(state.category==='all'||x.category===state.category)&&(!query||[x.title,x.description,x.category,x.decision].join(' ').toLocaleLowerCase('ru').includes(query)));entries.sort((a,b)=>state.order==='old'?a.order-b.order:b.order-a.order);

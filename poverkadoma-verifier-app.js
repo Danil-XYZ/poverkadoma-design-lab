@@ -6,7 +6,7 @@ function createVerifierApp(options) {
   const defaults={hints:true,theme:'light',fontScale:1,mapProvider:'',scanner:'google',defaultPrice:'',city:'Тольятти',phone:'+7 (901) 123-45-67',identifier:'DEMO-INTERNAL'};
   let labelAppearance='soft';
   let settings={...defaults},route='requests',params={},history=[],view=null,restoring=false,modalStack=[],modalNode=null,modalReturnFocus=null,toastTimer,pickers=null,lastSignature='',lastSentState=null,saveRevision=0;
-  const previewDefaults={base:safe(b.getBaseState()),timer:safe(app.verifierTimerDemo?.getState()),route,labelAppearance,sample:root.querySelector('#request-sample').value};
+  const previewDefaults={base:safe(b.getBaseState()),route,sample:root.querySelector('#request-sample').value};
   const sessionId=Math.random().toString(36).slice(2);
   const titles={requests:'Заявки',acts:'Акты',tools:'Инструменты',sections:'Разделы',request:'Заявка',account:'Личные данные',settings:'Настройки',messages:'Сообщения',notifications:'Уведомления',feedback:'Обратная связь',equipment:'Приборы',tags:'Идентификационные бирки',storage:'Условия хранения',nepton:'Подключение к НЕПТОН',guide:'Справочник',arshin:'Поиск в АРШИН',documents:'Документы',history:'История',statistics:'Статистика',upload:'Выгрузить все акты',login:'Вход',register:'Регистрация',onboarding:'Знакомство с приложением','new-act':'Новый акт'};
   const actRoutes=['acts','new-act','act-editor','meter-editor','measurements','act-review','upload','history','history-act','statistics'];
@@ -49,13 +49,15 @@ function createVerifierApp(options) {
   function navigate(next,nextParams={}){next=canonicalRoute(next);if(!known(next)){notice('Раздел не найден','error');return;}if(route!=='sections'&&(next!==route||JSON.stringify(nextParams)!==JSON.stringify(params)))history.push({route,params:safe(params)||{}});history=history.slice(-24);route=next;params=safe(nextParams)||{};closeAllModals();render();persist();}
   function back(){const previous=history.pop();route=canonicalRoute(previous?.route)||'requests';params=previous?.params||{};closeAllModals();render();persist();}
   function getPreviewView(){const timer=app.verifierTimerDemo;return {...b.getBaseState().modelContent,route,theme:settings.theme,labelAppearance,timerStyle:timer?.getState().style,timerPlaying:timer?.getState().playing,minutes:timer?.getDisplayMinutes()};}
-  function resetPreview(){
+  function resetDemoData(){
     const current=b.getBaseState(),wasRestoring=restoring;restoring=true;
     try{
-      // Reset presentation and list filters, preserving all actual work and account preferences.
-      b.restoreBaseState({modelContent:previewDefaults.base.modelContent,privateContent:{...previewDefaults.base.privateContent,requestDrafts:current.privateContent.requestDrafts,requestPreferences:current.privateContent.requestPreferences}});
-      settings.theme=defaults.theme;settings.fontScale=defaults.fontScale;labelAppearance=previewDefaults.labelAppearance;labelSelect.value=labelAppearance;
-      root.querySelector('#request-sample').value=previewDefaults.sample;app.verifierTimerDemo?.restore?.(previewDefaults.timer);
+      // Restore the demo dataset, keeping the selected visual design and timer controls.
+      closeAllModals();b.requestDetail.closeDialog();toast.hidden=true;
+      for(const module of Object.values(modules))module.reset();
+      settings={...defaults,hints:settings.hints,theme:settings.theme,fontScale:settings.fontScale};
+      b.restoreBaseState({modelContent:{...current.modelContent,section:'requests',searchOpen:false,listScope:previewDefaults.base.modelContent.listScope,dateFilter:previewDefaults.base.modelContent.dateFilter},privateContent:safe(previewDefaults.base.privateContent)});
+      root.querySelector('#request-sample').value=previewDefaults.sample;
       route=previewDefaults.route;params={};history=[];closeAllModals();render();
     }finally{restoring=wasRestoring;}
     persist();return getPreviewView();
@@ -105,5 +107,5 @@ function createVerifierApp(options) {
   controls.addEventListener('change',event=>{if(event.target.id==='request-sample'){event.stopImmediatePropagation();navigate('request',{id:event.target.value});}else if(event.target.id==='card-text'){settings.fontScale=event.target.value==='large'?2:1;applySettings();persist();}},true);
   controls.addEventListener('click',()=>{applySettings();persist();});
   restore(window.openai?.widgetState);
-  return {navigate,back,render,restore,persist,snapshot,getPreviewView,resetPreview,api,modules,navigation,getRoute:()=>({route,params}),help:showHelp,routes:[...new Set(['requests','request','tools','sections',...actRoutes,...toolRoutes,...accessRoutes])]};
+  return {navigate,back,render,restore,persist,snapshot,getPreviewView,resetDemoData,api,modules,navigation,getRoute:()=>({route,params}),help:showHelp,routes:[...new Set(['requests','request','tools','sections',...actRoutes,...toolRoutes,...accessRoutes])]};
 }

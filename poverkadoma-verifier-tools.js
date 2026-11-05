@@ -18,6 +18,7 @@ function createVerifierTools(api) {
     {id:'water-method',name:'Методика поверки счётчиков воды',revision:'Демонстрационная редакция 2',date:'2026-09-15',body:['Проверка условий','Перед измерением сверяют тип и заводской номер СИ, применимость методики и состояние эталона.','Результат поверки','Результаты измерений и заключение сохраняют для конкретного СИ. Значения этого макета не являются результатами реальной поверки.','Демонстрационный документ','Для реальной работы используется утверждённая методика, выданная организацией.']}
   ];
   let state={equipment:JSON.parse(JSON.stringify(initialEquipment)),storage:{date:today,pressure:'',temperature:'',humidity:'',status:'draft'},storageHistory:[],documents:{quality:false,'water-method':false},registryUpdated:'2026-10-28',arshinHistory:[],feedback:{message:'',attachments:[],status:'draft',phone:''},nepton:{phase:'disconnected',permission:false,network:'',mode:'Выключена',volume:'10',before:'',after:'',saved:false}};
+  const initialState=JSON.parse(JSON.stringify(state));
   let route='equipment',params={},equipmentQuery='',guideQuery='',arshinQuery='',searchDone=false,searchError=false,searchResult=null;
   const uploadUrls=new Map();
   const stack=(...nodes)=>{const host=el('div','v-stack');host.append(...nodes.filter(Boolean));return host;};
@@ -156,5 +157,6 @@ function createVerifierTools(api) {
     if(value.feedback&&typeof value.feedback==='object'){state.feedback.message=String(value.feedback.message||'').slice(0,3000);state.feedback.phone=String(value.feedback.phone||'').slice(0,30);state.feedback.status=['draft','queued','sent'].includes(value.feedback.status)?value.feedback.status:'draft';state.feedback.attachments=Array.isArray(value.feedback.attachments)?value.feedback.attachments.filter(n=>n&&typeof n.name==='string').slice(0,3).map(n=>({name:n.name.slice(0,100),type:String(n.type||'image/jpeg').slice(0,30),size:Number(n.size)||0})):[];}
     if(value.nepton&&typeof value.nepton==='object'){const n=value.nepton;for(const key of ['volume','before','after','error'])if(typeof n[key]==='string')state.nepton[key]=n[key].slice(0,25);state.nepton.permission=n.permission===true;state.nepton.mode=n.mode==='Включена'?'Включена':'Выключена';for(const key of ['photoBefore','photoAfter'])if(typeof n[key]==='string')state.nepton[key]=n[key].slice(0,100);state.nepton.phase=n.phase==='running'?'error':['disconnected','connected','result','error'].includes(n.phase)?n.phase:'disconnected';state.nepton.network=String(n.network||'').slice(0,60);state.nepton.saved=n.saved===true&&state.nepton.phase==='result';}
   }
-  return {render,getState,restore};
+  function reset(){for(const url of uploadUrls.values())URL.revokeObjectURL?.(url);uploadUrls.clear();state=JSON.parse(JSON.stringify(initialState));route='equipment';params={};equipmentQuery=guideQuery=arshinQuery='';searchDone=searchError=false;searchResult=null;}
+  return {render,getState,restore,reset};
 }
