@@ -13,74 +13,44 @@ window.matchMedia=()=>({matches:true});window.requestAnimationFrame=fn=>{frames.
 new vm.Script(code).runInNewContext({window,document,console,Date,setTimeout:()=>1,clearTimeout:()=>{},URL,Blob});
 const app=document.querySelector('.phone'),core=app.verifierApp,header=app.querySelector('.v-topbar');
 const toolbar=header.querySelector('.detail-toolbar'),title=toolbar.querySelector('.app-screen-title'),actions=toolbar.querySelector('.toolbar-actions'),back=toolbar.querySelector('.app-back-button');
-const rect=(left,width,top=0,height=48)=>({left,right:left+width,top,bottom:top+height,width,height});
-let viewport=390,scale=1,wrap=false;
-const visible=()=>[...actions.children].filter(n=>!n.hidden&&!(n.classList.contains('network-slot')&&app.dataset.offline!=='true'));
-const size=()=>app.dataset.offline==='true'?44:48;
-const naturalActionWidth=()=>visible().length*size()+(visible().length-1)*(app.dataset.offline==='true'?0:8);
-// Back retains its 48px target. All free space belongs to the right group's auto margin.
-const geometry=()=>{const content=viewport-32,titleWidth=164*scale,backWidth=48-12,actionWidth=toolbar.dataset.inkLayout==='true'?(parseFloat(toolbar.style.getPropertyValue('--ink-actions-width'))||0):naturalActionWidth();return {titleLeft:16+backWidth+8,titleWidth,backWidth,actionWidth,content};};
-actions.getBoundingClientRect=()=>rect(viewport-16-naturalActionWidth(),naturalActionWidth());
-toolbar.getBoundingClientRect=()=>rect(16,geometry().content);
-title.getBoundingClientRect=()=>rect(geometry().titleLeft,geometry().titleWidth,8,32*scale);
-back.getBoundingClientRect=()=>rect(4,48);
-window.getComputedStyle=()=>({font:'600 24px Segoe UI',strokeWidth:'1.7'});
-const create=document.createElement.bind(document);
-document.createElement=tag=>{const n=create(tag);if(tag==='canvas')n.getContext=()=>({measureText:()=>({actualBoundingBoxRight:geometry().titleWidth})});return n;};
-const settings=actions.querySelector('.v-settings-button .icon'),svg=create('svg');svg.viewBox={baseVal:{x:0,width:24}};svg.getBBox=()=>({x:3,width:18});settings.replaceChildren(svg);
-for(const control of actions.children){
-  control.getBoundingClientRect=()=>rect(viewport-16-geometry().actionWidth+visible().indexOf(control)*(size()+(app.dataset.offline==='true'?0:8)),size(),wrap?64:0);
-  const glyph=control.querySelector('.icon'),img=glyph?.querySelector('img');
-  if(img)img.getBoundingClientRect=()=>{const r=control.getBoundingClientRect(),help=glyph.dataset.iconKind==='help',w=help?19.7:24;return rect(r.left+r.width/2-w/2,w,12,20);};
-}
-svg.getBoundingClientRect=()=>{const r=settings.parentElement.getBoundingClientRect();return rect(r.left+r.width/2-8,16,16,16);};
 const draw=()=>{const pending=[...frames.values()];frames.clear();pending.forEach(fn=>fn(0));};
 const tap=n=>{assert.ok(n&&!n.closest('[hidden]'));n.dispatchEvent(new Event('click',{bubbles:true}));};
-let checked=0;
-for(viewport of [390,430])for(const offline of [false,true])for(const hints of [false,true]){
-  app.dataset.offline=String(offline);core.api.setSettings({hints});core.navigate('notifications');draw();
-  assert.ok(geometry().backWidth+geometry().titleWidth+geometry().actionWidth+16<=geometry().content,'Normal heading and all controls must fit on one flex line');
-  assert.equal(toolbar.dataset.inkLayout,'true');assert.equal(title.textContent,'Уведомления');assert.equal(back.hidden,false);
-  assert.equal(title.getBoundingClientRect().left,60,'Heading must stay at the same left anchor across viewport, network and hints changes');
-  assert.equal(parseFloat(toolbar.style.getPropertyValue('--ink-actions-width')),naturalActionWidth(),'Actions must retain their measured flex footprint');
-  assert.equal(actions.querySelector('.v-notifications-button').hidden,true,'Nested page must not duplicate Notifications');
-  const nodes=visible(),positions=nodes.map(n=>parseFloat(n.style.getPropertyValue('--tools-button-left'))+16);
-  assert.ok(positions[0]>=geometry().titleLeft+geometry().titleWidth+4);
-  positions.forEach((left,i)=>{assert.ok(left+size()<=viewport-16+.01);if(i)assert.ok(left>=positions[i-1]+size()-.01,'Touch targets overlap');});
-  let edge=geometry().titleLeft+geometry().titleWidth;const gaps=[];
-  nodes.forEach((control,i)=>{const glyph=control.querySelector('.icon'),img=glyph.querySelector('img'),r=(img||svg).getBoundingClientRect();let left,width;
-    if(img){const help=glyph.dataset.iconKind==='help';left=r.left+(help?r.width*6/19.7:0);width=r.width*(help?7.7/19.7:1);}else{left=r.left+(3-.85)*r.width/24;width=19.7*r.width/24;}
-    left+=positions[i]-control.getBoundingClientRect().left+parseFloat(control.style.getPropertyValue('--tools-icon-shift'));
-    gaps.push(left-edge);edge=left+width;
-  });
-  assert.ok(gaps.every(g=>Math.abs(g-gaps[0])<.01),'Visible title/action gaps differ');checked++;
-  core.navigation.apply('notifications');draw();assert.equal(title.getBoundingClientRect().left,60,'Repeated alignment must never recenter the heading');
-}
-// The heading is never truncated or shrunk; insufficient room uses the wrapping flex fallback.
-for(const state of [{viewport:320,scale:1,wrap:true},{viewport:390,scale:2,wrap:true}]){
-  ({viewport,scale,wrap}=state);app.dataset.offline='true';core.api.setSettings({hints:true});core.navigate('notifications');draw();
+core.navigate('tools');
+core.navigate('notifications');
+for(const hints of [true,false])for(const offline of [false,true,false]){
+  app.dataset.offline=String(offline);
+  core.api.setSettings({hints});
+  draw();
+  assert.equal(title.textContent,'Уведомления');
+  assert.equal(back.hidden,false);
+  assert.equal(actions.querySelector('.detail-offline').hidden,!offline);
+  assert.equal(actions.querySelector('.v-route-help').hidden,!hints);
+  assert.equal(actions.querySelector('.v-notifications-button').hidden,true);
+  assert.equal(actions.querySelector('.v-settings-button').hidden,false);
   assert.equal(toolbar.hasAttribute('data-ink-layout'),false);
-  assert.equal(toolbar.style.getPropertyValue('--ink-actions-width')||'','','Fallback must release the width reservation');
-  for(const control of actions.children)assert.equal(control.style.getPropertyValue('--tools-button-left')||'','');checked++;
 }
-viewport=390;scale=1;wrap=false;app.dataset.offline='false';core.navigate('tools');core.navigate('notifications');draw();
-tap(actions.querySelector('.v-route-help'));assert.equal(document.querySelector('#verifier-modal').hidden,false);core.api.closeModal();
-tap(actions.querySelector('.v-settings-button'));assert.equal(core.getRoute().route,'settings');draw();assert.equal(toolbar.hasAttribute('data-ink-layout'),false);
-assert.equal(toolbar.style.getPropertyValue('--ink-actions-width')||'','','Unrelated routes must release the width reservation');
-core.navigate('tools');core.navigate('notifications');tap(back);assert.equal(core.getRoute().route,'tools');checked++;
-// Check the compiled preview, not just source: scope() must not inject IDs inside :is().
+core.api.setSettings({hints:true});
+tap(actions.querySelector('.v-route-help'));
+assert.equal(document.querySelector('#verifier-modal').hidden,false);
+core.api.closeModal();
+tap(actions.querySelector('.v-settings-button'));
+assert.equal(core.getRoute().route,'settings');
+core.navigate('tools');
+core.navigate('notifications');
+tap(back);
+assert.equal(core.getRoute().route,'tools');
+
+// Validate the compiled selectors rather than assuming source rules survive scoping.
 const css=[...fragment.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)].map(m=>m[1]).join('\n');
-assert.match(css,/#pd-verifier-app-preview \.phone\[data-v-route="notifications"\]\[data-offline="false"\][^{]*\.network-slot\s*\{\s*display: none/);
-assert.match(css,/#pd-verifier-app-preview \.phone\[data-v-route="notifications"\][^{]*\.app-screen-title\s*\{[^}]*flex: 0 0 auto/);checked++;
-const inkSelector='#pd-verifier-app-preview .phone[data-v-route="notifications"] .v-topbar [data-ink-layout="true"] .toolbar-actions';
 const rules=[...css.matchAll(/([^{}]+)\{([^{}]*)\}/g)].flatMap(m=>m[1].split(',').map(selector=>({selector:selector.trim(),body:m[2]})));
-const inkRules=rules.filter(rule=>rule.selector===inkSelector);
-assert.equal(inkRules.length,2,'Compiled shared rule and Notifications override must have the exact same selector/specificity');
-assert.match(inkRules[0].body,/display:\s*contents/);
-assert.match(inkRules[1].body,/display:\s*flex;\s*width:\s*var\(--ink-actions-width\)/);
-const notificationBase='#pd-verifier-app-preview .phone[data-v-route="notifications"] .v-topbar ';
-assert.match(rules.find(r=>r.selector===notificationBase+'.detail-toolbar').body,/justify-content:\s*flex-start/);
-assert.match(rules.find(r=>r.selector===notificationBase+'.toolbar-actions').body,/margin-left:\s*auto/);
-assert.match(rules.find(r=>r.selector===notificationBase+'.app-back-button').body,/width:\s*48px;\s*flex:\s*0 0 48px/);checked++;
-assert.ok(!rules.some(rule=>rule.selector.includes('.phone:is(')&&rule.selector.includes('data-v-route="notifications"')),'Header selectors must remain safe for the existing comma scoper');checked++;
-console.log(`D002: ${checked} simulated geometry, fallback, CSS and navigation cases passed. Browser visual verification remains unavailable.`);
+const scoped='#pd-verifier-app-preview .phone[data-v-route="notifications"]';
+const rule=(state,element)=>rules.filter(r=>r.selector===scoped+state+' .v-topbar '+element).map(r=>r.body).join(' ');
+assert.match(rule('','.detail-toolbar'),/justify-content: flex-start/);
+assert.match(rule('','.app-back-button'),/width: 48px; flex: 0 0 48px/);
+assert.match(rule('','.app-screen-title'),/max-width: calc\(100% - 44px\)/);
+assert.match(rule('','.toolbar-actions'),/gap: 8px; margin-left: auto/);
+assert.match(rule('[data-offline="false"]','.network-slot'),/display: none/);
+assert.match(rule('[data-offline="true"]','.detail-toolbar'),/--tools-action-width: 44px/);
+assert.match(rule('[data-offline="true"]','.toolbar-actions'),/gap: 0/);
+assert.ok(!rules.some(r=>r.selector.includes(scoped)&&r.selector.includes('data-ink-layout')));
+console.log('Notifications: network, hints, navigation and compiled toolbar rules passed.');

@@ -31,9 +31,9 @@ function createVerifierNavigation({app,bridge,el,navigate,showHelp,back,getSetti
   screen.header.classList.add('v-topbar');screen.toolbar.classList.add('v-toolbar');screen.backButton.classList.add('v-back-button');screen.backButton.setAttribute('aria-label','Назад');screen.backButton.addEventListener('click',back);
   let inkFrame;
   function alignToolsInk(){
-    const {toolbar,heading,actions}=screen;toolbar.removeAttribute('data-ink-layout');toolbar.style.removeProperty('--ink-actions-width');
+    const {toolbar,heading,actions}=screen;toolbar.removeAttribute('data-ink-layout');
     [...actions.children].forEach(n=>{n.style.removeProperty('--tools-button-left');n.style.removeProperty('--tools-icon-shift');});
-    if(!['tools','notifications'].includes(app.dataset.vRoute)||screen.header.closest('[hidden]')||!window.getComputedStyle)return;
+    if(app.dataset.vRoute!=='tools'||screen.header.closest('[hidden]')||!window.getComputedStyle)return;
     const controls=[...actions.children].filter(n=>!n.hidden&&!(n.classList.contains('network-slot')&&screen.offline.hidden));
     const area=toolbar.getBoundingClientRect(),title=heading.getBoundingClientRect();
     if(!area.width||!title.width||controls.some(n=>Math.abs(n.getBoundingClientRect().top-title.top)>16))return;
@@ -50,8 +50,6 @@ function createVerifierNavigation({app,bridge,el,navigate,showHelp,back,getSetti
     if(bounds.some(b=>!b||!b.width))return;
     const targetWidth=controls[0].getBoundingClientRect().width,last=bounds.at(-1),plan=planToolsHeaderInk(titleRight,area.right,last.left+last.width,bounds.map(b=>b.width),targetWidth);if(!plan)return;
     controls.forEach((control,i)=>{const rect=control.getBoundingClientRect(),item=plan.items[i];control.style.setProperty('--tools-button-left',(item.target-area.left)+'px');control.style.setProperty('--tools-icon-shift',(item.left-bounds[i].left-(item.target-rect.left))+'px');});
-    // Reserve the right group; its auto margin absorbs free space without moving Back or the title.
-    if(app.dataset.vRoute==='notifications')toolbar.style.setProperty('--ink-actions-width',actions.getBoundingClientRect().width+'px');
     toolbar.dataset.inkLayout='true';
   }
   function scheduleToolsInk(){if(!window.requestAnimationFrame)return;window.cancelAnimationFrame?.(inkFrame);inkFrame=window.requestAnimationFrame(()=>{inkFrame=null;alignToolsInk();});}
