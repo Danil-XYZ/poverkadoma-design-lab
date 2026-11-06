@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Компактный фильтр — 10 вариантов · Поверка дома</title>
+<style>
+:root{color-scheme:light;--blue:#0084c1;--bg:#f2f4f9;--surface:#fff;--field:#e9ecf2;--ink:#181818;--muted:#616264;--line:#ccc;--soft-blue:#e5f2f9;--focus:#006998;--scale:1;--phone-width:390px;font-family:"Segoe UI",sans-serif}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#181818;--surface:#242427;--field:#343437;--ink:#fff;--muted:#c6c6c6;--line:#616264;--soft-blue:#183746;--focus:#61c5f1}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink)}button,input,select{font:inherit}button,select{cursor:pointer}button{color:inherit}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--focus);outline-offset:3px}[hidden]{display:none!important}
+.page{max-width:1700px;margin:auto;padding:24px 20px 48px}.back{display:inline-block;margin-bottom:12px;font-size:14px;font-weight:600;color:var(--focus);text-decoration:none}h1{font-size:28px;font-weight:600;line-height:1.3;margin:0 0 8px}.intro{max-width:760px;margin:0;color:var(--muted);font-size:15px;line-height:1.5}
+.tools{display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin:22px 0 28px;padding:16px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}.tools label{display:grid;gap:6px;color:var(--muted);font-size:13px}.tools select,.sample{min-height:44px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font-size:14px}.sample[aria-pressed="true"]{background:var(--soft-blue);border-color:var(--blue);color:var(--focus)}.tools-note{flex:1 1 180px;max-width:310px;color:var(--muted);font-size:13px;line-height:1.4;margin:0;align-self:center}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,var(--phone-width)),var(--phone-width)));gap:32px 24px;justify-content:center;align-items:start}.variant{min-width:0;container-type:inline-size}.variant-head{min-height:132px;padding:0 2px 14px}.variant-title{display:flex;gap:10px;align-items:baseline;font-size:18px;line-height:1.35;font-weight:600;margin:0 0 7px}.number{font-size:14px;color:var(--focus);font-variant-numeric:tabular-nums}.description{margin:0 0 9px;color:var(--muted);font-size:14px;line-height:1.45}.measure{font-size:13px;font-weight:600;line-height:1.4;color:var(--focus);font-variant-numeric:tabular-nums}
+.phone{background:var(--surface);border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 5px 18px rgb(0 0 0 / .04)}.status-bar{padding:7px 14px 3px;display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:12px;line-height:16px}.status-icons{display:flex;gap:4px}.status-icons svg{width:15px;height:12px;fill:none;stroke:currentColor;stroke-width:1.5}
+.filter-header{display:flex;align-items:center;gap:2px;padding:6px 10px 8px 14px;border-bottom:1px solid var(--line)}.filter-header h2{flex:1;min-width:0;margin:0;font-size:calc(20px * var(--scale));line-height:1.3;font-weight:600;overflow-wrap:anywhere}.icon-button{display:grid;place-items:center;flex:0 0 44px;width:44px;height:44px;padding:10px;border:0;border-radius:12px;background:transparent;color:var(--muted)}.icon-button svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round}.help-button{background:var(--field);color:var(--focus)}
+.filter-body{display:flex;flex-direction:column;gap:10px;padding:12px}.field-row{position:relative;display:flex;flex-direction:column;align-items:stretch;justify-content:center;gap:2px;width:100%;min-width:0;min-height:60px;padding:8px 32px 8px 12px;border:1px solid transparent;border-radius:12px;background:var(--field);color:var(--ink);text-align:left}.row-label{color:var(--muted);font-size:calc(14px * var(--scale));line-height:1.4;font-weight:600;overflow-wrap:anywhere}.row-value{color:var(--ink);font-size:calc(16px * var(--scale));line-height:1.4;overflow-wrap:anywhere}.field-row::after{content:"";position:absolute;right:14px;top:calc(50% - 5px);width:6px;height:6px;border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);transform:rotate(45deg)}.field-row[data-active="true"]{border-color:var(--blue)}
+.choices{min-width:0;margin:0;padding:0;border:0}.section-label{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 8px;margin:0 0 6px;color:var(--muted);font-size:calc(14px * var(--scale));line-height:1.4;font-weight:600}.hint{font-size:calc(12px * var(--scale));font-weight:400}.options{display:flex;flex-wrap:wrap;gap:6px}.option{flex:0 1 auto;min-width:0;min-height:44px;padding:8px 10px;border:1px solid transparent;border-radius:10px;background:var(--field);color:var(--ink);font-size:calc(14px * var(--scale));line-height:1.4;overflow-wrap:anywhere}.option[aria-pressed="true"]{background:var(--soft-blue);border-color:var(--blue);box-shadow:inset 0 0 0 1px var(--blue);color:var(--focus)}
+.range{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:8px}.range label{display:grid;gap:4px;min-width:0;color:var(--muted);font-size:calc(14px * var(--scale));line-height:1.4}.date-input{width:100%;min-width:0;min-height:44px;padding:8px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font-size:calc(16px * var(--scale))}
+.filter-footer{padding:10px 12px 12px;border-top:1px solid var(--line);background:var(--surface)}.actions{display:flex;flex-wrap:wrap;gap:8px}.reset,.apply,.reopen,.picker-done{min-height:48px;padding:10px 12px;border:1px solid var(--blue);border-radius:12px;line-height:1.4;overflow-wrap:anywhere}.reset{flex:1 1 90px;font-size:calc(14px * var(--scale));color:var(--focus);background:var(--surface)}.apply,.reopen,.picker-done{flex:2 1 145px;font-size:calc(16px * var(--scale));font-weight:600;background:var(--blue);color:#fff}.error{margin:0 0 8px;color:var(--ink);font-size:calc(14px * var(--scale));line-height:1.4}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.help-copy{margin:0;padding:12px 14px;background:var(--soft-blue);font-size:calc(14px * var(--scale));line-height:1.45}.closed{display:grid;gap:16px;padding:24px 16px;min-height:240px;align-content:center}.closed p{margin:0;line-height:1.45}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.joined{background:var(--field);border-radius:12px;overflow:hidden}.joined .field-row{border-radius:0}.joined .field-row+.field-row{border-top:1px solid var(--line)}
+/* Two columns within a settings row; long values still wrap. */
+.v2 .field-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;align-items:center;min-height:52px}.v2 .row-value{text-align:right}
+/* Four ordinary settings form two pairs; choice groups stay full-width. */
+.v3 .pair .field-row{height:100%;min-height:64px}
+/* Share one surface and separators across the three lower settings. */
+.v4 .joined .field-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;align-items:center;min-height:52px}.v4 .joined .row-value{text-align:right}
+/* The choice rails are intentionally scrollable, never clipped out of reach. */
+.v5 .options{flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin;padding:2px 2px 7px}.v5 .option{flex-shrink:0;white-space:nowrap}.v5 .rail-hint{display:inline}.rail-hint{display:none}
+/* Same six settings, expanded locally rather than in a separate picker. */
+.disclosure{min-width:0;background:var(--field);border-radius:12px}.disclosure .field-row{min-height:52px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;align-items:center}.disclosure .row-value{text-align:right}.disclosure .field-row[aria-expanded="true"]::after{transform:rotate(225deg);top:calc(50% - 2px)}.disclosure-body{padding:0 10px 10px}.disclosure-body .section-label{display:none}.disclosure-body .option{background:var(--surface)}.disclosure-body .option[aria-pressed="true"]{background:var(--soft-blue)}.v9 .filter-body>.field-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;align-items:center;min-height:52px}.v9 .filter-body>.field-row .row-value{text-align:right}
+.v10 .filter-body{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.v10 .field-row{min-height:70px;justify-content:flex-start;padding-top:9px;padding-bottom:9px}.v10 .row-label{margin-bottom:2px}
+.picker{width:min(460px,calc(100% - 24px));max-height:calc(100% - 24px);padding:16px;border:1px solid var(--line);border-radius:20px;background:var(--surface);color:var(--ink)}.picker::backdrop{background:rgb(24 24 24 / .4)}.picker-head{display:flex;align-items:center;gap:8px;margin-bottom:12px}.picker-head h2{flex:1;min-width:0;margin:0;font-size:calc(20px * var(--scale));font-weight:600;line-height:1.3;overflow-wrap:anywhere}.picker-list{display:grid;gap:8px}.picker-option{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px;width:100%;padding:11px 12px;border:1px solid transparent;border-radius:12px;background:var(--field);font-size:calc(16px * var(--scale));line-height:1.4;text-align:left;overflow-wrap:anywhere}.picker-option[aria-pressed="true"]{border-color:var(--blue);background:var(--soft-blue);color:var(--focus)}.picker-option[aria-pressed="true"]::after{content:"✓";font-size:16px}.picker-done{width:100%;margin-top:12px}.picker-note{font-size:calc(14px * var(--scale));color:var(--muted);margin:0 0 12px;line-height:1.4}.page-footer{margin:28px 0 0;text-align:center;color:var(--muted);font-size:13px;line-height:1.5}
+:root[data-scale="large"] .pair,:root[data-scale="large"] .v10 .filter-body,:root[data-scale="large"] .range{grid-template-columns:minmax(0,1fr)}:root[data-scale="large"] .field-row{display:flex;align-items:stretch}:root[data-scale="large"] .row-value{text-align:left}:root[data-scale="large"] .filter-header{flex-wrap:wrap}:root[data-scale="large"] .filter-header h2{flex-basis:calc(100% - 92px)}:root[data-scale="large"] .v5 .options{flex-wrap:wrap;overflow:visible}:root[data-scale="large"] .v5 .option{flex-shrink:1;white-space:normal}:root[data-scale="large"] .v5 .rail-hint{display:none}
+@container(max-width:340px){.v3 .pair{grid-template-columns:minmax(0,1fr)}.v2 .field-row,.v4 .joined .field-row,.v9 .field-row{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}}
+@media(max-width:600px){.page{padding:20px 12px 40px}h1{font-size:24px}.tools{padding:12px;gap:10px}.tools label{flex:1 1 120px}.tools select{width:100%}.gallery{grid-template-columns:minmax(0,min(100%,var(--phone-width)));gap:28px}.variant-head{min-height:0}}
+</style>
+</head>
+<body>
+<main class="page">
+<a class="back" href="./poverkadoma-filter-ten.html">← Предыдущие 10 вариантов</a>
+<h1>Компактный фильтр · 10 вариантов</h1>
+<p class="intro">Основа — «Строки настроек». От плотной формы со всеми вариантами выбора до шести строк и сетки 2×3. В каждом макете сохранены все шесть условий.</p>
+<div class="tools" aria-label="Сравнение компоновок">
+<label>Вариант<select id="variant-picker"><option value="all">Все 10 рядом</option></select></label>
+<label>Тема<select id="theme-picker"><option value="light">Светлая</option><option value="dark">Тёмная</option></select></label>
+<label>Ширина экрана<select id="width-picker"><option value="320">320 px</option><option value="390" selected>390 px</option><option value="430">430 px</option></select></label>
+<label>Размер текста<select id="scale-picker"><option value="1">100%</option><option value="2">200%</option></select></label>
+<button type="button" id="sample" class="sample" aria-pressed="false">Пример с выбранными</button>
+<p class="tools-note">Высота измеряется по макету. Выбор условий синхронизирован во всех вариантах.</p>
+</div>
+<div class="gallery" id="gallery"></div>
+<p class="page-footer">Шрифт полей — 16 px, подписей — 14 px. Зоны нажатия — от 44 px. Демонстрационные данные.</p>
+</main>
+<dialog class="picker" id="picker" aria-labelledby="picker-title">
+<div class="picker-head"><h2 id="picker-title"></h2><button type="button" class="icon-button" id="picker-close" aria-label="Закрыть список">×</button></div>
+<p id="picker-note" class="picker-note" hidden>Можно выбрать несколько статусов.</p>
+<div id="picker-list" class="picker-list"></div>
+<div id="picker-range" class="range" hidden><label for="picker-from">С<input class="date-input" type="date" id="picker-from"></label><label for="picker-to">По<input class="date-input" type="date" id="picker-to"></label></div>
+<p id="picker-error" class="error" role="alert" hidden></p><button type="button" id="picker-done" class="picker-done" hidden>Готово</button>
+</dialog>
+<script>
+(() => {
+'use strict';
+const variants=[
+ ['Плотные строки','Меньше отступов и компактный подвал. Дата и все статусы остаются на виду.'],
+ ['Подпись слева','Подпись и значение в одной строке. Все кнопки даты и статусов видны сразу.'],
+ ['Поля попарно','Четыре поля собраны в две пары. Дата и статусы занимают всю ширину.'],
+ ['Общий блок','Три нижних поля на одной серой поверхности с разделителями. Выборы не скрыты.'],
+ ['Две ленты','Дата и статусы — по одной строке. Для скрытых справа вариантов нужен свайп.'],
+ ['Дата в строке','Дата открывается по нажатию на строку. Все статусы видны сразу.'],
+ ['Статусы в строке','Статусы выбираются в отдельном списке. Все варианты даты остаются на виду.'],
+ ['Шесть строк','Каждое условие — серая строка с текущим значением. Варианты открываются по нажатию.'],
+ ['Раскрытие на месте','Дата и статусы раскрываются под строкой. Открыта одна группа за раз.'],
+ ['Шесть плиток','Все условия в сетке 2×3. Выбор по нажатию; при крупном тексте — один столбец.']
+];
+const fields={
+ scope:{label:'Заявки',options:[['mine','Мои'],['available','Свободные'],['all','Все заявки']]},
+ period:{label:'Дата визита',options:[['all','Все даты'],['today','Сегодня'],['tomorrow','Завтра'],['undated','Без даты'],['range','Период']]},
+ statuses:{label:'Статус',options:['Новая','Назначена','Согласована','В работе','Выполнена','Отменена'].map(x=>[x,x])},
+ city:{label:'Населённый пункт',options:[['','Все населённые пункты'],['Тольятти','Тольятти']]},
+ service:{label:'Услуга',options:[['','Все услуги'],['water','Поверка воды'],['gas','Поверка газа'],['replace','Замена ИПУ']]},
+ sync:{label:'Отправка изменений',options:[['','Любое состояние'],['error','Ошибка отправки'],['queued','Ожидают отправки']]}
+};
+const defaults=()=>({scope:'mine',period:'all',statuses:[],city:'',service:'',sync:'',from:'',to:''});
+let state=defaults();
+const today=new Date();today.setHours(12,0,0,0);
+function day(offset=0){const d=new Date(today);d.setDate(d.getDate()+offset);return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');}
+const rows=[['mine','Назначена',null,'water','error'],['mine','Назначена',null,'water',''],['mine','Согласована',0,'water',''],['mine','В работе',0,'water',''],['mine','Согласована',0,'gas','queued'],['mine','Согласована',0,'water',''],['mine','Согласована',1,'water',''],['mine','Согласована',1,'water',''],['mine','Согласована',2,'gas',''],['mine','Согласована',3,'water',''],['mine','Отменена',null,'water',''],['mine','Отменена',null,'water',''],['mine','Назначена',null,'water',''],['available','Новая',0,'water',''],['available','Новая',0,'water',''],['available','Новая',1,'gas',''],['available','Новая',1,'water',''],['available','Новая',2,'water',''],['available','Новая',3,'water',''],['available','Новая',null,'water',''],['available','Новая',4,'water','']].map(([scope,status,offset,service,sync])=>({scope,status,date:offset===null?'':day(offset),city:'Тольятти',service,sync}));
+const esc=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const icons={close:'<path d="m6 6 12 12M18 6 6 18"/>',help:'<path d="M9.1 8a3 3 0 0 1 5.8 1c0 2-3 2.3-3 4.4M12 17h.01"/>'};
+const icon=name=>'<svg viewBox="0 0 24 24" aria-hidden="true">'+icons[name]+'</svg>';
+function row(n,key,disclosure=false){return '<button type="button" class="field-row" data-key="'+key+'" '+(disclosure?'data-disclosure="true" aria-controls="inline-'+n+'-'+key+'"':'aria-haspopup="dialog" aria-controls="picker"')+' aria-expanded="false"><span class="row-label">'+fields[key].label+'</span><span class="row-value"></span></button>';}
+function range(n){return '<div class="range inline-range" hidden><label for="from-'+n+'">С<input class="date-input" id="from-'+n+'" type="date" data-date="from"></label><label for="to-'+n+'">По<input class="date-input" id="to-'+n+'" type="date" data-date="to"></label></div>';}
+function choices(n,key){return '<section class="choices" aria-labelledby="label-'+n+'-'+key+'"><h3 class="section-label" id="label-'+n+'-'+key+'">'+fields[key].label+(key==='statuses'?'<span class="hint">Можно несколько</span>':'')+'<span class="hint rail-hint">Листайте →</span></h3><div class="options">'+fields[key].options.map(([value,label])=>'<button class="option" type="button" data-choice="'+key+'" data-value="'+esc(value)+'" aria-pressed="false">'+label+'</button>').join('')+'</div>'+(key==='period'?range(n):'')+'</section>';}
+function disclosure(n,key){return '<div class="disclosure">'+row(n,key,true)+'<div class="disclosure-body" id="inline-'+n+'-'+key+'" hidden>'+choices(n,key)+'</div></div>';}
+const gallery=document.getElementById('gallery');
+variants.forEach(([name,description],index)=>{
+ const n=index+1,scope=row(n,'scope'),city=row(n,'city'),service=row(n,'service'),sync=row(n,'sync');
+ const period=n===9?disclosure(n,'period'):[6,8,10].includes(n)?row(n,'period'):choices(n,'period');
+ const status=n===9?disclosure(n,'statuses'):[7,8,10].includes(n)?row(n,'statuses'):choices(n,'statuses');
+ let body=scope+period+status+city+service+sync;
+ if(n===3)body='<div class="pair">'+scope+city+'</div>'+period+status+'<div class="pair">'+service+sync+'</div>';
+ if(n===4)body=scope+period+status+'<div class="joined">'+city+service+sync+'</div>';
+ const article=document.createElement('article');article.className='variant v'+n;article.dataset.variant=n;article.id='variant-'+n;
+ article.innerHTML='<header class="variant-head"><h2 class="variant-title"><span class="number">'+String(n).padStart(2,'0')+'</span>'+name+'</h2><p class="description">'+description+'</p><span class="measure">Высота: <span class="measure-value">…</span> px</span></header><div class="phone"><div class="status-bar" aria-hidden="true"><span>9:41</span><span class="status-icons"><svg viewBox="0 0 16 12"><path d="M2 10V8m4 2V6m4 4V3m4 7V1"/></svg><svg viewBox="0 0 16 12"><path d="M1 4q7-6 14 0M4 7q4-4 8 0M7 10h2"/></svg><svg viewBox="0 0 18 12"><rect x="1" y="2" width="13" height="8" rx="2"/><path d="M16 4v4M3 4h9v4H3z"/></svg></span></div><form class="filter-form"><header class="filter-header"><h2>Фильтр заявок</h2><button type="button" class="icon-button" data-close aria-label="Закрыть фильтр">'+icon('close')+'</button><button type="button" class="icon-button help-button" data-help aria-label="Подсказка к фильтру" aria-expanded="false" aria-controls="help-'+n+'">'+icon('help')+'</button></header><p class="help-copy" id="help-'+n+'" hidden>Выберите условия. Статусов может быть несколько. «Сбросить» возвращает исходные значения.</p><div class="filter-body">'+body+'</div><footer class="filter-footer"><p class="error" role="alert" hidden></p><p class="result sr-only" role="status" aria-live="polite"></p><div class="actions"><button type="button" class="reset" data-reset>Сбросить</button><button type="submit" class="apply">Показать · 13</button></div></footer></form><div class="closed" hidden><p></p><button type="button" class="reopen">Открыть фильтр</button></div></div>';
+ gallery.append(article);
+ const option=document.createElement('option');option.value=n;option.textContent=n+'. '+name;document.getElementById('variant-picker').append(option);
+});
+function count(){return rows.filter(r=>(state.scope==='all'||r.scope===state.scope)&&(!state.statuses.length||state.statuses.includes(r.status))&&(!state.city||r.city===state.city)&&(!state.service||r.service===state.service)&&(!state.sync||r.sync===state.sync)&&(state.period==='all'||state.period==='today'&&r.date===day()||state.period==='tomorrow'&&r.date===day(1)||state.period==='undated'&&!r.date||state.period==='range'&&r.date&&(!state.from||r.date>=state.from)&&(!state.to||r.date<=state.to))).length;}
+function dateLabel(value){return value?value.split('-').reverse().join('.'):'';}
+function valueLabel(key,brief=false){
+ if(key==='statuses')return !state.statuses.length?'Все статусы':state.statuses.length===1?state.statuses[0]:brief?'Выбрано: '+state.statuses.length:state.statuses.join(', ');
+ if(key==='period'&&state.period==='range'){if(state.from&&state.to)return dateLabel(state.from)+' — '+dateLabel(state.to);if(state.from)return 'С '+dateLabel(state.from);if(state.to)return 'По '+dateLabel(state.to);return 'Период';}
+ if(brief&&key==='city'&&!state.city)return 'Все';
+ if(brief&&key==='sync'&&!state.sync)return 'Любое';
+ return fields[key].options.find(x=>x[0]===state[key])[1];
+}
+function isActive(key){return key==='statuses'?state.statuses.length>0:state[key]!==defaults()[key];}
+function render(){
+ gallery.querySelectorAll('[data-key]').forEach(button=>{const key=button.dataset.key,n=Number(button.closest('.variant').dataset.variant),brief=[2,3,4,9,10].includes(n);button.querySelector('.row-value').textContent=valueLabel(key,brief);button.setAttribute('aria-label',fields[key].label+': '+valueLabel(key));button.dataset.active=String(isActive(key));});
+ gallery.querySelectorAll('[data-choice]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.choice==='statuses'?state.statuses.includes(button.dataset.value):state.period===button.dataset.value)));
+ gallery.querySelectorAll('[data-date]').forEach(input=>{if(input.value!==state[input.dataset.date])input.value=state[input.dataset.date];});
+ gallery.querySelectorAll('.inline-range').forEach(el=>el.hidden=state.period!=='range');
+ const matches=count();gallery.querySelectorAll('.apply').forEach(el=>el.textContent='Показать · '+matches);gallery.querySelectorAll('.result').forEach(el=>el.textContent='Найдено заявок: '+matches);gallery.querySelectorAll('.error').forEach(el=>el.hidden=true);
+ document.getElementById('sample').setAttribute('aria-pressed',String(state.period==='today'&&state.scope==='mine'&&state.statuses.length===2&&state.statuses.includes('Согласована')&&state.statuses.includes('В работе')&&state.city==='Тольятти'&&!state.service&&!state.sync&&!state.from&&!state.to));
+}
+function rangeError(s){if(s.period!=='range')return '';if(!s.from&&!s.to)return 'Укажите начало или конец периода.';if(s.from&&s.to&&s.from>s.to)return 'Начало периода должно быть не позже окончания.';return '';}
+const picker=document.getElementById('picker'),pickerList=document.getElementById('picker-list');
+let pickerTrigger=null,pickerKey='',pickerDraft=null;
+function drawPicker(){
+ document.getElementById('picker-title').textContent=fields[pickerKey].label;
+ document.getElementById('picker-note').hidden=pickerKey!=='statuses';
+ pickerList.replaceChildren();
+ fields[pickerKey].options.forEach(([value,label])=>{const button=document.createElement('button');button.className='picker-option';button.type='button';button.textContent=label;button.dataset.value=value;button.setAttribute('aria-pressed',String(pickerKey==='statuses'?pickerDraft.statuses.includes(value):pickerDraft[pickerKey]===value));button.addEventListener('click',()=>{
+   if(pickerKey==='statuses'){pickerDraft.statuses=pickerDraft.statuses.includes(value)?pickerDraft.statuses.filter(x=>x!==value):[...pickerDraft.statuses,value];button.setAttribute('aria-pressed',String(pickerDraft.statuses.includes(value)));}
+   else {pickerDraft[pickerKey]=value;if(pickerKey==='period'&&value==='range'){pickerList.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.value===value)));updatePickerRange();}else commitPicker();}
+ });pickerList.append(button);});
+ updatePickerRange();
+}
+function updatePickerRange(){const ranged=pickerKey==='period'&&pickerDraft.period==='range';document.getElementById('picker-range').hidden=!ranged;document.getElementById('picker-done').hidden=pickerKey!=='statuses'&&!ranged;document.getElementById('picker-from').value=pickerDraft.from;document.getElementById('picker-to').value=pickerDraft.to;document.getElementById('picker-error').hidden=true;}
+function openPicker(button){pickerTrigger=button;pickerKey=button.dataset.key;pickerDraft={...state,statuses:[...state.statuses]};drawPicker();button.setAttribute('aria-expanded','true');picker.showModal();}
+function commitPicker(){const error=pickerKey==='period'?rangeError(pickerDraft):'';if(error){const el=document.getElementById('picker-error');el.textContent=error;el.hidden=false;return;}state=pickerDraft;render();picker.close();}
+document.getElementById('picker-done').addEventListener('click',commitPicker);
+document.getElementById('picker-close').addEventListener('click',()=>picker.close());
+for(const key of ['from','to'])document.getElementById('picker-'+key).addEventListener('change',event=>{pickerDraft[key]=event.target.value;document.getElementById('picker-error').hidden=true;});
+picker.addEventListener('close',()=>{if(pickerTrigger){pickerTrigger.setAttribute('aria-expanded','false');pickerTrigger.focus();}pickerDraft=null;});
+gallery.addEventListener('change',event=>{if(event.target.dataset.date){state[event.target.dataset.date]=event.target.value;render();}});
+gallery.addEventListener('click',event=>{
+ const button=event.target.closest('button');if(!button)return;const article=button.closest('.variant');
+ if(button.dataset.key){
+   if(button.dataset.disclosure){const opening=button.getAttribute('aria-expanded')!=='true';article.querySelectorAll('[data-disclosure]').forEach(b=>b.setAttribute('aria-expanded','false'));article.querySelectorAll('.disclosure-body').forEach(el=>el.hidden=true);button.setAttribute('aria-expanded',String(opening));document.getElementById(button.getAttribute('aria-controls')).hidden=!opening;}
+   else openPicker(button);
+ }
+ if(button.dataset.choice){const value=button.dataset.value;if(button.dataset.choice==='statuses')state.statuses=state.statuses.includes(value)?state.statuses.filter(x=>x!==value):[...state.statuses,value];else state.period=value;render();}
+ if(button.hasAttribute('data-reset')){state=defaults();render();}
+ if(button.hasAttribute('data-help')){const el=article.querySelector('.help-copy');el.hidden=!el.hidden;button.setAttribute('aria-expanded',String(!el.hidden));}
+ if(button.hasAttribute('data-close'))closeForm(article,'Фильтр закрыт.');
+ if(button.classList.contains('reopen')){article.querySelector('.closed').hidden=true;article.querySelector('form').hidden=false;article.querySelector('[data-close]').focus();}
+});
+function closeForm(article,message){article.querySelector('form').hidden=true;article.querySelector('.closed p').textContent=message;article.querySelector('.closed').hidden=false;article.querySelector('.reopen').focus();}
+gallery.addEventListener('submit',event=>{event.preventDefault();const error=rangeError(state);if(error){const el=event.target.querySelector('.error');el.textContent=error;el.hidden=false;return;}closeForm(event.target.closest('.variant'),'Фильтр применён. Найдено заявок: '+count()+'.');});
+document.getElementById('variant-picker').addEventListener('change',event=>{gallery.querySelectorAll('.variant').forEach(el=>el.hidden=event.target.value!=='all'&&el.dataset.variant!==event.target.value);});
+document.getElementById('theme-picker').addEventListener('change',event=>{document.documentElement.dataset.theme=event.target.value;});
+document.getElementById('width-picker').addEventListener('change',event=>{document.documentElement.style.setProperty('--phone-width',event.target.value+'px');});
+document.getElementById('scale-picker').addEventListener('change',event=>{document.documentElement.style.setProperty('--scale',event.target.value);document.documentElement.dataset.scale=event.target.value==='2'?'large':'normal';});
+document.getElementById('sample').addEventListener('click',event=>{state=event.currentTarget.getAttribute('aria-pressed')==='true'?defaults():{...defaults(),period:'today',statuses:['Согласована','В работе'],city:'Тольятти'};render();});
+const sizes=new ResizeObserver(entries=>{for(const entry of entries){const el=entry.target;if(el.getBoundingClientRect().width>0)el.closest('.variant').querySelector('.measure-value').textContent=Math.round(el.getBoundingClientRect().height);}});
+gallery.querySelectorAll('.phone').forEach(el=>sizes.observe(el));
+render();
+})();
+</script>
+</body>
+</html>
