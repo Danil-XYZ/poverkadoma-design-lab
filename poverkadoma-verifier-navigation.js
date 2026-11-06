@@ -3,11 +3,16 @@
 function planToolsHeaderInk(titleRight,right,inkEnd,widths,targetWidths){
   if(![titleRight,right,inkEnd,...targetWidths,...widths].every(Number.isFinite)||!widths.length||widths.length!==targetWidths.length)return null;
   const gap=(inkEnd-titleRight-widths.reduce((a,b)=>a+b,0))/widths.length;
-  if(gap<0||widths.some((width,index)=>width<=0||width>targetWidths[index]))return null;
+  if(gap<0||widths.some((width,index)=>width<=0||(targetWidths[index]!==0&&width>targetWidths[index])))return null;
   let edge=titleRight;const items=widths.map(width=>{const left=edge+gap;edge=left+width;return {left,width};});
   let next=right;
   for(let i=items.length-1;i>=0;i--){
     const item=items[i],targetWidth=targetWidths[i];
+    if(targetWidth===0){
+      // A status indicator has no touch target to reserve.
+      item.target=item.left;
+      continue;
+    }
     item.target=Math.min(item.left+(item.width-targetWidth)/2,next-targetWidth);
     if(item.target<titleRight+4||item.target<item.left+item.width-targetWidth-.01||item.target>item.left+.01)return null;
     next=item.target;
@@ -55,7 +60,8 @@ function createVerifierNavigation({app,bridge,el,navigate,showHelp,back,getSetti
     });
     if(bounds.some(b=>!b||!b.width))return;
     const rects=controls.map(control=>control.getBoundingClientRect()),last=bounds.at(-1);
-    const plan=planToolsHeaderInk(titleRight,area.right,last.left+last.width,bounds.map(bound=>bound.width),rects.map(rect=>rect.width));
+    const targetWidths=rects.map((rect,index)=>compactNotifications&&controls[index].classList.contains('network-slot')?0:rect.width);
+    const plan=planToolsHeaderInk(titleRight,area.right,last.left+last.width,bounds.map(bound=>bound.width),targetWidths);
     if(!plan)return;
     controls.forEach((control,index)=>{
       if(compactNotifications&&control===screen.settings)return;

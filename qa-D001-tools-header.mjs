@@ -24,6 +24,10 @@ assert.ok(offline.gap<online.gap,'Offline must uniformly compress gaps');
 verify(171,374,357,[15.7,13.15],48); // Hints disabled, online.
 verify(171,374,358.575,[24,15.7,13.15],44); // Hints disabled, offline.
 verify(171,414,398.575,[24,7.7,15.7,13.15],44); // Wider viewport.
+const notification = plan(196.15,328,310.575,[24,7.7,13.15],[0,44,48]);
+assert.ok(notification, 'A passive indicator may use the padding beside the help glyph at 360px');
+assert.ok(notification.items[1].target+44<=280,'Help must not overlap the anchored Settings button');
+checked++;
 for(const [title,right,end,widths,target] of [[0,0,0,[0],48],[NaN,374,357,[24],48],[171,344,328,[24,7.7,15.7,13.15],44],[327,374,358.575,[24,7.7,15.7,13.15],44]]){
   assert.equal(plan(title,right,end,widths,widths.map(()=>target)),null,'Unavailable / insufficient geometry must use the flex fallback');checked++;
 }

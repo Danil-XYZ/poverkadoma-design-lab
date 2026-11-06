@@ -29,7 +29,7 @@
 .phone[data-v-route="notifications"][data-offline="true"] .v-topbar .toolbar-actions { gap: 0; }
 .phone[data-v-route="notifications"] .v-topbar .toolbar-actions { min-width: 120px; justify-content: flex-end; }
 .phone[data-v-route="notifications"] .v-topbar .v-settings-button { width: 48px; flex-basis: 48px; }
-.phone[data-v-route="notifications"] .v-topbar .network-slot { --tools-action-width: 28px; }
+.phone[data-v-route="notifications"] .v-topbar .network-slot { --tools-action-width: 28px; pointer-events: none; }
 .phone[data-v-route="notifications"][data-offline="true"] .v-topbar .network-slot,
 .phone[data-v-route="notifications"][data-offline="true"] .v-topbar .v-route-help { position: relative; left: var(--tools-button-left, 0px); }
 .phone[data-v-route="notifications"][data-offline="true"] .v-topbar .network-slot .icon,
