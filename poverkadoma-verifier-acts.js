@@ -292,7 +292,7 @@ function createVerifierActs(api) {
       }
       draw();panel.append(yearControl,scroller,scrollControls);section.append(heading,panel);out.append(section);
     }
-    return view('Статистика',out,'Помесячные демонстрационные данные. У каждого графика свой год. Прокрутите график вбок, чтобы увидеть остальные месяцы. В оригинальном приложении обработанные заявки доступны организациям с биллингом.',{label:'Закрыть',onClick:()=>api.back()});
+    return view('Статистика',out,'Помесячные демонстрационные данные. У каждого графика свой год. Прокрутите график вбок, чтобы увидеть остальные месяцы. В оригинальном приложении обработанные заявки доступны организациям с биллингом.');
   }
   function render(route,params={}){
     currentRoute=route;currentParams={...params};if(route==='acts')return listScreen();if(route==='new-act')return newActScreen(params);if(route==='upload')return uploadScreen(params);if(route==='history')return historyScreen();if(route==='statistics')return statisticsScreen();
