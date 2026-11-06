@@ -445,6 +445,7 @@
     app.dataset.borders = String(bordersToggle.checked);
     app.dataset.shadowDepth = String(level);
     app.style.setProperty('--decorative-line', bordersToggle.checked ? 'var(--line)' : 'transparent');
+    app.style.setProperty('--decorative-border-width', bordersToggle.checked ? '1px' : '0px');
     const scale = shadowsToggle.checked ? level / 50 : 0;
     const round = value => Math.round(value * 1000) / 1000;
     const shadow = (offset, blur, opacity) => `0 ${round(offset * scale)}px ${round(blur * scale)}px rgba(24, 24, 24, ${round(opacity * scale)})`;
