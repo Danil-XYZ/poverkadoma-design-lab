@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Фильтр заявок — 10 вариантов · Поверка дома</title>
+<style>
+:root { color-scheme:light; --blue:#0084c1; --blue-light:#2db0ed; --bg:#f2f4f9; --surface:#fff; --field:#e9ecf2; --ink:#181818; --muted:#616264; --line:#ccc; --soft-blue:#e5f2f9; --focus:#006998; --scale:1; --phone-width:390px; font-family:"Segoe UI",sans-serif; }
+:root[data-theme="dark"] { color-scheme:dark; --bg:#181818; --surface:#242427; --field:#343437; --ink:#fff; --muted:#c6c6c6; --line:#616264; --soft-blue:#183746; --focus:#61c5f1; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--ink); }
+button,input,select { font:inherit; }
+button,select { cursor:pointer; }
+button { color:inherit; }
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible { outline:3px solid var(--focus); outline-offset:3px; }
+[hidden] { display:none!important; }
+.page { max-width:1700px; margin:auto; padding:28px 28px 56px; }
+.page-head { display:flex; flex-wrap:wrap; align-items:end; justify-content:space-between; gap:20px; padding-bottom:24px; }
+.home-link { color:var(--blue); text-decoration:none; display:inline-flex; align-items:center; gap:8px; font-size:14px; font-weight:600; margin-bottom:12px; }
+h1 { font-size:28px; line-height:1.25; font-weight:600; margin:0 0 8px; }
+.intro { font-size:15px; color:var(--muted); line-height:1.5; max-width:680px; margin:0; }
+.gallery-tools { display:flex; align-items:end; flex-wrap:wrap; gap:12px; margin:0 0 24px; padding:16px; border:1px solid var(--line); border-radius:16px; background:var(--surface); }
+.gallery-tools label { display:grid; gap:6px; color:var(--muted); font-size:13px; }
+.gallery-tools select,.sample-button { border:1px solid var(--line); border-radius:10px; min-height:42px; padding:8px 12px; background:var(--surface); color:var(--ink); font-size:14px; }
+.sample-button[aria-pressed="true"] { background:var(--soft-blue); border-color:var(--blue); color:var(--focus); }
+.tools-note { color:var(--muted); font-size:13px; margin:0; flex:1 1 190px; max-width:340px; line-height:1.4; align-self:center; }
+.gallery { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,var(--phone-width)),var(--phone-width))); gap:36px 28px; justify-content:center; align-items:start; }
+.variant { min-width:0; scroll-margin-top:24px; }
+.variant-head { min-height:103px; padding:0 2px 16px; }
+.variant-title { display:flex; align-items:center; gap:10px; margin:0 0 7px; font-size:18px; line-height:1.35; font-weight:600; }
+.variant-number { color:var(--blue); font-size:14px; font-weight:600; font-variant-numeric:tabular-nums; }
+.variant-description { margin:0; color:var(--muted); font-size:14px; line-height:1.5; }
+.phone { color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:24px; overflow:hidden; box-shadow:0 6px 20px rgb(0 0 0 / .04); }
+.status-bar { padding:9px 16px; display:flex; justify-content:space-between; align-items:center; font-size:12px; line-height:16px; color:var(--muted); background:var(--surface); }
+.device-status { display:flex; gap:5px; align-items:center; }
+.device-status svg { width:15px; height:12px; fill:none; stroke:currentColor; stroke-width:1.5; }
+.filter-form { margin:0; }
+.filter-header { display:flex; gap:4px; align-items:center; padding:10px 12px 12px 16px; background:var(--surface); border-bottom:1px solid var(--line); }
+.filter-header h2 { flex:1; margin:0; min-width:0; font-size:calc(20px * var(--scale)); line-height:1.3; font-weight:600; overflow-wrap:anywhere; }
+.icon-button { display:grid; place-items:center; flex:0 0 40px; width:40px; height:44px; padding:8px; border:0; border-radius:12px; background:transparent; color:var(--muted); }
+.icon-button svg { width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+.help-button { background:var(--field); color:var(--blue); }
+.filter-body { display:flex; flex-direction:column; gap:20px; padding:20px 16px 24px; background:var(--surface); }
+.section { margin:0; min-width:0; padding:0; border:0; }
+.section-label { margin:0 0 8px; display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:4px 8px; color:var(--muted); font-size:calc(14px * var(--scale)); font-weight:600; line-height:1.55; }
+.section-label .hint { font-size:calc(12px * var(--scale)); font-weight:400; }
+.section-content { min-width:0; }
+.select-wrap { position:relative; display:flex; min-width:0; align-items:center; }
+.select-wrap::after { content:""; position:absolute; width:7px; height:7px; right:17px; top:calc(50% - 5px); border-right:1.5px solid var(--muted); border-bottom:1.5px solid var(--muted); transform:rotate(45deg); pointer-events:none; }
+.filter-select,.date-input { width:100%; min-width:0; min-height:48px; padding:11px 38px 11px 12px; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:12px; appearance:none; font-size:calc(16px * var(--scale)); line-height:1.45; }
+.filter-select { text-align:left; white-space:normal; overflow-wrap:anywhere; }
+.date-input { padding-right:10px; appearance:auto; }
+.options { display:flex; flex-wrap:wrap; gap:8px; }
+.option { min-height:44px; min-width:0; padding:9px 12px; border:1px solid var(--line); border-radius:12px; background:var(--surface); color:var(--ink); font-size:calc(14px * var(--scale)); line-height:1.4; overflow-wrap:anywhere; }
+.option[aria-pressed="true"] { border-color:var(--blue); background:var(--soft-blue); color:var(--focus); box-shadow:inset 0 0 0 1px var(--blue); }
+.range { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:12px; }
+.range label { display:grid; gap:6px; font-size:calc(14px * var(--scale)); color:var(--muted); }
+.filter-footer { padding:14px 16px 18px; display:grid; gap:10px; background:var(--surface); border-top:1px solid var(--line); }
+.result { margin:0; font-size:calc(14px * var(--scale)); line-height:1.4; color:var(--muted); }
+.actions { display:flex; flex-wrap:wrap; gap:8px; }
+.reset,.apply,.reopen { min-height:48px; padding:10px 14px; border:1px solid var(--blue); border-radius:12px; font-size:calc(16px * var(--scale)); line-height:1.4; }
+.reset { flex:1 1 90px; color:var(--focus); background:var(--surface); font-size:calc(14px * var(--scale)); }
+.apply,.reopen { flex:2 1 145px; color:#fff; background:var(--blue); font-weight:600; }
+.error { margin:0; font-size:calc(14px * var(--scale)); line-height:1.4; color:var(--ink); }
+.help-copy { padding:12px 16px; margin:0; background:var(--soft-blue); border-bottom:1px solid var(--line); font-size:calc(14px * var(--scale)); line-height:1.5; }
+.closed-state { display:grid; justify-items:start; align-content:center; gap:18px; padding:32px 20px; min-height:500px; background:var(--bg); }
+.closed-state p { line-height:1.5; margin:0; }
+.page-footer { color:var(--muted); font-size:13px; line-height:1.5; margin:32px 0 0; text-align:center; }
+.picker-dialog { width:min(440px,calc(100% - 32px)); max-height:calc(100% - 32px); padding:16px; border:1px solid var(--line); border-radius:20px; background:var(--surface); color:var(--ink); }
+.picker-dialog::backdrop { background:rgb(24 24 24 / .4); }
+.picker-head { display:flex; gap:12px; align-items:center; margin-bottom:12px; }
+.picker-head h2 { flex:1; margin:0; font-size:calc(18px * var(--scale)); line-height:1.4; font-weight:600; }
+.picker-options { display:grid; gap:8px; }
+.picker-options button { padding:12px; min-height:48px; border:1px solid var(--line); border-radius:12px; background:var(--field); color:var(--ink); font-size:calc(16px * var(--scale)); text-align:left; overflow-wrap:anywhere; }
+.picker-options button[aria-pressed="true"] { border-color:var(--blue); background:var(--soft-blue); color:var(--focus); }
+/* 1: neutral filled controls, white sheet. */
+.v1 .filter-select,.v1 .option:not([aria-pressed="true"]),.v1 .date-input { background:var(--field); border-color:transparent; }
+/* 2: section labels live outside each white card, as elsewhere in the project. */
+.v2 .filter-body { background:var(--bg); }
+.v2 .section-content { padding:12px; background:var(--surface); border:1px solid var(--line); border-radius:16px; }
+.v2 .section:not(.choice-section) .section-content { padding:0; }
+.v2 .filter-select { border:0; background:transparent; }
+.v2 .option:not([aria-pressed="true"]) { background:var(--field); border-color:transparent; }
+/* 3: three larger functional groups, separated by the screen background. */
+.v3 .filter-body { background:var(--bg); gap:16px; }
+.v3 .bundle { display:flex; flex-direction:column; gap:16px; padding:16px 12px; background:var(--surface); border:1px solid var(--line); border-radius:16px; }
+.v3 .bundle .section + .section { padding-top:16px; border-top:1px solid var(--line); }
+.v3 .filter-select,.v3 .option:not([aria-pressed="true"]),.v3 .date-input { background:var(--field); border-color:transparent; }
+/* 4: selectors read as single settings rows with the label inside. */
+.v4 .section:not(.choice-section) { padding:10px 12px 2px; background:var(--field); border-radius:14px; }
+.v4 .section:not(.choice-section) .section-label { margin-bottom:0; }
+.v4 .filter-select { border:0; background:transparent; padding-left:0; min-height:42px; }
+.v4 .select-wrap::after { right:5px; }
+.v4 .option:not([aria-pressed="true"]) { background:var(--field); border-color:transparent; }
+/* 5: colour is concentrated in restrained outlines and selected values. */
+.v5 .filter-select,.v5 .date-input { border-color:var(--blue); }
+.v5 .option:not([aria-pressed="true"]) { background:var(--soft-blue); border-color:transparent; }
+.v5 .option[aria-pressed="true"] { background:var(--blue); color:#fff; box-shadow:none; }
+.v5 .help-button { background:var(--soft-blue); }
+/* 6: regular two-column choice tiles. */
+.v6 .filter-body { background:var(--bg); }
+.v6 .options { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
+.v6 .option { display:flex; align-items:center; justify-content:space-between; gap:8px; min-height:52px; text-align:left; }
+.v6 .option::after { content:""; flex:0 0 15px; width:15px; height:15px; border:1px solid var(--line); border-radius:5px; }
+.v6 .option[aria-pressed="true"]::after { content:"✓"; display:grid; place-items:center; font-size:12px; border-color:var(--blue); background:var(--blue); color:#fff; }
+.v6 .date-section .option::after { border-radius:50%; }
+/* 7: a single recessed tray gathers each group of choices. */
+.v7 .choice-section .section-content { padding:12px; background:var(--field); border-radius:16px; }
+.v7 .option:not([aria-pressed="true"]) { border-color:transparent; }
+.v7 .filter-select { background:var(--field); border-color:transparent; }
+/* 8: a brand-colour header anchors an otherwise neutral sheet. */
+.v8 .status-bar,.v8 .filter-header { background:var(--blue); color:#fff; border-color:transparent; }
+.v8 .filter-header .icon-button { color:#fff; }
+.v8 .help-button { background:rgb(255 255 255 / .17); }
+.v8 .filter-body { background:var(--bg); }
+.v8 .option[aria-pressed="true"] { background:var(--blue); color:#fff; box-shadow:none; }
+/* 9: neutral outlined choice groups, no extra white card fill. */
+.v9 .filter-body { background:var(--bg); }
+.v9 .choice-section .section-content { border:1px solid var(--line); border-radius:16px; padding:12px; }
+.v9 .option { border-color:transparent; }
+.v9 .option[aria-pressed="true"] { border-color:var(--blue); }
+/* 10: a pale brand tint separates the whole sheet from its controls. */
+.v10 .filter-body { background:var(--soft-blue); }
+.v10 .filter-header { background:var(--soft-blue); }
+.v10 .filter-select,.v10 .option:not([aria-pressed="true"]) { border-color:color-mix(in srgb,var(--blue) 28%,var(--surface)); }
+.v10 .option[aria-pressed="true"] { background:var(--blue); color:#fff; box-shadow:none; }
+:root[data-scale="large"] .range,:root[data-scale="large"] .v6 .options { grid-template-columns:minmax(0,1fr); }
+:root[data-scale="large"] .filter-header { flex-wrap:wrap; }
+:root[data-scale="large"] .filter-header h2 { flex-basis:calc(100% - 96px); }
+:root[data-scale="large"] .hint { flex-basis:100%; }
+@media(max-width:600px) { .page { padding:20px 12px 40px; } h1 { font-size:24px; } .gallery-tools { padding:12px; gap:10px; } .gallery-tools label { flex:1 1 120px; } .gallery-tools select { width:100%; } .variant-head { min-height:0; } .gallery { grid-template-columns:minmax(0,min(100%,var(--phone-width))); gap:28px; } }
+</style>
+</head>
+<body>
+<main class="page">
+<header class="page-head">
+  <div><a class="home-link" href="./">← Поверка дома · дизайн-лаборатория</a><h1>Фильтр заявок · 10 вариантов</h1><p class="intro">Одна форма, разные поверхности. Подписи, палитра и скругления — из текущего проекта.</p></div>
+</header>
+<div class="gallery-tools" aria-label="Сравнение вариантов">
+  <label>Вариант<select id="variant-picker"><option value="all">Все 10 рядом</option></select></label>
+  <label>Тема<select id="theme-picker"><option value="light">Светлая</option><option value="dark">Тёмная</option></select></label>
+  <label>Ширина экрана<select id="width-picker"><option value="320">320 px</option><option value="390" selected>390 px</option><option value="430">430 px</option></select></label>
+  <label>Размер текста<select id="scale-picker"><option value="1">100%</option><option value="2">200%</option></select></label>
+  <button class="sample-button" id="sample" type="button" aria-pressed="false">Пример с выбранными</button>
+  <p class="tools-note">Изменения фильтра повторяются во всех вариантах — так легче сравнивать.</p>
+</div>
+<div class="gallery" id="gallery"></div>
+<p class="page-footer">Демонстрационные данные. Новые варианты оформления для выбора.</p>
+</main>
+<dialog class="picker-dialog" id="field-picker" aria-labelledby="picker-title"><div class="picker-head"><h2 id="picker-title"></h2><button class="icon-button" type="button" id="picker-close" aria-label="Закрыть список">×</button></div><div class="picker-options" id="picker-options"></div></dialog>
+<script>
+(() => {
+  'use strict';
+  const variants = [
+    ['Серые поля','Белый фон, серые поля и кнопки. Самое спокойное изменение.'],
+    ['Карточки разделов','Каждый блок на своей белой карточке, подпись над ней.'],
+    ['Три группы','Принадлежность и дата, статусы, остальные условия — в трёх карточках.'],
+    ['Строки настроек','Подпись и выбранное значение объединены общей серой поверхностью.'],
+    ['Синяя обводка','Фирменный контур полей и заливка выбранных значений.'],
+    ['Плитки выбора','Дата и статусы выровнены в две колонки, выбор отмечен галочкой.'],
+    ['Общая подложка','Белые кнопки собраны на серых подложках, поля тоже серые.'],
+    ['Фирменная шапка','Синий заголовок, серый фон формы и белые элементы управления.'],
+    ['Контурные секции','Группы отделены тонкой рамкой на общем сером фоне.'],
+    ['Голубой фон','Лёгкая фирменная заливка под белыми полями и кнопками.']
+  ];
+  const periods = [['all','Все даты'],['today','Сегодня'],['tomorrow','Завтра'],['undated','Без даты'],['range','Период']];
+  const statuses = ['Новая','Назначена','Согласована','В работе','Выполнена','Отменена'];
+  const defaults = () => ({scope:'mine',period:'all',statuses:[],city:'',service:'',sync:'',from:'',to:''});
+  let state = defaults();
+  const today = new Date(); today.setHours(12,0,0,0);
+  function dateKey(offset=0) { const d=new Date(today); d.setDate(d.getDate()+offset); return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-'); }
+  // Minimal version of the lab's synthetic request fixture: no client records.
+  const rows = [
+    ['mine','Назначена',null,'water','error'],['mine','Назначена',null,'water',''],
+    ['mine','Согласована',0,'water',''],['mine','В работе',0,'water',''],['mine','Согласована',0,'gas','queued'],['mine','Согласована',0,'water',''],
+    ['mine','Согласована',1,'water',''],['mine','Согласована',1,'water',''],['mine','Согласована',2,'gas',''],['mine','Согласована',3,'water',''],
+    ['mine','Отменена',null,'water',''],['mine','Отменена',null,'water',''],['mine','Назначена',null,'water',''],
+    ['available','Новая',0,'water',''],['available','Новая',0,'water',''],['available','Новая',1,'gas',''],['available','Новая',1,'water',''],
+    ['available','Новая',2,'water',''],['available','Новая',3,'water',''],['available','Новая',null,'water',''],['available','Новая',4,'water','']
+  ].map(([scope,status,offset,service,sync])=>({scope,status,date:offset===null?'':dateKey(offset),city:'Тольятти',service,sync}));
+  const icons={close:'<path d="m6 6 12 12M18 6 6 18"/>',help:'<path d="M9.1 8a3 3 0 0 1 5.8 1c0 2-3 2.3-3 4.4"/><path d="M12 17h.01"/>'};
+  const icon = name => '<svg viewBox="0 0 24 24" aria-hidden="true">'+icons[name]+'</svg>';
+  const gallery=document.getElementById('gallery');
+  const selectChoices={};
+  function field(n,key,label,options) { selectChoices[key]={label,options}; return '<section class="section"><label class="section-label" for="f'+n+'-'+key+'">'+label+'</label><div class="section-content"><div class="select-wrap"><button class="filter-select" type="button" id="f'+n+'-'+key+'" data-field="'+key+'" aria-haspopup="dialog" aria-expanded="false" aria-controls="field-picker">'+options[0][1]+'</button></div></div></section>'; }
+  function choices(n,key,label,options) { return '<section class="section choice-section '+(key==='period'?'date-section':'')+'" aria-labelledby="f'+n+'-'+key+'-label"><h3 class="section-label" id="f'+n+'-'+key+'-label">'+label+(key==='status'?'<span class="hint">Можно несколько</span>':'')+'</h3><div class="section-content"><div class="options">'+options.map(([value,text])=>'<button class="option" type="button" data-'+key+'="'+value+'" aria-pressed="'+(key==='period'&&value==='all')+'">'+text+'</button>').join('')+'</div>'+(key==='period'?'<div class="range" hidden><label for="f'+n+'-from">С<input class="date-input" type="date" id="f'+n+'-from" data-field="from"></label><label for="f'+n+'-to">По<input class="date-input" type="date" id="f'+n+'-to" data-field="to"></label></div>':'')+'</div></section>'; }
+  variants.forEach(([name,description],index)=>{
+    const n=index+1;
+    const scope=field(n,'scope','Заявки',[['mine','Мои'],['available','Свободные'],['all','Все заявки']]);
+    const period=choices(n,'period','Дата визита',periods);
+    const status=choices(n,'status','Статус',statuses.map(x=>[x,x]));
+    const other=field(n,'city','Населённый пункт',[['','Все населённые пункты'],['Тольятти','Тольятти']])+field(n,'service','Услуга',[['','Все услуги'],['water','Поверка воды'],['gas','Поверка газа'],['replace','Замена ИПУ']])+field(n,'sync','Отправка изменений',[['','Любое состояние'],['error','Ошибка отправки'],['queued','Ожидают отправки']]);
+    const body=n===3?'<div class="bundle">'+scope+period+'</div><div class="bundle">'+status+'</div><div class="bundle">'+other+'</div>':scope+period+status+other;
+    const article=document.createElement('article'); article.className='variant v'+n; article.dataset.variant=n; article.id='variant-'+n;
+    article.innerHTML='<div class="variant-head"><h2 class="variant-title"><span class="variant-number">'+String(n).padStart(2,'0')+'</span>'+name+'</h2><p class="variant-description">'+description+'</p></div><div class="phone"><div class="status-bar" aria-hidden="true"><span>9:41</span><span class="device-status"><svg viewBox="0 0 16 12"><path d="M2 10V8m4 2V6m4 4V3m4 7V1"/></svg><svg viewBox="0 0 16 12"><path d="M1 4q7-6 14 0M4 7q4-4 8 0M7 10h2"/></svg><svg viewBox="0 0 18 12"><rect x="1" y="2" width="13" height="8" rx="2"/><path d="M16 4v4M3 4h9v4H3z"/></svg></span></div><form class="filter-form"><header class="filter-header"><h2>Фильтр заявок</h2><button class="icon-button" type="button" data-close aria-label="Закрыть фильтр">'+icon('close')+'</button><button class="icon-button help-button" type="button" data-help aria-label="Подсказка к фильтру" aria-expanded="false" aria-controls="help-'+n+'">'+icon('help')+'</button></header><p class="help-copy" id="help-'+n+'" hidden>Выберите условия. Статусов может быть несколько. Кнопка «Сбросить» вернёт исходные значения.</p><div class="filter-body">'+body+'</div><footer class="filter-footer"><p class="error" role="alert" hidden></p><p class="result" role="status" aria-live="polite">Найдено заявок: 13</p><div class="actions"><button type="button" class="reset" data-reset>Сбросить</button><button type="submit" class="apply">Показать · 13</button></div></footer></form><div class="closed-state" hidden><p class="closed-copy"></p><button type="button" class="reopen">Открыть фильтр</button></div></div>';
+    gallery.append(article);
+    const option=document.createElement('option'); option.value=n; option.textContent=n+'. '+name; document.getElementById('variant-picker').append(option);
+  });
+  function count() { return rows.filter(r=>(state.scope==='all'||r.scope===state.scope)&&(!state.statuses.length||state.statuses.includes(r.status))&&(!state.city||r.city===state.city)&&(!state.service||r.service===state.service)&&(!state.sync||r.sync===state.sync)&&(state.period==='all'||state.period==='today'&&r.date===dateKey()||state.period==='tomorrow'&&r.date===dateKey(1)||state.period==='undated'&&!r.date||state.period==='range'&&r.date&&(!state.from||r.date>=state.from)&&(!state.to||r.date<=state.to))).length; }
+  function render() {
+    gallery.querySelectorAll('[data-field]').forEach(el=>{const key=el.dataset.field;if(el.tagName==='BUTTON'){const choice=selectChoices[key];const value=choice.options.find(x=>x[0]===state[key])[1];el.textContent=value;el.setAttribute('aria-label',choice.label+': '+value);}else if(el.value!==state[key])el.value=state[key];});
+    gallery.querySelectorAll('[data-period]').forEach(el=>el.setAttribute('aria-pressed',String(el.dataset.period===state.period)));
+    gallery.querySelectorAll('[data-status]').forEach(el=>el.setAttribute('aria-pressed',String(state.statuses.includes(el.dataset.status))));
+    gallery.querySelectorAll('.range').forEach(el=>el.hidden=state.period!=='range');
+    gallery.querySelectorAll('.result').forEach(el=>el.textContent='Найдено заявок: '+count());
+    gallery.querySelectorAll('.apply').forEach(el=>el.textContent='Показать · '+count());
+    gallery.querySelectorAll('.error').forEach(el=>el.hidden=true);
+    document.getElementById('sample').setAttribute('aria-pressed',String(state.scope==='mine'&&state.period==='today'&&state.statuses.length===1&&state.statuses[0]==='Согласована'&&state.city==='Тольятти'&&!state.service&&!state.sync&&!state.from&&!state.to));
+  }
+  const picker=document.getElementById('field-picker');
+  let pickerTrigger=null;
+  function openPicker(button){
+    pickerTrigger=button;const key=button.dataset.field,choice=selectChoices[key];
+    document.getElementById('picker-title').textContent=choice.label;
+    const options=document.getElementById('picker-options');options.replaceChildren();
+    choice.options.forEach(([value,label])=>{const option=document.createElement('button');option.type='button';option.textContent=label;option.setAttribute('aria-pressed',String(state[key]===value));option.addEventListener('click',()=>{state[key]=value;render();picker.close();});options.append(option);});
+    button.setAttribute('aria-expanded','true');picker.showModal();
+  }
+  document.getElementById('picker-close').addEventListener('click',()=>picker.close());
+  picker.addEventListener('close',()=>{if(pickerTrigger){pickerTrigger.setAttribute('aria-expanded','false');pickerTrigger.focus();}});
+  gallery.addEventListener('change',event=>{const key=event.target.dataset.field;if(key){state[key]=event.target.value;document.getElementById('sample').setAttribute('aria-pressed','false');render();}});
+  gallery.addEventListener('click',event=>{
+    const button=event.target.closest('button');if(!button)return;
+    const article=button.closest('.variant');
+    if(button.classList.contains('filter-select'))openPicker(button);
+    if(button.dataset.period){state.period=button.dataset.period;render();}
+    if(button.dataset.status){const value=button.dataset.status;state.statuses=state.statuses.includes(value)?state.statuses.filter(x=>x!==value):[...state.statuses,value];render();}
+    if(button.hasAttribute('data-reset')){state=defaults();document.getElementById('sample').setAttribute('aria-pressed','false');render();}
+    if(button.hasAttribute('data-help')){const help=article.querySelector('.help-copy');help.hidden=!help.hidden;button.setAttribute('aria-expanded',String(!help.hidden));}
+    if(button.hasAttribute('data-close'))close(article,'Фильтр закрыт.');
+    if(button.classList.contains('reopen')){article.querySelector('.closed-state').hidden=true;article.querySelector('form').hidden=false;article.querySelector('[data-close]').focus();}
+  });
+  function close(article,message){article.querySelector('form').hidden=true;article.querySelector('.closed-copy').textContent=message;article.querySelector('.closed-state').hidden=false;article.querySelector('.reopen').focus();}
+  gallery.addEventListener('submit',event=>{
+    event.preventDefault();let error='';
+    if(state.period==='range'&&!state.from&&!state.to)error='Укажите начало или конец периода.';
+    if(state.period==='range'&&state.from&&state.to&&state.from>state.to)error='Начало периода должно быть не позже окончания.';
+    if(error){const el=event.target.querySelector('.error');el.textContent=error;el.hidden=false;return;}
+    close(event.target.closest('.variant'),'Фильтр применён. Найдено заявок: '+count()+'.');
+  });
+  document.getElementById('sample').addEventListener('click',event=>{const active=event.currentTarget.getAttribute('aria-pressed')!=='true';state=active?{...defaults(),period:'today',statuses:['Согласована'],city:'Тольятти'}:defaults();event.currentTarget.setAttribute('aria-pressed',String(active));render();});
+  document.getElementById('variant-picker').addEventListener('change',event=>{gallery.querySelectorAll('.variant').forEach(el=>el.hidden=event.target.value!=='all'&&el.dataset.variant!==event.target.value);});
+  document.getElementById('theme-picker').addEventListener('change',event=>{document.documentElement.dataset.theme=event.target.value;});
+  document.getElementById('width-picker').addEventListener('change',event=>{document.documentElement.style.setProperty('--phone-width',event.target.value+'px');});
+  document.getElementById('scale-picker').addEventListener('change',event=>{document.documentElement.style.setProperty('--scale',event.target.value);document.documentElement.dataset.scale=event.target.value==='2'?'large':'normal';});
+  render();
+})();
+</script>
+</body>
+</html>
