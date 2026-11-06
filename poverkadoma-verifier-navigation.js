@@ -40,13 +40,20 @@ function createVerifierNavigation({app,bridge,el,navigate,showHelp,back,getSetti
   const request=prepare(requestHeader),main=prepare(app.querySelector(':scope > header.topbar')),screen=prepare(generated);
   screen.header.classList.add('v-topbar');screen.toolbar.classList.add('v-toolbar');screen.backButton.classList.add('v-back-button');screen.backButton.setAttribute('aria-label','Назад');screen.backButton.addEventListener('click',back);
   let inkFrame;
-  function alignToolsInk(){
+  function layoutHeaderActions(){
     const {toolbar,heading,actions}=screen;toolbar.removeAttribute('data-ink-layout');
+    toolbar.removeAttribute('data-tools-compact');
     [...actions.children].forEach(n=>{n.style.removeProperty('--tools-button-left');n.style.removeProperty('--tools-icon-shift');});
-    const compactNotifications=app.dataset.vRoute==='notifications'&&app.dataset.offline==='true';
-    if((app.dataset.vRoute!=='tools'&&!compactNotifications)||screen.header.closest('[hidden]')||!window.getComputedStyle)return;
-    const controls=[...actions.children].filter(n=>!n.hidden&&!(n.classList.contains('network-slot')&&screen.offline.hidden));
+    if(screen.header.closest('[hidden]')||!window.getComputedStyle)return;
     const area=toolbar.getBoundingClientRect(),title=heading.getBoundingClientRect();
+    if(app.dataset.vRoute==='tools'){
+      const gap=parseFloat(window.getComputedStyle(toolbar).columnGap)||0;
+      const requiredWidth=title.width+gap+actions.getBoundingClientRect().width;
+      toolbar.toggleAttribute('data-tools-compact',area.width>0&&requiredWidth>area.width);
+      return;
+    }
+    if(app.dataset.vRoute!=='notifications'||app.dataset.offline!=='true')return;
+    const controls=[...actions.children].filter(n=>!n.hidden&&!(n.classList.contains('network-slot')&&screen.offline.hidden));
     if(!area.width||!title.width||controls.some(n=>Math.abs(n.getBoundingClientRect().top-title.top)>16))return;
     const context=document.createElement('canvas').getContext?.('2d');if(!context)return;
     context.font=window.getComputedStyle(heading).font;
@@ -60,18 +67,18 @@ function createVerifierNavigation({app,bridge,el,navigate,showHelp,back,getSetti
     });
     if(bounds.some(b=>!b||!b.width))return;
     const rects=controls.map(control=>control.getBoundingClientRect()),last=bounds.at(-1);
-    const targetWidths=rects.map((rect,index)=>compactNotifications&&controls[index].classList.contains('network-slot')?0:rect.width);
+    const targetWidths=rects.map((rect,index)=>controls[index].classList.contains('network-slot')?0:rect.width);
     const plan=planToolsHeaderInk(titleRight,area.right,last.left+last.width,bounds.map(bound=>bound.width),targetWidths);
     if(!plan)return;
     controls.forEach((control,index)=>{
-      if(compactNotifications&&control===screen.settings)return;
+      if(control===screen.settings)return;
       const rect=rects[index],item=plan.items[index],targetShift=item.target-rect.left;
-      control.style.setProperty('--tools-button-left',(compactNotifications?targetShift:item.target-area.left)+'px');
+      control.style.setProperty('--tools-button-left',targetShift+'px');
       control.style.setProperty('--tools-icon-shift',(item.left-bounds[index].left-targetShift)+'px');
     });
     toolbar.dataset.inkLayout='true';
   }
-  function scheduleToolsInk(){if(!window.requestAnimationFrame)return;window.cancelAnimationFrame?.(inkFrame);inkFrame=window.requestAnimationFrame(()=>{inkFrame=null;alignToolsInk();});}
+  function scheduleToolsInk(){if(!window.requestAnimationFrame)return;window.cancelAnimationFrame?.(inkFrame);inkFrame=window.requestAnimationFrame(()=>{inkFrame=null;layoutHeaderActions();});}
   screen.actions.addEventListener('load',scheduleToolsInk,true);
   if(window.MutationObserver)new window.MutationObserver(scheduleToolsInk).observe(app,{attributes:true,attributeFilter:['data-offline']});
   if(window.ResizeObserver){let width;new window.ResizeObserver(entries=>{const next=entries[0]?.contentRect.width;if(next!==width){width=next;scheduleToolsInk();}}).observe(app);}

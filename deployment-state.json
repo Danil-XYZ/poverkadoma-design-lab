@@ -2,16 +2,16 @@
   "version": 1,
   "site": "https://danil-xyz.github.io/poverkadoma-design-lab/",
   "artifacts": {
-    "index.html": "3034a5c5fb691d4c8395bc80fc4c1242a273fc21fe90b6f289634be51ccf58a6",
+    "index.html": "5758d0b22b0905a1263c26c6795a3a8051327a9cc068da9c39f861b61472ca0a",
     "site.css": "0cb0fd9671309df0e5ae91f0ec465cafdfe80d0b5d2c4605dfe57edf98d54ce5",
     "site.js": "6f61ed5a585f79fab5aa9ef62e72b24d044c9816972a2e1e4c982604933e4693",
-    "data.js": "262da26595be5c2618471a547fca5ca426c65fdab14933086546207add8068b5",
+    "data.js": "310faf1c7e445467c6cb8216622926a3615169059a6c4e669c237a0365582e28",
     "README.txt": "0ec045d3dca90ba286931d9de9970b333c6a33d39911b7d49d4c75a11663ccf5"
   },
   "reports": [
     {
       "file": "poverkadoma-verifier-qa.json",
-      "checks": 57
+      "checks": 56
     },
     {
       "file": "poverkadoma-design-site-qa.json",

@@ -53,20 +53,31 @@ pass('History search matches owner and serial number, empty results recover, fil
 pass('History rejects an inverted date range and closing the filter keeps applied values unchanged',()=>{
   const s=setup();s.core.navigate('history');s.fire('.v-history-filter');const dates=s.document.querySelectorAll('#verifier-modal input[type="date"]');s.change('#'+dates[0].id,'2026-11-05','input');s.change('#'+dates[1].id,'2026-10-01','input');s.clickText('Применить',s.document.querySelector('#verifier-modal'));assert.match(s.document.querySelector('#verifier-modal [role="alert"]').textContent,/Начало периода/);assert.equal(s.core.modules.acts.getState().historyFrom,'');s.core.api.closeModal();assert.equal(s.document.querySelector('.v-history-filter').dataset.active,'false');
 });
-pass('Tools ink alignment safely resets when layout or font measurement is unavailable',()=>{const s=setup(undefined,{clock:true});for(const scale of [1,2]){s.core.api.setSettings({fontScale:scale});for(const route of ['tools','equipment','tools','acts','tools']){s.core.navigate(route);s.advance(100);const header=s.document.querySelector('.v-topbar');assert.equal(header.querySelector('.detail-toolbar').hasAttribute('data-ink-layout'),false);assert.ok(!s.visibleHeader().querySelector('.app-screen-title').hidden);}}});
-pass('Tools ink alignment applies and clears coordinates across network, hints and narrow-layout changes (simulated geometry)',()=>{
-  const s=setup(undefined,{clock:true});s.core.navigate('tools');
-  const header=s.document.querySelector('.v-topbar'),toolbar=header.querySelector('.detail-toolbar'),title=toolbar.querySelector('.app-screen-title'),actions=header.querySelector('.toolbar-actions');let width=358;
-  const rect=(left,width,top=0,height=48)=>({left,right:left+width,top,bottom:top+height,width,height});
-  toolbar.getBoundingClientRect=()=>rect(16,width);title.getBoundingClientRect=()=>rect(16,156,8,32);
-  s.window.getComputedStyle=()=>({font:'600 24px sans-serif',strokeWidth:'1.7'});
-  const create=s.document.createElement.bind(s.document);s.document.createElement=tag=>{const n=create(tag);if(tag==='canvas')n.getContext=()=>({measureText:()=>({actualBoundingBoxRight:155})});return n;};
-  const settings=actions.querySelector('.v-settings-button .icon'),svg=create('svg');svg.viewBox={baseVal:{x:0,width:24}};svg.getBBox=()=>({x:3,width:18});settings.replaceChildren(svg);
-  for(const control of actions.children){control.getBoundingClientRect=()=>{const visible=[...actions.children].filter(n=>!n.hidden&&!(n.classList.contains('network-slot')&&s.app.dataset.offline!=='true')),size=s.app.dataset.offline==='true'?44:48,gap=s.app.dataset.offline==='true'?0:8,index=visible.indexOf(control);return rect(16+width-visible.length*size-(visible.length-1)*gap+index*(size+gap),size);};const glyph=control.querySelector('.icon'),img=glyph?.querySelector('img');if(img)img.getBoundingClientRect=()=>{const r=control.getBoundingClientRect(),help=glyph.dataset.iconKind==='help',bell=glyph.dataset.iconKind==='bell',w=help?19.7:bell?15.7001:24;return rect(r.left+r.width/2-w/2,w,12,20);};}
-  svg.getBoundingClientRect=()=>{const r=settings.parentElement.getBoundingClientRect();return rect(r.left+r.width/2-8,16,16,16);};
-  for(const offline of [false,true,false]){s.fire('[data-network="'+(offline?'offline':'online')+'"]');s.core.navigate('tools');s.advance(100);assert.equal(toolbar.dataset.inkLayout,'true');for(const hints of [false,true]){s.core.api.setSettings({hints});s.advance(100);assert.equal(toolbar.dataset.inkLayout,'true');}}
-  width=280;s.core.navigate('tools');s.advance(100);assert.equal(toolbar.hasAttribute('data-ink-layout'),false);for(const control of actions.children){assert.equal(control.style.getPropertyValue('--tools-button-left')||'','');assert.equal(control.style.getPropertyValue('--tools-icon-shift')||'','');}
-  s.tapTop('Уведомления');assert.equal(s.core.getRoute().route,'notifications');
+pass('Tools uses standard spacing whenever its title and visible actions fit',()=>{
+  const s=setup(undefined,{clock:true});
+  s.core.navigate('tools');
+  const toolbar=s.document.querySelector('.v-topbar .detail-toolbar');
+  const title=toolbar.querySelector('.app-screen-title');
+  const actions=toolbar.querySelector('.toolbar-actions');
+  let width=358;
+  toolbar.getBoundingClientRect=()=>({width});
+  title.getBoundingClientRect=()=>({width:156});
+  s.window.getComputedStyle=()=>({columnGap:'8px'});
+  actions.getBoundingClientRect=()=>{
+    const count=Array.from(actions.children).filter(control=>!control.hidden&&(!control.classList.contains('network-slot')||s.app.dataset.offline==='true')).length;
+    return {width:count*48+(count-1)*8};
+  };
+  for(const [toolbarWidth,offline,hints,compact] of [[358,false,true,false],[358,true,true,true],[398,true,true,false],[358,true,false,false],[358,true,true,true],[358,false,true,false]]){
+    width=toolbarWidth;
+    s.fire('[data-network="'+(offline?'offline':'online')+'"]');
+    s.core.api.setSettings({hints});
+    s.advance(100);
+    assert.equal(toolbar.hasAttribute('data-tools-compact'),compact);
+  }
+  s.tapTop('Уведомления');
+  s.advance(100);
+  assert.equal(s.core.getRoute().route,'notifications');
+  assert.equal(toolbar.hasAttribute('data-tools-compact'),false);
 });
 pass('Demo reset restores unread and deleted communications, requests, acts and tools after persisted boot',()=>{
   const plain=v=>JSON.parse(JSON.stringify(v)),s=setup(undefined,{clock:true}),seed=plain(s.core.snapshot().privateContent);
