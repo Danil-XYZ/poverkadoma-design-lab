@@ -154,6 +154,8 @@
   let dateFrom = '';
   let dateTo = '';
   let requestFilters = {statuses:[], city:'', service:'', sync:''};
+  // Demo fallback from Android DefaultBidType (id=1). Other services require the partner's server catalog.
+  const requestServices = ['Поверка ИПУ'];
   const statusLabels = {new:'Новая',appointed:'Назначена',agreed:'Согласована','in-work':'В работе',completed:'Выполнена',canceled:'Отменена'};
   const filterCity = document.getElementById('filter-city');
   const filterService = document.getElementById('filter-service');
@@ -163,7 +165,7 @@
   const statusOptions = document.getElementById('filter-status-options');
   const periodOptions = document.getElementById('filter-period-options');
   function cleanRequestFilters(value = {}) {
-    return {statuses:[...new Set(Array.isArray(value?.statuses) ? value.statuses.filter(key => Object.hasOwn(statusLabels,key)) : [])],city:typeof value?.city === 'string' ? value.city.slice(0,200) : '',service:['Поверка ИПУ','Поверка газового счётчика','Замена ИПУ'].includes(value?.service) ? value.service : '',sync:['error','queued'].includes(value?.sync) ? value.sync : ''};
+    return {statuses:[...new Set(Array.isArray(value?.statuses) ? value.statuses.filter(key => Object.hasOwn(statusLabels,key)) : [])],city:typeof value?.city === 'string' ? value.city.slice(0,200) : '',service:requestServices.includes(value?.service) ? value.service : '',sync:['error','queued'].includes(value?.sync) ? value.sync : ''};
   }
   function draftRequestFilters() {
     return {statuses:[...statusOptions.querySelectorAll('[aria-pressed="true"]')].map(n=>n.dataset.status),city:filterCity.value,service:filterService.value,sync:filterSync.value};
@@ -192,7 +194,7 @@
     filterError.hidden=true;refreshFilterDraft();
   });
   let renderedRequestModels = new Map();
-  const requestDetail = createRequestDetail({app, screen:requestScreen, icon, onClose:()=>showRequests(), onChange:()=>renderRequests()});
+  const requestDetail = createRequestDetail({app, screen:requestScreen, icon, services:requestServices, onClose:()=>showRequests(), onChange:()=>renderRequests()});
   const requestSample = document.getElementById('request-sample');
   const requestSampleOpen = document.getElementById('request-sample-open');
   requestSampleOpen.addEventListener('click',()=>openRequest(requestSample.value));
@@ -239,8 +241,8 @@
     }
     for (const status of requestFilters.statuses) chip(statusLabels[status],()=>setListFilters(listScope,dateFilter,dateFrom,dateTo,{...requestFilters,statuses:requestFilters.statuses.filter(v=>v!==status)}));
     if(requestFilters.city) chip(requestFilters.city,()=>setListFilters(listScope,dateFilter,dateFrom,dateTo,{...requestFilters,city:''}));
-    if(requestFilters.service) chip({'Поверка ИПУ':'Поверка воды','Поверка газового счётчика':'Поверка газа','Замена ИПУ':'Замена ИПУ'}[requestFilters.service],()=>setListFilters(listScope,dateFilter,dateFrom,dateTo,{...requestFilters,service:''}));
-    if(requestFilters.sync) chip({error:'Ошибка отправки',queued:'Ожидают отправки'}[requestFilters.sync],()=>setListFilters(listScope,dateFilter,dateFrom,dateTo,{...requestFilters,sync:''}));
+    if(requestFilters.service) chip(requestFilters.service,()=>setListFilters(listScope,dateFilter,dateFrom,dateTo,{...requestFilters,service:''}));
+    if(requestFilters.sync) chip({error:'Ошибка отправки',queued:'Отправляются'}[requestFilters.sync],()=>setListFilters(listScope,dateFilter,dateFrom,dateTo,{...requestFilters,sync:''}));
     if(filterSummary.children.length) chip('Сбросить всё',()=>setListFilters(listScope==='all'?'mine':listScope,'all','','',{}));
     filterSummary.hidden = !filterSummary.children.length;
     renderRequests();
@@ -253,6 +255,8 @@
       filterFrom.value = dateFrom; filterTo.value = dateTo;
       filterCity.replaceChildren();
       for(const city of ['',...new Set([...getRequestItems().map(item=>item.city),requestFilters.city].filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ru'))) {const option=document.createElement('option');option.value=city;option.textContent=city||'Все населённые пункты';filterCity.append(option);}
+      filterService.replaceChildren();
+      for(const service of ['',...requestServices]) {const option=document.createElement('option');option.value=service;option.textContent=service||'Все услуги';filterService.append(option);}
       filterCity.value=requestFilters.city;filterService.value=requestFilters.service;filterSync.value=requestFilters.sync;
       statusOptions.querySelectorAll('button').forEach(n=>n.setAttribute('aria-pressed',String(requestFilters.statuses.includes(n.dataset.status))));
       filterRange.hidden = dateFilter !== 'range'; filterError.hidden = true;
@@ -483,9 +487,9 @@
       const saved=savedDrafts[item.id];if(!saved)return item;
       const next={...item,...saved};
       next.baseQuantity=item.quantity||item.work?.match(/(\d+) счётчик/)?.[1]||'';
-      next.baseService=item.service||(/газа/.test(item.work||'')?'Поверка газового счётчика':'Поверка ИПУ');
+      next.baseService=item.service||requestServices[0];
       if(saved.visitDate)next.visitDate=/^\d{2}\.\d{2}\.\d{4}$/.test(saved.visitDate)?saved.visitDate.split('.').reverse().join('-'):saved.visitDate;
-      if(saved.kind)next.action={new:'Принять заявку',appointed:'Согласовать',agreed:next.service==='Замена ИПУ'?'Выполнить заявку':'Создать акт','in-work':'Продолжить акт',completed:'Результат',canceled:'Посмотреть'}[saved.kind];
+      if(saved.kind)next.action={new:'Принять заявку',appointed:'Согласовать',agreed:'Создать акт','in-work':'Продолжить акт',completed:'Результат',canceled:'Посмотреть'}[saved.kind];
       if(saved.quantity)next.work=(item.work||'').replace(/\d+ счётчик[а-я]*/u,saved.quantity+' '+(saved.quantity==='1'?'счётчик':Number(saved.quantity)<5?'счётчика':'счётчиков'));
       return next;
     });
@@ -510,7 +514,7 @@
       if (scope === 'available' && (item.assignedTo != null || item.kind !== 'new')) return false;
       if (extra.statuses.length && !extra.statuses.includes(item.kind)) return false;
       if (extra.city && item.city !== extra.city) return false;
-      const service = item.service || (/газа/.test(item.work||'') ? 'Поверка газового счётчика' : 'Поверка ИПУ');
+      const service = item.service || requestServices[0];
       if (extra.service && service !== extra.service) return false;
       if (extra.sync && item.syncState !== extra.sync) return false;
       const rawDate = item.visitDate || item.requestedDate || '';

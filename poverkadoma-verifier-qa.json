@@ -56,7 +56,7 @@
     "Request filters intersect date, status, service, city and sync; count matches rendered cards",
     "Request status OR, draft cancellation, reset, empty state and removal preserve the correct list",
     "Request period boundaries, undated requests and search compose with applied filters",
-    "Request filters follow current edited fields, mixed localities and available assignment scope"
+    "Request filters normalize retired services and preserve mixed localities and assignment scope"
   ],
   "routeCount": 39,
   "headerContract": {
@@ -74,7 +74,7 @@
     "verification": "Actual visible DOM control activation"
   },
   "seedSnapshotBytes": 16591,
-  "fragmentBytes": 1029396,
+  "fragmentBytes": 1028861,
   "limitations": [
     "DOM-only: layout, real-browser rendering and touch/device behavior remain unverified; custom calendar and option interactions are exercised in DOM",
     "Camera, real file selection, downloads and external handlers remain unverified",

@@ -171,13 +171,14 @@ h1 { font-size:28px; line-height:1.25; font-weight:600; margin:0 0 8px; }
   function dateKey(offset=0) { const d=new Date(today); d.setDate(d.getDate()+offset); return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-'); }
   // Minimal version of the lab's synthetic request fixture: no client records.
   const rows = [
-    ['mine','Назначена',null,'water','error'],['mine','Назначена',null,'water',''],
-    ['mine','Согласована',0,'water',''],['mine','В работе',0,'water',''],['mine','Согласована',0,'gas','queued'],['mine','Согласована',0,'water',''],
-    ['mine','Согласована',1,'water',''],['mine','Согласована',1,'water',''],['mine','Согласована',2,'gas',''],['mine','Согласована',3,'water',''],
-    ['mine','Отменена',null,'water',''],['mine','Отменена',null,'water',''],['mine','Назначена',null,'water',''],
-    ['available','Новая',0,'water',''],['available','Новая',0,'water',''],['available','Новая',1,'gas',''],['available','Новая',1,'water',''],
-    ['available','Новая',2,'water',''],['available','Новая',3,'water',''],['available','Новая',null,'water',''],['available','Новая',4,'water','']
+    ['mine','Назначена',null,'verification','error'],['mine','Назначена',null,'verification',''],
+    ['mine','Согласована',0,'verification',''],['mine','В работе',0,'verification',''],['mine','Согласована',0,'verification','queued'],['mine','Согласована',0,'verification',''],
+    ['mine','Согласована',1,'verification',''],['mine','Согласована',1,'verification',''],['mine','Согласована',2,'verification',''],['mine','Согласована',3,'verification',''],
+    ['mine','Отменена',null,'verification',''],['mine','Отменена',null,'verification',''],['mine','Назначена',null,'verification',''],
+    ['available','Новая',0,'verification',''],['available','Новая',0,'verification',''],['available','Новая',1,'verification',''],['available','Новая',1,'verification',''],
+    ['available','Новая',2,'verification',''],['available','Новая',3,'verification',''],['available','Новая',null,'verification',''],['available','Новая',4,'verification','']
   ].map(([scope,status,offset,service,sync])=>({scope,status,date:offset===null?'':dateKey(offset),city:'Тольятти',service,sync}));
+  const cityOptions=[['','Все населённые пункты'],...[...new Set(rows.map(row=>row.city).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ru')).map(city=>[city,city])];
   const icons={close:'<path d="m6 6 12 12M18 6 6 18"/>',help:'<path d="M9.1 8a3 3 0 0 1 5.8 1c0 2-3 2.3-3 4.4"/><path d="M12 17h.01"/>'};
   const icon = name => '<svg viewBox="0 0 24 24" aria-hidden="true">'+icons[name]+'</svg>';
   const gallery=document.getElementById('gallery');
@@ -189,7 +190,7 @@ h1 { font-size:28px; line-height:1.25; font-weight:600; margin:0 0 8px; }
     const scope=field(n,'scope','Заявки',[['mine','Мои'],['available','Свободные'],['all','Все заявки']]);
     const period=choices(n,'period','Дата визита',periods);
     const status=choices(n,'status','Статус',statuses.map(x=>[x,x]));
-    const other=field(n,'city','Населённый пункт',[['','Все населённые пункты'],['Тольятти','Тольятти']])+field(n,'service','Услуга',[['','Все услуги'],['water','Поверка воды'],['gas','Поверка газа'],['replace','Замена ИПУ']])+field(n,'sync','Отправка изменений',[['','Любое состояние'],['error','Ошибка отправки'],['queued','Ожидают отправки']]);
+    const other=field(n,'city','Населённый пункт',cityOptions)+field(n,'service','Услуга',[['','Все услуги'],['verification','Поверка ИПУ']])+field(n,'sync','Отправка изменений',[['','Любое состояние'],['error','Ошибка отправки'],['queued','Отправляются']]);
     const body=n===3?'<div class="bundle">'+scope+period+'</div><div class="bundle">'+status+'</div><div class="bundle">'+other+'</div>':scope+period+status+other;
     const article=document.createElement('article'); article.className='variant v'+n; article.dataset.variant=n; article.id='variant-'+n;
     article.innerHTML='<div class="variant-head"><h2 class="variant-title"><span class="variant-number">'+String(n).padStart(2,'0')+'</span>'+name+'</h2><p class="variant-description">'+description+'</p></div><div class="phone"><div class="status-bar" aria-hidden="true"><span>9:41</span><span class="device-status"><svg viewBox="0 0 16 12"><path d="M2 10V8m4 2V6m4 4V3m4 7V1"/></svg><svg viewBox="0 0 16 12"><path d="M1 4q7-6 14 0M4 7q4-4 8 0M7 10h2"/></svg><svg viewBox="0 0 18 12"><rect x="1" y="2" width="13" height="8" rx="2"/><path d="M16 4v4M3 4h9v4H3z"/></svg></span></div><form class="filter-form"><header class="filter-header"><h2>Фильтр заявок</h2><button class="icon-button" type="button" data-close aria-label="Закрыть фильтр">'+icon('close')+'</button><button class="icon-button help-button" type="button" data-help aria-label="Подсказка к фильтру" aria-expanded="false" aria-controls="help-'+n+'">'+icon('help')+'</button></header><p class="help-copy" id="help-'+n+'" hidden>Выберите условия. Статусов может быть несколько. Кнопка «Сбросить» вернёт исходные значения.</p><div class="filter-body">'+body+'</div><footer class="filter-footer"><p class="error" role="alert" hidden></p><p class="result" role="status" aria-live="polite">Найдено заявок: 13</p><div class="actions"><button type="button" class="reset" data-reset>Сбросить</button><button type="submit" class="apply">Показать · 13</button></div></footer></form><div class="closed-state" hidden><p class="closed-copy"></p><button type="button" class="reopen">Открыть фильтр</button></div></div>';
@@ -238,7 +239,7 @@ h1 { font-size:28px; line-height:1.25; font-weight:600; margin:0 0 8px; }
     if(error){const el=event.target.querySelector('.error');el.textContent=error;el.hidden=false;return;}
     close(event.target.closest('.variant'),'Фильтр применён. Найдено заявок: '+count()+'.');
   });
-  document.getElementById('sample').addEventListener('click',event=>{const active=event.currentTarget.getAttribute('aria-pressed')!=='true';state=active?{...defaults(),period:'today',statuses:['Согласована'],city:'Тольятти'}:defaults();event.currentTarget.setAttribute('aria-pressed',String(active));render();});
+  document.getElementById('sample').addEventListener('click',event=>{const active=event.currentTarget.getAttribute('aria-pressed')!=='true';state=active?{...defaults(),period:'today',statuses:['Согласована'],city:rows[0]?.city||''}:defaults();event.currentTarget.setAttribute('aria-pressed',String(active));render();});
   document.getElementById('variant-picker').addEventListener('change',event=>{gallery.querySelectorAll('.variant').forEach(el=>el.hidden=event.target.value!=='all'&&el.dataset.variant!==event.target.value);});
   document.getElementById('theme-picker').addEventListener('change',event=>{document.documentElement.dataset.theme=event.target.value;});
   document.getElementById('width-picker').addEventListener('change',event=>{document.documentElement.style.setProperty('--phone-width',event.target.value+'px');});

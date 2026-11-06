@@ -77,15 +77,16 @@ const fields={
  scope:{label:'Заявки',options:[['mine','Мои'],['available','Свободные'],['all','Все заявки']]},
  period:{label:'Дата визита',options:[['all','Все даты'],['today','Сегодня'],['tomorrow','Завтра'],['undated','Без даты'],['range','Период']]},
  statuses:{label:'Статус',options:['Новая','Назначена','Согласована','В работе','Выполнена','Отменена'].map(x=>[x,x])},
- city:{label:'Населённый пункт',options:[['','Все населённые пункты'],['Тольятти','Тольятти']]},
- service:{label:'Услуга',options:[['','Все услуги'],['water','Поверка воды'],['gas','Поверка газа'],['replace','Замена ИПУ']]},
- sync:{label:'Отправка изменений',options:[['','Любое состояние'],['error','Ошибка отправки'],['queued','Ожидают отправки']]}
+ city:{label:'Населённый пункт',options:[['','Все населённые пункты']]},
+ service:{label:'Услуга',options:[['','Все услуги'],['verification','Поверка ИПУ']]},
+ sync:{label:'Отправка изменений',options:[['','Любое состояние'],['error','Ошибка отправки'],['queued','Отправляются']]}
 };
 const defaults=()=>({scope:'mine',period:'all',statuses:[],city:'',service:'',sync:'',from:'',to:''});
 let state=defaults();
 const today=new Date();today.setHours(12,0,0,0);
 function day(offset=0){const d=new Date(today);d.setDate(d.getDate()+offset);return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');}
-const rows=[['mine','Назначена',null,'water','error'],['mine','Назначена',null,'water',''],['mine','Согласована',0,'water',''],['mine','В работе',0,'water',''],['mine','Согласована',0,'gas','queued'],['mine','Согласована',0,'water',''],['mine','Согласована',1,'water',''],['mine','Согласована',1,'water',''],['mine','Согласована',2,'gas',''],['mine','Согласована',3,'water',''],['mine','Отменена',null,'water',''],['mine','Отменена',null,'water',''],['mine','Назначена',null,'water',''],['available','Новая',0,'water',''],['available','Новая',0,'water',''],['available','Новая',1,'gas',''],['available','Новая',1,'water',''],['available','Новая',2,'water',''],['available','Новая',3,'water',''],['available','Новая',null,'water',''],['available','Новая',4,'water','']].map(([scope,status,offset,service,sync])=>({scope,status,date:offset===null?'':day(offset),city:'Тольятти',service,sync}));
+const rows=[['mine','Назначена',null,'verification','error'],['mine','Назначена',null,'verification',''],['mine','Согласована',0,'verification',''],['mine','В работе',0,'verification',''],['mine','Согласована',0,'verification','queued'],['mine','Согласована',0,'verification',''],['mine','Согласована',1,'verification',''],['mine','Согласована',1,'verification',''],['mine','Согласована',2,'verification',''],['mine','Согласована',3,'verification',''],['mine','Отменена',null,'verification',''],['mine','Отменена',null,'verification',''],['mine','Назначена',null,'verification',''],['available','Новая',0,'verification',''],['available','Новая',0,'verification',''],['available','Новая',1,'verification',''],['available','Новая',1,'verification',''],['available','Новая',2,'verification',''],['available','Новая',3,'verification',''],['available','Новая',null,'verification',''],['available','Новая',4,'verification','']].map(([scope,status,offset,service,sync])=>({scope,status,date:offset===null?'':day(offset),city:'Тольятти',service,sync}));
+fields.city.options.push(...[...new Set(rows.map(row=>row.city).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ru')).map(city=>[city,city]));
 const esc=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const icons={close:'<path d="m6 6 12 12M18 6 6 18"/>',help:'<path d="M9.1 8a3 3 0 0 1 5.8 1c0 2-3 2.3-3 4.4M12 17h.01"/>'};
 const icon=name=>'<svg viewBox="0 0 24 24" aria-hidden="true">'+icons[name]+'</svg>';
@@ -163,7 +164,7 @@ document.getElementById('variant-picker').addEventListener('change',event=>{gall
 document.getElementById('theme-picker').addEventListener('change',event=>{document.documentElement.dataset.theme=event.target.value;});
 document.getElementById('width-picker').addEventListener('change',event=>{document.documentElement.style.setProperty('--phone-width',event.target.value+'px');});
 document.getElementById('scale-picker').addEventListener('change',event=>{document.documentElement.style.setProperty('--scale',event.target.value);document.documentElement.dataset.scale=event.target.value==='2'?'large':'normal';});
-document.getElementById('sample').addEventListener('click',event=>{state=event.currentTarget.getAttribute('aria-pressed')==='true'?defaults():{...defaults(),period:'today',statuses:['Согласована','В работе'],city:'Тольятти'};render();});
+document.getElementById('sample').addEventListener('click',event=>{state=event.currentTarget.getAttribute('aria-pressed')==='true'?defaults():{...defaults(),period:'today',statuses:['Согласована','В работе'],city:rows[0]?.city||''};render();});
 const sizes=new ResizeObserver(entries=>{for(const entry of entries){const el=entry.target;if(el.getBoundingClientRect().width>0)el.closest('.variant').querySelector('.measure-value').textContent=Math.round(el.getBoundingClientRect().height);}});
 gallery.querySelectorAll('.phone').forEach(el=>sizes.observe(el));
 render();

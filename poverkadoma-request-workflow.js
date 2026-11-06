@@ -1,7 +1,7 @@
 /* Internal-verifier prototype. Local demo transitions only; no backend or live regulatory clock. */
 function createRequestDetail(options) {
   'use strict';
-  const {app,screen,icon,onClose,onChange}=options;
+  const {app,screen,icon,onClose,onChange,services=['Поверка ИПУ']}=options;
   const find=id=>screen.querySelector('#'+id);
   const content=find('request-detail-content'),history=find('request-history-content');
   const actions=find('request-detail-actions'),secondary=find('request-secondary-actions');
@@ -16,7 +16,6 @@ function createRequestDetail(options) {
     'sample-new':{...common,kind:'new',state:'Новая',visitDate:'',visitTime:'',agreementMinutesLeft:43,receivedTime:'9:59',agreementDue:'10:59'},
     'sample-appointed':{...common,kind:'appointed',state:'Назначена',agreementMinutesLeft:15,receivedTime:'9:59',agreementDue:'10:59'},
     'sample-agreed':{...common,kind:'agreed',state:'Согласована',agreementHistory:'Заявка согласована без превышения срока'},
-    'sample-replacement':{...common,kind:'agreed',state:'Согласована',service:'Замена ИПУ'},
     'sample-in-work':{...common,kind:'in-work',state:'В работе',linkedAct:'23-2020-00001'},
     'sample-completed':{...common,kind:'completed',state:'Выполнена',resultQuantity:'2',completedDate:'27.10.2024'},
     'sample-canceled':{...common,kind:'canceled',state:'Отменена',cancellationDate:'30.03.2026 21:00',cancellationRemaining:'00:59:59',canRestore:true,cancellationReason:'Заказчик передумал'},
@@ -33,8 +32,9 @@ function createRequestDetail(options) {
   const urgency=n=>n<0?'overdue':n<=5?'critical':n<=15?'warning':'calm';
   const hasDeadline=()=>['new','appointed'].includes(current?.kind)&&Number.isFinite(current.agreementMinutesLeft);
   const canEdit=()=>['new','appointed','agreed'].includes(current?.kind);
-  function getSample(id){return Object.prototype.hasOwnProperty.call(samples,id)?{...samples[id],detailKey:id}:null;}
-  function readItem(item){const v={...item,detailKey:item.detailKey||item.id,quantity:item.quantity||item.work?.match(/(\d+) счётчик/)?.[1]||'',service:item.service||(/газа/.test(item.work||'')?'Поверка газового счётчика':'Поверка ИПУ'),visitDate:dateText(item.visitDate||item.requestedDate),visitTime:item.visitTime||item.requestedTime||'',amount:item.amount||'',note:item.note||'',comment:item.comment||'',baseAddress:item.address||'',baseQuantity:item.baseQuantity||item.quantity||item.work?.match(/(\d+) счётчик/)?.[1]||'',baseService:item.baseService||item.service||(/газа/.test(item.work||'')?'Поверка газового счётчика':'Поверка ИПУ'),...drafts[item.detailKey||item.id]};v.pricePending=v.quantity!==v.baseQuantity||v.service!==v.baseService;return v;}
+  // Compatibility: retired speculative sample opens the supported verification scenario.
+  function getSample(id){const sampleId=id==='sample-replacement'?'sample-agreed':id;return Object.prototype.hasOwnProperty.call(samples,sampleId)?{...samples[sampleId],detailKey:id}:null;}
+  function readItem(item){const v={...item,detailKey:item.detailKey||item.id,quantity:item.quantity||item.work?.match(/(\d+) счётчик/)?.[1]||'',service:item.service||services[0],visitDate:dateText(item.visitDate||item.requestedDate),visitTime:item.visitTime||item.requestedTime||'',amount:item.amount||'',note:item.note||'',comment:item.comment||'',baseAddress:item.address||'',baseQuantity:item.baseQuantity||item.quantity||item.work?.match(/(\d+) счётчик/)?.[1]||'',baseService:item.baseService||item.service||services[0],...drafts[item.detailKey||item.id]};v.pricePending=v.quantity!==v.baseQuantity||v.service!==v.baseService;return v;}
   function button(label,callback,kind='secondary'){const b=el('button','request-action detail-'+kind,label);b.type='button';b.addEventListener('click',callback);return b;}
   function dialog(heading,description,trigger){editorKey='';confirmAction=null;overlay.dataset.mode='default';editorContent.hidden=true;editorSave.hidden=true;editorSave.className='request-action primary';find('request-action-description').hidden=false;find('request-action-title').textContent=heading;find('request-action-description').textContent=description;dialogClose.textContent='Понятно';dialogClose.className='request-action primary';returnFocus=trigger||document.activeElement;overlay.hidden=false;dialogClose.focus?.({preventScroll:true});}
   function hideDialog(){const wasOpen=!overlay.hidden,key=editorKey;overlay.hidden=true;editorKey='';confirmAction=null;if(wasOpen){const target=returnFocus?.isConnected?returnFocus:content.querySelector('[data-field="'+key+'"]')||mapPreview||primary;target?.focus?.({preventScroll:true});}}
@@ -65,7 +65,7 @@ function createRequestDetail(options) {
     }
     return null;
   }
-  function actionLabel(){if(!current)return '';return {new:'Принять заявку',appointed:'Согласовать',agreed:current.service==='Замена ИПУ'?'Выполнить заявку':'Создать акт','in-work':current.linkedAct?'Продолжить акт':'Создать акт',completed:'',canceled:current.canRestore===true?'Вернуть в работу':''}[current.kind]||'';}
+  function actionLabel(){if(!current)return '';return {new:'Принять заявку',appointed:'Согласовать',agreed:'Создать акт','in-work':current.linkedAct?'Продолжить акт':'Создать акт',completed:'',canceled:current.canRestore===true?'Вернуть в работу':''}[current.kind]||'';}
   function updateFooter(){
     if(!current||!primary)return;
     const step=requiredStep(),label=step?.label||actionLabel();primary.replaceChildren(el('span','action-label',label));primary.className='request-action primary';primary.removeAttribute('data-urgency');
@@ -110,7 +110,7 @@ function createRequestDetail(options) {
     find('request-action-description').hidden=true;editorContent.hidden=false;editorContent.replaceChildren();editorSave.hidden=false;editorSave.textContent='Сохранить';dialogClose.textContent='Отмена';dialogClose.className='request-action detail-secondary';
     {
       const input=el(key==='address'?'textarea':key==='service'?'select':'input');input.id='request-editor-value';input.setAttribute('aria-label',find('request-action-title').textContent);
-      if(key==='service'){for(const value of [...new Set([current.service,'Поверка ИПУ','Замена ИПУ'])]){const option=el('option','',value);option.value=value;if(value===current.service)option.setAttribute('selected','');input.append(option);}}
+      if(key==='service'){for(const value of services){const option=el('option','',value);option.value=value;if(value===current.service)option.setAttribute('selected','');input.append(option);}}
       else{input.type='text';input.value=current[key]||'';input.maxLength=editableKeys[key];if(key==='quantity')input.inputMode='numeric';if(key==='address')input.rows=3;}
       if(key==='address')editorContent.append(el('p','detail-editor-city',current.city));editorContent.append(input);
     }
@@ -213,7 +213,7 @@ function createRequestDetail(options) {
     current=readItem(item);notesVisible={note:false,comment:false};editorKey='';confirmAction=null;overlay.hidden=true;information.open=false;
     created.textContent=current.created||'Не указана';created.dateTime=current.created?.split('.').reverse().join('-')||'';refresh();viewport.scrollTop=0;
   }
-  function restoreDrafts(value){drafts={};if(!value||typeof value!=='object'||Array.isArray(value))return;for(const[id,entry]of Object.entries(value).slice(-8)){if(!/^(?:sample-[a-z-]+|[\d-]{1,40})$/.test(id)||!entry||typeof entry!=='object')continue;const clean={};for(const[key,limit]of Object.entries({...editableKeys,...localKeys}))if(typeof entry[key]==='string')clean[key]=entry[key].slice(0,limit);if(clean.kind&&!Object.prototype.hasOwnProperty.call(states,clean.kind)){delete clean.kind;delete clean.state;}else if(clean.kind)clean.state=states[clean.kind];if(entry.localDemo===true)clean.localDemo=true;if(typeof entry.canRestore==='boolean')clean.canRestore=entry.canRestore;if(Object.keys(clean).length)drafts[id]=clean;}}
+  function restoreDrafts(value){drafts={};if(!value||typeof value!=='object'||Array.isArray(value))return;for(const[id,entry]of Object.entries(value).slice(-8)){if(!/^(?:sample-[a-z-]+|[\d-]{1,40})$/.test(id)||!entry||typeof entry!=='object')continue;const clean={};for(const[key,limit]of Object.entries({...editableKeys,...localKeys}))if(typeof entry[key]==='string')clean[key]=entry[key].slice(0,limit);for(const key of ['service','baseService'])if(clean[key]&&!services.includes(clean[key]))delete clean[key];if(clean.kind&&!Object.prototype.hasOwnProperty.call(states,clean.kind)){delete clean.kind;delete clean.state;}else if(clean.kind)clean.state=states[clean.kind];if(entry.localDemo===true)clean.localDemo=true;if(typeof entry.canRestore==='boolean')clean.canRestore=entry.canRestore;if(Object.keys(clean).length)drafts[id]=clean;}}
   function restorePreferences(value){mapProvider=['yandex','google'].includes(value?.mapProvider)?value.mapProvider:'';}
   function syncActs(acts){let changed=false;for(const [key,entry]of Object.entries(drafts)){if(!entry.actId)continue;const act=acts.find(a=>a.id===entry.actId);const patch=!act?{actId:'',linkedAct:'',kind:'agreed',state:states.agreed}:act.status==='sent'?{linkedAct:act.number,kind:'completed',state:states.completed,resultQuantity:String(act.meters?.length||''),completedDate:act.date}:null;if(patch&&Object.entries(patch).some(([k,v])=>entry[k]!==v)){Object.assign(entry,patch);if(current?.detailKey===key)Object.assign(current,patch);changed=true;}}if(changed)onChange?.();}
   function updateItem(item,patch){const v=readItem(item),key=v.detailKey;drafts[key]={...(drafts[key]||{}),...patch,localDemo:true};if(current?.detailKey===key)Object.assign(current,patch,{localDemo:true});onChange?.();}
