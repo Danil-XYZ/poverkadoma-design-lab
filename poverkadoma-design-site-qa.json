@@ -26,7 +26,7 @@
       "poverkadoma-design-site.js",
       "poverkadoma-design-site-data.js"
     ],
-    "bytes": 13429164,
+    "bytes": 13427992,
     "verification": "Static package; no production services,credentials or raw Confluence exports included."
   },
   "verification": "DOM integration and source checks only; real browser geometry,frame script execution and mobile interaction remain unverified."

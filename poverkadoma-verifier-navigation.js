@@ -40,19 +40,33 @@ function createVerifierNavigation({app,bridge,el,navigate,showHelp,back,getSetti
   const request=prepare(requestHeader),main=prepare(app.querySelector(':scope > header.topbar')),screen=prepare(generated);
   screen.header.classList.add('v-topbar');screen.toolbar.classList.add('v-toolbar');screen.backButton.classList.add('v-back-button');screen.backButton.setAttribute('aria-label','Назад');screen.backButton.addEventListener('click',back);
   let inkFrame;
+  function fitHeader({header,toolbar,heading,actions,backButton}){
+    if(header.closest('[hidden]')||!window.getComputedStyle)return;
+    toolbar.removeAttribute('data-header-compact');
+    toolbar.removeAttribute('data-header-stacked');
+    const width=toolbar.getBoundingClientRect().width;
+    if(!width)return;
+    const gap=parseFloat(window.getComputedStyle(toolbar).columnGap)||0;
+    let titleWidth=heading.getBoundingClientRect().width;
+    if(backButton&&!backButton.hidden){
+      const margin=parseFloat(window.getComputedStyle(backButton).marginLeft)||0;
+      titleWidth+=backButton.getBoundingClientRect().width+margin+gap;
+    }
+    const fits=()=>{
+      const actionsWidth=actions.getBoundingClientRect().width;
+      return !actionsWidth||titleWidth+gap+actionsWidth<=width;
+    };
+    if(fits())return;
+    toolbar.setAttribute('data-header-compact','');
+    if(!fits())toolbar.setAttribute('data-header-stacked','');
+  }
   function layoutHeaderActions(){
     const {toolbar,heading,actions}=screen;toolbar.removeAttribute('data-ink-layout');
-    toolbar.removeAttribute('data-tools-compact');
     [...actions.children].forEach(n=>{n.style.removeProperty('--tools-button-left');n.style.removeProperty('--tools-icon-shift');});
-    if(screen.header.closest('[hidden]')||!window.getComputedStyle)return;
+    for(const info of [main,request,screen])fitHeader(info);
+    if(app.dataset.vRoute!=='notifications'||app.dataset.offline!=='true'||screen.header.closest('[hidden]')||
+      !toolbar.hasAttribute('data-header-compact')||toolbar.hasAttribute('data-header-stacked'))return;
     const area=toolbar.getBoundingClientRect(),title=heading.getBoundingClientRect();
-    if(app.dataset.vRoute==='tools'){
-      const gap=parseFloat(window.getComputedStyle(toolbar).columnGap)||0;
-      const requiredWidth=title.width+gap+actions.getBoundingClientRect().width;
-      toolbar.toggleAttribute('data-tools-compact',area.width>0&&requiredWidth>area.width);
-      return;
-    }
-    if(app.dataset.vRoute!=='notifications'||app.dataset.offline!=='true')return;
     const controls=[...actions.children].filter(n=>!n.hidden&&!(n.classList.contains('network-slot')&&screen.offline.hidden));
     if(!area.width||!title.width||controls.some(n=>Math.abs(n.getBoundingClientRect().top-title.top)>16))return;
     const context=document.createElement('canvas').getContext?.('2d');if(!context)return;
