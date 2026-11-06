@@ -1,12 +1,17 @@
 /* One request-header contract and direct role destinations for the full prototype. */
 // Place visible ink evenly while keeping full, non-overlapping touch targets.
-function planToolsHeaderInk(titleRight,right,inkEnd,widths,targetWidth){
-  if(![titleRight,right,inkEnd,targetWidth,...widths].every(Number.isFinite)||!widths.length||targetWidth<44)return null;
+function planToolsHeaderInk(titleRight,right,inkEnd,widths,targetWidths){
+  if(![titleRight,right,inkEnd,...targetWidths,...widths].every(Number.isFinite)||!widths.length||widths.length!==targetWidths.length)return null;
   const gap=(inkEnd-titleRight-widths.reduce((a,b)=>a+b,0))/widths.length;
-  if(gap<0||widths.some(w=>w<=0||w>targetWidth))return null;
+  if(gap<0||widths.some((width,index)=>width<=0||width>targetWidths[index]))return null;
   let edge=titleRight;const items=widths.map(width=>{const left=edge+gap;edge=left+width;return {left,width};});
   let next=right;
-  for(let i=items.length-1;i>=0;i--){const item=items[i];item.target=Math.min(item.left+(item.width-targetWidth)/2,next-targetWidth);if(item.target<titleRight+4||item.target<item.left+item.width-targetWidth-.01||item.target>item.left+.01)return null;next=item.target;}
+  for(let i=items.length-1;i>=0;i--){
+    const item=items[i],targetWidth=targetWidths[i];
+    item.target=Math.min(item.left+(item.width-targetWidth)/2,next-targetWidth);
+    if(item.target<titleRight+4||item.target<item.left+item.width-targetWidth-.01||item.target>item.left+.01)return null;
+    next=item.target;
+  }
   return {gap,items};
 }
 function createVerifierNavigation({app,bridge,el,navigate,showHelp,back,getSettings}) {
@@ -33,7 +38,8 @@ function createVerifierNavigation({app,bridge,el,navigate,showHelp,back,getSetti
   function alignToolsInk(){
     const {toolbar,heading,actions}=screen;toolbar.removeAttribute('data-ink-layout');
     [...actions.children].forEach(n=>{n.style.removeProperty('--tools-button-left');n.style.removeProperty('--tools-icon-shift');});
-    if(app.dataset.vRoute!=='tools'||screen.header.closest('[hidden]')||!window.getComputedStyle)return;
+    const compactNotifications=app.dataset.vRoute==='notifications'&&app.dataset.offline==='true';
+    if((app.dataset.vRoute!=='tools'&&!compactNotifications)||screen.header.closest('[hidden]')||!window.getComputedStyle)return;
     const controls=[...actions.children].filter(n=>!n.hidden&&!(n.classList.contains('network-slot')&&screen.offline.hidden));
     const area=toolbar.getBoundingClientRect(),title=heading.getBoundingClientRect();
     if(!area.width||!title.width||controls.some(n=>Math.abs(n.getBoundingClientRect().top-title.top)>16))return;
@@ -48,8 +54,15 @@ function createVerifierNavigation({app,bridge,el,navigate,showHelp,back,getSetti
       return null;
     });
     if(bounds.some(b=>!b||!b.width))return;
-    const targetWidth=controls[0].getBoundingClientRect().width,last=bounds.at(-1),plan=planToolsHeaderInk(titleRight,area.right,last.left+last.width,bounds.map(b=>b.width),targetWidth);if(!plan)return;
-    controls.forEach((control,i)=>{const rect=control.getBoundingClientRect(),item=plan.items[i];control.style.setProperty('--tools-button-left',(item.target-area.left)+'px');control.style.setProperty('--tools-icon-shift',(item.left-bounds[i].left-(item.target-rect.left))+'px');});
+    const rects=controls.map(control=>control.getBoundingClientRect()),last=bounds.at(-1);
+    const plan=planToolsHeaderInk(titleRight,area.right,last.left+last.width,bounds.map(bound=>bound.width),rects.map(rect=>rect.width));
+    if(!plan)return;
+    controls.forEach((control,index)=>{
+      if(compactNotifications&&control===screen.settings)return;
+      const rect=rects[index],item=plan.items[index],targetShift=item.target-rect.left;
+      control.style.setProperty('--tools-button-left',(compactNotifications?targetShift:item.target-area.left)+'px');
+      control.style.setProperty('--tools-icon-shift',(item.left-bounds[index].left-targetShift)+'px');
+    });
     toolbar.dataset.inkLayout='true';
   }
   function scheduleToolsInk(){if(!window.requestAnimationFrame)return;window.cancelAnimationFrame?.(inkFrame);inkFrame=window.requestAnimationFrame(()=>{inkFrame=null;alignToolsInk();});}
