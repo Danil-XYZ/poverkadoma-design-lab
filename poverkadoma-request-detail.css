@@ -24,8 +24,9 @@
 .detail-affordance { opacity: .8; }
 .detail-unit { flex: 0 0 auto; }
 .detail-full-address { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 8px; font-size: calc(16px * var(--card-font-scale)); font-weight: 400; line-height: 1.5; overflow-wrap: anywhere; }
+.detail-address-line { min-width: 0; }
 .detail-address-text { min-width: 0; }
-.detail-locality { grid-column: 1 / -1; min-width: 0; padding-bottom: 8px; border-bottom: 1px solid var(--line); color: var(--ink); font: inherit; overflow-wrap: anywhere; }
+.detail-locality { color: var(--ink); font: inherit; }
 .detail-placeholder { color: var(--secondary); white-space: nowrap; }
 .detail-value:empty:has(+ .detail-placeholder) { display: none; }
 .detail-label { color: var(--secondary); font-size: calc(14px * var(--card-font-scale)); line-height: 1.45; }

@@ -80,7 +80,7 @@ function createRequestDetail(options) {
     if(key==='quantity'||key==='service'){entry.baseQuantity=current.baseQuantity;entry.baseService=current.baseService;current.pricePending=current.quantity!==current.baseQuantity||current.service!==current.baseService;}
     content.querySelector('[data-field="'+key+'"] .detail-field-error')?.remove();content.querySelector('#detail-'+key)?.removeAttribute('aria-invalid');
     if(key==='address'){
-      mapPreview?.querySelector('.detail-map-image')?.remove();mapPreview?.setAttribute('aria-label','Открыть карту: '+current.city+', '+current.address);
+      mapPreview?.setAttribute('aria-label','Открыть карту: '+current.city+', '+current.address);
     }
     if(key==='quantity'||key==='service')updatePriceNote();updateFooter();onChange?.();
   }
@@ -111,7 +111,7 @@ function createRequestDetail(options) {
     {
       const input=el(key==='address'?'textarea':key==='service'?'select':'input');input.id='request-editor-value';input.setAttribute('aria-label',find('request-action-title').textContent);
       if(key==='service'){for(const value of services){const option=el('option','',value);option.value=value;if(value===current.service)option.setAttribute('selected','');input.append(option);}}
-      else{input.type='text';input.value=current[key]||'';input.maxLength=editableKeys[key];if(key==='quantity')input.inputMode='numeric';if(key==='address')input.rows=3;}
+      else{if(input.tagName==='INPUT')input.type='text';input.value=current[key]||'';input.maxLength=editableKeys[key];if(key==='quantity')input.inputMode='numeric';if(key==='address')input.rows=3;}
       if(key==='address')editorContent.append(el('p','detail-editor-city',current.city));editorContent.append(input);
     }
     overlay.hidden=false;pickerHook?.(editorContent);const focus=editorContent.querySelector('button,input:not([hidden]),textarea');focus?.focus?.({preventScroll:true});
@@ -138,9 +138,9 @@ function createRequestDetail(options) {
     const addressGroup=el('div','detail-field-group');addressGroup.append(el('span','detail-label','Адрес'));const address=el(canEdit()?'button':'div','detail-field detail-full-address');address.dataset.field='address';
     if(canEdit()){address.type='button';address.setAttribute('aria-haspopup','dialog');address.addEventListener('click',()=>openEditor('address'));}
     address.setAttribute('aria-label','Адрес: '+v.city+', '+v.address);
-    const city=el('span','detail-locality',v.city||'Населённый пункт не указан'),street=el('span','detail-address-text',v.address);city.id='detail-city';city.setAttribute('aria-label','Населённый пункт: '+city.textContent);street.id='detail-address';address.append(city,street);if(canEdit())address.append(affordance('address'));addressGroup.append(address);content.append(addressGroup);
+    const addressLine=el('span','detail-address-line'),city=el('span','detail-locality',v.city||'Населённый пункт не указан'),street=el('span','detail-address-text',v.address);city.id='detail-city';city.setAttribute('aria-label','Населённый пункт: '+city.textContent);street.id='detail-address';addressLine.append(city,document.createTextNode(', '),street);address.append(addressLine);if(canEdit())address.append(affordance('address'));addressGroup.append(address);content.append(addressGroup);
     const mapGroup=el('div','detail-map-group');mapPreview=el(mapProvider?'a':'button','detail-map-preview');if(!mapProvider){mapPreview.type='button';mapPreview.addEventListener('click',openMap);}else{mapPreview.href=mapUrl(mapProvider);mapPreview.target='_blank';mapPreview.rel='noopener noreferrer';}mapPreview.id='request-map';mapPreview.dataset.detailRoute='true';mapPreview.setAttribute('aria-label','Построить маршрут: '+v.city+', '+v.address);
-    if(v.mapSource==='original'&&v.address===v.baseAddress){const img=el('img','detail-map-image');img.src='poverkadoma-home-asset-request-map.png';img.alt='Карта из исходного макета заявки, район улицы Ворошилова';mapPreview.append(img);}else mapPreview.append(el('span','detail-map-unavailable','Карта недоступна'));
+    const img=el('img','detail-map-image');img.src='poverkadoma-home-asset-request-map.png';img.alt='Иллюстрация карты в макете';mapPreview.append(img);
     mapPreview.append(el('span','detail-map-link','Построить маршрут'));mapGroup.append(mapPreview);if(mapProvider){const change=button('Карты',openMap);change.classList.add('detail-map-change');change.setAttribute('aria-label','Сменить приложение карт');mapGroup.append(change);}content.append(mapGroup);
     content.append(field('Владелец СИ',v.clientName,'clientName',{editable:true,glyph:'person'}));
     const phone=field('Контактный телефон',v.phone||'','phone'),phoneRow=el('div','detail-phone-row'),dial=v.phoneDial||v.phone?.replace(/[^+\d]/g,'')||'';phoneRow.append(phone);
