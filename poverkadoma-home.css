@@ -63,7 +63,7 @@ h1 { margin: 0; flex: 1; min-width: 0; font-size: 24px; font-weight: 600; line-h
 .network-slot { display: block; width: 48px; height: 48px; flex: 0 0 48px; }
 .icon { position: relative; display: inline-block; flex-shrink: 0; overflow: hidden; }
 .icon img { position: absolute; display: block; max-width: none; pointer-events: none; }
-.list-tools { flex: 0 0 auto; display: flex; flex-direction: column; gap: var(--space-3); margin: var(--space-3) var(--screen-gutter); }
+.list-tools { flex: 0 0 auto; display: flex; flex-direction: column; gap: var(--space-3); margin: var(--space-3) var(--screen-gutter) var(--space-2); }
 .tools-row { display: flex; gap: var(--space-2); align-items: center; }
 .date-selector { display: flex; flex: 1; min-width: 0; height: 48px; border-radius: 14px; background: var(--surface); }
 .date-selector button { position: relative; isolation: isolate; flex: 1; min-width: 0; height: 48px; border-radius: 13px; font-size: 16px; line-height: 22px; color: var(--secondary); }
@@ -90,7 +90,7 @@ h1 { margin: 0; flex: 1; min-width: 0; font-size: 24px; font-weight: 600; line-h
 .phone[data-borders="false"] .search-field:focus-within { border-width: 1px; border-color: var(--blue); }
 .requests-viewport { flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; scrollbar-width: none; padding: 0 0 var(--space-4); overscroll-behavior: contain; }
 .requests-viewport::-webkit-scrollbar { display: none; }
-.requests { display: flex; flex-direction: column; gap: var(--space-5); margin: 0 var(--screen-gutter); }
+.requests { display: flex; flex-direction: column; gap: var(--space-2); margin: 0 var(--screen-gutter); }
 .request-day-group { display: flex; flex-direction: column; gap: var(--space-2); }
 .request-day-heading { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); }
 .request-day-heading h2 { margin: 0; min-width: 0; font-size: 16px; font-weight: 600; line-height: 24px; }
