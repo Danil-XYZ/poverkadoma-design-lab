@@ -20,13 +20,15 @@ const entries = {
   'README.txt': 'poverkadoma-design-site-README.txt'
 };
 const hashes = {};
-const dataVersion = crypto.createHash('sha256').update(fs.readFileSync(path.join(base, entries['data.js']))).digest('hex').slice(0,16);
+const assetVersions = Object.fromEntries(['site.css', 'site.js', 'data.js'].map(target => [
+  target, crypto.createHash('sha256').update(fs.readFileSync(path.join(base, entries[target]))).digest('hex').slice(0,16)
+]));
 for (const [target, source] of Object.entries(entries)) {
   let content = fs.readFileSync(path.join(base, source));
   if (target === 'index.html') content = Buffer.from(content.toString('utf8')
-    .replaceAll('poverkadoma-design-site.css', 'site.css')
-    .replaceAll('poverkadoma-design-site-data.js', 'data.js?v=' + dataVersion)
-    .replaceAll('poverkadoma-design-site.js', 'site.js'));
+    .replaceAll('poverkadoma-design-site.css', 'site.css?v=' + assetVersions['site.css'])
+    .replaceAll('poverkadoma-design-site-data.js', 'data.js?v=' + assetVersions['data.js'])
+    .replaceAll('poverkadoma-design-site.js', 'site.js?v=' + assetVersions['site.js']));
   fs.writeFileSync(path.join(base, target), content);
   hashes[target] = crypto.createHash('sha256').update(content).digest('hex');
 }
