@@ -1,6 +1,6 @@
 {
   "date": "2026-11-05",
-  "checks": 11,
+  "checks": 12,
   "passed": [
     "Local site boots with27 experiment series,231 variants,16 analyses and13 role profiles",
     "Every generated preview has valid inline JavaScript and local dependencies",
@@ -12,7 +12,8 @@
     "Beautiful outer controls operate the original prototype including labels,shadows,corners and timer",
     "Reset button restores unread demo data durably without changing appearance or unrelated storage",
     "All local source resources exist and the site needs neither a server API nor a build on the host",
-    "Problem register keeps all 43 issues, evidence for resolved items and working combined filters"
+    "Problem register keeps all 43 issues, evidence for resolved items and working combined filters",
+    "Before-after table contains all issues, preserves statuses and filters independently"
   ],
   "manifest": {
     "buildDate": "2026-11-05",

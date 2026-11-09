@@ -54,4 +54,13 @@ pass('Problem register keeps all 43 issues, evidence for resolved items and work
  change('#problem-group','Акты и заполнение счётчиков');assert.equal(document.querySelector('#problem-count').textContent,'Показано 8 из 43');
  document.querySelector('#problem-reset').click();
 });
+pass('Before-after table contains all issues, preserves statuses and filters independently',()=>{
+ const issues=JSON.parse(read('poverkadoma-problems.json')).items,rows=[...document.querySelectorAll('[data-comparison-row]')];assert.equal(rows.length,43);
+ for(const item of issues){const row=rows.find(r=>r.dataset.number===String(item.id));assert.ok(row.textContent.includes(item.problem));assert.ok(row.textContent.includes(item.solution));assert.equal(row.dataset.status,item.status);assert.equal(row.querySelector('a').getAttribute('href'),'#problems?item='+item.id);}
+ location.hash='#comparison';site.route();assert.equal(document.querySelector('#page-comparison').hidden,false);assert.equal(document.querySelector('#page-problems').hidden,true);
+ change('#comparison-status','partial');assert.equal(document.querySelector('#comparison-count').textContent,'Показано 13 из 43');
+ change('#comparison-group','Акты и заполнение счётчиков');assert.equal(document.querySelector('#comparison-count').textContent,'Показано 4 из 43');
+ change('#comparison-search','несуществующая строка','input');assert.equal(document.querySelector('#comparison-empty').hidden,false);
+ document.querySelector('#comparison-reset').click();assert.equal(document.querySelector('#comparison-count').textContent,'Показано 43 из 43');assert.equal(document.querySelector('#comparison-empty').hidden,true);
+});
 const report={date:'2026-11-05',checks:checks.length,passed:checks,manifest:JSON.parse(read('poverkadoma-design-site-manifest.json')),verification:'DOM integration and source checks only; real browser geometry,frame script execution and mobile interaction remain unverified.'};fs.writeFileSync(path.join(base,'poverkadoma-design-site-qa.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));
