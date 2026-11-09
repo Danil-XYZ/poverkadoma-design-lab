@@ -6,9 +6,9 @@
   <meta name="description" content="Поверка дома: интерактивный макет, история дизайн-экспериментов, исследования и EPC-сценарии по ролям.">
   <meta name="theme-color" content="#0084c1">
   <title>Поверка дома — дизайн-лаборатория</title>
-  <link rel="stylesheet" href="site.css?v=ed7dde40235df5b6">
+  <link rel="stylesheet" href="site.css?v=1fbb42a08d7fefbf">
   <script defer src="data.js?v=39766225f19bec2d"></script>
-  <script defer src="site.js?v=f2c4625405c10aa6"></script>
+  <script defer src="site.js?v=782194a59bf2306b"></script>
 </head>
 <body>
   <a class="skip" href="#main">К содержимому</a>
@@ -245,269 +245,251 @@
     <!-- problems:end -->
 <!-- comparison:start -->
     <section id="page-comparison" data-page="comparison" hidden>
-      <div class="page-heading"><div><p class="eyebrow">Все изменения в одном месте</p><h1>До / после</h1><p class="lead">Сводная таблица по всем 43 пунктам: оригинал, текущее состояние макета и статус решения.</p></div></div>
-      <p class="problem-scope">Сравнение относится к макету внутреннего поверителя. Частичные решения, нерешённые вопросы и непроверенные сценарии сохранены в таблице с отдельными статусами.</p>
-      <div class="filter-bar problem-filters"><label class="search-field"><span class="sr-only">Поиск в таблице до и после</span><input id="comparison-search" type="search" placeholder="Номер, проблема или изменение"></label><label class="filter-select"><span class="sr-only">Статус в таблице</span><select id="comparison-status"><option value="all">Все статусы</option><option value="solved">Решено в макете</option><option value="partial">Частично решено</option><option value="check">Требует проверки</option><option value="open">Не решено</option></select></label><label class="filter-select"><span class="sr-only">Группа в таблице</span><select id="comparison-group"><option value="all">Все группы</option><option value="Навигация и разделение ответственности">Навигация и разделение ответственности</option><option value="Карточки и список заявок">Карточки и список заявок</option><option value="Экран заявки">Экран заявки</option><option value="Акты и заполнение счётчиков">Акты и заполнение счётчиков</option><option value="Ошибки, блокировки и восстановление">Ошибки, блокировки и восстановление</option><option value="Визуал и доступность">Визуал и доступность</option></select></label><button class="button" type="button" id="comparison-reset">Сбросить фильтры</button></div>
-      <p id="comparison-count" class="problem-count" role="status">Показано 43 из 43</p>
+      <div class="page-heading"><div><p class="eyebrow">Изменения интерфейса</p><h1>До / после</h1><p class="lead">Что убрали, добавили, переименовали и переместили относительно оригинального дизайна.</p></div></div>
+      <p class="problem-scope">Каждая строка — конкретное изменение, которое уже есть в рабочем макете внутреннего поверителя.</p>
+      <div class="filter-bar problem-filters comparison-filters"><label class="search-field"><span class="sr-only">Поиск в таблице до и после</span><input id="comparison-search" type="search" placeholder="Элемент или изменение"></label><label class="filter-select"><span class="sr-only">Экран в таблице</span><select id="comparison-group"><option value="all">Все экраны</option><option value="Карточка заявки">Карточка заявки</option><option value="Навигация">Навигация</option><option value="Список заявок">Список заявок</option><option value="Экран заявки">Экран заявки</option><option value="Акты">Акты</option><option value="Счётчики">Счётчики</option><option value="Выгрузка">Выгрузка</option><option value="Общее оформление">Общее оформление</option><option value="Настройки">Настройки</option></select></label><button class="button" type="button" id="comparison-reset">Сбросить фильтры</button></div>
+      <p id="comparison-count" class="problem-count" role="status">Показано 48 из 48</p>
       <p class="comparison-scroll-hint">Прокрутите таблицу вправо, чтобы увидеть все колонки.</p>
       <div class="comparison-scroll" role="region" aria-label="Сводная таблица до и после" tabindex="0">
-        <table class="comparison-table"><caption class="sr-only">Все 43 проблемы оригинала и изменения в рабочем макете</caption><colgroup><col class="comparison-topic"><col class="comparison-before"><col class="comparison-after"><col class="comparison-state"></colgroup><thead><tr><th scope="col">№ · Группа</th><th scope="col">До — оригинал</th><th scope="col">После — текущий макет</th><th scope="col">Статус</th></tr></thead><tbody><tr data-comparison-row data-status="solved" data-group="Навигация и разделение ответственности" data-number="1">
-  <th scope="row"><a href="#problems?item=1" aria-label="Подробности пункта 1">01</a><span class="comparison-group">Навигация и разделение ответственности</span></th>
-  <td>Несколько разных способов найти функцию: переключатель «Акты / Заявки», быстрые ссылки и боковое меню. Пользователю приходится запоминать расположение.</td>
-  <td><p>Заявки, акты и инструменты вынесены в три постоянные нижние вкладки. Настройки и уведомления находятся в шапке. Снимок показывает структуру для внутреннего поверителя.</p><a class="comparison-detail" href="#problems?item=1">Подробнее и скриншот ↗</a></td>
-  <td><span class="problem-status solved">Решено в макете</span></td>
+        <table class="comparison-table"><caption class="sr-only">Изменённые элементы: оригинальный дизайн и рабочий макет</caption><colgroup><col class="comparison-topic"><col class="comparison-before"><col class="comparison-after"></colgroup><thead><tr><th scope="col">Элемент / экран</th><th scope="col">Было в оригинале</th><th scope="col">Стало в макете</th></tr></thead><tbody><tr data-comparison-row data-group="Карточка заявки" data-number="1">
+  <th scope="row"><span class="comparison-element">Кнопка «Открыть»</span><span class="comparison-group">Карточка заявки</span></th>
+  <td>Отдельная кнопка «Открыть» рядом с основным действием.</td>
+  <td><p>Кнопка удалена. Заявка открывается нажатием на карточку; справа добавлена стрелка.</p><a class="comparison-detail" href="problem-evidence-free.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Кнопка «Открыть»">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="solved" data-group="Навигация и разделение ответственности" data-number="2">
-  <th scope="row"><a href="#problems?item=2" aria-label="Подробности пункта 2">02</a><span class="comparison-group">Навигация и разделение ответственности</span></th>
-  <td>Связанные задачи распределены между разными точками входа. Заполнение актов, массовая выгрузка, история и статистика не воспринимаются как одно рабочее направление.</td>
-  <td><p>Заполнение актов, массовая выгрузка, история и статистика собраны в разделе «Акты».</p><a class="comparison-detail" href="#problems?item=2">Подробнее и скриншот ↗</a></td>
-  <td><span class="problem-status solved">Решено в макете</span></td>
+<tr data-comparison-row data-group="Навигация" data-number="2">
+  <th scope="row"><span class="comparison-element">Переключатель «Акты / Заявки»</span><span class="comparison-group">Навигация</span></th>
+  <td>Переключатель над списком на общем экране «Акты и заявки».</td>
+  <td><p>Вместо него — нижние вкладки «Заявки», «Акты», «Инструменты».</p><a class="comparison-detail" href="problem-evidence-requests.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Переключатель «Акты / Заявки»">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="solved" data-group="Навигация и разделение ответственности" data-number="3">
-  <th scope="row"><a href="#problems?item=3" aria-label="Подробности пункта 3">03</a><span class="comparison-group">Навигация и разделение ответственности</span></th>
-  <td>В меню соседствуют функции разной частоты и назначения: повседневная работа, оборудование, справочники, настройки и обслуживание данных.</td>
-  <td><p>Повседневная работа находится в «Заявках» и «Актах». Инструменты разделены на оборудование, справочные данные и сопровождение работы.</p><a class="comparison-detail" href="#problems?item=3">Подробнее и скриншот ↗</a></td>
-  <td><span class="problem-status solved">Решено в макете</span></td>
+<tr data-comparison-row data-group="Навигация" data-number="3">
+  <th scope="row"><span class="comparison-element">Боковое меню</span><span class="comparison-group">Навигация</span></th>
+  <td>Разделы приложения открывались из выдвижного бокового меню.</td>
+  <td><p>Бокового меню нет. Основные разделы доступны снизу, инструменты — на отдельном экране.</p><a class="comparison-detail" href="problem-evidence-tools.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Боковое меню">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="partial" data-group="Навигация и разделение ответственности" data-number="4">
-  <th scope="row"><a href="#problems?item=4" aria-label="Подробности пункта 4">04</a><span class="comparison-group">Навигация и разделение ответственности</span></th>
-  <td>Настройки перегружены разнородными задачами: профиль, финансы, роль, внешние приложения, резервное копирование и выход.</td>
-  <td><p>Настройки сгруппированы по задачам: удобство, рабочие приложения и другие параметры. Профиль и обслуживание данных остаются на этом экране; полного разделения ответственности пока нет.</p><a class="comparison-detail" href="#problems?item=4">Подробнее и скриншот ↗</a></td>
-  <td><span class="problem-status partial">Частично решено</span></td>
+<tr data-comparison-row data-group="Навигация" data-number="4">
+  <th scope="row"><span class="comparison-element">Вход в настройки</span><span class="comparison-group">Навигация</span></th>
+  <td>Пункт «Настройки» в боковом меню.</td>
+  <td><p>Кнопка с шестерёнкой в правой части шапки.</p><a class="comparison-detail" href="problem-evidence-requests.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Вход в настройки">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="check" data-group="Навигация и разделение ответственности" data-number="5">
-  <th scope="row"><a href="#problems?item=5" aria-label="Подробности пункта 5">05</a><span class="comparison-group">Навигация и разделение ответственности</span></th>
-  <td>Возврат бывает непредсказуемым: из заявки со связанным актом можно попасть в акт вместо исходного списка.</td>
-  <td><p>На экране заявки есть возврат к заявкам. Полную цепочку «список → заявка → связанный акт → назад» с сохранением исходного списка ещё нужно проверить.</p><a class="comparison-detail" href="#problems?item=5">Подробнее ↗</a></td>
-  <td><span class="problem-status check">Требует проверки</span></td>
+<tr data-comparison-row data-group="Навигация" data-number="5">
+  <th scope="row"><span class="comparison-element">Уведомления в шапке</span><span class="comparison-group">Навигация</span></th>
+  <td>Колокольчик слева от заголовка общего экрана.</td>
+  <td><p>Колокольчик перенесён вправо, рядом с настройками.</p><a class="comparison-detail" href="problem-evidence-requests.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Уведомления в шапке">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="solved" data-group="Карточки и список заявок" data-number="6">
-  <th scope="row"><a href="#problems?item=6" aria-label="Подробности пункта 6">06</a><span class="comparison-group">Карточки и список заявок</span></th>
-  <td>Номер визуально важнее адреса. Крупный жирный номер перетягивает внимание с места выполнения работы.</td>
-  <td><p>Адрес выделен жирным и расположен в основной части карточки. Номер уменьшен и перенесён в служебную строку со статусом.</p><a class="comparison-detail" href="#problems?item=6">Подробнее и скриншот ↗</a></td>
-  <td><span class="problem-status solved">Решено в макете</span></td>
+<tr data-comparison-row data-group="Навигация" data-number="6">
+  <th scope="row"><span class="comparison-element">Заголовок рабочего списка</span><span class="comparison-group">Навигация</span></th>
+  <td>Общий заголовок «Акты и заявки».</td>
+  <td><p>Каждая вкладка имеет свой заголовок: «Заявки», «Акты» или «Инструменты».</p><a class="comparison-detail" href="problem-evidence-requests.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Заголовок рабочего списка">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="partial" data-group="Карточки и список заявок" data-number="7">
-  <th scope="row"><a href="#problems?item=7" aria-label="Подробности пункта 7">07</a><span class="comparison-group">Карточки и список заявок</span></th>
-  <td>Много второстепенного текста: длинные подписи, контакты и служебные сведения конкурируют с данными для текущего решения.</td>
-  <td><p>Второстепенные сведения набраны спокойнее, подписи сокращены и дополнены иконками. Контакты на назначенных заявках остаются; достаточность уплотнения нужно проверить с поверителями.</p><a class="comparison-detail" href="#problems?item=7">Подробнее и скриншот ↗</a></td>
-  <td><span class="problem-status partial">Частично решено</span></td>
+<tr data-comparison-row data-group="Навигация" data-number="7">
+  <th scope="row"><span class="comparison-element">Инструменты</span><span class="comparison-group">Навигация</span></th>
+  <td>Оборудование, справочники и служебные функции — отдельные пункты общего меню.</td>
+  <td><p>Добавлен экран с тремя группами: «Оборудование», «Справочные данные», «Сопровождение работы».</p><a class="comparison-detail" href="problem-evidence-tools.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Инструменты">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="solved" data-group="Карточки и список заявок" data-number="8">
-  <th scope="row"><a href="#problems?item=8" aria-label="Подробности пункта 8">08</a><span class="comparison-group">Карточки и список заявок</span></th>
-  <td>На новой заявке показываются контакты ещё до принятия, хотя в этот момент пользователь прежде всего выбирает подходящую работу.</td>
-  <td><p>В карточке свободной новой заявки показаны адрес, состав работы и желаемый визит. Имя и телефон клиента до принятия не занимают карточку.</p><a class="comparison-detail" href="#problems?item=8">Подробнее и скриншот ↗</a></td>
-  <td><span class="problem-status solved">Решено в макете</span></td>
+<tr data-comparison-row data-group="Навигация" data-number="8">
+  <th scope="row"><span class="comparison-element">История, статистика и массовая выгрузка</span><span class="comparison-group">Навигация</span></th>
+  <td>Отдельные точки входа через меню и быстрые ссылки.</td>
+  <td><p>Кнопки «Выгрузить всё», истории и статистики собраны над списком актов.</p><a class="comparison-detail" href="problem-evidence-acts.jpg" target="_blank" rel="noopener" aria-label="Скриншот: История, статистика и массовая выгрузка">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="solved" data-group="Карточки и список заявок" data-number="9">
-  <th scope="row"><a href="#problems?item=9" aria-label="Подробности пункта 9">09</a><span class="comparison-group">Карточки и список заявок</span></th>
-  <td>Кнопка «Открыть» дублирует нажатие на карточку и занимает место рядом с основным действием.</td>
-  <td><p>Карточка открывается нажатием на её содержимое и обозначена стрелкой. Внизу остаётся действие по статусу; отдельной видимой кнопки «Открыть» нет.</p><a class="comparison-detail" href="#problems?item=9">Подробнее и скриншот ↗</a></td>
-  <td><span class="problem-status solved">Решено в макете</span></td>
+<tr data-comparison-row data-group="Список заявок" data-number="9">
+  <th scope="row"><span class="comparison-element">Мои и свободные заявки</span><span class="comparison-group">Список заявок</span></th>
+  <td>На главном экране переключались акты и заявки.</td>
+  <td><p>В верхней части списка заявок добавлен переключатель «Мои / Свободные».</p><a class="comparison-detail" href="problem-evidence-free.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Мои и свободные заявки">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="partial" data-group="Карточки и список заявок" data-number="10">
-  <th scope="row"><a href="#problems?item=10" aria-label="Подробности пункта 10">10</a><span class="comparison-group">Карточки и список заявок</span></th>
-  <td>Назначение шкалы срока недостаточно очевидно: её можно принять за прогресс выполнения или время до визита.</td>
-  <td><p>Индикатор встроен в действие согласования и показывает оставшееся время либо просрочку. На экране заявки есть явная подпись о согласовании. Понятность самого индикатора в списке пока не проверена с пользователями.</p><a class="comparison-detail" href="#problems?item=10">Подробнее и скриншот ↗</a></td>
-  <td><span class="problem-status partial">Частично решено</span></td>
+<tr data-comparison-row data-group="Список заявок" data-number="10">
+  <th scope="row"><span class="comparison-element">Кнопка поиска</span><span class="comparison-group">Список заявок</span></th>
+  <td>Поиск находился в шапке общего экрана.</td>
+  <td><p>Кнопка поиска перенесена к переключателю «Мои / Свободные», рядом с фильтром.</p><a class="comparison-detail" href="problem-evidence-requests.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Кнопка поиска">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="solved" data-group="Карточки и список заявок" data-number="11">
-  <th scope="row"><a href="#problems?item=11" aria-label="Подробности пункта 11">11</a><span class="comparison-group">Карточки и список заявок</span></th>
-  <td>Исторические сведения о согласовании продолжают занимать внимание, когда пользователь уже перешёл к выполнению заявки.</td>
-  <td><p>После согласования в карточке показываются дата и время визита. Индикатор срока согласования не выводится у согласованной заявки и заявки в работе.</p><a class="comparison-detail" href="#problems?item=11">Подробнее и скриншот ↗</a></td>
-  <td><span class="problem-status solved">Решено в макете</span></td>
+<tr data-comparison-row data-group="Список заявок" data-number="11">
+  <th scope="row"><span class="comparison-element">Группы списка</span><span class="comparison-group">Список заявок</span></th>
+  <td>Сплошной список карточек без заголовков дней.</td>
+  <td><p>Добавлены заголовки дней визита и отдельная группа «Нужно согласовать».</p><a class="comparison-detail" href="problem-evidence-visits.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Группы списка">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="solved" data-group="Карточки и список заявок" data-number="12">
-  <th scope="row"><a href="#problems?item=12" aria-label="Подробности пункта 12">12</a><span class="comparison-group">Карточки и список заявок</span></th>
-  <td>Сортировка согласованных заявок не учитывает время визита, что мешает использовать список как последовательность выездов.</td>
-  <td><p>Согласованные заявки сгруппированы по дням и упорядочены по времени начала визита. Заявки на согласование вынесены в отдельную группу.</p><a class="comparison-detail" href="#problems?item=12">Подробнее и скриншот ↗</a></td>
-  <td><span class="problem-status solved">Решено в макете</span></td>
+<tr data-comparison-row data-group="Список заявок" data-number="12">
+  <th scope="row"><span class="comparison-element">Порядок визитов</span><span class="comparison-group">Список заявок</span></th>
+  <td>Сортировка согласованных заявок не учитывала время визита.</td>
+  <td><p>Внутри дня заявки расположены по времени начала визита.</p><a class="comparison-detail" href="problem-evidence-visits.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Порядок визитов">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="solved" data-group="Карточки и список заявок" data-number="13">
-  <th scope="row"><a href="#problems?item=13" aria-label="Подробности пункта 13">13</a><span class="comparison-group">Карточки и список заявок</span></th>
-  <td>В поиске нет достаточно явного состояния «ничего не найдено».</td>
-  <td><p>При запросе без совпадений появляется отдельное пустое состояние, которое сообщает об отсутствии заявок.</p><a class="comparison-detail" href="#problems?item=13">Подробнее и скриншот ↗</a></td>
-  <td><span class="problem-status solved">Решено в макете</span></td>
+<tr data-comparison-row data-group="Список заявок" data-number="13">
+  <th scope="row"><span class="comparison-element">Результат поиска без совпадений</span><span class="comparison-group">Список заявок</span></th>
+  <td>Не было отдельного явного сообщения о пустом результате.</td>
+  <td><p>Показывается текст «Заявки не найдены».</p><a class="comparison-detail" href="problem-evidence-empty.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Результат поиска без совпадений">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="solved" data-group="Карточки и список заявок" data-number="14">
-  <th scope="row"><a href="#problems?item=14" aria-label="Подробности пункта 14">14</a><span class="comparison-group">Карточки и список заявок</span></th>
-  <td>Подпись «Создать акт» может оставаться у заявки в работе, не объясняя, что акт уже существует и его нужно продолжить.</td>
-  <td><p>Для заявки со связанным актом действие называется «Продолжить акт». Оно отделено от сценария создания нового акта.</p><a class="comparison-detail" href="#problems?item=14">Подробнее и скриншот ↗</a></td>
-  <td><span class="problem-status solved">Решено в макете</span></td>
+<tr data-comparison-row data-group="Карточка заявки" data-number="14">
+  <th scope="row"><span class="comparison-element">Номер и адрес</span><span class="comparison-group">Карточка заявки</span></th>
+  <td>Номер крупный и жирный; адрес набран второстепенным серым текстом.</td>
+  <td><p>Номер уменьшен и перенесён в верхнюю строку со статусом. Улица и дом выделены жирным.</p><a class="comparison-detail" href="problem-evidence-requests.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Номер и адрес">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="partial" data-group="Экран заявки" data-number="15">
-  <th scope="row"><a href="#problems?item=15" aria-label="Подробности пункта 15">15</a><span class="comparison-group">Экран заявки</span></th>
-  <td>Экран построен как длинная анкета, а не вокруг ближайшего действия пользователя.</td>
-  <td><p>Сведения разделены на компактные поля, дополнительные тексты раскрываются отдельно, а ближайшее действие закреплено снизу. Экран по-прежнему длинный; удобство нового порядка требует проверки.</p><a class="comparison-detail" href="#problems?item=15">Подробнее и скриншот ↗</a></td>
-  <td><span class="problem-status partial">Частично решено</span></td>
+<tr data-comparison-row data-group="Карточка заявки" data-number="15">
+  <th scope="row"><span class="comparison-element">Населённый пункт</span><span class="comparison-group">Карточка заявки</span></th>
+  <td>Населённый пункт был частью общей строки полного адреса.</td>
+  <td><p>Населённый пункт вынесен в отдельную строку над улицей и домом.</p><a class="comparison-detail" href="problem-evidence-requests.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Населённый пункт">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="solved" data-group="Экран заявки" data-number="16">
-  <th scope="row"><a href="#problems?item=16" aria-label="Подробности пункта 16">16</a><span class="comparison-group">Экран заявки</span></th>
-  <td>Главное действие находится после длинного содержимого: до него нужно прокручивать сведения и карту.</td>
-  <td><p>Главное действие закреплено в нижней панели и остаётся доступным при прокрутке. До него не нужно проходить все сведения и карту.</p><a class="comparison-detail" href="#problems?item=16">Подробнее и скриншот ↗</a></td>
-  <td><span class="problem-status solved">Решено в макете</span></td>
+<tr data-comparison-row data-group="Карточка заявки" data-number="16">
+  <th scope="row"><span class="comparison-element">Контакты новой заявки</span><span class="comparison-group">Карточка заявки</span></th>
+  <td>Имя владельца и телефон показывались до принятия заявки.</td>
+  <td><p>В карточке свободной новой заявки имя и телефон скрыты.</p><a class="comparison-detail" href="problem-evidence-free.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Контакты новой заявки">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="solved" data-group="Экран заявки" data-number="17">
-  <th scope="row"><a href="#problems?item=17" aria-label="Подробности пункта 17">17</a><span class="comparison-group">Экран заявки</span></th>
-  <td>Редактируемые и справочные значения выглядят одинаково. Например, возможность изменить адрес ничем явно не обозначена.</td>
-  <td><p>Редактирование обозначено карандашом, выбор — стрелкой, справочные значения показаны без этих признаков. Адрес оформлен как кнопка редактирования.</p><a class="comparison-detail" href="#problems?item=17">Подробнее и скриншот ↗</a></td>
-  <td><span class="problem-status solved">Решено в макете</span></td>
+<tr data-comparison-row data-group="Карточка заявки" data-number="17">
+  <th scope="row"><span class="comparison-element">Состав работы</span><span class="comparison-group">Карточка заявки</span></th>
+  <td>В исходной карточке были номер, статус, адрес, дата и контакты.</td>
+  <td><p>Под адресом добавлена короткая строка состава работы: например «2 счётчика воды».</p><a class="comparison-detail" href="problem-evidence-requests.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Состав работы">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="solved" data-group="Экран заявки" data-number="18">
-  <th scope="row"><a href="#problems?item=18" aria-label="Подробности пункта 18">18</a><span class="comparison-group">Экран заявки</span></th>
-  <td>Пустые поля не объясняют действие: у незаполненного времени нет приглашения «Выбрать».</td>
-  <td><p>Для незаполненных даты и времени показано «Выбрать». Нажатие открывает диалог выбора визита.</p><a class="comparison-detail" href="#problems?item=18">Подробнее и скриншот ↗</a></td>
-  <td><span class="problem-status solved">Решено в макете</span></td>
+<tr data-comparison-row data-group="Карточка заявки" data-number="18">
+  <th scope="row"><span class="comparison-element">Подписи контактов</span><span class="comparison-group">Карточка заявки</span></th>
+  <td>Текстовые подписи «Владелец СИ:» и «Контактный номер:».</td>
+  <td><p>В назначенной заявке длинные подписи заменены иконками перед именем и телефоном.</p><a class="comparison-detail" href="problem-evidence-requests.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Подписи контактов">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="partial" data-group="Экран заявки" data-number="19">
-  <th scope="row"><a href="#problems?item=19" aria-label="Подробности пункта 19">19</a><span class="comparison-group">Экран заявки</span></th>
-  <td>Не всегда понятно, почему действие недоступно и что нужно исправить для продолжения.</td>
-  <td><p>В заявке без визита главное действие предлагает «Указать дату и время». Проверка акта перечисляет пропуски. Все причины недоступности в остальных сценариях ещё не проверены.</p><a class="comparison-detail" href="#problems?item=19">Подробнее и скриншот ↗</a></td>
-  <td><span class="problem-status partial">Частично решено</span></td>
+<tr data-comparison-row data-group="Карточка заявки" data-number="19">
+  <th scope="row"><span class="comparison-element">Статус</span><span class="comparison-group">Карточка заявки</span></th>
+  <td>Широкая насыщенная цветная плашка с белой подписью.</td>
+  <td><p>В режиме «Мягкие» — компактная светлая плашка с цветной точкой и тёмной подписью.</p><a class="comparison-detail" href="problem-evidence-free.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Статус">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="check" data-group="Экран заявки" data-number="20">
-  <th scope="row"><a href="#problems?item=20" aria-label="Подробности пункта 20">20</a><span class="comparison-group">Экран заявки</span></th>
-  <td>Желаемый визит и согласованный визит недостаточно явно различаются.</td>
-  <td><p>В новой заявке виден запрошенный интервал, в согласованной — визит. Однозначное различение желаемого и согласованного визита во всех состояниях пока не подтверждено.</p><a class="comparison-detail" href="#problems?item=20">Подробнее ↗</a></td>
-  <td><span class="problem-status check">Требует проверки</span></td>
+<tr data-comparison-row data-group="Карточка заявки" data-number="20">
+  <th scope="row"><span class="comparison-element">Текст основных кнопок</span><span class="comparison-group">Карточка заявки</span></th>
+  <td>Подписи набраны прописными: «ПРИНЯТЬ ЗАЯВКУ», «ОТКРЫТЬ».</td>
+  <td><p>Подписи в обычном регистре: «Принять заявку», «Согласовать», «Продолжить акт».</p><a class="comparison-detail" href="problem-evidence-free.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Текст основных кнопок">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="partial" data-group="Экран заявки" data-number="21">
-  <th scope="row"><a href="#problems?item=21" aria-label="Подробности пункта 21">21</a><span class="comparison-group">Экран заявки</span></th>
-  <td>Подписи «Количество ИПУ» и «Стоимость» недостаточно конкретны: неочевидны состав работы и основание суммы.</td>
-  <td><p>Подписи изменены на «Количество счётчиков» и «Стоимость заявки», вид работ вынесен отдельно. Основание расчёта стоимости и состав суммы ещё не раскрыты.</p><a class="comparison-detail" href="#problems?item=21">Подробнее и скриншот ↗</a></td>
-  <td><span class="problem-status partial">Частично решено</span></td>
+<tr data-comparison-row data-group="Карточка заявки" data-number="21">
+  <th scope="row"><span class="comparison-element">Срок согласования</span><span class="comparison-group">Карточка заявки</span></th>
+  <td>Отдельная цветная шкала и подпись срока.</td>
+  <td><p>Остаток времени или просрочка встроены в основную кнопку до согласования.</p><a class="comparison-detail" href="problem-evidence-requests.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Срок согласования">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="partial" data-group="Экран заявки" data-number="22">
-  <th scope="row"><a href="#problems?item=22" aria-label="Подробности пункта 22">22</a><span class="comparison-group">Экран заявки</span></th>
-  <td>Кнопка «Закрыть» не объясняет последствия: закрывается просмотр или одновременно сохраняются изменения.</td>
-  <td><p>Редактирование вынесено в отдельные диалоги с «Готово» и «Отмена», а возврат — в шапку. Требуется единая проверка сохранения и отмены изменений во всех формах.</p><a class="comparison-detail" href="#problems?item=22">Подробнее и скриншот ↗</a></td>
-  <td><span class="problem-status partial">Частично решено</span></td>
+<tr data-comparison-row data-group="Карточка заявки" data-number="22">
+  <th scope="row"><span class="comparison-element">Шкала после согласования</span><span class="comparison-group">Карточка заявки</span></th>
+  <td>Исторические сведения о сроке согласования оставались на карточке.</td>
+  <td><p>У согласованной заявки и заявки в работе шкалы согласования нет; показаны дата и время визита.</p><a class="comparison-detail" href="problem-evidence-visits.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Шкала после согласования">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="check" data-group="Экран заявки" data-number="23">
-  <th scope="row"><a href="#problems?item=23" aria-label="Подробности пункта 23">23</a><span class="comparison-group">Экран заявки</span></th>
-  <td>Диалог согласования закрывается до получения результата операции, поэтому результат действия может быть недостаточно заметен.</td>
-  <td><p>Согласование в макете демонстрационное. Ожидание ответа сервера, ошибка и повторная отправка не подтверждены реальной операцией.</p><a class="comparison-detail" href="#problems?item=23">Подробнее ↗</a></td>
-  <td><span class="problem-status check">Требует проверки</span></td>
+<tr data-comparison-row data-group="Карточка заявки" data-number="23">
+  <th scope="row"><span class="comparison-element">Действие при существующем акте</span><span class="comparison-group">Карточка заявки</span></th>
+  <td>У заявки в работе могла оставаться подпись «Создать акт».</td>
+  <td><p>Для заявки со связанным актом показано «Продолжить акт».</p><a class="comparison-detail" href="problem-evidence-continue.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Действие при существующем акте">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="check" data-group="Экран заявки" data-number="24">
-  <th scope="row"><a href="#problems?item=24" aria-label="Подробности пункта 24">24</a><span class="comparison-group">Экран заявки</span></th>
-  <td>Отмена и восстановление описаны неоднозначно: причины, сроки и возможность возврата не везде согласованы между собой.</td>
-  <td><p>Есть действия отмены и возврата в работу. Единые правила причин, сроков и окончательной отмены нужно проверить по требованиям и всем состояниям.</p><a class="comparison-detail" href="#problems?item=24">Подробнее ↗</a></td>
-  <td><span class="problem-status check">Требует проверки</span></td>
+<tr data-comparison-row data-group="Экран заявки" data-number="24">
+  <th scope="row"><span class="comparison-element">Номер и статус</span><span class="comparison-group">Экран заявки</span></th>
+  <td>Номер и статус располагались прямо на фоне экрана.</td>
+  <td><p>Они собраны в общую белую карточку; срок согласования вынесен в её нижнюю цветную ленту.</p><a class="comparison-detail" href="problem-evidence-detail.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Номер и статус">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="solved" data-group="Акты и заполнение счётчиков" data-number="25">
-  <th scope="row"><a href="#problems?item=25" aria-label="Подробности пункта 25">25</a><span class="comparison-group">Акты и заполнение счётчиков</span></th>
-  <td>Сообщение о неготовности не перечисляет конкретные пропуски. Пользователь знает, что акт не готов, но не сразу понимает почему.</td>
-  <td><p>Экран «Проверка акта» перечисляет конкретные пропуски и группирует их по документам, данным акта и счётчикам.</p><a class="comparison-detail" href="#problems?item=25">Подробнее и скриншот ↗</a></td>
-  <td><span class="problem-status solved">Решено в макете</span></td>
+<tr data-comparison-row data-group="Экран заявки" data-number="25">
+  <th scope="row"><span class="comparison-element">Населённый пункт и адрес</span><span class="comparison-group">Экран заявки</span></th>
+  <td>Два отдельных поля: «Населённый пункт» и «Адрес».</td>
+  <td><p>Одна редактируемая строка адреса, содержащая населённый пункт, улицу и дом.</p><a class="comparison-detail" href="problem-evidence-detail.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Населённый пункт и адрес">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="partial" data-group="Акты и заполнение счётчиков" data-number="26">
-  <th scope="row"><a href="#problems?item=26" aria-label="Подробности пункта 26">26</a><span class="comparison-group">Акты и заполнение счётчиков</span></th>
-  <td>Нет перехода непосредственно к проблемному полю: пропуск приходится искать в длинной форме.</td>
-  <td><p>Нажатие на пропуск открывает нужный счётчик и вкладку, например «Паспорт». Автоматического перехода и фокуса на конкретном поле пока нет.</p><a class="comparison-detail" href="#problems?item=26">Подробнее и скриншот ↗</a></td>
-  <td><span class="problem-status partial">Частично решено</span></td>
+<tr data-comparison-row data-group="Экран заявки" data-number="26">
+  <th scope="row"><span class="comparison-element">Поверхности полей</span><span class="comparison-group">Экран заявки</span></th>
+  <td>Серые заливки полей на светлом фоне.</td>
+  <td><p>Белые отдельные поля с обводкой и общей настройкой теней.</p><a class="comparison-detail" href="problem-evidence-fields.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Поверхности полей">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="solved" data-group="Акты и заполнение счётчиков" data-number="27">
-  <th scope="row"><a href="#problems?item=27" aria-label="Подробности пункта 27">27</a><span class="comparison-group">Акты и заполнение счётчиков</span></th>
-  <td>Форма счётчика перегружена одновременно раскрытыми группами данных.</td>
-  <td><p>Форма счётчика разделена на вкладки «Паспорт», «Условия» и «Результат». Измерения открываются отдельно, поэтому все группы не раскрыты одновременно.</p><a class="comparison-detail" href="#problems?item=27">Подробнее и скриншот ↗</a></td>
-  <td><span class="problem-status solved">Решено в макете</span></td>
+<tr data-comparison-row data-group="Экран заявки" data-number="27">
+  <th scope="row"><span class="comparison-element">Признак редактирования</span><span class="comparison-group">Экран заявки</span></th>
+  <td>Адрес и владелец выглядели как обычные значения в поле.</td>
+  <td><p>В редактируемых строках адреса и владельца добавлен карандаш справа.</p><a class="comparison-detail" href="problem-evidence-detail.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Признак редактирования">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="partial" data-group="Акты и заполнение счётчиков" data-number="28">
-  <th scope="row"><a href="#problems?item=28" aria-label="Подробности пункта 28">28</a><span class="comparison-group">Акты и заполнение счётчиков</span></th>
-  <td>При заполнении длинной формы теряется контекст: к какому адресу, акту и счётчику относятся текущие сведения.</td>
-  <td><p>В форме видны номер акта, номер счётчика, тип и заводской номер. Адрес в этой сводке отсутствует, а сохранение контекста при глубокой прокрутке ещё нужно проверить.</p><a class="comparison-detail" href="#problems?item=28">Подробнее и скриншот ↗</a></td>
-  <td><span class="problem-status partial">Частично решено</span></td>
+<tr data-comparison-row data-group="Экран заявки" data-number="28">
+  <th scope="row"><span class="comparison-element">Незаполненные дата и время</span><span class="comparison-group">Экран заявки</span></th>
+  <td>Пустое поле без приглашения к выбору.</td>
+  <td><p>Показываются «Выбрать», иконка календаря или часов и стрелка перехода.</p><a class="comparison-detail" href="problem-evidence-fields.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Незаполненные дата и время">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="solved" data-group="Акты и заполнение счётчиков" data-number="29">
-  <th scope="row"><a href="#problems?item=29" aria-label="Подробности пункта 29">29</a><span class="comparison-group">Акты и заполнение счётчиков</span></th>
-  <td>Недоступная кнопка «Выгрузить» сама по себе не объясняет следующий шаг.</td>
-  <td><p>В карточке черновика вместо недоступной выгрузки показано действие «Заполнить акт», а пропущенные реквизиты подписаны прямо в карточке.</p><a class="comparison-detail" href="#problems?item=29">Подробнее и скриншот ↗</a></td>
-  <td><span class="problem-status solved">Решено в макете</span></td>
+<tr data-comparison-row data-group="Экран заявки" data-number="29">
+  <th scope="row"><span class="comparison-element">Подпись количества</span><span class="comparison-group">Экран заявки</span></th>
+  <td>«Количество ИПУ».</td>
+  <td><p>«Количество счётчиков».</p><a class="comparison-detail" href="problem-evidence-fields.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Подпись количества">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="partial" data-group="Акты и заполнение счётчиков" data-number="30">
-  <th scope="row"><a href="#problems?item=30" aria-label="Подробности пункта 30">30</a><span class="comparison-group">Акты и заполнение счётчиков</span></th>
-  <td>Неготовые акты исключаются из массовой выгрузки без понятного перечня пропущенных актов и причин.</td>
-  <td><p>В массовой выгрузке видны и готовые акты, и черновики. Кнопка «Исправить … пункт(а)» ведёт к причинам. Согласованность выбора и блокирующих документов требует дополнительной проверки.</p><a class="comparison-detail" href="#problems?item=30">Подробнее и скриншот ↗</a></td>
-  <td><span class="problem-status partial">Частично решено</span></td>
+<tr data-comparison-row data-group="Экран заявки" data-number="30">
+  <th scope="row"><span class="comparison-element">Подпись стоимости</span><span class="comparison-group">Экран заявки</span></th>
+  <td>«Стоимость».</td>
+  <td><p>«Стоимость заявки».</p><a class="comparison-detail" href="problem-evidence-fields.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Подпись стоимости">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="partial" data-group="Акты и заполнение счётчиков" data-number="31">
-  <th scope="row"><a href="#problems?item=31" aria-label="Подробности пункта 31">31</a><span class="comparison-group">Акты и заполнение счётчиков</span></th>
-  <td>Сохранение на устройстве и отправка на сервер недостаточно различаются в подтверждениях.</td>
-  <td><p>Состояния «В очереди» и «Ошибка» поясняют, что изменения сохранены на устройстве. Сквозное различение локального сохранения и подтверждённой сервером отправки ещё не проверено.</p><a class="comparison-detail" href="#problems?item=31">Подробнее ↗</a></td>
-  <td><span class="problem-status partial">Частично решено</span></td>
+<tr data-comparison-row data-group="Экран заявки" data-number="31">
+  <th scope="row"><span class="comparison-element">Основное действие</span><span class="comparison-group">Экран заявки</span></th>
+  <td>Кнопка находилась после содержимого формы и карты.</td>
+  <td><p>Кнопка закреплена в нижней панели и остаётся видимой при прокрутке.</p><a class="comparison-detail" href="problem-evidence-fields.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Основное действие">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="check" data-group="Акты и заполнение счётчиков" data-number="32">
-  <th scope="row"><a href="#problems?item=32" aria-label="Подробности пункта 32">32</a><span class="comparison-group">Акты и заполнение счётчиков</span></th>
-  <td>История отправки не даёт полного ответа о последующей публикации в АРШИН.</td>
-  <td><p>История отправки есть, но полный путь от отправки до подтверждённой публикации в АРШИН не проверен.</p><a class="comparison-detail" href="#problems?item=32">Подробнее ↗</a></td>
-  <td><span class="problem-status check">Требует проверки</span></td>
+<tr data-comparison-row data-group="Акты" data-number="32">
+  <th scope="row"><span class="comparison-element">Действие в карточке черновика</span><span class="comparison-group">Акты</span></th>
+  <td>Недоступная кнопка «Выгрузить».</td>
+  <td><p>Кнопка «Заполнить акт».</p><a class="comparison-detail" href="problem-evidence-draft.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Действие в карточке черновика">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="partial" data-group="Ошибки, блокировки и восстановление" data-number="33">
-  <th scope="row"><a href="#problems?item=33" aria-label="Подробности пункта 33">33</a><span class="comparison-group">Ошибки, блокировки и восстановление</span></th>
-  <td>Непрочитанные документы СМК могут заменять список локальных актов, перекрывая привычный рабочий экран.</td>
-  <td><p>Локальные акты остаются видны, а непрочитанные документы перечисляются в проверке акта. Все переходы и блокировки работы с документами ещё нужно проверить.</p><a class="comparison-detail" href="#problems?item=33">Подробнее и скриншот ↗</a></td>
-  <td><span class="problem-status partial">Частично решено</span></td>
+<tr data-comparison-row data-group="Акты" data-number="33">
+  <th scope="row"><span class="comparison-element">Пропущенные реквизиты в карточке</span><span class="comparison-group">Акты</span></th>
+  <td>Общий сигнал о неготовности без перечня конкретных полей.</td>
+  <td><p>Подписаны пропуски у счётчика: «МП не заполнен», «Рег. № не заполнен», отсутствие фото.</p><a class="comparison-detail" href="problem-evidence-draft.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Пропущенные реквизиты в карточке">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="check" data-group="Ошибки, блокировки и восстановление" data-number="34">
-  <th scope="row"><a href="#problems?item=34" aria-label="Подробности пункта 34">34</a><span class="comparison-group">Ошибки, блокировки и восстановление</span></th>
-  <td>При ошибке загрузки документа экран может оставаться в состоянии загрузки, без понятного повторного действия.</td>
-  <td><p>Реальная ошибка загрузки документа, завершение загрузки и повторное действие не проверены.</p><a class="comparison-detail" href="#problems?item=34">Подробнее ↗</a></td>
-  <td><span class="problem-status check">Требует проверки</span></td>
+<tr data-comparison-row data-group="Акты" data-number="34">
+  <th scope="row"><span class="comparison-element">Проверка готовности</span><span class="comparison-group">Акты</span></th>
+  <td>Сообщение о неготовности акта без конкретного списка.</td>
+  <td><p>Добавлен экран «Проверка акта» со списком пропусков по документам, акту и счётчикам.</p><a class="comparison-detail" href="problem-evidence-validation.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Проверка готовности">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="check" data-group="Ошибки, блокировки и восстановление" data-number="35">
-  <th scope="row"><a href="#problems?item=35" aria-label="Подробности пункта 35">35</a><span class="comparison-group">Ошибки, блокировки и восстановление</span></th>
-  <td>Блокировки из-за оборудования применяются неодинаково в разных точках входа.</td>
-  <td><p>Единообразие блокировок оборудования во всех точках входа требует отдельного прогона.</p><a class="comparison-detail" href="#problems?item=35">Подробнее ↗</a></td>
-  <td><span class="problem-status check">Требует проверки</span></td>
+<tr data-comparison-row data-group="Акты" data-number="35">
+  <th scope="row"><span class="comparison-element">Переход из списка пропусков</span><span class="comparison-group">Акты</span></th>
+  <td>Пропущенные данные приходилось искать в форме самостоятельно.</td>
+  <td><p>Нажатие на пропуск открывает соответствующий счётчик и вкладку формы.</p><a class="comparison-detail" href="problem-evidence-meter.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Переход из списка пропусков">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="check" data-group="Ошибки, блокировки и восстановление" data-number="36">
-  <th scope="row"><a href="#problems?item=36" aria-label="Подробности пункта 36">36</a><span class="comparison-group">Ошибки, блокировки и восстановление</span></th>
-  <td>Отправка условий хранения при выходе не сопровождается ожиданием подтверждения результата.</td>
-  <td><p>Ожидание подтверждения отправки условий хранения при выходе не подтверждено.</p><a class="comparison-detail" href="#problems?item=36">Подробнее ↗</a></td>
-  <td><span class="problem-status check">Требует проверки</span></td>
+<tr data-comparison-row data-group="Акты" data-number="36">
+  <th scope="row"><span class="comparison-element">Редактор акта</span><span class="comparison-group">Акты</span></th>
+  <td>Данные акта, фотография, чек и счётчики располагались в одной длинной форме.</td>
+  <td><p>Форма разделена на вкладки «Данные», «Счётчики» и «Материалы».</p></td>
 </tr>
-<tr data-comparison-row data-status="check" data-group="Ошибки, блокировки и восстановление" data-number="37">
-  <th scope="row"><a href="#problems?item=37" aria-label="Подробности пункта 37">37</a><span class="comparison-group">Ошибки, блокировки и восстановление</span></th>
-  <td>Восстановление резервной копии недостаточно подробно сообщает результат: что восстановилось, что пропущено и где возникли ошибки.</td>
-  <td><p>Полный отчёт о восстановленных, пропущенных и ошибочных данных резервной копии не проверен.</p><a class="comparison-detail" href="#problems?item=37">Подробнее ↗</a></td>
-  <td><span class="problem-status check">Требует проверки</span></td>
+<tr data-comparison-row data-group="Счётчики" data-number="37">
+  <th scope="row"><span class="comparison-element">Группы формы</span><span class="comparison-group">Счётчики</span></th>
+  <td>Паспортные данные, условия и результат были раскрыты в общей форме.</td>
+  <td><p>Добавлены вкладки «Паспорт», «Условия», «Результат».</p><a class="comparison-detail" href="problem-evidence-meter.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Группы формы">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="check" data-group="Ошибки, блокировки и восстановление" data-number="38">
-  <th scope="row"><a href="#problems?item=38" aria-label="Подробности пункта 38">38</a><span class="comparison-group">Ошибки, блокировки и восстановление</span></th>
-  <td>Поиск в АРШИН может очищать введённый номер даже при сетевой ошибке.</td>
-  <td><p>Сохранение введённого номера при реальной сетевой ошибке АРШИН не проверено.</p><a class="comparison-detail" href="#problems?item=38">Подробнее ↗</a></td>
-  <td><span class="problem-status check">Требует проверки</span></td>
+<tr data-comparison-row data-group="Счётчики" data-number="38">
+  <th scope="row"><span class="comparison-element">Контекст формы</span><span class="comparison-group">Счётчики</span></th>
+  <td>В длинной форме не было отдельной компактной сводки акта и счётчика.</td>
+  <td><p>Над вкладками показаны номер и статус акта, тип счётчика и заводской номер.</p><a class="comparison-detail" href="problem-evidence-meter.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Контекст формы">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="check" data-group="Ошибки, блокировки и восстановление" data-number="39">
-  <th scope="row"><a href="#problems?item=39" aria-label="Подробности пункта 39">39</a><span class="comparison-group">Ошибки, блокировки и восстановление</span></th>
-  <td>Некоторые сообщения об ошибках рекомендуют переустановку приложения, не учитывая наличие локальных черновиков и фотографий.</td>
-  <td><p>Все сообщения об ошибках и защита локальных черновиков и фотографий требуют отдельного аудита.</p><a class="comparison-detail" href="#problems?item=39">Подробнее ↗</a></td>
-  <td><span class="problem-status check">Требует проверки</span></td>
+<tr data-comparison-row data-group="Выгрузка" data-number="39">
+  <th scope="row"><span class="comparison-element">Неготовые акты в массовой выгрузке</span><span class="comparison-group">Выгрузка</span></th>
+  <td>Неготовые акты исключались из массовой выгрузки.</td>
+  <td><p>Черновики отображаются в общем списке с кнопкой «Исправить … пункт(а)».</p><a class="comparison-detail" href="problem-evidence-export.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Неготовые акты в массовой выгрузке">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="open" data-group="Визуал и доступность" data-number="40">
-  <th scope="row"><a href="#problems?item=40" aria-label="Подробности пункта 40">40</a><span class="comparison-group">Визуал и доступность</span></th>
-  <td>Белый текст на светлом участке исходного голубого градиента имеет слабый контраст.</td>
-  <td><p>Исходный голубой градиент сохранён, белые надписи на нём остаются. Проверенного решения проблемы контраста пока нет.</p><a class="comparison-detail" href="#problems?item=40">Подробнее ↗</a></td>
-  <td><span class="problem-status open">Не решено</span></td>
+<tr data-comparison-row data-group="Общее оформление" data-number="40">
+  <th scope="row"><span class="comparison-element">Нижний край шапки</span><span class="comparison-group">Общее оформление</span></th>
+  <td>Прямой нижний край верхней панели.</td>
+  <td><p>В основном оформлении нижние углы шапки скруглены.</p><a class="comparison-detail" href="problem-evidence-requests.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Нижний край шапки">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="check" data-group="Визуал и доступность" data-number="41">
-  <th scope="row"><a href="#problems?item=41" aria-label="Подробности пункта 41">41</a><span class="comparison-group">Визуал и доступность</span></th>
-  <td>Масштабирование текста общих синих кнопок ограничено способом задания размера в коде. Фактическое поведение при крупном системном шрифте требует проверки на устройстве.</td>
-  <td><p>Макет позволяет увеличить текст. Это не подтверждает исправление размера текста общих Android-кнопок: нужна проверка реализации и устройства.</p><a class="comparison-detail" href="#problems?item=41">Подробнее ↗</a></td>
-  <td><span class="problem-status check">Требует проверки</span></td>
+<tr data-comparison-row data-group="Настройки" data-number="41">
+  <th scope="row"><span class="comparison-element">Группы настроек</span><span class="comparison-group">Настройки</span></th>
+  <td>Параметры шли общей формой с разделителями.</td>
+  <td><p>Добавлены заголовки групп «Удобство», «Рабочие приложения», «Кассовые чеки», «Данные и аккаунт».</p><a class="comparison-detail" href="problem-evidence-settings.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Группы настроек">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="partial" data-group="Визуал и доступность" data-number="42">
-  <th scope="row"><a href="#problems?item=42" aria-label="Подробности пункта 42">42</a><span class="comparison-group">Визуал и доступность</span></th>
-  <td>Несколько цветовых сигналов конкурируют: предметный статус, результат поверки, неполнота и ошибка передачи. Их смысл нужно различать последовательнее.</td>
-  <td><p>Предметный статус, отправка и незаполненные реквизиты получили отдельные подписи и места. Полная последовательность цветовых значений во всех темах и состояниях ещё не проверена.</p><a class="comparison-detail" href="#problems?item=42">Подробнее и скриншот ↗</a></td>
-  <td><span class="problem-status partial">Частично решено</span></td>
+<tr data-comparison-row data-group="Настройки" data-number="42">
+  <th scope="row"><span class="comparison-element">Карточка профиля</span><span class="comparison-group">Настройки</span></th>
+  <td>ФИО и сведения пользователя были отдельными строками среди параметров.</td>
+  <td><p>Вверху добавлена карточка профиля с инициалами, ФИО и организацией; она открывает личный кабинет.</p><a class="comparison-detail" href="problem-evidence-settings.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Карточка профиля">Скриншот макета ↗</a></td>
 </tr>
-<tr data-comparison-row data-status="solved" data-group="Визуал и доступность" data-number="43">
-  <th scope="row"><a href="#problems?item=43" aria-label="Подробности пункта 43">43</a><span class="comparison-group">Визуал и доступность</span></th>
-  <td>Визуальное оформление недостаточно помогает отличить просмотр, редактирование и выбор значения.</td>
-  <td><p>Просмотр, редактирование и выбор различаются: справочное значение, карандаш и стрелка с приглашением «Выбрать».</p><a class="comparison-detail" href="#problems?item=43">Подробнее и скриншот ↗</a></td>
-  <td><span class="problem-status solved">Решено в макете</span></td>
+<tr data-comparison-row data-group="Настройки" data-number="43">
+  <th scope="row"><span class="comparison-element">Выбор темы</span><span class="comparison-group">Настройки</span></th>
+  <td>Три сегмента «Авто / Светлая / Тёмная» прямо в форме.</td>
+  <td><p>Одно поле «Цветовая схема» с текущим значением и открытием списка вариантов.</p><a class="comparison-detail" href="problem-evidence-settings.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Выбор темы">Скриншот макета ↗</a></td>
+</tr>
+<tr data-comparison-row data-group="Настройки" data-number="44">
+  <th scope="row"><span class="comparison-element">Выбор QR-сканера</span><span class="comparison-group">Настройки</span></th>
+  <td>Сегментный переключатель «ZXing / Google ML Kit».</td>
+  <td><p>Поле «Сканер QR-кодов» с текущим значением и открытием выбора.</p><a class="comparison-detail" href="problem-evidence-settings.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Выбор QR-сканера">Скриншот макета ↗</a></td>
+</tr>
+<tr data-comparison-row data-group="Настройки" data-number="45">
+  <th scope="row"><span class="comparison-element">Выбор приложения карт</span><span class="comparison-group">Настройки</span></th>
+  <td>Сегментный переключатель «Яндекс Карты / Google Maps».</td>
+  <td><p>Поле «Приложение карт»; добавлен вариант «Спрашивать при открытии».</p></td>
+</tr>
+<tr data-comparison-row data-group="Настройки" data-number="46">
+  <th scope="row"><span class="comparison-element">Резервная копия</span><span class="comparison-group">Настройки</span></th>
+  <td>Кнопки «Создать» и «Загрузить» прямо на экране настроек.</td>
+  <td><p>Одна строка «Резервная копия», открывающая отдельный диалог действий.</p></td>
+</tr>
+<tr data-comparison-row data-group="Настройки" data-number="47">
+  <th scope="row"><span class="comparison-element">Кнопка «Закрыть»</span><span class="comparison-group">Настройки</span></th>
+  <td>Отдельная кнопка «Закрыть» внизу настроек.</td>
+  <td><p>Кнопка удалена. Для выхода с экрана используется «Назад» в шапке.</p></td>
+</tr>
+<tr data-comparison-row data-group="Настройки" data-number="48">
+  <th scope="row"><span class="comparison-element">Размер текста</span><span class="comparison-group">Настройки</span></th>
+  <td>Отдельного выбора размера текста на исходном экране настроек не было.</td>
+  <td><p>Добавлено поле «Размер текста» с вариантами «Обычный», «Крупный», «Очень крупный».</p><a class="comparison-detail" href="problem-evidence-settings.jpg" target="_blank" rel="noopener" aria-label="Скриншот: Размер текста">Скриншот макета ↗</a></td>
 </tr></tbody></table>
       </div>
       <p id="comparison-empty" class="empty-state" hidden>По этим условиям строк не найдено. Измените запрос или сбросьте фильтры.</p>

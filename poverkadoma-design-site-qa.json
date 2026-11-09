@@ -13,7 +13,7 @@
     "Reset button restores unread demo data durably without changing appearance or unrelated storage",
     "All local source resources exist and the site needs neither a server API nor a build on the host",
     "Problem register keeps all 43 issues, evidence for resolved items and working combined filters",
-    "Before-after table contains all issues, preserves statuses and filters independently"
+    "Before-after table contains only independent concrete interface changes"
   ],
   "manifest": {
     "buildDate": "2026-11-05",

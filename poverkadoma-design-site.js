@@ -116,15 +116,14 @@
   $('#problem-group').addEventListener('change',filterProblems);
   $('#problem-reset').addEventListener('click',resetProblemFilters);
   function filterComparison(){
-    const query=$('#comparison-search').value.trim().toLocaleLowerCase('ru'),status=$('#comparison-status').value,group=$('#comparison-group').value;
+    const query=$('#comparison-search').value.trim().toLocaleLowerCase('ru'),group=$('#comparison-group').value,rows=$$('[data-comparison-row]');
     let count=0;
-    $$('[data-comparison-row]').forEach(row=>{const match=(!query||row.textContent.toLocaleLowerCase('ru').includes(query)||row.dataset.number===query)&&(status==='all'||row.dataset.status===status)&&(group==='all'||row.dataset.group===group);row.hidden=!match;if(match)count++;});
-    $('#comparison-count').textContent='Показано '+count+' из 43';$('#comparison-empty').hidden=count>0;
+    rows.forEach(row=>{const match=(!query||row.textContent.toLocaleLowerCase('ru').includes(query))&&(group==='all'||row.dataset.group===group);row.hidden=!match;if(match)count++;});
+    $('#comparison-count').textContent='Показано '+count+' из '+rows.length;$('#comparison-empty').hidden=count>0;
   }
   $('#comparison-search').addEventListener('input',filterComparison);
-  $('#comparison-status').addEventListener('change',filterComparison);
   $('#comparison-group').addEventListener('change',filterComparison);
-  $('#comparison-reset').addEventListener('click',()=>{$('#comparison-search').value='';$('#comparison-status').value='all';$('#comparison-group').value='all';filterComparison();});
+  $('#comparison-reset').addEventListener('click',()=>{$('#comparison-search').value='';$('#comparison-group').value='all';filterComparison();});
   function route(){const hash=location.hash.slice(1).split('?')[0],page=['prototype','problems','comparison','experiments','research','scenarios'].includes(hash)?hash:'prototype';state.page=page;$$('[data-page]').forEach(n=>n.hidden=n.dataset.page!==page);$$('[data-nav]').forEach(n=>{if(n.dataset.nav===page)n.setAttribute('aria-current','page');else n.removeAttribute('aria-current');});if(page==='prototype'&&!loaded.has('main'))mountFrame($('#prototype-frame'),'main');if(page==='problems')openProblemLink();if(page==='experiments')experiments();if(page==='research')research();if(page==='scenarios'&&!loaded.has('scenarios'))mountFrame($('#scenario-frame'),'scenarios');saveView();}
   $('#open-rules').addEventListener('click',()=>{state.document='rules';if(location.hash==='#research')research();});window.addEventListener('hashchange',route);window.addEventListener('load',()=>{if(location.hash.startsWith('#problems?'))openProblemLink();});
   $('#edition-date').textContent='05.11.2026';$('#site-snapshot').textContent=data.experiments.length+' серий · '+data.documents.length+' материалов · '+data.roles.length+' профилей';

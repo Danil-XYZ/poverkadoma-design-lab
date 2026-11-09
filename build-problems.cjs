@@ -30,21 +30,26 @@ const file = path.join(base, 'poverkadoma-design-site.html');
 let html = fs.readFileSync(file, 'utf8');
 if (html.includes('<!-- problems:start -->')) html = html.replace(/<!-- problems:start -->[\s\S]*?<!-- problems:end -->/, section);
 else html = html.replace('    <section id="page-experiments"', section + '\n    <section id="page-experiments"');
-const rows = data.items.map(x => `<tr data-comparison-row data-status="${x.status}" data-group="${esc(x.group)}" data-number="${x.id}">
-  <th scope="row"><a href="#problems?item=${x.id}" aria-label="Подробности пункта ${x.id}">${String(x.id).padStart(2,'0')}</a><span class="comparison-group">${esc(x.group)}</span></th>
-  <td>${esc(x.problem)}</td>
-  <td><p>${esc(x.solution)}</p><a class="comparison-detail" href="#problems?item=${x.id}">Подробнее${x.image ? ' и скриншот' : ''} ↗</a></td>
-  <td><span class="problem-status ${x.status}">${labels[x.status]}</span></td>
+const changes = JSON.parse(fs.readFileSync(path.join(base, 'poverkadoma-design-changes.json'), 'utf8')).items;
+for (const change of changes) {
+  if (!change.element || !change.before || !change.after || change.before === change.after || 'status' in change) throw Error('Expected a concrete design change: ' + change.id);
+  if (change.image && !fs.existsSync(path.join(base, change.image))) throw Error('Missing change screenshot: ' + change.image);
+}
+const screens = [...new Set(changes.map(x => x.screen))];
+const rows = changes.map(x => `<tr data-comparison-row data-group="${esc(x.screen)}" data-number="${x.id}">
+  <th scope="row"><span class="comparison-element">${esc(x.element)}</span><span class="comparison-group">${esc(x.screen)}</span></th>
+  <td>${esc(x.before)}</td>
+  <td><p>${esc(x.after)}</p>${x.image ? `<a class="comparison-detail" href="${esc(x.image)}" target="_blank" rel="noopener" aria-label="Скриншот: ${esc(x.element)}">Скриншот макета ↗</a>` : ''}</td>
 </tr>`).join('\n');
 const comparison = `<!-- comparison:start -->
     <section id="page-comparison" data-page="comparison" hidden>
-      <div class="page-heading"><div><p class="eyebrow">Все изменения в одном месте</p><h1>До / после</h1><p class="lead">Сводная таблица по всем 43 пунктам: оригинал, текущее состояние макета и статус решения.</p></div></div>
-      <p class="problem-scope">Сравнение относится к макету внутреннего поверителя. Частичные решения, нерешённые вопросы и непроверенные сценарии сохранены в таблице с отдельными статусами.</p>
-      <div class="filter-bar problem-filters"><label class="search-field"><span class="sr-only">Поиск в таблице до и после</span><input id="comparison-search" type="search" placeholder="Номер, проблема или изменение"></label><label class="filter-select"><span class="sr-only">Статус в таблице</span><select id="comparison-status"><option value="all">Все статусы</option>${Object.entries(labels).map(([k,v])=>`<option value="${k}">${v}</option>`).join('')}</select></label><label class="filter-select"><span class="sr-only">Группа в таблице</span><select id="comparison-group"><option value="all">Все группы</option>${groups.map(g=>`<option value="${esc(g)}">${esc(g)}</option>`).join('')}</select></label><button class="button" type="button" id="comparison-reset">Сбросить фильтры</button></div>
-      <p id="comparison-count" class="problem-count" role="status">Показано 43 из 43</p>
+      <div class="page-heading"><div><p class="eyebrow">Изменения интерфейса</p><h1>До / после</h1><p class="lead">Что убрали, добавили, переименовали и переместили относительно оригинального дизайна.</p></div></div>
+      <p class="problem-scope">Каждая строка — конкретное изменение, которое уже есть в рабочем макете внутреннего поверителя.</p>
+      <div class="filter-bar problem-filters comparison-filters"><label class="search-field"><span class="sr-only">Поиск в таблице до и после</span><input id="comparison-search" type="search" placeholder="Элемент или изменение"></label><label class="filter-select"><span class="sr-only">Экран в таблице</span><select id="comparison-group"><option value="all">Все экраны</option>${screens.map(g=>`<option value="${esc(g)}">${esc(g)}</option>`).join('')}</select></label><button class="button" type="button" id="comparison-reset">Сбросить фильтры</button></div>
+      <p id="comparison-count" class="problem-count" role="status">Показано ${changes.length} из ${changes.length}</p>
       <p class="comparison-scroll-hint">Прокрутите таблицу вправо, чтобы увидеть все колонки.</p>
       <div class="comparison-scroll" role="region" aria-label="Сводная таблица до и после" tabindex="0">
-        <table class="comparison-table"><caption class="sr-only">Все 43 проблемы оригинала и изменения в рабочем макете</caption><colgroup><col class="comparison-topic"><col class="comparison-before"><col class="comparison-after"><col class="comparison-state"></colgroup><thead><tr><th scope="col">№ · Группа</th><th scope="col">До — оригинал</th><th scope="col">После — текущий макет</th><th scope="col">Статус</th></tr></thead><tbody>${rows}</tbody></table>
+        <table class="comparison-table"><caption class="sr-only">Изменённые элементы: оригинальный дизайн и рабочий макет</caption><colgroup><col class="comparison-topic"><col class="comparison-before"><col class="comparison-after"></colgroup><thead><tr><th scope="col">Элемент / экран</th><th scope="col">Было в оригинале</th><th scope="col">Стало в макете</th></tr></thead><tbody>${rows}</tbody></table>
       </div>
       <p id="comparison-empty" class="empty-state" hidden>По этим условиям строк не найдено. Измените запрос или сбросьте фильтры.</p>
     </section>

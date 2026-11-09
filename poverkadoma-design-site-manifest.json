@@ -15,8 +15,8 @@
   "verification": "Static package; no production services,credentials or raw Confluence exports included.",
   "package": {
     "file": "poverkadoma-design-site.zip",
-    "bytes": 4528898,
-    "sha256": "15440FF69370388D2BB70C3DBDCEB77D13668E09986DAC7B3478ADB52FC7FBBC",
+    "bytes": 4527077,
+    "sha256": "4C5F45E3FFC5377FDE7190BD58FB5AFE4AFF1A64319AE673A24346CE911FB299",
     "entries": [
       "index.html",
       "site.css",
