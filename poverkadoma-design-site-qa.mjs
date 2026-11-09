@@ -4,7 +4,7 @@ const dataContext={window:{}};new vm.Script(read('poverkadoma-design-site-data.j
 const html=read('poverkadoma-design-site.html'),{window,document,Event}=parseHTML(html),local=new Map(),location={hash:'#prototype'},timers=[];
 const selectProto=Object.getPrototypeOf(document.createElement('select'));Object.defineProperty(selectProto,'options',{configurable:true,get(){return this.querySelectorAll('option');}});Object.defineProperty(selectProto,'value',{configurable:true,get(){return this.querySelector('option[selected]')?.getAttribute('value')??this.querySelector('option')?.getAttribute('value')??'';},set(v){this.querySelectorAll('option').forEach(n=>n.toggleAttribute('selected',n.getAttribute('value')===String(v)));}});
 window.PD_SITE_DATA=data;window.location=location;const localStorage={getItem:key=>local.get(key)||null,setItem:(key,value)=>local.set(key,value)};
-new vm.Script(read('poverkadoma-design-site.js')).runInNewContext({window,document,location,localStorage,console,setTimeout:fn=>{timers.push(fn);return timers.length;},clearTimeout:()=>{},URL,Blob});
+new vm.Script(read('poverkadoma-design-site.js')).runInNewContext({window,document,location,localStorage,console,setTimeout:fn=>{timers.push(fn);return timers.length;},clearTimeout:()=>{},URL,URLSearchParams,Blob});
 const site=window.PD_DESIGN_SITE,checks=[];function pass(name,fn){try{fn();checks.push(name);}catch(e){console.error(name+'\n'+String(e.stack).slice(0,1800));process.exit(1);}}
 function change(selector,value,type='change'){const n=document.querySelector(selector);assert.ok(n,selector);if(n.type==='checkbox')n.checked=value;else n.value=value;n.dispatchEvent(new Event(type,{bubbles:true}));}
 pass('Local site boots with27 experiment series,231 variants,16 analyses and13 role profiles',()=>{assert.ok(site);assert.equal(data.experiments.length,27);assert.equal(data.experiments.reduce((n,e)=>n+e.count,0),231);assert.equal(data.documents.length,16);assert.equal(data.roles.length,13);assert.ok(document.querySelector('#prototype-frame').srcdoc.includes('createVerifierApp'));assert.ok(!document.querySelector('#prototype-frame').srcdoc.includes('<\\/script>'));});
@@ -43,4 +43,15 @@ const reload=makeMain(JSON.parse(local.get(key)),{clock:true});reload.core.navig
   assert.equal(document.querySelector('#reset-preview').textContent,'Сбросить данные макета');assert.ok(document.querySelector('#reset-preview-note').textContent.includes('Изменения данных будут удалены'));
 });
 pass('All local source resources exist and the site needs neither a server API nor a build on the host',()=>{for(const link of document.querySelectorAll('script[src],link[href]')){const src=link.getAttribute('src')||link.getAttribute('href');if(src.startsWith('#'))continue;assert.ok(fs.existsSync(path.join(base,src)),src);}assert.ok(!/fetch\(|XMLHttpRequest|WebSocket/.test(read('poverkadoma-design-site.js')));for(const item of data.experiments)assert.ok(data.raw[item.id]);assert.ok(!/<iframe[^>]+src="https?:/.test(html));});
+pass('Problem register keeps all 43 issues, evidence for resolved items and working combined filters',()=>{
+ const issues=JSON.parse(read('poverkadoma-problems.json')).items;
+ assert.equal(issues.length,43); assert.equal(document.querySelectorAll('.problem-item').length,43);
+ for(const issue of issues){const row=document.getElementById('problem-'+issue.id);assert.ok(row.textContent.includes(issue.problem));assert.ok(row.textContent.includes(issue.solution));if(issue.status==='solved')assert.ok(row.querySelector('img'));if(issue.image)assert.ok(fs.existsSync(path.join(base,issue.image)));}
+ location.hash='#problems';site.route();assert.equal(document.querySelector('#page-problems').hidden,false);
+ change('#problem-status','solved');assert.equal(document.querySelector('#problem-count').textContent,'Показано 17 из 43');
+ change('#problem-search','невозможный запрос','input');assert.equal(document.querySelector('#problem-empty').hidden,false);
+ document.querySelector('#problem-reset').click();assert.equal(document.querySelector('#problem-count').textContent,'Показано 43 из 43');
+ change('#problem-group','Акты и заполнение счётчиков');assert.equal(document.querySelector('#problem-count').textContent,'Показано 8 из 43');
+ document.querySelector('#problem-reset').click();
+});
 const report={date:'2026-11-05',checks:checks.length,passed:checks,manifest:JSON.parse(read('poverkadoma-design-site-manifest.json')),verification:'DOM integration and source checks only; real browser geometry,frame script execution and mobile interaction remain unverified.'};fs.writeFileSync(path.join(base,'poverkadoma-design-site-qa.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));

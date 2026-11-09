@@ -4,3 +4,34 @@
 @media(max-width:760px){.site-header{padding:16px;flex-direction:column;align-items:flex-start;gap:14px}.brand-mark{width:36px;height:36px;font-size:21px;border-radius:11px}.brand{font-size:16px}.brand small{font-size:11px}.site-nav{width:100%;gap:4px;justify-content:space-between}.site-nav a{flex:1;text-align:center;font-size:13px;padding:9px 6px}main{width:calc(100% - 32px);padding-top:24px}.page-heading{align-items:flex-start;flex-wrap:wrap;gap:12px}h1{font-size:26px;line-height:34px}.lead{font-size:14px;line-height:21px}.workbench{display:flex;flex-direction:column}.settings-panel{width:100%;order:2}.prototype-area{position:static;width:100%;order:1}.device-stage{min-height:0;padding:20px 8px}#prototype-frame{min-height:580px;height:720px}.device-heading{padding:12px}.stage-note{padding:0 12px 14px}.filter-bar{display:flex;flex-wrap:wrap}.filter-bar>*{flex:1;min-width:140px}.filter-bar>.search-field{min-width:100%}.experiment summary{padding:16px;gap:12px;grid-template-columns:30px minmax(0,1fr) 16px}.experiment-step{font-size:12px;border-radius:9px;min-height:30px}.experiment-title{font-size:17px;line-height:24px}.experiment-desc{font-size:13px;line-height:20px}.experiment-body{padding:12px}.experiment-action-row{font-size:12px;flex-wrap:wrap}.experiment-frame{height:760px}.document-toolbar label{min-width:100%}.research-content{padding:18px}.record-pair{grid-template-columns:minmax(0,1fr);gap:3px}.scenario-frame{min-height:760px}.site-footer{width:calc(100% - 32px)}.page-heading>.count-label{font-size:12px}#fullscreen-content{padding:8px}}
 iframe:fullscreen{width:100vw!important;max-width:none!important;height:100vh!important;min-height:0!important;border:0!important;border-radius:0!important;background:#f2f4f9}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+/* Evidence register: original issue numbers and the existing laboratory palette. */
+.problem-scope{max-width:900px;color:#536171;font-size:14px;line-height:1.65;margin:-8px 0 22px}
+.problem-totals{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px}
+.problem-total{padding:10px 14px;border:1px solid #d5dbe4;border-radius:12px;background:#fff;font-size:13px}
+.problem-total strong{font-size:20px;margin-right:5px}
+.problem-count{font-size:13px;color:#536171;margin:18px 0}
+.problem-filters{flex-wrap:wrap}.problem-filters select{max-width:100%}
+.problem-item{background:#fff;border:1px solid #d5dbe4;border-radius:16px;margin:12px 0;scroll-margin-top:110px;overflow:hidden}
+.problem-item[hidden]{display:none}.problem-item summary{display:flex;align-items:flex-start;gap:18px;list-style:none;padding:22px;cursor:pointer}
+.problem-item summary::-webkit-details-marker{display:none}
+.problem-number{color:#0084c1;font-weight:700;font-size:19px;min-width:28px}
+.problem-summary{flex:1;min-width:0}.problem-group{display:block;color:#647184;font-size:12px;margin-bottom:7px}
+.problem-title{display:block;font-weight:600;font-size:16px;line-height:1.55}
+.problem-status{border-radius:7px;padding:6px 9px;white-space:nowrap;font-size:12px;font-weight:600;background:#edf0f5;color:#485363}
+.problem-status.solved{background:#e5f3ed;color:#206647}.problem-status.partial{background:#fff2db;color:#80571c}.problem-status.open{background:#fbe9e9;color:#963f46}
+.problem-body{padding:0 22px 24px 68px;border-top:1px solid #edf0f5;line-height:1.7}
+.problem-body.has-evidence{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:36px}
+.problem-body h2{font-size:16px;margin:24px 0 8px}.problem-body p{font-size:15px;margin:0 0 20px;max-width:760px}
+.problem-permalink{font-size:13px;color:#0078ad;text-underline-offset:3px}
+.problem-body figure{margin:24px 0 0}.problem-body img{display:block;width:100%;height:auto;border-radius:16px;border:1px solid #d5dbe4;background:#f2f4f9}
+.problem-body figcaption{font-size:12px;line-height:1.55;color:#536171;margin-top:12px}.problem-body figcaption span{display:block;margin-top:6px;color:#6c7686}
+.problem-item summary:after{content:'+';font-size:22px;color:#0084c1}.problem-item[open] summary:after{content:'−'}
+.problem-item summary:focus-visible,.problem-body a:focus-visible{outline:3px solid #0084c1;outline-offset:-3px}
+@media(max-width:760px){.problem-item summary{padding:16px;gap:10px;flex-wrap:wrap}.problem-summary{flex-basis:calc(100% - 48px)}.problem-status{margin-left:38px}.problem-item summary:after{margin-left:auto}.problem-body,.problem-body.has-evidence{display:block;padding:0 16px 22px}.problem-body figure{max-width:320px;margin:20px auto 0}.problem-filters>*{min-width:0;max-width:100%}.problem-filters .filter-select{width:100%}.problem-title{font-size:15px}}
+
+.problem-filters{display:grid;grid-template-columns:minmax(180px,1fr) 190px minmax(180px,260px) auto}
+@media(max-width:1000px){.problem-filters{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.problem-filters{grid-template-columns:minmax(0,1fr)}}
+
+.problem-filters>.search-field{grid-row:auto}

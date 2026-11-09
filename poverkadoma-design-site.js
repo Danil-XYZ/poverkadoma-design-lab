@@ -102,8 +102,21 @@
   async function openFullscreen(frame){if(!frame)return;if(frame.requestFullscreen){try{await frame.requestFullscreen();return;}catch{}}if(!frame.getAttribute('srcdoc')){const item=data.experiments.find(x=>'experiment-'+x.id===frame.id);if(item)mountFrame(frame,item.id);}const placeholder=document.createComment('frame-position');frame.before(placeholder);fullscreenRestore={frame,placeholder,focus:document.activeElement};$('#fullscreen-title').textContent=frame.title||'Макет';$('#fullscreen-content').replaceChildren(frame);$('#fullscreen-layer').hidden=false;document.body.style.overflow='hidden';$('#fullscreen-close').focus();}
   function closeFullscreen(){if(!fullscreenRestore)return;const {frame,placeholder,focus}=fullscreenRestore;placeholder.replaceWith(frame);$('#fullscreen-layer').hidden=true;document.body.style.overflow='';fullscreenRestore=null;focus?.focus?.();}
   $('#fullscreen-close').addEventListener('click',closeFullscreen);document.addEventListener('keydown',e=>{if(e.key==='Escape')closeFullscreen();if(e.key==='Tab'&&fullscreenRestore&&document.activeElement===$('#fullscreen-close')&&e.shiftKey){e.preventDefault();fullscreenRestore.frame.focus();}});
-  function route(){const hash=location.hash.slice(1).split('?')[0],page=['prototype','experiments','research','scenarios'].includes(hash)?hash:'prototype';state.page=page;$$('[data-page]').forEach(n=>n.hidden=n.dataset.page!==page);$$('[data-nav]').forEach(n=>{if(n.dataset.nav===page)n.setAttribute('aria-current','page');else n.removeAttribute('aria-current');});if(page==='prototype'&&!loaded.has('main'))mountFrame($('#prototype-frame'),'main');if(page==='experiments')experiments();if(page==='research')research();if(page==='scenarios'&&!loaded.has('scenarios'))mountFrame($('#scenario-frame'),'scenarios');saveView();}
-  $('#open-rules').addEventListener('click',()=>{state.document='rules';if(location.hash==='#research')research();});window.addEventListener('hashchange',route);
+
+  function filterProblems(){
+    const query=$('#problem-search').value.trim().toLocaleLowerCase('ru'),status=$('#problem-status').value,group=$('#problem-group').value;
+    let count=0;
+    $$('#problem-list .problem-item').forEach(item=>{const text=item.textContent.toLocaleLowerCase('ru');const match=(!query||text.includes(query)||item.id==='problem-'+query)&&(status==='all'||item.dataset.status===status)&&(group==='all'||item.dataset.group===group);item.hidden=!match;if(match)count++;});
+    $('#problem-count').textContent='Показано '+count+' из 43';$('#problem-empty').hidden=count>0;
+  }
+  function resetProblemFilters(){ $('#problem-search').value='';$('#problem-status').value='all';$('#problem-group').value='all';filterProblems(); }
+  function openProblemLink(){const id=new URLSearchParams(location.hash.split('?')[1]||'').get('item');if(!/^\d+$/.test(id||''))return;const item=document.getElementById('problem-'+id);if(!item)return;resetProblemFilters();item.open=true;requestAnimationFrame(()=>item.scrollIntoView({block:'start'}));}
+  $('#problem-search').addEventListener('input',filterProblems);
+  $('#problem-status').addEventListener('change',filterProblems);
+  $('#problem-group').addEventListener('change',filterProblems);
+  $('#problem-reset').addEventListener('click',resetProblemFilters);
+  function route(){const hash=location.hash.slice(1).split('?')[0],page=['prototype','problems','experiments','research','scenarios'].includes(hash)?hash:'prototype';state.page=page;$$('[data-page]').forEach(n=>n.hidden=n.dataset.page!==page);$$('[data-nav]').forEach(n=>{if(n.dataset.nav===page)n.setAttribute('aria-current','page');else n.removeAttribute('aria-current');});if(page==='prototype'&&!loaded.has('main'))mountFrame($('#prototype-frame'),'main');if(page==='problems')openProblemLink();if(page==='experiments')experiments();if(page==='research')research();if(page==='scenarios'&&!loaded.has('scenarios'))mountFrame($('#scenario-frame'),'scenarios');saveView();}
+  $('#open-rules').addEventListener('click',()=>{state.document='rules';if(location.hash==='#research')research();});window.addEventListener('hashchange',route);window.addEventListener('load',()=>{if(location.hash.startsWith('#problems?'))openProblemLink();});
   $('#edition-date').textContent='05.11.2026';$('#site-snapshot').textContent=data.experiments.length+' серий · '+data.documents.length+' материалов · '+data.roles.length+' профилей';
   window.PD_DESIGN_SITE={state,frameDocument,experiments,research,route,data,frames};route();
 })();

@@ -9,6 +9,7 @@ $siteEntries = @(
   @{Source='poverkadoma-design-site-data.js';Target='data.js'},
   @{Source='poverkadoma-design-site-README.txt';Target='README.txt'}
 )
+$siteEvidence = @((Get-Content -LiteralPath (Join-Path $siteOutputRoot 'poverkadoma-problems.json') -Raw | ConvertFrom-Json).items | Where-Object { $_.image } | Select-Object -ExpandProperty image -Unique)
 $siteStream = [System.IO.File]::Open($siteArchivePath,[System.IO.FileMode]::Create)
 $siteArchive = New-Object System.IO.Compression.ZipArchive($siteStream,[System.IO.Compression.ZipArchiveMode]::Create)
 try {
@@ -19,19 +20,25 @@ try {
     $siteWriter=New-Object System.IO.StreamWriter($siteEntry.Open(),(New-Object System.Text.UTF8Encoding($false)))
     try{$siteWriter.Write($siteText)}finally{$siteWriter.Dispose()}
   }
+  foreach($siteImage in $siteEvidence){
+    $siteEntry=$siteArchive.CreateEntry($siteImage,[System.IO.Compression.CompressionLevel]::Optimal)
+    $siteImageStream=$siteEntry.Open()
+    try { $siteBytes=[System.IO.File]::ReadAllBytes((Join-Path $siteOutputRoot $siteImage)); $siteImageStream.Write($siteBytes,0,$siteBytes.Length) } finally { $siteImageStream.Dispose() }
+  }
 }finally{$siteArchive.Dispose();$siteStream.Dispose()}
 $siteReadStream=[System.IO.File]::OpenRead($siteArchivePath)
 $siteReadArchive=New-Object System.IO.Compression.ZipArchive($siteReadStream,[System.IO.Compression.ZipArchiveMode]::Read)
 try {
-  if($siteReadArchive.Entries.Count -ne 5){throw 'Unexpected archive entries'}
+  if($siteReadArchive.Entries.Count -ne (5 + $siteEvidence.Count)){throw 'Unexpected archive entries'}
   foreach($siteExpected in $siteEntries){if(-not $siteReadArchive.GetEntry($siteExpected.Target)){throw ('Missing archive entry '+$siteExpected.Target)}}
+  foreach($siteImage in $siteEvidence){if(-not $siteReadArchive.GetEntry($siteImage)){throw ('Missing screenshot '+$siteImage)}}
   $siteIndexReader=New-Object System.IO.StreamReader($siteReadArchive.GetEntry('index.html').Open())
   try{$siteIndex=$siteIndexReader.ReadToEnd()}finally{$siteIndexReader.Dispose()}
   foreach($siteResource in @('site.css','site.js','data.js')){if(-not $siteIndex.Contains('"'+$siteResource+'"')){throw ('Missing portable resource '+$siteResource)}}
 }finally{$siteReadArchive.Dispose();$siteReadStream.Dispose()}
 $siteManifestPath=Join-Path $siteOutputRoot 'poverkadoma-design-site-manifest.json'
 $siteManifest=Get-Content -LiteralPath $siteManifestPath -Raw | ConvertFrom-Json
-$sitePackageInfo=[pscustomobject]@{file='poverkadoma-design-site.zip';bytes=(Get-Item -LiteralPath $siteArchivePath).Length;sha256=(Get-FileHash -LiteralPath $siteArchivePath -Algorithm SHA256).Hash;entries=@('index.html','site.css','site.js','data.js','README.txt');verified=$true}
+$sitePackageInfo=[pscustomobject]@{file='poverkadoma-design-site.zip';bytes=(Get-Item -LiteralPath $siteArchivePath).Length;sha256=(Get-FileHash -LiteralPath $siteArchivePath -Algorithm SHA256).Hash;entries=(@('index.html','site.css','site.js','data.js','README.txt') + $siteEvidence);verified=$true}
 $siteManifest | Add-Member -NotePropertyName package -NotePropertyValue $sitePackageInfo -Force
 [System.IO.File]::WriteAllText($siteManifestPath,($siteManifest | ConvertTo-Json -Depth 30),(New-Object System.Text.UTF8Encoding($false)))
 $sitePackageInfo | ConvertTo-Json -Compress

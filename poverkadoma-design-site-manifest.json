@@ -12,5 +12,33 @@
     "poverkadoma-design-site-data.js"
   ],
   "bytes": 13428007,
-  "verification": "Static package; no production services,credentials or raw Confluence exports included."
+  "verification": "Static package; no production services,credentials or raw Confluence exports included.",
+  "package": {
+    "file": "poverkadoma-design-site.zip",
+    "bytes": 4521260,
+    "sha256": "2DCBF0DE3431A4FBE58642985DDCC90989D2BFB4BFCA2804219B458842C374AC",
+    "entries": [
+      "index.html",
+      "site.css",
+      "site.js",
+      "data.js",
+      "README.txt",
+      "problem-evidence-requests.jpg",
+      "problem-evidence-acts.jpg",
+      "problem-evidence-tools.jpg",
+      "problem-evidence-settings.jpg",
+      "problem-evidence-free.jpg",
+      "problem-evidence-detail.jpg",
+      "problem-evidence-visits.jpg",
+      "problem-evidence-empty.jpg",
+      "problem-evidence-continue.jpg",
+      "problem-evidence-fields.jpg",
+      "problem-evidence-picker.jpg",
+      "problem-evidence-validation.jpg",
+      "problem-evidence-meter.jpg",
+      "problem-evidence-draft.jpg",
+      "problem-evidence-export.jpg"
+    ],
+    "verified": true
+  }
 }

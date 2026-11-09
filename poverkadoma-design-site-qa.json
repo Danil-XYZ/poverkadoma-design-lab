@@ -1,6 +1,6 @@
 {
   "date": "2026-11-05",
-  "checks": 10,
+  "checks": 11,
   "passed": [
     "Local site boots with27 experiment series,231 variants,16 analyses and13 role profiles",
     "Every generated preview has valid inline JavaScript and local dependencies",
@@ -11,7 +11,8 @@
     "Export preserves sprite lookup keys and every rendered icon has an embedded image;phone sizing overrides the old844px canvas last",
     "Beautiful outer controls operate the original prototype including labels,shadows,corners and timer",
     "Reset button restores unread demo data durably without changing appearance or unrelated storage",
-    "All local source resources exist and the site needs neither a server API nor a build on the host"
+    "All local source resources exist and the site needs neither a server API nor a build on the host",
+    "Problem register keeps all 43 issues, evidence for resolved items and working combined filters"
   ],
   "manifest": {
     "buildDate": "2026-11-05",

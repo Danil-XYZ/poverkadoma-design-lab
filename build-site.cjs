@@ -3,7 +3,7 @@ const path = require('node:path');
 const crypto = require('node:crypto');
 const {spawnSync} = require('node:child_process');
 const base = __dirname;
-for (const file of ['poverkadoma-verifier-build.cjs', 'poverkadoma-verifier-qa.mjs', 'poverkadoma-design-site-build.cjs', 'poverkadoma-design-site-qa.mjs']) {
+for (const file of ['build-problems.cjs', 'poverkadoma-verifier-build.cjs', 'poverkadoma-verifier-qa.mjs', 'poverkadoma-design-site-build.cjs', 'poverkadoma-design-site-qa.mjs']) {
   const result = spawnSync(process.execPath, [path.join(base, file)], {cwd: base, encoding: 'utf8'});
   if (result.status !== 0) {
     process.stderr.write(result.stdout || '');

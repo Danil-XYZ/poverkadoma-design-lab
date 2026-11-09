@@ -2,11 +2,11 @@
   "version": 1,
   "site": "https://danil-xyz.github.io/poverkadoma-design-lab/",
   "artifacts": {
-    "index.html": "7990ef01d0b679787b206277d7e3e4775588caaedabb367cf907364a86d96704",
-    "site.css": "0cb0fd9671309df0e5ae91f0ec465cafdfe80d0b5d2c4605dfe57edf98d54ce5",
-    "site.js": "6f61ed5a585f79fab5aa9ef62e72b24d044c9816972a2e1e4c982604933e4693",
+    "index.html": "169ceb733487a538ab8c8f96db96f049ab4b01184799b7000296a400b0211bce",
+    "site.css": "37099ec8e2b46740c4a54cb8dc667f4c179f556530a11142490aa8999b5912dd",
+    "site.js": "8380b2d59b727660234a83a9e81c3e7df4938dbd3bf91263dac45ab5d264ce8b",
     "data.js": "39766225f19bec2d18b3b8d1261262c41009b91e1d7235ebbf0df51b34912e2b",
-    "README.txt": "0ec045d3dca90ba286931d9de9970b333c6a33d39911b7d49d4c75a11663ccf5"
+    "README.txt": "d2d68faa70e0ed066489279733ffb91de21187100bacfda5ae739eac1317d28a"
   },
   "reports": [
     {
@@ -15,7 +15,7 @@
     },
     {
       "file": "poverkadoma-design-site-qa.json",
-      "checks": 10
+      "checks": 11
     }
   ],
   "experiments": 27,

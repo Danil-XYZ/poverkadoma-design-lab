@@ -1,0 +1,33 @@
+{
+  "date": "2026-11-09",
+  "scope": "Problems and solutions section only",
+  "items": 43,
+  "statuses": {
+    "solved": 17,
+    "partial": 13,
+    "check": 12,
+    "open": 1
+  },
+  "screenshots": 15,
+  "checks": [
+    "Every original item retained in original order",
+    "Every solved item has a local screenshot",
+    "All 15 screenshots visually inspected",
+    "Status filter: 17 solved",
+    "Group filter: 8 act issues",
+    "Unmatched search shows empty state",
+    "Reset restores all 43 items",
+    "Direct link opens and scrolls to issue, including on reload",
+    "Desktop and 390px mobile render checked",
+    "Mobile document width 375px within 390px viewport",
+    "Portable ZIP includes all 15 screenshots"
+  ],
+  "existingChecks": {
+    "prototype": 56,
+    "site": 11
+  },
+  "limits": [
+    "Demo evidence only; no production backend or Android verification",
+    "Existing preview iframe emitted a MutationObserver error before section changes; no prototype behavior changed"
+  ]
+}
