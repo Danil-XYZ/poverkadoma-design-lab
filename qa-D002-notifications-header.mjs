@@ -25,15 +25,15 @@ for(const hints of [true,false])for(const offline of [false,true,false]){
   assert.equal(back.hidden,false);
   assert.equal(actions.querySelector('.detail-offline').hidden,!offline);
   assert.equal(actions.querySelector('.v-route-help').hidden,!hints);
-  assert.equal(actions.querySelector('.v-notifications-button').hidden,true);
-  assert.equal(actions.querySelector('.v-settings-button').hidden,false);
+  assert.equal(actions.querySelector('.v-notifications-button'),null);
+  assert.equal(actions.querySelector('.v-settings-button'),null);
   assert.equal(toolbar.hasAttribute('data-ink-layout'),false);
 }
 core.api.setSettings({hints:true});
 tap(actions.querySelector('.v-route-help'));
 assert.equal(document.querySelector('#verifier-modal').hidden,false);
 core.api.closeModal();
-tap(actions.querySelector('.v-settings-button'));
+tap(app.querySelector('.bottom-bar [data-nav=settings]'));
 assert.equal(core.getRoute().route,'settings');
 core.navigate('tools');
 core.navigate('notifications');
@@ -45,9 +45,7 @@ const css=[...fragment.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)].map(m=>m[1]
 const rules=[...css.matchAll(/([^{}]+)\{([^{}]*)\}/g)].flatMap(m=>m[1].split(',').map(selector=>({selector:selector.trim(),body:m[2]})));
 const scoped='#pd-verifier-app-preview ';
 const rule=selector=>rules.filter(r=>r.selector===scoped+selector).map(r=>r.body).join(' ');
-assert.match(rule('.detail-toolbar .toolbar-actions > .v-settings-button'),/width: 48px; flex-basis: 48px/);
 assert.match(rule('.phone[data-offline="false"] .detail-toolbar .network-slot'),/display: none/);
 assert.match(rule('.detail-toolbar[data-header-compact]'),/--header-action-width: 44px/);
 assert.match(rule('.detail-toolbar[data-header-compact] .toolbar-actions'),/gap: 0/);
-assert.match(rule('.detail-toolbar[data-header-stacked] .v-settings-button'),/position: absolute; top: 0; right: 0/);
 console.log('Notifications: network, hints, navigation and compiled toolbar rules passed.');

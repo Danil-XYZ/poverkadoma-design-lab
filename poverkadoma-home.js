@@ -624,14 +624,6 @@
       city.setAttribute('aria-label', 'Населённый пункт: ' + city.textContent);
       address.append(document.createTextNode(item.address));
       details.append(city, address);
-      if (item.work) {
-        const work = document.createElement('p');
-        work.className = 'request-work';
-        const description = document.createElement('span');
-        description.textContent = compactWork(item.work);
-        work.append(icon('meter'), description);
-        details.append(work);
-      }
       if (item.kind !== 'new' && item.clientName) {
         const client = document.createElement('p');
         client.className = 'request-client';
@@ -643,18 +635,6 @@
         name.textContent = item.clientName;
         client.append(clientLabel, icon('person'), name);
         details.append(client);
-      }
-      if (item.kind !== 'new' && item.phone) {
-        const phone = document.createElement('p');
-        phone.className = 'request-phone';
-        phone.setAttribute('aria-label', item.phoneLabel + ': ' + item.phone);
-        const phoneLabel = document.createElement('span');
-        phoneLabel.className = 'visually-hidden';
-        phoneLabel.textContent = item.phoneLabel + ': ';
-        const number = document.createElement('span');
-        number.textContent = item.phone;
-        phone.append(phoneLabel, icon('phone'), number);
-        details.append(phone);
       }
       if (item.visit || item.canceled || item.requestedDate) {
         const date = document.createElement('p');

@@ -15,7 +15,7 @@ function createVerifierApp(options) {
   const modules={};
   const oldHeader=app.querySelector('.topbar'),oldList=app.querySelector('.requests-viewport'),oldActs=app.querySelector('#acts-screen'),oldProfile=app.querySelector('#profile-screen'),oldDest=app.querySelector('#destination-screen'),oldRequest=app.querySelector('#request-screen'),bottom=app.querySelector('.bottom-bar');
   const screen=el('section','v-screen');screen.id='verifier-screen';screen.hidden=true;screen.setAttribute('aria-label','Раздел приложения');
-  const navigation=createVerifierNavigation({app,bridge:b,el,navigate,showHelp,back,getSettings:()=>settings});
+  const navigation=createVerifierNavigation({app,el,navigate,showHelp,back,getSettings:()=>settings});
   const {header,toolbar,backButton,heading,helpButton,offline}=navigation.screen;
   const viewport=el('main','v-viewport'),actionBar=el('footer','v-action-bar'),fab=el('button','v-fab');fab.type='button';fab.hidden=true;screen.append(header,viewport,actionBar,fab);app.insertBefore(screen,bottom);
   const overlay=el('div','v-overlay');overlay.id='verifier-modal';overlay.hidden=true;app.append(overlay);
@@ -79,7 +79,7 @@ function createVerifierApp(options) {
     applySettings();if(route==='requests'){screen.hidden=true;b.showSection('requests');view=null;bottom.hidden=false;navigation.apply(route);return;}
     if(route==='request'){screen.hidden=true;b.openRequest(params.id,false);bottom.hidden=true;view=null;applySettings();return;}
     const module=actRoutes.includes(route)?modules.acts:toolRoutes.includes(route)?modules.tools:modules.access;view=route==='tools'?navigation.toolsView():route==='sections'?navigation.sectionsView():module.render(route,params);if(!view?.content){notice('Не удалось открыть экран','error');route='requests';params={};render();return;}
-    b.showSection(view.section==='acts'?'acts':'profile');hideOld();screen.hidden=false;app.dataset.screen='verifier';app.dataset.vRoute=route;heading.textContent=route==='account'?titles.account:view.title||titles[route]||'Поверка';screen.setAttribute('aria-label',heading.textContent);bottom.hidden=!navigation.roots.includes(route);viewport.replaceChildren(view.content);viewport.scrollTop=0;pickers.enhance(viewport);
+    b.showSection(view.section==='acts'?'acts':'profile');hideOld();screen.hidden=false;app.dataset.screen='verifier';app.dataset.vRoute=route;heading.textContent=route==='account'?titles.account:view.title||titles[route]||'Поверка';screen.setAttribute('aria-label',heading.textContent);bottom.hidden=!navigation.hasBottomBar(route);viewport.replaceChildren(view.content);viewport.scrollTop=0;pickers.enhance(viewport);
     actionBar.replaceChildren();actionBar.hidden=!view.primary;if(view.primary){const primary=button(view.primary.label,view.primary.onClick,'primary');primary.disabled=Boolean(view.primary.disabled);actionBar.append(primary,el('div','gesture-area'));}fab.hidden=!view.fab;viewport.classList.toggle('v-has-fab',Boolean(view.fab));if(view.fab){const plus=el('span','v-fab-plus'),glyph=el('i');plus.setAttribute('aria-hidden','true');glyph.setAttribute('data-lucide','plus');plus.append(glyph);fab.replaceChildren(plus);fab.onclick=view.fab.onClick;fab.setAttribute('aria-label',view.fab.label);}applySettings();
   }
   function snapshot(){const base=b.getBaseState(),timer=app.verifierTimerDemo?.getState?.();return {modelContent:{...base.modelContent,screen:titles[route]||view?.title||route,verifierRoute:route,hints:settings.hints,theme:settings.theme,requestTimerStyle:timer?.style,timerDemoPlaying:timer?.playing,labelAppearance},privateContent:{...base.privateContent,labelAppearance,requestTimerPreview:timer,verifier:{version:1,route,params:safe(params),history:safe(history.slice(-12)),settings:safe(settings),acts:modules.acts.getState(),tools:modules.tools.getState(),access:modules.access.getState()}}};}
@@ -94,7 +94,6 @@ function createVerifierApp(options) {
     if(target.id==='request-back'){event.preventDefault();event.stopImmediatePropagation();back();return;}
     if(target.id==='request-help'||target.getAttribute('aria-label')==='Подсказки'){event.preventDefault();event.stopImmediatePropagation();showHelp();return;}
     if(target.id==='request-detail-status'&&settings.hints===false){event.preventDefault();event.stopImmediatePropagation();return;}
-    if(target.getAttribute('aria-label')==='Уведомления'){event.preventDefault();event.stopImmediatePropagation();navigate('notifications');return;}
     const cardNode=target.closest('.request[data-request-id]');if(cardNode&&(target.classList.contains('request-entry')||target.classList.contains('request-action')&&!target.classList.contains('request-call'))){event.preventDefault();event.stopImmediatePropagation();if(target.classList.contains('request-entry'))navigate('request',{id:cardNode.dataset.requestId});else{const item=b.getRequests().find(x=>x.id===cardNode.dataset.requestId);if(item)quickAction(item);}return;}
   },true);
   app.addEventListener('click',event=>{if(event.target.closest('#filter-toggle'))pickers.enhance(app.querySelector('#request-filters'));});

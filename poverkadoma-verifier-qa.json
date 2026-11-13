@@ -1,5 +1,5 @@
 {
-  "passed": 56,
+  "passed": 57,
   "checks": [
     "History cycles 10/50/100, paginates without duplicates, and keeps preferences after reload",
     "History cards disclose original meter facts and receipt action does not expand them",
@@ -10,7 +10,7 @@
     "Demo reset closes open dialogs and preserves reduced motion timer choice",
     "Full application boots with the approved request feed and no save on load",
     "Every implemented route renders without a placeholder and has contextual help",
-    "Original destinations remain within two actual navigation taps from the three main roots without a Profile menu",
+    "Original destinations remain within two actual navigation taps from every bottom navigation tab without a Profile menu",
     "The native accessible hint checkbox turns hints off and on and restores both saved states",
     "Nested dialog help preserves the original dialog values",
     "Custom setting selectors use icon chevrons and apply theme and font scale across screens",
@@ -18,7 +18,7 @@
     "Whole-app state and drafts restore without duplicate save events",
     "Communications use shared Notification/Message segments and an icon-only Support action",
     "All implemented routes use the Request header DOM and shared typography; roots keep the same bottom navigation",
-    "Act drafts survive the Settings shortcut, Back to Acts, reopening and a host-state reload",
+    "Act drafts survive a switch to Settings, reopening and a host-state reload",
     "Old saved Profile routes migrate to Settings without resurrecting the old all-functions menu",
     "The section gateway is entered only from Settings and returns there without a leaked history step",
     "Registration validates email and consent,checks a local code and connects only the internal role",
@@ -53,6 +53,7 @@
     "Negative manual time restores,synchronized detail stays hidden for agreed requests,and legacy clocks migrate to the new cycle",
     "Locality is a separate visible row for single and mixed geography and remains above the street when editing a request",
     "Tools header preserves title,actions and network behavior with the shared toolbar",
+    "Request cards omit meter counts and phone rows, with direct calling still available",
     "Request filters intersect date, status, service, city and sync; count matches rendered cards",
     "Request status OR, draft cancellation, reset, empty state and removal preserve the correct list",
     "Request period boundaries, undated requests and search compose with applied filters",
@@ -74,7 +75,7 @@
     "verification": "Actual visible DOM control activation"
   },
   "seedSnapshotBytes": 16591,
-  "fragmentBytes": 1028934,
+  "fragmentBytes": 1028019,
   "limitations": [
     "DOM-only: layout, real-browser rendering and touch/device behavior remain unverified; custom calendar and option interactions are exercised in DOM",
     "Camera, real file selection, downloads and external handlers remain unverified",
