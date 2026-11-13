@@ -22,6 +22,20 @@ function createVerifierApp(options) {
   oldList.prepend(oldHeader);
   const {header,toolbar,backButton,heading,helpButton,offline}=navigation.screen;
   const viewport=el('main','v-viewport'),actionBar=el('footer','v-action-bar'),fab=el('button','v-fab');fab.type='button';fab.hidden=true;screen.append(header,viewport,actionBar,fab);app.insertBefore(screen,bottom);
+  function syncFeedSystemBar(){
+    const feed=route==='requests'?oldList:route==='acts'?viewport:null;
+    const feedHeader=route==='requests'?oldHeader:header;
+    const headerGone=feed && feed.scrollTop>0 &&
+      feedHeader.getBoundingClientRect().bottom<=feed.getBoundingClientRect().top;
+    feedSystemBar.toggleAttribute('data-header-gone',Boolean(headerGone));
+  }
+  oldList.addEventListener('scroll',syncFeedSystemBar,{passive:true});
+  viewport.addEventListener('scroll',syncFeedSystemBar,{passive:true});
+  if(window.ResizeObserver){
+    const headerSize=new window.ResizeObserver(syncFeedSystemBar);
+    headerSize.observe(oldHeader);
+    headerSize.observe(header);
+  }
   const overlay=el('div','v-overlay');overlay.id='verifier-modal';overlay.hidden=true;app.append(overlay);
   const toast=el('div','v-toast');toast.hidden=true;toast.setAttribute('role','status');app.append(toast);
   let uid=0;
@@ -80,7 +94,7 @@ function createVerifierApp(options) {
   function hideOld(){for(const n of [oldHeader,oldList,oldActs,oldProfile,oldDest,oldRequest])n.hidden=true;}
   function render(){
     if(modules.access.getState().signedIn===false&&!authRoutes.includes(route)&&route!=='about'){route='login';params={};}
-    applySettings();if(route==='requests'){screen.hidden=true;b.showSection('requests');view=null;bottom.hidden=false;navigation.apply(route);return;}
+    applySettings();if(route==='requests'){screen.hidden=true;b.showSection('requests');view=null;bottom.hidden=false;navigation.apply(route);syncFeedSystemBar();return;}
     if(route==='request'){screen.hidden=true;b.openRequest(params.id,false);bottom.hidden=true;view=null;applySettings();return;}
     const module=actRoutes.includes(route)?modules.acts:toolRoutes.includes(route)?modules.tools:modules.access;view=route==='tools'?navigation.toolsView():route==='sections'?navigation.sectionsView():module.render(route,params);if(!view?.content){notice('Не удалось открыть экран','error');route='requests';params={};render();return;}
     b.showSection(view.section==='acts'?'acts':'profile');hideOld();screen.hidden=false;app.dataset.screen='verifier';app.dataset.vRoute=route;heading.textContent=route==='account'?titles.account:view.title||titles[route]||'Поверка';screen.setAttribute('aria-label',heading.textContent);bottom.hidden=!navigation.hasBottomBar(route);
@@ -91,6 +105,7 @@ function createVerifierApp(options) {
       viewport.replaceChildren(view.content);
     }
     viewport.scrollTop=0;
+    syncFeedSystemBar();
     pickers.enhance(viewport);
     actionBar.replaceChildren();actionBar.hidden=!view.primary;if(view.primary){const primary=button(view.primary.label,view.primary.onClick,'primary');primary.disabled=Boolean(view.primary.disabled);actionBar.append(primary,el('div','gesture-area'));}fab.hidden=!view.fab;viewport.classList.toggle('v-has-fab',Boolean(view.fab));if(view.fab){const plus=el('span','v-fab-plus'),glyph=el('i');plus.setAttribute('aria-hidden','true');glyph.setAttribute('data-lucide','plus');plus.append(glyph);fab.replaceChildren(plus);fab.onclick=view.fab.onClick;fab.setAttribute('aria-label',view.fab.label);}applySettings();
   }

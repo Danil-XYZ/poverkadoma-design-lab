@@ -2,10 +2,10 @@
   "version": 1,
   "site": "https://danil-xyz.github.io/poverkadoma-design-lab/",
   "artifacts": {
-    "index.html": "9ad11898f31606e043cb5e7b51e6539cc01ff444f51fe416bbdfc61860a46b02",
+    "index.html": "43d95eeec948abd7951575f37dd3104cb5f4e02a3c2292216267a29ce18e761e",
     "site.css": "1fbb42a08d7fefbfe2e4b47ff6d4df9da11c3e37c4befb0e9877c2a05b54f481",
     "site.js": "3f05e6fc93febdcf5539e321e3a158f9882c1507b37b8878c07b44084ab0a8f8",
-    "data.js": "2e0847400bb58d199e96fee3f17b2ecadb3e30b5fec36c132aea507178842641",
+    "data.js": "d4eb9f5db3ac225fe08e7961f6cf93b66a84363504e082706dd8d76d5016b4f7",
     "README.txt": "d2d68faa70e0ed066489279733ffb91de21187100bacfda5ae739eac1317d28a"
   },
   "reports": [
