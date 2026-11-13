@@ -97,20 +97,20 @@ function createVerifierNavigation({app,el,navigate,showHelp,back,getSettings}) {
   if(window.MutationObserver)new window.MutationObserver(scheduleToolsInk).observe(app,{attributes:true,attributeFilter:['data-offline']});
   if(window.ResizeObserver){let width;new window.ResizeObserver(entries=>{const next=entries[0]?.contentRect.width;if(next!==width){width=next;scheduleToolsInk();}}).observe(app);}
   document.fonts?.ready?.then(scheduleToolsInk);document.fonts?.addEventListener?.('loadingdone',scheduleToolsInk);
-  // The legacy home controller owns its original NodeList. Keep that detached node intact.
+  // The legacy home controller still owns the detached buttons in its original NodeList.
   const bottomBar=app.querySelector('.bottom-bar');
   bottomBar.classList.add('v-bottom-bar');
-  const oldProfile=bottomBar.querySelector('[data-nav="profile"]');
-  const tabs=['tools','notifications','settings'].map(route=>{
+  const tabLabels={requests:names.requests,acts:names.acts,tools:'Сервис',notifications:'События',settings:names.settings};
+  const tabs=Object.entries(tabLabels).map(([route,label])=>{
     const tab=el('button','nav-item');
     tab.type='button';
     tab.dataset.nav=route;
     const mark=el('span','nav-mark');
     mark.append(navIcon(route));
-    tab.append(mark,el('span','',names[route]));
+    tab.append(mark,el('span','',label));
     return tab;
   });
-  oldProfile.replaceWith(...tabs);
+  bottomBar.querySelector('.bottom-navigation').replaceChildren(...tabs);
   function hasBottomBar(route){return roots.includes(route)||communicationRoutes.includes(route)||route==='settings';}
   function configure(info,hideBack,auth=false,pageRoute='requests'){info.offline.hidden=app.dataset.offline!=='true';info.helpButton.hidden=getSettings().hints===false;info.sections.hidden=auth||pageRoute!=='settings';if(info.backButton)info.backButton.hidden=hideBack;}
   function apply(route,auth=false){
@@ -119,7 +119,7 @@ function createVerifierNavigation({app,el,navigate,showHelp,back,getSettings}) {
     configure(screen,roots.includes(route),auth,route);
     main.heading.textContent='Заявки';
     const activeTab=communicationRoutes.includes(route)?'notifications':route;
-    bottomBar.querySelectorAll('[data-nav]').forEach(tab=>{
+    tabs.forEach(tab=>{
       if(tab.dataset.nav===activeTab)tab.setAttribute('aria-current','page');
       else tab.removeAttribute('aria-current');
     });
