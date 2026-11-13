@@ -58,9 +58,8 @@
   font-size: min(calc(.75rem * var(--v-scale, 1)), .9375rem);
 }
 .v-bottom-bar .nav-item:focus-visible { outline-offset: -2px; }
-.v-bottom-bar .nav-item[aria-current="page"] { border-radius: 12px; font-weight: 400; color: color-mix(in srgb, var(--blue) 78%, var(--ink)); }
+.v-bottom-bar .nav-item[aria-current="page"] { border-radius: 12px; background: transparent; font-weight: 400; color: color-mix(in srgb, var(--blue) 78%, var(--ink)); }
 .phone[data-v-theme="dark"] .v-bottom-bar .nav-item[aria-current="page"] {
-  background: color-mix(in srgb, var(--blue) 16%, var(--surface));
   color: var(--blue-light);
 }
 .v-bottom-bar .nav-mark { --icon-size: 22px; width: 24px; height: 24px; }
