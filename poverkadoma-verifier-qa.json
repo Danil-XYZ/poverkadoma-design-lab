@@ -75,7 +75,7 @@
     "verification": "Actual visible DOM control activation"
   },
   "seedSnapshotBytes": 16591,
-  "fragmentBytes": 1028319,
+  "fragmentBytes": 1028267,
   "limitations": [
     "DOM-only: layout, real-browser rendering and touch/device behavior remain unverified; custom calendar and option interactions are exercised in DOM",
     "Camera, real file selection, downloads and external handlers remain unverified",

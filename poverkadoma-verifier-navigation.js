@@ -22,7 +22,7 @@ function planToolsHeaderInk(titleRight,right,inkEnd,widths,targetWidths){
 function createVerifierNavigation({app,el,navigate,showHelp,back,getSettings}) {
   const roots=['requests','acts','tools'];
   const communicationRoutes=['notifications','messages'];
-  const names={requests:'Заявки',acts:'Акты',tools:'Инструменты',upload:'Выгрузка',history:'История',statistics:'Статистика',equipment:'Приборы',tags:'Бирки',storage:'Условия хранения',nepton:'НЕПТОН',guide:'Справочник СИ',arshin:'АРШИН',documents:'Документы СМК',settings:'Настройки',account:'Личные данные',notifications:'Уведомления',messages:'Сообщения',feedback:'Поддержка'};
+  const names={requests:'Заявки',acts:'Акты',tools:'Сервисы',upload:'Выгрузка',history:'История',statistics:'Статистика',equipment:'Приборы',tags:'Бирки',storage:'Условия хранения',nepton:'НЕПТОН',guide:'Справочник СИ',arshin:'АРШИН',documents:'Документы СМК',settings:'Настройки',account:'Личные данные',notifications:'Уведомления',messages:'Сообщения',feedback:'Поддержка'};
   const glyphs={tools:'wrench',settings:'settings',sections:'layout-grid',equipment:'gauge',tags:'tag',storage:'thermometer',nepton:'radio',guide:'book-open',arshin:'search-check',documents:'file-check-2',requests:'clipboard-list',acts:'files',upload:'cloud-upload',history:'history',statistics:'chart-no-axes-combined',account:'user-round',notifications:'bell',messages:'message-square',feedback:'headset'};
   function navIcon(key){const box=el('span','icon v-nav-glyph'),i=el('i');box.setAttribute('aria-hidden','true');box.style.width='24px';box.style.height='24px';i.dataset.lucide=glyphs[key]||key;box.append(i);return box;}
   const paintIcons=()=>globalThis.lucide?.createIcons?.({attrs:{width:20,height:20,'stroke-width':1.7}});
@@ -100,7 +100,7 @@ function createVerifierNavigation({app,el,navigate,showHelp,back,getSettings}) {
   // The legacy home controller still owns the detached buttons in its original NodeList.
   const bottomBar=app.querySelector('.bottom-bar');
   bottomBar.classList.add('v-bottom-bar');
-  const tabLabels={requests:names.requests,acts:names.acts,tools:'Сервис',notifications:'События',settings:names.settings};
+  const tabLabels={requests:names.requests,acts:names.acts,tools:names.tools,notifications:'События',settings:names.settings};
   const tabs=Object.entries(tabLabels).map(([route,label])=>{
     const tab=el('button','nav-item');
     tab.type='button';
@@ -127,7 +127,7 @@ function createVerifierNavigation({app,el,navigate,showHelp,back,getSettings}) {
     scheduleToolsInk();
   }
   function group(title,items,kind){const host=el('section','v-tools-group'),list=el('div','v-tools-grid');host.append(el('h3','v-tools-heading',title));for(const key of items){const n=el('button','v-tools-tile cursor-interaction');n.type='button';n.setAttribute('aria-label',names[key]);n.dataset[kind==='tools'?'toolsDestination':'sectionDestination']=key;n.append(navIcon(key),el('span','v-tools-name',names[key]));if(kind==='tools'){const chevron=navIcon('chevron-right');chevron.classList.add('v-tools-chevron');n.append(chevron);}n.addEventListener('click',()=>navigate(key));list.append(n);}host.append(list);return host;}
-  function toolsView(){const content=el('div','v-stack v-tools-tasks');content.append(group('Оборудование',['equipment','nepton'],'tools'),group('Справочные данные',['guide','arshin'],'tools'),group('Сопровождение работы',['tags','storage','documents'],'tools'));return {title:'Инструменты',section:'tools',content,help:'Оборудование: Приборы и НЕПТОН. Справочные данные: Справочник СИ и АРШИН. Сопровождение работы: Бирки, Условия хранения и Документы СМК. Каждая кнопка сразу открывает нужный инструмент; эти функции также доступны из соответствующего шага акта.'};}
+  function toolsView(){const content=el('div','v-stack v-tools-tasks');content.append(group('Оборудование',['equipment','nepton'],'tools'),group('Справочные данные',['guide','arshin'],'tools'),group('Сопровождение работы',['tags','storage','documents'],'tools'));return {title:names.tools,section:'tools',content,help:'Оборудование: Приборы и НЕПТОН. Справочные данные: Справочник СИ и АРШИН. Сопровождение работы: Бирки, Условия хранения и Документы СМК. Каждая кнопка сразу открывает нужный инструмент; эти функции также доступны из соответствующего шага акта.'};}
   function sectionsView(){const content=el('div','v-stack');content.append(group('Работа',['requests','acts','tools','upload','history','statistics'],'sections'),group('Подготовка',['equipment','tags','storage','documents'],'sections'),group('Во время поверки',['guide','arshin','nepton'],'sections'),group('Личное и связь',['account','settings','notifications','messages','feedback'],'sections'));return {title:'Разделы',section:'tools',content,help:'Каждая кнопка сразу открывает нужный раздел. Группы помогают найти функцию и не добавляют промежуточных переходов.'};}
   return {hasBottomBar,main,request,screen,apply,toolsView,sectionsView,paintIcons,icon:navIcon};
 }
