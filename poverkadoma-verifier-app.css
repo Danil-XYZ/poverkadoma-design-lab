@@ -169,8 +169,8 @@ button.v-text, .v-text-action { min-height: 44px; padding: 8px 12px; border: 0; 
 .v-fab-plus svg { display: block; width: 24px; height: 24px; stroke-width: 2; }
 .v-act-shortcuts { display: grid; grid-template-columns: minmax(0,1fr) 48px 48px; gap: var(--space-2); align-items:center; }
 .v-act-shortcuts .v-button { padding: 8px; font-size: calc(16px * var(--v-scale)); line-height: calc(24px * var(--v-scale)); }
-.v-viewport:has(> .v-acts-feed) { padding: var(--space-3) var(--screen-gutter) var(--space-4); }
-.v-acts-feed { gap: var(--space-2); }
+.v-viewport:has(> .v-acts-feed) { padding: 0; }
+.v-acts-feed { gap: var(--space-2); padding: var(--space-3) var(--screen-gutter) var(--space-4); }
 .v-act-groups { display:flex; flex-direction:column; gap:var(--space-2); }
 .v-history-feed { gap:12px; }
 .v-history-toolbar { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
