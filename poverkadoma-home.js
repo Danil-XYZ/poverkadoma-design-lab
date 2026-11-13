@@ -617,13 +617,12 @@
       details.className = 'request-facts';
       const address = document.createElement('p');
       address.className = 'request-address';
-      address.setAttribute('aria-label', 'Адрес: ' + item.city + ', ' + item.address);
-      const city = document.createElement('p');
+      const city = document.createElement('span');
       city.className = 'request-city';
       city.textContent = item.city || 'Населённый пункт не указан';
-      city.setAttribute('aria-label', 'Населённый пункт: ' + city.textContent);
-      address.append(document.createTextNode(item.address));
-      details.append(city, address);
+      address.setAttribute('aria-label', 'Адрес: ' + city.textContent + ', ' + item.address);
+      address.append(city, document.createTextNode(' ' + item.address));
+      details.append(address);
       if (item.kind !== 'new' && item.clientName) {
         const client = document.createElement('p');
         client.className = 'request-client';

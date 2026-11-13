@@ -51,7 +51,7 @@
     "Animation phase survives host echoes and list rebuilds;reduced motion starts paused until explicit Play",
     "External label saturation changes all status families and survives routes,packed restores and host echoes",
     "Negative manual time restores,synchronized detail stays hidden for agreed requests,and legacy clocks migrate to the new cycle",
-    "Locality is a separate visible row for single and mixed geography and remains above the street when editing a request",
+    "Locality starts the card address in single and mixed geography and remains editable on the request",
     "Tools header preserves title,actions and network behavior with the shared toolbar",
     "Request cards omit meter counts and phone rows, with direct calling still available",
     "Request filters intersect date, status, service, city and sync; count matches rendered cards",
@@ -75,7 +75,7 @@
     "verification": "Actual visible DOM control activation"
   },
   "seedSnapshotBytes": 16591,
-  "fragmentBytes": 1028714,
+  "fragmentBytes": 1029504,
   "limitations": [
     "DOM-only: layout, real-browser rendering and touch/device behavior remain unverified; custom calendar and option interactions are exercised in DOM",
     "Camera, real file selection, downloads and external handlers remain unverified",

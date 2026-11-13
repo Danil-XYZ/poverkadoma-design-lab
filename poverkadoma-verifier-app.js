@@ -16,6 +16,9 @@ function createVerifierApp(options) {
   const oldHeader=app.querySelector('.topbar'),oldList=app.querySelector('.requests-viewport'),oldActs=app.querySelector('#acts-screen'),oldProfile=app.querySelector('#profile-screen'),oldDest=app.querySelector('#destination-screen'),oldRequest=app.querySelector('#request-screen'),bottom=app.querySelector('.bottom-bar');
   const screen=el('section','v-screen');screen.id='verifier-screen';screen.hidden=true;screen.setAttribute('aria-label','Раздел приложения');
   const navigation=createVerifierNavigation({app,el,navigate,showHelp,back,getSettings:()=>settings});
+  const feedSystemBar=oldHeader.querySelector('.systembar').cloneNode(true);
+  feedSystemBar.classList.add('v-feed-systembar');
+  app.prepend(feedSystemBar);
   oldList.prepend(oldHeader);
   const {header,toolbar,backButton,heading,helpButton,offline}=navigation.screen;
   const viewport=el('main','v-viewport'),actionBar=el('footer','v-action-bar'),fab=el('button','v-fab');fab.type='button';fab.hidden=true;screen.append(header,viewport,actionBar,fab);app.insertBefore(screen,bottom);
