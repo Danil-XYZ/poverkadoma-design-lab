@@ -116,7 +116,18 @@ h1 { margin: 0; flex: 1; min-width: 0; font-size: 24px; font-weight: 600; line-h
 .request-facts { display: flex; flex-direction: column; gap: 0; }
 .request-facts p { margin: 0; }
 .request-address { font-size: var(--card-accent-font); line-height: 1.3; font-weight: 700; overflow-wrap: anywhere; }
-.request-city { display: block; min-width: 0; color: var(--secondary); font-size: var(--card-body-font); line-height: 1.4; font-weight: 400; overflow-wrap: anywhere; }
+.request-facts .request-city {
+  align-self: flex-start;
+  max-width: 100%;
+  margin-bottom: var(--space-1);
+  padding: 2px var(--space-2);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--secondary) 12%, var(--surface));
+  color: var(--ink);
+  font-size: calc(13px * var(--card-font-scale));
+  line-height: calc(18px * var(--card-font-scale));
+  overflow-wrap: anywhere;
+}
 .request-client, .request-date { color: var(--secondary); overflow-wrap: anywhere; }
 .request-client { display: flex; align-items: flex-start; gap: var(--space-1); }
 .request-client > .icon { margin-top: var(--space-1); }
